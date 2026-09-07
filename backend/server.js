@@ -157,6 +157,21 @@ const startServer = async () => {
     logger.error('Unhandled Promise Rejection:', err);
   });
 
+  // 24/7 Production Keep-Alive Ping (prevents Render Free Tier idle sleep)
+  const renderUrl = process.env.RENDER_EXTERNAL_URL || 'https://harsh-developer.onrender.com';
+  if (process.env.NODE_ENV === 'production' || process.env.RENDER) {
+    const https = require('https');
+    const KEEP_ALIVE_INTERVAL = 13 * 60 * 1000; // every 13 minutes
+    setInterval(() => {
+      https.get(`${renderUrl}/api/health`, (res) => {
+        logger.info(`[Keep-Alive] 24/7 self-ping executed: ${res.statusCode}`);
+      }).on('error', (err) => {
+        logger.warn(`[Keep-Alive] Ping warning: ${err.message}`);
+      });
+    }, KEEP_ALIVE_INTERVAL);
+    logger.info(`⏰ 24/7 Keep-Alive self-pinger initialized for: ${renderUrl}`);
+  }
+
   return server;
 };
 
