@@ -72,14 +72,37 @@ const login = async (req, res, next) => {
       return res.status(400).json({ success: false, message: 'Email and password are required.' });
     }
 
-    const user = await dbService.User.findOne({ email: email.toLowerCase().trim() });
+    const cleanEmail = email.toLowerCase().trim();
+    let user = await dbService.User.findOne({ email: cleanEmail });
+
+    // If not found in Users, check if Harshit (Admin) is logging in
     if (!user) {
-      return res.status(401).json({ success: false, message: 'Invalid email or password.' });
+      const admin = await dbService.Admin.findOne({ email: cleanEmail });
+      if (admin) {
+        const isMatch = await bcrypt.compare(password, admin.password);
+        if (isMatch) {
+          const token = generateToken(admin._id);
+          logger.success(`Harshit (Admin) signed in to Client Portal: ${admin.email}`);
+          return res.status(200).json({
+            success: true,
+            message: 'Signed in successfully as Harshit (Owner / Admin Workspace).',
+            token,
+            user: {
+              id: admin._id,
+              name: admin.name,
+              email: admin.email,
+              phone: config.developerPhone || '',
+              company: 'Harsh Developer'
+            }
+          });
+        }
+      }
+      return res.status(401).json({ success: false, message: 'Invalid email or password. Please verify your credentials or create an account.' });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(401).json({ success: false, message: 'Invalid email or password.' });
+      return res.status(401).json({ success: false, message: 'Invalid email or password. Please check your password.' });
     }
 
     const token = generateToken(user._id);
@@ -94,8 +117,8 @@ const login = async (req, res, next) => {
         id: user._id,
         name: user.name,
         email: user.email,
-        phone: user.phone,
-        company: user.company
+        phone: user.phone || '',
+        company: user.company || ''
       }
     });
   } catch (err) {
@@ -105,14 +128,20 @@ const login = async (req, res, next) => {
 
 const getMe = async (req, res, next) => {
   try {
-    const user = await dbService.User.findById(req.user._id);
+    const user = req.user;
     if (!user) {
       return res.status(404).json({ success: false, message: 'User account not found.' });
     }
 
     res.status(200).json({
       success: true,
-      user
+      user: {
+        id: user._id || user.id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone || '',
+        company: user.company || ''
+      }
     });
   } catch (err) {
     next(err);

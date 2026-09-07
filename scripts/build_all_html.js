@@ -425,58 +425,74 @@ const clientPortalHtml = `<!DOCTYPE html>
         </p>
       </div>
 
-      <div class="auth-tabs">
-        <div class="auth-tab active" id="tab-login-btn" onclick="switchAuthTab('login')">Sign In</div>
-        <div class="auth-tab" id="tab-register-btn" onclick="switchAuthTab('register')">Create Account</div>
+      <div class="auth-tabs" role="tablist" style="display: flex; border-bottom: 1px solid var(--border-glass); margin-bottom: 24px;">
+        <button type="button" class="auth-tab active" id="tab-login-btn" onclick="switchAuthTab('login')" style="flex: 1; background: none; border: none; border-bottom: 2px solid var(--cyan); padding: 12px; font-family: inherit; font-size: 1rem; font-weight: 600; color: var(--cyan); cursor: pointer; transition: all 0.2s;">Sign In</button>
+        <button type="button" class="auth-tab" id="tab-register-btn" onclick="switchAuthTab('register')" style="flex: 1; background: none; border: none; border-bottom: 2px solid transparent; padding: 12px; font-family: inherit; font-size: 1rem; font-weight: 600; color: var(--text-muted); cursor: pointer; transition: all 0.2s;">Create Account</button>
       </div>
 
-      <div id="auth-status-msg" class="form-status-msg" style="display: none;"></div>
+      <div id="auth-status-msg" class="form-status-msg" style="display: none; margin-bottom: 18px; padding: 12px 16px; border-radius: 8px; font-size: 0.9rem;"></div>
 
+      <!-- CLIENT SIGN IN FORM -->
       <form id="client-login-form">
-        <div class="form-group" style="margin-bottom: 16px;">
-          <label class="form-label">Email Address</label>
+        <div class="form-group" style="margin-bottom: 18px;">
+          <label class="form-label" style="display: block; margin-bottom: 6px; font-size: 0.9rem; font-weight: 500;">Email Address</label>
           <input type="email" id="client-email" class="form-control" placeholder="client@example.com" required autocomplete="email" />
         </div>
 
         <div class="form-group" style="margin-bottom: 24px;">
-          <label class="form-label">Password</label>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <label class="form-label" style="margin-bottom: 0; font-size: 0.9rem; font-weight: 500;">Password</label>
+            <button type="button" onclick="togglePassVisibility('client-password', this)" style="background: none; border: none; color: var(--cyan); font-size: 0.82rem; cursor: pointer; padding: 0;">Show Password</button>
+          </div>
           <input type="password" id="client-password" class="form-control" placeholder="••••••••" required autocomplete="current-password" />
         </div>
 
-        <button type="submit" id="btn-login-submit" class="btn btn-primary" style="width: 100%;">
-          Sign In to Portal →
+        <button type="submit" id="btn-login-submit" class="btn btn-primary" style="width: 100%; padding: 12px;">
+          <span>Sign In to Portal →</span>
         </button>
+
+        <div style="text-align: center; margin-top: 20px; font-size: 0.88rem; color: var(--text-muted);">
+          Don't have an account? <a href="javascript:void(0)" onclick="switchAuthTab('register')" style="color: var(--cyan); font-weight: 600; text-decoration: underline;">Create Account here →</a>
+        </div>
       </form>
 
+      <!-- CLIENT REGISTRATION FORM -->
       <form id="client-register-form" style="display: none;">
         <div class="form-group" style="margin-bottom: 14px;">
-          <label class="form-label">Full Name <span class="req">*</span></label>
-          <input type="text" id="reg-name" class="form-control" placeholder="Alex Smith" required />
+          <label class="form-label" style="display: block; margin-bottom: 6px; font-size: 0.9rem; font-weight: 500;">Full Name <span class="req">*</span></label>
+          <input type="text" id="reg-name" class="form-control" placeholder="Alex Smith" required minlength="2" />
         </div>
 
         <div class="form-group" style="margin-bottom: 14px;">
-          <label class="form-label">Email Address <span class="req">*</span></label>
-          <input type="email" id="reg-email" class="form-control" placeholder="alex@company.com" required />
+          <label class="form-label" style="display: block; margin-bottom: 6px; font-size: 0.9rem; font-weight: 500;">Email Address <span class="req">*</span></label>
+          <input type="email" id="reg-email" class="form-control" placeholder="alex@company.com" required autocomplete="email" />
         </div>
 
         <div class="form-group" style="margin-bottom: 14px;">
-          <label class="form-label">Phone / WhatsApp Number</label>
+          <label class="form-label" style="display: block; margin-bottom: 6px; font-size: 0.9rem; font-weight: 500;">Phone / WhatsApp Number</label>
           <input type="tel" id="reg-phone" class="form-control" placeholder="+91 9876543210" />
         </div>
 
         <div class="form-group" style="margin-bottom: 14px;">
-          <label class="form-label">Company / Brand (Optional)</label>
+          <label class="form-label" style="display: block; margin-bottom: 6px; font-size: 0.9rem; font-weight: 500;">Company / Brand (Optional)</label>
           <input type="text" id="reg-company" class="form-control" placeholder="Acme Inc." />
         </div>
 
         <div class="form-group" style="margin-bottom: 24px;">
-          <label class="form-label">Create Password (min 6 characters) <span class="req">*</span></label>
-          <input type="password" id="reg-password" class="form-control" placeholder="••••••••" required minlength="6" />
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <label class="form-label" style="margin-bottom: 0; font-size: 0.9rem; font-weight: 500;">Create Password (min 6 characters) <span class="req">*</span></label>
+            <button type="button" onclick="togglePassVisibility('reg-password', this)" style="background: none; border: none; color: var(--cyan); font-size: 0.82rem; cursor: pointer; padding: 0;">Show Password</button>
+          </div>
+          <input type="password" id="reg-password" class="form-control" placeholder="••••••••" required minlength="6" autocomplete="new-password" />
         </div>
 
-        <button type="submit" id="btn-reg-submit" class="btn btn-primary" style="width: 100%;">
-          Register Account →
+        <button type="submit" id="btn-reg-submit" class="btn btn-primary" style="width: 100%; padding: 12px;">
+          <span>Create Account & Enter Portal →</span>
         </button>
+
+        <div style="text-align: center; margin-top: 20px; font-size: 0.88rem; color: var(--text-muted);">
+          Already have an account? <a href="javascript:void(0)" onclick="switchAuthTab('login')" style="color: var(--cyan); font-weight: 600; text-decoration: underline;">Sign In here →</a>
+        </div>
       </form>
     </div>
 
@@ -561,12 +577,24 @@ const clientPortalHtml = `<!DOCTYPE html>
     </div>
   </div>
 
-  ${floatingActions()}
-  ${footer()}
+  \${floatingActions()}
+  \${footer()}
 
   <script src="/js/api.js"></script>
   <script>
     let userToken = localStorage.getItem('userToken') || sessionStorage.getItem('userToken');
+
+    function togglePassVisibility(id, btn) {
+      const input = document.getElementById(id);
+      if (!input) return;
+      if (input.type === 'password') {
+        input.type = 'text';
+        btn.textContent = 'Hide Password';
+      } else {
+        input.type = 'password';
+        btn.textContent = 'Show Password';
+      }
+    }
 
     function switchAuthTab(tab) {
       const loginTab = document.getElementById('tab-login-btn');
@@ -574,20 +602,41 @@ const clientPortalHtml = `<!DOCTYPE html>
       const loginForm = document.getElementById('client-login-form');
       const regForm = document.getElementById('client-register-form');
       const msgBox = document.getElementById('auth-status-msg');
-      if (msgBox) msgBox.style.display = 'none';
+      if (msgBox) {
+        msgBox.style.display = 'none';
+        msgBox.innerHTML = '';
+      }
 
       if (tab === 'login') {
-        loginTab.classList.add('active');
-        regTab.classList.remove('active');
+        loginTab.style.color = 'var(--cyan)';
+        loginTab.style.borderBottomColor = 'var(--cyan)';
+        regTab.style.color = 'var(--text-muted)';
+        regTab.style.borderBottomColor = 'transparent';
         loginForm.style.display = 'block';
         regForm.style.display = 'none';
       } else {
-        loginTab.classList.remove('active');
-        regTab.classList.add('active');
+        loginTab.style.color = 'var(--text-muted)';
+        loginTab.style.borderBottomColor = 'transparent';
+        regTab.style.color = 'var(--cyan)';
+        regTab.style.borderBottomColor = 'var(--cyan)';
         loginForm.style.display = 'none';
         regForm.style.display = 'block';
       }
     }
+
+    function switchToLoginWithEmail(email) {
+      switchAuthTab('login');
+      const emailInput = document.getElementById('client-email');
+      if (emailInput) {
+        emailInput.value = email;
+        const passInput = document.getElementById('client-password');
+        if (passInput) passInput.focus();
+      }
+    }
+
+    window.switchAuthTab = switchAuthTab;
+    window.togglePassVisibility = togglePassVisibility;
+    window.switchToLoginWithEmail = switchToLoginWithEmail;
 
     document.addEventListener('DOMContentLoaded', async () => {
       if (userToken) {
@@ -616,8 +665,8 @@ const clientPortalHtml = `<!DOCTYPE html>
     function showClientDashboard(user) {
       document.getElementById('auth-section').style.display = 'none';
       document.getElementById('dashboard-section').style.display = 'block';
-      document.getElementById('client-user-name').textContent = user.name;
-      document.getElementById('client-user-email').textContent = user.email;
+      document.getElementById('client-user-name').textContent = user.name || 'Client';
+      document.getElementById('client-user-email').textContent = user.email || '';
       document.getElementById('client-user-company').textContent = user.company || 'Direct Client';
     }
 
@@ -628,6 +677,7 @@ const clientPortalHtml = `<!DOCTYPE html>
       window.location.reload();
     }
 
+    // SIGN IN SUBMISSION
     document.getElementById('client-login-form').addEventListener('submit', async (e) => {
       e.preventDefault();
       const email = document.getElementById('client-email').value.trim();
@@ -636,7 +686,8 @@ const clientPortalHtml = `<!DOCTYPE html>
       const msgBox = document.getElementById('auth-status-msg');
 
       btn.disabled = true;
-      btn.textContent = 'Signing in...';
+      btn.innerHTML = '<span>Signing in...</span>';
+      msgBox.style.display = 'none';
 
       try {
         const res = await fetch('/api/users/login', {
@@ -645,26 +696,30 @@ const clientPortalHtml = `<!DOCTYPE html>
           body: JSON.stringify({ email, password })
         });
         const data = await res.json();
-        if (!res.ok) throw new Error(data.message || 'Login failed');
+        if (!res.ok) throw new Error(data.message || 'Login failed. Please check your credentials.');
 
         userToken = data.token;
         localStorage.setItem('userToken', data.token);
         sessionStorage.setItem('userToken', data.token);
 
-        showToast('Signed in successfully!', 'success');
+        showToast(data.message || 'Signed in successfully!', 'success');
         showClientDashboard(data.user);
         await loadClientEnquiries();
       } catch (err) {
         msgBox.className = 'form-status-msg error';
         msgBox.style.display = 'block';
-        msgBox.textContent = err.message;
+        msgBox.style.background = 'rgba(239, 68, 68, 0.15)';
+        msgBox.style.border = '1px solid #ef4444';
+        msgBox.style.color = '#fca5a5';
+        msgBox.innerHTML = '⚠️ <strong>Login Failed:</strong> ' + escapeHtml(err.message);
         showToast(err.message, 'error');
       } finally {
         btn.disabled = false;
-        btn.textContent = 'Sign In to Portal →';
+        btn.innerHTML = '<span>Sign In to Portal →</span>';
       }
     });
 
+    // REGISTRATION SUBMISSION
     document.getElementById('client-register-form').addEventListener('submit', async (e) => {
       e.preventDefault();
       const name = document.getElementById('reg-name').value.trim();
@@ -675,8 +730,19 @@ const clientPortalHtml = `<!DOCTYPE html>
       const btn = document.getElementById('btn-reg-submit');
       const msgBox = document.getElementById('auth-status-msg');
 
+      if (password.length < 6) {
+        msgBox.className = 'form-status-msg error';
+        msgBox.style.display = 'block';
+        msgBox.style.background = 'rgba(239, 68, 68, 0.15)';
+        msgBox.style.border = '1px solid #ef4444';
+        msgBox.style.color = '#fca5a5';
+        msgBox.textContent = 'Password must be at least 6 characters long.';
+        return;
+      }
+
       btn.disabled = true;
-      btn.textContent = 'Creating account...';
+      btn.innerHTML = '<span>Creating account...</span>';
+      msgBox.style.display = 'none';
 
       try {
         const res = await fetch('/api/users/register', {
@@ -685,23 +751,31 @@ const clientPortalHtml = `<!DOCTYPE html>
           body: JSON.stringify({ name, email, phone, company, password })
         });
         const data = await res.json();
-        if (!res.ok) throw new Error(data.message || 'Registration failed');
+        if (!res.ok) throw new Error(data.message || 'Registration failed.');
 
         userToken = data.token;
         localStorage.setItem('userToken', data.token);
         sessionStorage.setItem('userToken', data.token);
 
-        showToast('Registration successful! Welcome.', 'success');
+        showToast('Registration successful! Welcome to your Client Workspace.', 'success');
         showClientDashboard(data.user);
         await loadClientEnquiries();
       } catch (err) {
         msgBox.className = 'form-status-msg error';
         msgBox.style.display = 'block';
-        msgBox.textContent = err.message;
+        msgBox.style.background = 'rgba(239, 68, 68, 0.15)';
+        msgBox.style.border = '1px solid #ef4444';
+        msgBox.style.color = '#fca5a5';
+
+        if (err.message && err.message.toLowerCase().includes('already exists')) {
+          msgBox.innerHTML = '⚠️ ' + escapeHtml(err.message) + '<br/><button type="button" onclick="switchToLoginWithEmail(\'' + escapeHtml(email) + '\')" class="btn btn-outline btn-sm" style="margin-top: 10px; font-size: 0.85rem; padding: 6px 14px;">Sign In with this email →</button>';
+        } else {
+          msgBox.innerHTML = '⚠️ <strong>Registration Error:</strong> ' + escapeHtml(err.message);
+        }
         showToast(err.message, 'error');
       } finally {
         btn.disabled = false;
-        btn.textContent = 'Register Account →';
+        btn.innerHTML = '<span>Create Account & Enter Portal →</span>';
       }
     });
 

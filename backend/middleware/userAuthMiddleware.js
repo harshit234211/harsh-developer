@@ -18,7 +18,21 @@ const protectUser = async (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, config.jwtSecret);
-    const user = await dbService.User.findById(decoded.id);
+    let user = await dbService.User.findById(decoded.id);
+    if (!user) {
+      const admin = await dbService.Admin.findById(decoded.id);
+      if (admin) {
+        user = {
+          _id: admin._id,
+          id: admin._id,
+          name: admin.name,
+          email: admin.email,
+          phone: config.developerPhone || '',
+          company: 'Harsh Developer (Admin)',
+          role: 'admin'
+        };
+      }
+    }
 
     if (!user) {
       return res.status(401).json({

@@ -1,13 +1,13 @@
 {
   "admins": [
     {
-      "_id": "d23c02a3-e9b3-4fd7-9be9-26f2ca3ab219",
+      "_id": "eb4f8262-b43c-4dae-b9de-f205530bacc7",
       "name": "Harshit (Harsh Developer)",
       "email": "shakyaharshit683@gmail.com",
-      "password": "$2a$10$2An6e/8QZKm0mrRNZrbCBO8i6SWvnAvWMgZaWGhrsH8eOBqooVm12",
+      "password": "$2a$10$dQ26pY31/PotKsZFBGIus..bljD/Su8/5Wb3RheiiXuina00Jdkjy",
       "role": "superadmin",
-      "createdAt": "2026-09-07T11:16:36.401Z",
-      "updatedAt": "2026-09-07T11:16:36.401Z"
+      "createdAt": "2026-09-07T16:41:41.126Z",
+      "updatedAt": "2026-09-07T16:41:41.126Z"
     }
   ],
   "projects": [
@@ -235,9 +235,39 @@
       "notes": "",
       "createdAt": "2026-09-06T16:45:46.689Z",
       "updatedAt": "2026-09-06T16:45:46.818Z"
+    },
+    {
+      "_id": "5f702987-8445-40bb-ad73-c5feaab2eb2a",
+      "name": "Johnathan Vance",
+      "email": "john.vance@techcorp.io",
+      "phone": "+919876543210",
+      "whatsapp": "+919876543210",
+      "service": "Web Application Development",
+      "budget": "₹75,000 - ₹1,50,000 / $950 - $1,800",
+      "projectType": "New Project",
+      "deadline": "1 Month",
+      "description": "We need a high-performance SaaS analytics application with Three.js 3D dashboards.",
+      "message": "",
+      "referenceUrl": "https://example.com/demo",
+      "userId": null,
+      "status": "In Progress",
+      "notes": "",
+      "createdAt": "2026-09-07T16:41:41.294Z",
+      "updatedAt": "2026-09-07T16:41:41.466Z"
     }
   ],
   "users": [
+    {
+      "_id": "harshit-client-user-id",
+      "name": "Harshit",
+      "email": "shakyaharshit683@gmail.com",
+      "phone": "+918791984082",
+      "company": "Harsh Developer",
+      "password": "$2a$10$dQ26pY31/PotKsZFBGIus..bljD/Su8/5Wb3RheiiXuina00Jdkjy",
+      "role": "client",
+      "createdAt": "2026-09-07T16:41:21.999Z",
+      "updatedAt": "2026-09-07T16:41:22.000Z"
+    },
     {
       "_id": "d60ef74f-b482-4bdf-9a55-4a83888ab6f2",
       "name": "QA Test Client",
@@ -259,6 +289,17 @@
       "role": "client",
       "createdAt": "2026-09-06T16:45:46.899Z",
       "updatedAt": "2026-09-06T16:45:46.899Z"
+    },
+    {
+      "_id": "4bf745e6-5f60-4773-b52d-c26787f88d6e",
+      "name": "QA Test Client",
+      "email": "qa.client.1788799301471@example.com",
+      "phone": "+919988776655",
+      "company": "QA Industries",
+      "password": "$2a$10$lyoqXPJUekTMrDXrL4J3BOF3Q43jPpDidAMJ/L8appaawrqYAZDxm",
+      "role": "client",
+      "createdAt": "2026-09-07T16:41:41.544Z",
+      "updatedAt": "2026-09-07T16:41:41.544Z"
     }
   ]
 }

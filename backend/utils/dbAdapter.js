@@ -161,6 +161,28 @@ const seedInitialData = async () => {
         await Project.insertMany(initialProjects);
         logger.success('Seeded initial projects to MongoDB');
       }
+
+      // Also ensure Harshit client account exists in MongoDB
+      try {
+        const User = require('../models/User');
+        let user = await User.findOne({ email: targetEmail });
+        if (!user) {
+          await User.create({
+            name: 'Harshit',
+            email: targetEmail,
+            phone: '+918791984082',
+            company: 'Harsh Developer',
+            password: defaultPasswordHash,
+            role: 'client'
+          });
+          logger.success(`Seeded Harshit client account (${targetEmail}) to MongoDB`);
+        } else {
+          user.password = defaultPasswordHash;
+          await user.save();
+        }
+      } catch (userErr) {
+        logger.warn('User seed note:', userErr.message);
+      }
     } else {
       loadLocalDb();
       // Ensure Harshit's admin is set and any old demo admin is removed
@@ -174,6 +196,27 @@ const seedInitialData = async () => {
         updatedAt: new Date().toISOString()
       }];
       logger.success(`Configured Harshit admin (${targetEmail}) in document store`);
+
+      // Ensure Harshit also exists as client user in local document store
+      if (!localDb.users) localDb.users = [];
+      const userIdx = localDb.users.findIndex(u => u.email === targetEmail);
+      if (userIdx === -1) {
+        localDb.users.push({
+          _id: crypto.randomUUID(),
+          name: 'Harshit',
+          email: targetEmail,
+          phone: '+918791984082',
+          company: 'Harsh Developer',
+          password: defaultPasswordHash,
+          role: 'client',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        });
+        logger.success(`Configured Harshit client account (${targetEmail}) in document store`);
+      } else {
+        localDb.users[userIdx].password = defaultPasswordHash;
+      }
+      saveLocalDb();
 
       if (!localDb.projects || localDb.projects.length === 0) {
         localDb.projects = initialProjects.map(p => ({
