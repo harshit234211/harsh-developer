@@ -1,19 +1,22 @@
-﻿# Harsh Developer — Production 3D Portfolio & Client Service Platform
+# Harsh Developer — Production 3D Portfolio & Client Service Platform
 
 > Built for **Harshit** (**Harsh Developer**) — Full-Stack Web Developer & 3D WebGL Engineer.
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/harshit234211/harsh-developer)
 
 ---
 
 ## 🌟 Overview
 
-A complete, live-working, production-ready 3D developer portfolio and client management system.
+A complete, live-working, production-ready 3D developer portfolio, client portal, and administrative CRM system.
 
 - **Real 3D Experience**: Powered by Three.js & WebGL with an interactive Cybernetic Developer Core, orbit gimbals, holographic data nodes, and mouse-parallax interaction. Includes automatic fallback for devices without WebGL.
+- **Client Portal & Self-Service Dashboard**: Client account registration, authentication, and live enquiry tracking (`/client-portal`).
 - **Client Services Platform**: 10 comprehensive developer services with auto-selecting project request links.
-- **Dynamic Projects Showcase**: REST-driven showcase projects with dynamic category filter tabs and "Coming Soon" GitHub state.
+- **Dynamic Projects Showcase**: REST-driven showcase projects with dynamic category filter tabs.
 - **Working Contact Pipeline**: Validated project enquiry form with anti-spam debounce, database persistence, and status notifications.
 - **Direct Connect Links**: Instant WhatsApp (`wa.me/918791984082`), Phone Call (`tel:+917017022966`), Email (`mailto:shakyaharshit683@gmail.com`), Instagram (`@kiro_mage`), and Telegram (`@harshuuu1123`).
-- **Full-Stack Admin System**: Secure JWT authentication, password hashing via `bcryptjs`, CRM pipeline for enquiry status tracking (`New`, `Contacted`, `In Progress`, `Completed`, `Cancelled`), and project CMS for creating, modifying, and publishing portfolio items.
+- **Full-Stack Admin System**: Secure JWT authentication, password hashing via `bcryptjs`, CRM pipeline for enquiry status tracking (`New`, `Contacted`, `In Progress`, `Completed`, `Cancelled`), client roster management, and project CMS.
 - **Dual-Engine Database Adapter**: Runs out-of-the-box using the embedded document store (`database/store.json`), and automatically connects to MongoDB / MongoDB Atlas whenever `MONGODB_URI` is provided.
 
 ---
@@ -110,8 +113,8 @@ NODE_ENV=development
 MONGODB_URI=
 
 # Admin Login Credentials
-ADMIN_EMAIL=admin@harshdeveloper.com
-ADMIN_PASSWORD=HarshAdmin2026!
+ADMIN_EMAIL=shakyaharshit683@gmail.com
+ADMIN_PASSWORD=harsshit9696
 JWT_SECRET=harsh_developer_jwt_secret_token_secure_key_2026_production
 JWT_EXPIRES_IN=7d
 
@@ -128,13 +131,14 @@ DEVELOPER_TELEGRAM=https://t.me/harshuuu1123
 npm start
 ```
 The server will start on port `5000`:
-- **Live Website**: `http://localhost:5000/`
-- **Services Catalog**: `http://localhost:5000/services`
-- **Projects Gallery**: `http://localhost:5000/projects`
-- **About Harshit**: `http://localhost:5000/about`
-- **Contact & Hire Me**: `http://localhost:5000/contact`
-- **Admin Login**: `http://localhost:5000/admin-login`
-- **Admin Dashboard**: `http://localhost:5000/admin/`
+- **Live Website**: `/`
+- **Client Portal**: `/client-portal`
+- **Services Catalog**: `/services`
+- **Projects Gallery**: `/projects`
+- **About Harshit**: `/about`
+- **Contact & Hire Me**: `/contact`
+- **Admin Login**: `/admin-login`
+- **Admin Dashboard**: `/admin/`
 
 ---
 
