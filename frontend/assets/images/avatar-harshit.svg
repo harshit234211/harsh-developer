@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+    <defs>
+      <linearGradient id="avatar-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#00f0ff"/>
+        <stop offset="50%" stop-color="#7928ca"/>
+        <stop offset="100%" stop-color="#10b981"/>
+      </linearGradient>
+    </defs>
+    <circle cx="100" cy="100" r="96" fill="#0e172a" stroke="url(#avatar-grad)" stroke-width="4"/>
+    <!-- Stylized H glyph -->
+    <path d="M 65,55 V 145 M 135,55 V 145 M 65,100 H 135" stroke="#ffffff" stroke-width="12" stroke-linecap="round"/>
+    <circle cx="100" cy="40" r="8" fill="#00f0ff"/>
+    <circle cx="150" cy="140" r="5" fill="#10b981"/>
+  </svg>

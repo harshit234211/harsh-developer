@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: harsh-developer
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: ADMIN_EMAIL
+        value: shakyaharshit683@gmail.com
+      - key: ADMIN_PASSWORD
+        value: harsshit9696
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DEVELOPER_EMAIL
+        value: shakyaharshit683@gmail.com
+      - key: DEVELOPER_WHATSAPP
+        value: "+918791984082"
+      - key: DEVELOPER_PHONE
+        value: "+917017022966"
+      - key: DEVELOPER_INSTAGRAM
+        value: https://www.instagram.com/kiro_mage/
+      - key: DEVELOPER_TELEGRAM
+        value: https://t.me/harshuuu1123

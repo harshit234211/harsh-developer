@@ -1,0 +1,138 @@
+const commonHead = (title, desc) => `
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${title} | Harsh Developer</title>
+  <meta name="description" content="${desc}" />
+  <meta name="keywords" content="Harsh Developer, Harshit, Full Stack Developer, 3D WebGL, React, Node.js, AI Solutions, Android Developer" />
+  <meta property="og:title" content="${title} | Harsh Developer" />
+  <meta property="og:description" content="${desc}" />
+  <meta property="og:image" content="/assets/images/project-ai.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/images/avatar-harshit.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/responsive.css" />
+`;
+
+const navbar = (active) => `
+  <nav class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="/" class="brand-logo" aria-label="Harsh Developer Home">
+        <div class="brand-badge-icon">H</div>
+        <div class="brand-name">Harsh <span>Developer</span></div>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="/" class="nav-link ${active === 'home' ? 'active' : ''}">Home</a></li>
+        <li><a href="/services" class="nav-link ${active === 'services' ? 'active' : ''}">Services</a></li>
+        <li><a href="/projects" class="nav-link ${active === 'projects' ? 'active' : ''}">Projects</a></li>
+        <li><a href="/about" class="nav-link ${active === 'about' ? 'active' : ''}">About</a></li>
+        <li><a href="/contact" class="nav-link ${active === 'contact' ? 'active' : ''}">Contact</a></li>
+        <li><a href="/client-portal" class="nav-link ${active === 'portal' ? 'active' : ''}" style="color: var(--cyan);">Client Portal</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="/client-portal" class="btn btn-outline btn-sm btn-hire-nav">Client Portal</a>
+        <a href="/contact" class="btn btn-primary btn-sm btn-hire-nav">Hire Me</a>
+        <button class="mobile-toggle" id="mobile-toggle-btn" aria-label="Toggle menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mobile-drawer" id="mobile-drawer">
+    <a href="/" class="mobile-nav-link">Home <span>→</span></a>
+    <a href="/services" class="mobile-nav-link">Services <span>→</span></a>
+    <a href="/projects" class="mobile-nav-link">Projects <span>→</span></a>
+    <a href="/about" class="mobile-nav-link">About <span>→</span></a>
+    <a href="/contact" class="mobile-nav-link">Contact & Hire Me <span>→</span></a>
+    <a href="/client-portal" class="mobile-nav-link" style="color: var(--cyan);">Client Portal <span>👤</span></a>
+    <a href="/admin-login" class="mobile-nav-link" style="color: var(--amber);">Admin Portal <span>🔒</span></a>
+    <div style="margin-top: 20px;">
+      <a href="https://wa.me/918791984082" target="_blank" rel="noopener noreferrer" class="btn btn-emerald" style="width: 100%; margin-bottom: 10px;">
+        Chat on WhatsApp
+      </a>
+      <a href="tel:+917017022966" class="btn btn-outline" style="width: 100%;">
+        Call +91 7017022966
+      </a>
+    </div>
+  </div>
+`;
+
+const floatingActions = () => `
+  <div class="floating-actions-bar">
+    <a href="https://wa.me/918791984082?text=Hi%20Harshit,%20I'm%20interested%20in%20discussing%20a%20project." target="_blank" rel="noopener noreferrer" class="floating-btn wa" aria-label="Chat on WhatsApp">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.861.174.086.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.043.072.043.419-.101.824z"/></svg>
+      <span class="floating-tooltip">WhatsApp Harshit</span>
+    </a>
+    <a href="tel:+917017022966" class="floating-btn call" aria-label="Call Harshit">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+      <span class="floating-tooltip">Call +91 7017022966</span>
+    </a>
+  </div>
+`;
+
+const footer = () => `
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <div class="brand-logo">
+          <div class="brand-badge-icon">H</div>
+          <div class="brand-name">Harsh <span>Developer</span></div>
+        </div>
+        <p>
+          Crafting modern full-stack web solutions, 3D WebGL experiences, and custom AI applications. Designed & engineered by Harshit.
+        </p>
+        <div style="color: var(--text-muted); font-size: 0.85rem;">
+          shakyaharshit683@gmail.com
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Navigation</div>
+        <div class="footer-links">
+          <a href="/" class="footer-link">Home</a>
+          <a href="/services" class="footer-link">Services</a>
+          <a href="/projects" class="footer-link">Projects</a>
+          <a href="/about" class="footer-link">About Harshit</a>
+          <a href="/contact" class="footer-link">Contact & Hire</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Services</div>
+        <div class="footer-links">
+          <a href="/services" class="footer-link">Website Development</a>
+          <a href="/services" class="footer-link">Web Applications</a>
+          <a href="/services" class="footer-link">AI Integration</a>
+          <a href="/services" class="footer-link">Android Apps</a>
+          <a href="/services" class="footer-link">Admin Dashboards</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Connect & Admin</div>
+        <div class="footer-links">
+          <a href="https://wa.me/918791984082" target="_blank" rel="noopener noreferrer" class="footer-link">WhatsApp</a>
+          <a href="tel:+917017022966" class="footer-link">Direct Phone</a>
+          <a href="https://www.instagram.com/kiro_mage/" target="_blank" rel="noopener noreferrer" class="footer-link">Instagram</a>
+          <a href="https://t.me/harshuuu1123" target="_blank" rel="noopener noreferrer" class="footer-link">Telegram</a>
+          <a href="/admin-login" class="footer-link" style="color: var(--amber); margin-top: 8px;">Admin Login 🔒</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <div>&copy; 2026 Harsh Developer (Harshit). All rights reserved.</div>
+      <div>Engineered with Node.js, Three.js WebGL & MongoDB</div>
+    </div>
+  </footer>
+`;
+
+module.exports = { commonHead, navbar, floatingActions, footer };

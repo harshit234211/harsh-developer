@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard — Harsh Developer</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/images/avatar-harshit.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/admin/css/admin.css" />
+</head>
+<body>
+
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div>
+        <div class="admin-brand">
+          <div style="width: 36px; height: 36px; border-radius: 8px; background: linear-gradient(135deg, #00f0ff, #8a2be2); color: #000; display: flex; align-items: center; justify-content: center; font-weight: 800;">H</div>
+          <div>Harsh <span style="color: var(--cyan);">Admin</span></div>
+        </div>
+
+        <nav class="admin-nav">
+          <div class="admin-nav-item active" data-section="overview">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            <span>Overview</span>
+          </div>
+          <div class="admin-nav-item" data-section="enquiries">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            <span>Enquiries CRM</span>
+          </div>
+          <div class="admin-nav-item" data-section="projects">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+            <span>Projects CMS</span>
+          </div>
+          <div class="admin-nav-item" data-section="clients">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            <span>Registered Clients</span>
+          </div>
+        </nav>
+      </div>
+
+      <div style="border-top: 1px solid var(--border); padding-top: 20px;">
+        <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 6px;">Active Database:</div>
+        <div id="db-engine-badge" style="font-size: 0.8rem; color: var(--emerald); font-family: 'JetBrains Mono', monospace; word-break: break-all; margin-bottom: 16px;">
+          Checking DB...
+        </div>
+        <a href="/" target="_blank" class="admin-nav-item" style="padding: 8px 12px; margin-bottom: 8px; color: var(--text-muted);">
+          <span>🌐 View Live Website</span>
+        </a>
+        <button id="logout-btn" class="action-btn delete" style="width: 100%; justify-content: center; padding: 10px;">
+          <span>Log Out</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <header class="admin-header">
+        <div class="admin-title-area">
+          <h1>Management Console</h1>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">Review incoming client project requests and maintain showcase case studies.</p>
+        </div>
+
+        <div class="admin-user-profile">
+          <div class="user-badge">
+            <div class="user-name" id="admin-name-display">Harshit (Harsh Developer)</div>
+            <div class="user-role" id="admin-role-display">shakyaharshit683@gmail.com</div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Overview Section -->
+      <div id="section-overview" class="admin-section active">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon icon-blue">📋</div>
+            <div class="stat-info">
+              <span class="stat-val" id="stat-total-enquiries">0</span>
+              <span class="stat-label">Total Enquiries</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon icon-yellow">⚡</div>
+            <div class="stat-info">
+              <span class="stat-val" id="stat-new-enquiries">0</span>
+              <span class="stat-label">New Enquiries</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon icon-purple">🔄</div>
+            <div class="stat-info">
+              <span class="stat-val" id="stat-in-progress">0</span>
+              <span class="stat-label">In Progress</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon icon-green">✅</div>
+            <div class="stat-info">
+              <span class="stat-val" id="stat-completed">0</span>
+              <span class="stat-label">Completed</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon icon-blue">🚀</div>
+            <div class="stat-info">
+              <span class="stat-val" id="stat-total-projects">0</span>
+              <span class="stat-label">Total Projects</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon icon-purple">👤</div>
+            <div class="stat-info">
+              <span class="stat-val" id="stat-total-clients">0</span>
+              <span class="stat-label">Registered Clients</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Summary Box -->
+        <div style="background: var(--admin-card); border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin-top: 24px;">
+          <h3 style="font-size: 1.2rem; margin-bottom: 12px;">System & Operational Summary</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+            All client requests submitted via the contact form on your portfolio website are logged in real-time.
+            Use the Enquiries CRM tab to update statuses, take immediate action (WhatsApp, Call, Email), or review references.
+          </p>
+          <div style="display: flex; gap: 14px; flex-wrap: wrap;">
+            <button onclick="document.querySelector('.admin-nav-item[data-section=enquiries]').click()" class="action-btn" style="background: var(--cyan); color: #000; font-weight: 600; padding: 10px 18px;">
+              Manage Enquiries →
+            </button>
+            <button onclick="document.querySelector('.admin-nav-item[data-section=projects]').click()" class="action-btn" style="padding: 10px 18px;">
+              Manage Projects →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Enquiries Section -->
+      <div id="section-enquiries" class="admin-section">
+        <div class="section-toolbar">
+          <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+            <input type="text" id="enquiry-search-input" class="search-input" placeholder="Search by name, email, phone..." oninput="loadEnquiries()" />
+            <select id="enquiry-status-filter" class="filter-select" onchange="loadEnquiries()">
+              <option value="All">All Statuses</option>
+              <option value="New">New</option>
+              <option value="Contacted">Contacted</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Completed">Completed</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
+          </div>
+          <button onclick="loadEnquiries()" class="action-btn">🔄 Refresh</button>
+        </div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Client Name</th>
+                <th>Contact Info</th>
+                <th>Service</th>
+                <th>Budget</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="enquiries-table-body">
+              <!-- Rendered by /admin/js/admin.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Projects Section -->
+      <div id="section-projects" class="admin-section">
+        <div class="section-toolbar">
+          <div>
+            <h2 style="font-size: 1.3rem;">Showcase Portfolio Management</h2>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">Add, modify, or archive projects displayed on the public website.</p>
+          </div>
+          <button onclick="openAddProjectModal()" class="action-btn" style="background: var(--cyan); color: #000; font-weight: 600; padding: 10px 18px;">
+            + Add New Project
+          </button>
+        </div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Project Name</th>
+                <th>Category</th>
+                <th>Technologies</th>
+                <th>Status</th>
+                <th>Visibility</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="projects-table-body">
+              <!-- Rendered by /admin/js/admin.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Clients Section -->
+      <div id="section-clients" class="admin-section">
+        <div class="section-toolbar">
+          <div>
+            <h2 style="font-size: 1.3rem;">Registered Clients Management</h2>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">View accounts created by clients to track and manage projects.</p>
+          </div>
+          <button onclick="loadClients()" class="action-btn">🔄 Refresh</button>
+        </div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Client Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Company</th>
+                <th>Joined Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="clients-table-body">
+              <!-- Rendered by /admin/js/admin.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Enquiry Detail Modal -->
+  <div id="enquiry-detail-modal" class="modal-backdrop">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Enquiry Details</h3>
+        <button class="modal-close" onclick="closeModals()">&times;</button>
+      </div>
+      <div id="modal-enquiry-content"></div>
+    </div>
+  </div>
+
+  <!-- Add / Edit Project Modal -->
+  <div id="project-modal" class="modal-backdrop">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="project-modal-title">Project Details</h3>
+        <button class="modal-close" onclick="closeModals()">&times;</button>
+      </div>
+      <form id="project-form">
+        <input type="hidden" id="project-id" />
+        
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div>
+            <label class="form-label">Project Name *</label>
+            <input type="text" id="project-name" class="search-input" style="width: 100%;" required />
+          </div>
+
+          <div>
+            <label class="form-label">Category *</label>
+            <select id="project-category" class="filter-select" style="width: 100%;" required>
+              <option value="Web Applications">Web Applications</option>
+              <option value="AI Solutions">AI Solutions</option>
+              <option value="E-Commerce">E-Commerce</option>
+              <option value="Admin Dashboards">Admin Dashboards</option>
+              <option value="Android Applications">Android Applications</option>
+              <option value="Websites">Websites</option>
+              <option value="Custom Software">Custom Software</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="form-label">Description *</label>
+            <textarea id="project-description" class="search-input" style="width: 100%; min-height: 80px;" required></textarea>
+          </div>
+
+          <div>
+            <label class="form-label">Technologies (comma-separated)</label>
+            <input type="text" id="project-technologies" class="search-input" style="width: 100%;" placeholder="e.g. React, Node.js, Three.js, MongoDB" />
+          </div>
+
+          <div>
+            <label class="form-label">Image URL / Path</label>
+            <input type="text" id="project-image" class="search-input" style="width: 100%;" placeholder="/assets/images/project-ai.svg" />
+          </div>
+
+          <div>
+            <label class="form-label">Live Demo URL</label>
+            <input type="url" id="project-demo" class="search-input" style="width: 100%;" placeholder="https://example.com" />
+          </div>
+
+          <div>
+            <label class="form-label">GitHub URL</label>
+            <input type="text" id="project-github" class="search-input" style="width: 100%;" placeholder="Coming Soon or repository link" />
+          </div>
+
+          <div>
+            <label class="form-label">Project Status</label>
+            <select id="project-status" class="filter-select" style="width: 100%;">
+              <option value="Showcase Demo">Showcase Demo</option>
+              <option value="Live">Live</option>
+              <option value="In Development">In Development</option>
+              <option value="Completed">Completed</option>
+            </select>
+          </div>
+
+          <div style="display: flex; gap: 12px; margin-top: 10px;">
+            <button type="submit" class="action-btn" style="background: var(--cyan); color: #000; font-weight: 600; padding: 10px 20px; flex-grow: 1;">
+              Save Project
+            </button>
+            <button type="button" onclick="closeModals()" class="action-btn" style="padding: 10px 20px;">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/admin/js/admin.js"></script>
+</body>
+</html>

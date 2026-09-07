@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 380" width="100%" height="100%">
+    <rect width="600" height="380" fill="#0b1021"/>
+    <!-- Browser window -->
+    <rect x="80" y="55" width="440" height="240" rx="8" fill="#0d172e" stroke="#2a3b60" stroke-width="2"/>
+    <rect x="80" y="55" width="440" height="30" rx="8" fill="#13203e"/>
+    <circle cx="100" cy="70" r="4" fill="#ef4444"/>
+    <circle cx="112" cy="70" r="4" fill="#f59e0b"/>
+    <circle cx="124" cy="70" r="4" fill="#10b981"/>
+    <!-- Hero Mockup inside -->
+    <rect x="110" y="105" width="180" height="20" rx="4" fill="#00f0ff" opacity="0.8"/>
+    <rect x="110" y="135" width="230" height="10" rx="4" fill="#64748b"/>
+    <rect x="110" y="152" width="170" height="10" rx="4" fill="#475569"/>
+    <rect x="110" y="180" width="80" height="24" rx="4" fill="#7928ca"/>
+    <rect x="340" y="105" width="150" height="150" rx="8" fill="#1b2848"/>
+    <text x="300" y="335" font-family="'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="3">APEX AGENCY SUITE</text>
+    <text x="300" y="358" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" fill="#00f0ff" text-anchor="middle" letter-spacing="1">MODERN WEB EXPERIENCES</text>
+  </svg>
