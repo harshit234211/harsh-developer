@@ -17,6 +17,10 @@ const projectRoutes = require('./routes/projectRoutes');
 const enquiryRoutes = require('./routes/enquiryRoutes');
 const userRoutes = require('./routes/userRoutes');
 
+// DevCraft Catalog Datasets
+const DEVCRAFT_SERVICES = require('../scripts/data_services');
+const DEVCRAFT_DEMOS = require('../scripts/data_demos');
+
 const app = express();
 
 // Trust reverse proxy for secure headers & rate limiting
@@ -71,20 +75,47 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Public Developer Profile API
+// Public DevCraft Studio Profile API
 app.get('/api/developer', (req, res) => {
   res.status(200).json({
-    name: config.developer.name,
-    brand: config.developer.brand,
+    brand: 'DEVCRAFT Studio',
+    tagline: 'Ideas → Code → Real Solutions',
+    leadArchitect: config.developer.name,
     role: config.developer.role,
     email: config.developer.email,
     whatsapp: config.developer.whatsapp,
     phone: config.developer.phone,
     instagram: config.developer.instagram,
     telegram: config.developer.telegram,
-    githubStatus: 'Coming Soon',
-    servicesCount: 10
+    github: config.developer.github,
+    servicesCount: DEVCRAFT_SERVICES.length,
+    demosCount: DEVCRAFT_DEMOS.length,
+    status: 'Available for Production Sprints'
   });
+});
+
+// All 20 Services API
+app.get('/api/services', (req, res) => {
+  const { category } = req.query;
+  if (category && category !== 'All') {
+    const filtered = DEVCRAFT_SERVICES.filter(s => 
+      s.category.toLowerCase().includes(category.toLowerCase())
+    );
+    return res.status(200).json({ success: true, count: filtered.length, data: filtered });
+  }
+  res.status(200).json({ success: true, count: DEVCRAFT_SERVICES.length, data: DEVCRAFT_SERVICES });
+});
+
+// All 10 Interactive Demos API
+app.get('/api/demos', (req, res) => {
+  const { category } = req.query;
+  if (category && category !== 'ALL') {
+    const filtered = DEVCRAFT_DEMOS.filter(d => 
+      d.category.toUpperCase().includes(category.toUpperCase())
+    );
+    return res.status(200).json({ success: true, count: filtered.length, data: filtered });
+  }
+  res.status(200).json({ success: true, count: DEVCRAFT_DEMOS.length, data: DEVCRAFT_DEMOS });
 });
 
 // API Routes
@@ -145,7 +176,7 @@ const startServer = async () => {
   await connectDB();
 
   const server = app.listen(config.port, () => {
-    logger.success(`🚀 Harsh Developer Production Server running on port ${config.port}`);
+    logger.success(`🚀 DEVCRAFT Studio Production Server running on port ${config.port}`);
     logger.info(`🌐 Frontend: http://localhost:${config.port}`);
     logger.info(`🔒 Admin Dashboard: http://localhost:${config.port}/admin/`);
     logger.info(`🔑 Admin Login: http://localhost:${config.port}/admin-login`);

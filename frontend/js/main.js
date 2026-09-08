@@ -1,26 +1,222 @@
-﻿/**
- * HARSH DEVELOPER — MAIN UI CONTROLLER & PROJECTS LOADER
+/**
+ * DEVCRAFT STUDIO — MASTER CLIENT CONTROLLER
+ * Theme Switching, Dynamic Filtering, FAQ Accordion, Cost Estimator, Mobile Nav
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  initThemeSwitcher();
   initMobileNav();
-  initProjectsSection();
   initSmoothScroll();
+  initBackToTop();
+  calculateEstimate(); // initialize estimator display
 });
 
-// Mobile Navigation Toggle
+// ==========================================
+// 1. THEME SWITCHER (3 THEMES WITH LOCALSTORAGE)
+// Option A: Futuristic Dev (default)
+// Option B: Premium SaaS
+// Option C: Cyber Studio
+// ==========================================
+function initThemeSwitcher() {
+  const savedTheme = localStorage.getItem('devcraft_theme') || 'futuristic-dev';
+  applyTheme(savedTheme);
+
+  const toggleBtn = document.getElementById('theme-toggle-btn');
+  const themeMenu = document.getElementById('theme-menu');
+
+  if (toggleBtn && themeMenu) {
+    toggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      themeMenu.classList.toggle('show');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!themeMenu.contains(e.target) && !toggleBtn.contains(e.target)) {
+        themeMenu.classList.remove('show');
+      }
+    });
+
+    // Theme menu option buttons
+    document.querySelectorAll('.theme-option').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const selected = btn.getAttribute('data-theme-value');
+        if (selected) {
+          applyTheme(selected);
+          themeMenu.classList.remove('show');
+        }
+      });
+    });
+  }
+
+  // Mobile theme picker buttons
+  document.querySelectorAll('.theme-picker-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const selected = btn.getAttribute('data-theme-value');
+      if (selected) {
+        applyTheme(selected);
+      }
+    });
+  });
+}
+
+function applyTheme(themeName) {
+  document.documentElement.setAttribute('data-theme', themeName);
+  localStorage.setItem('devcraft_theme', themeName);
+
+  const labelMap = {
+    'futuristic-dev': 'Futuristic Dev',
+    'premium-saas': 'Premium SaaS',
+    'cyber-studio': 'Cyber Studio'
+  };
+
+  const labelEl = document.getElementById('current-theme-label');
+  if (labelEl) {
+    labelEl.textContent = labelMap[themeName] || 'Futuristic Dev';
+  }
+
+  // Highlight active mobile picker button
+  document.querySelectorAll('.theme-picker-btn').forEach(b => {
+    if (b.getAttribute('data-theme-value') === themeName) {
+      b.classList.add('btn-primary');
+      b.classList.remove('btn-outline');
+    } else {
+      b.classList.remove('btn-primary');
+      b.classList.add('btn-outline');
+    }
+  });
+}
+
+// ==========================================
+// 2. SERVICES FILTER BAR (20 SERVICES)
+// ==========================================
+window.filterServicesCategory = function(category) {
+  const filterBtns = document.querySelectorAll('#services-filter-bar .filter-pill');
+  filterBtns.forEach(btn => {
+    if (btn.textContent.trim().toLowerCase() === category.toLowerCase()) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+  });
+
+  const cards = document.querySelectorAll('#services-catalog-grid .service-card');
+  cards.forEach(card => {
+    const cardCat = (card.getAttribute('data-category') || '').toLowerCase();
+    const targetCat = category.toLowerCase();
+
+    if (targetCat === 'all' || cardCat.includes(targetCat) || targetCat.includes(cardCat)) {
+      card.style.display = 'flex';
+      card.style.opacity = '1';
+    } else {
+      card.style.display = 'none';
+      card.style.opacity = '0';
+    }
+  });
+};
+
+// ==========================================
+// 3. DEMOS & PORTFOLIO FILTER BAR (10 DEMOS)
+// ALL, MOBILE APPS, WEB APPS, WEBSITES, AI, DASHBOARDS, BUSINESS SOFTWARE, AUTOMATION
+// ==========================================
+window.filterDemosCategory = function(category) {
+  const filterBtns = document.querySelectorAll('#portfolio-filter-bar .filter-pill');
+  filterBtns.forEach(btn => {
+    if (btn.textContent.trim().toUpperCase() === category.toUpperCase()) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+  });
+
+  const cards = document.querySelectorAll('#demos-catalog-grid .demo-card');
+  cards.forEach(card => {
+    const cardCat = (card.getAttribute('data-category') || '').toUpperCase();
+    const targetCat = category.toUpperCase();
+
+    if (targetCat === 'ALL' || cardCat.includes(targetCat) || targetCat.includes(cardCat)) {
+      card.style.display = 'flex';
+      card.style.opacity = '1';
+    } else {
+      card.style.display = 'none';
+      card.style.opacity = '0';
+    }
+  });
+};
+
+// ==========================================
+// 4. INTERACTIVE FAQ ACCORDION
+// ==========================================
+window.toggleFaq = function(element) {
+  const allItems = document.querySelectorAll('#faq-accordion .faq-item');
+  const wasActive = element.classList.contains('active');
+
+  allItems.forEach(item => item.classList.remove('active'));
+
+  if (!wasActive) {
+    element.classList.add('active');
+  }
+};
+
+// ==========================================
+// 5. INTERACTIVE PROJECT COST ESTIMATOR
+// ==========================================
+window.calculateEstimate = function() {
+  const typeEl = document.getElementById('est-type');
+  const compEl = document.getElementById('est-complexity');
+  const speedEl = document.getElementById('est-speed');
+  const resultEl = document.getElementById('est-result-val');
+
+  if (!typeEl || !compEl || !speedEl || !resultEl) return;
+
+  const basePrices = {
+    web: 45000,
+    mobile: 55000,
+    ai: 65000,
+    dashboard: 40000,
+    website: 25000
+  };
+
+  const compMultipliers = {
+    mvp: 0.75,
+    standard: 1.0,
+    enterprise: 1.8
+  };
+
+  const speedMultipliers = {
+    normal: 1.0,
+    express: 1.3,
+    flexible: 0.9
+  };
+
+  const base = basePrices[typeEl.value] || 45000;
+  const comp = compMultipliers[compEl.value] || 1.0;
+  const speed = speedMultipliers[speedEl.value] || 1.0;
+
+  const lowEstimate = Math.round((base * comp * speed) / 1000) * 1000;
+  const highEstimate = Math.round((lowEstimate * 1.45) / 1000) * 1000;
+
+  resultEl.textContent = `₹${lowEstimate.toLocaleString('en-IN')} – ₹${highEstimate.toLocaleString('en-IN')}`;
+};
+
+// ==========================================
+// 6. MOBILE NAVIGATION DRAWER
+// ==========================================
 function initMobileNav() {
   const toggleBtn = document.getElementById('mobile-toggle-btn');
   const drawer = document.getElementById('mobile-drawer');
+  const closeBtn = document.getElementById('mobile-drawer-close');
 
   if (toggleBtn && drawer) {
     toggleBtn.addEventListener('click', () => {
-      drawer.classList.toggle('active');
-      const isExpanded = drawer.classList.contains('active');
-      toggleBtn.setAttribute('aria-expanded', isExpanded);
+      drawer.classList.add('active');
     });
 
-    // Close drawer when any nav link inside is clicked
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        drawer.classList.remove('active');
+      });
+    }
+
     drawer.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
         drawer.classList.remove('active');
@@ -29,92 +225,14 @@ function initMobileNav() {
   }
 }
 
-// Projects Loader & Filter Tabs
-async function initProjectsSection() {
-  const projectsGrid = document.getElementById('projects-grid');
-  const filterBtns = document.querySelectorAll('.filter-btn');
-
-  if (!projectsGrid) return;
-
-  let currentCategory = 'All';
-
-  async function loadProjects(category = 'All') {
-    projectsGrid.innerHTML = `
-      <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #94a3b8;">
-        <div style="display: inline-block; width: 32px; height: 32px; border: 3px solid rgba(0, 240, 255, 0.2); border-top-color: #00f0ff; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 12px;"></div>
-        <p>Loading projects from API...</p>
-      </div>
-    `;
-
-    try {
-      const res = await ApiService.getProjects(category);
-      const projects = res.data || [];
-
-      if (projects.length === 0) {
-        projectsGrid.innerHTML = `
-          <div style="grid-column: 1 / -1; text-align: center; padding: 50px; background: rgba(255,255,255,0.02); border-radius: 14px; border: 1px dashed rgba(255,255,255,0.1);">
-            <h4 style="margin-bottom: 8px;">No projects found in this category</h4>
-            <p style="color: #94a3b8; font-size: 0.95rem;">Check back soon or select another category above.</p>
-          </div>
-        `;
-        return;
-      }
-
-      projectsGrid.innerHTML = projects.map(p => `
-        <div class="glass-card project-card">
-          <div class="project-image-wrap">
-            <img src="${p.image || '/assets/images/project-placeholder.svg'}" alt="${p.name}" loading="lazy"/>
-            <span class="project-status-badge status-showcase">${p.status || 'Showcase Demo'}</span>
-          </div>
-          <div class="project-category">${p.category}</div>
-          <h3 class="project-title">${p.name}</h3>
-          <p class="project-desc">${p.description}</p>
-          <div class="project-tags">
-            ${(p.technologies || []).map(tech => `<span class="project-tag">${tech}</span>`).join('')}
-          </div>
-          <div class="project-links">
-            ${p.liveDemoUrl ? `
-              <a href="${p.liveDemoUrl}" target="_blank" rel="noopener noreferrer" class="project-link-btn">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                Live Demo
-              </a>
-            ` : ''}
-            <button class="project-link-btn github-disabled" title="GitHub link coming soon">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-              GitHub <span class="badge-soon">Soon</span>
-            </button>
-          </div>
-        </div>
-      `).join('');
-    } catch (err) {
-      projectsGrid.innerHTML = `
-        <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #f87171;">
-          <p>Failed to load projects from server. Please refresh the page.</p>
-        </div>
-      `;
-    }
-  }
-
-  // Bind filter button clicks
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      currentCategory = btn.dataset.category || 'All';
-      loadProjects(currentCategory);
-    });
-  });
-
-  // Initial load
-  loadProjects('All');
-}
-
-// Smooth Anchor Jump Helper
+// ==========================================
+// 7. SMOOTH SCROLLING
+// ==========================================
 function initSmoothScroll() {
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
       const targetId = this.getAttribute('href');
-      if (targetId === '#') return;
+      if (!targetId || targetId === '#') return;
       const targetElement = document.querySelector(targetId);
       if (targetElement) {
         e.preventDefault();
@@ -126,3 +244,26 @@ function initSmoothScroll() {
     });
   });
 }
+
+// ==========================================
+// 8. BACK TO TOP BUTTON
+// ==========================================
+function initBackToTop() {
+  const btn = document.getElementById('back-to-top-btn');
+  if (btn) {
+    btn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 400) {
+        btn.style.opacity = '1';
+        btn.style.pointerEvents = 'auto';
+      } else {
+        btn.style.opacity = '0';
+        btn.style.pointerEvents = 'none';
+      }
+    });
+  }
+}
+

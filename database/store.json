@@ -1,13 +1,13 @@
 {
   "admins": [
     {
-      "_id": "eb4f8262-b43c-4dae-b9de-f205530bacc7",
+      "_id": "77f34e12-7b34-4af9-98fa-eaee9caaee2a",
       "name": "Harshit (Harsh Developer)",
       "email": "shakyaharshit683@gmail.com",
-      "password": "$2a$10$dQ26pY31/PotKsZFBGIus..bljD/Su8/5Wb3RheiiXuina00Jdkjy",
+      "password": "$2a$10$z4E/lVgAtmGzHz4T2Dnm9eNzqR1HTtwAcP2u6GhcpOq/yez8YQ6WG",
       "role": "superadmin",
-      "createdAt": "2026-09-07T16:41:41.126Z",
-      "updatedAt": "2026-09-07T16:41:41.126Z"
+      "createdAt": "2026-09-08T10:20:11.709Z",
+      "updatedAt": "2026-09-08T10:20:11.709Z"
     }
   ],
   "projects": [
@@ -254,6 +254,44 @@
       "notes": "",
       "createdAt": "2026-09-07T16:41:41.294Z",
       "updatedAt": "2026-09-07T16:41:41.466Z"
+    },
+    {
+      "_id": "e41e6be6-378e-45fe-9e30-59c50a33a984",
+      "name": "Johnathan Vance",
+      "email": "john.vance@techcorp.io",
+      "phone": "+919876543210",
+      "whatsapp": "+919876543210",
+      "service": "Web Application Development",
+      "budget": "₹75,000 - ₹1,50,000 / $950 - $1,800",
+      "projectType": "New Project",
+      "deadline": "1 Month",
+      "description": "We need a high-performance SaaS analytics application with Three.js 3D dashboards.",
+      "message": "",
+      "referenceUrl": "https://example.com/demo",
+      "userId": null,
+      "status": "In Progress",
+      "notes": "",
+      "createdAt": "2026-09-08T10:18:52.408Z",
+      "updatedAt": "2026-09-08T10:18:52.544Z"
+    },
+    {
+      "_id": "c006aa16-90bc-42d2-8b1e-ce57f5dd0147",
+      "name": "Johnathan Vance",
+      "email": "john.vance@techcorp.io",
+      "phone": "+919876543210",
+      "whatsapp": "+919876543210",
+      "service": "Web Application Development",
+      "budget": "₹75,000 - ₹1,50,000 / $950 - $1,800",
+      "projectType": "New Project",
+      "deadline": "1 Month",
+      "description": "We need a high-performance SaaS analytics application with Three.js 3D dashboards.",
+      "message": "",
+      "referenceUrl": "https://example.com/demo",
+      "userId": null,
+      "status": "In Progress",
+      "notes": "",
+      "createdAt": "2026-09-08T10:20:11.826Z",
+      "updatedAt": "2026-09-08T10:20:11.960Z"
     }
   ],
   "users": [
@@ -263,7 +301,7 @@
       "email": "shakyaharshit683@gmail.com",
       "phone": "+918791984082",
       "company": "Harsh Developer",
-      "password": "$2a$10$dQ26pY31/PotKsZFBGIus..bljD/Su8/5Wb3RheiiXuina00Jdkjy",
+      "password": "$2a$10$z4E/lVgAtmGzHz4T2Dnm9eNzqR1HTtwAcP2u6GhcpOq/yez8YQ6WG",
       "role": "client",
       "createdAt": "2026-09-07T16:41:21.999Z",
       "updatedAt": "2026-09-07T16:41:22.000Z"
@@ -300,6 +338,28 @@
       "role": "client",
       "createdAt": "2026-09-07T16:41:41.544Z",
       "updatedAt": "2026-09-07T16:41:41.544Z"
+    },
+    {
+      "_id": "ca1f1a77-8009-4345-ba7c-edd33c622c2c",
+      "name": "QA Test Client",
+      "email": "qa.client.1788862732549@example.com",
+      "phone": "+919988776655",
+      "company": "QA Industries",
+      "password": "$2a$10$Ee1FY2zi3FTcxhAG5hCrDukhq2bFRXMY6SzJcqW9I33oizX5JHhDe",
+      "role": "client",
+      "createdAt": "2026-09-08T10:18:52.615Z",
+      "updatedAt": "2026-09-08T10:18:52.615Z"
+    },
+    {
+      "_id": "64d0adcb-f916-4f7a-9f3d-c31f2ee21a2e",
+      "name": "QA Test Client",
+      "email": "qa.client.1788862811965@example.com",
+      "phone": "+919988776655",
+      "company": "QA Industries",
+      "password": "$2a$10$z10oK3Sl4oi9ZEtShq4SwOlzvIUTDyCyWaWfPkYMlgl7TC78V.RqO",
+      "role": "client",
+      "createdAt": "2026-09-08T10:20:12.032Z",
+      "updatedAt": "2026-09-08T10:20:12.032Z"
     }
   ]
 }

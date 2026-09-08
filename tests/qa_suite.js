@@ -100,7 +100,15 @@ async function runQaSuite() {
 
     // 5. Test Developer Profile Public API
     const devRes = await request('GET', '/api/developer');
-    assert(devRes.statusCode === 200 && devRes.data.name === 'Harshit' && devRes.data.brand === 'Harsh Developer', 'STEP 5: Public Developer API Returns Correct Info', `Brand: ${devRes.data.brand}`);
+    assert(devRes.statusCode === 200 && devRes.data.brand === 'DEVCRAFT Studio', 'STEP 5: Public Developer API Returns DevCraft Studio', `Brand: ${devRes.data.brand}`);
+
+    // 5b. Test All 20 Services API
+    const servicesRes = await request('GET', '/api/services');
+    assert(servicesRes.statusCode === 200 && servicesRes.data.count === 20, 'STEP 5b: Services API Returns All 20 Services', `Count: ${servicesRes.data.count}`);
+
+    // 5c. Test All 10 Interactive Demos API
+    const demosRes = await request('GET', '/api/demos');
+    assert(demosRes.statusCode === 200 && demosRes.data.count === 10, 'STEP 5c: Demos API Returns All 10 Interactive Demos', `Count: ${demosRes.data.count}`);
 
     // 6. Test Admin Login (Real Valid Credentials)
     const loginRes = await request('POST', '/api/admin/login', {
@@ -190,15 +198,15 @@ async function runQaSuite() {
     }
     assert(allPagesOk, 'STEP 11: All Frontend Navigation Pages Respond with HTTP 200 OK');
 
-    // 12. Test Contact Channels URL Verification (WhatsApp, Call, Email, Instagram, Telegram, GitHub)
+    // 12. Test Contact Channels URL Verification (WhatsApp, Call, Email, Instagram, Telegram, Zero Coming Soon)
     const indexContent = fs.readFileSync(path.join(__dirname, '../frontend/index.html'), 'utf8');
     const waOk = indexContent.includes('wa.me/918791984082');
     const callOk = indexContent.includes('tel:+917017022966');
     const mailOk = indexContent.includes('mailto:shakyaharshit683@gmail.com') || indexContent.includes('shakyaharshit683@gmail.com');
     const igOk = indexContent.includes('instagram.com/kiro_mage');
     const tgOk = indexContent.includes('t.me/harshuuu1123');
-    const githubSoonOk = indexContent.includes('Coming Soon') && !indexContent.includes('github.com/fake');
-    assert(waOk && callOk && mailOk && igOk && tgOk && githubSoonOk, 'STEP 12: All Contact Links (WA, Phone, IG, TG, GitHub Soon) Strictly Verified');
+    const zeroComingSoon = !indexContent.includes('Coming Soon');
+    assert(waOk && callOk && mailOk && igOk && tgOk && zeroComingSoon, 'STEP 12: All Contact Channels Active & Zero Coming Soon Placeholders');
 
     // 13. Test 3D Three.js Scene Configuration
     const threeSceneContent = fs.readFileSync(path.join(__dirname, '../frontend/js/three-scene.js'), 'utf8');
@@ -207,7 +215,7 @@ async function runQaSuite() {
     assert(hasThreeEngine && hasFallback, 'STEP 13: Real Three.js WebGL Scene & Fallback Visual Mechanism Verified');
 
     // 14. Check Frontend JavaScript Syntax
-    const jsFiles = ['frontend/js/api.js', 'frontend/js/form.js', 'frontend/js/main.js', 'frontend/js/three-scene.js', 'admin/js/admin.js'];
+    const jsFiles = ['frontend/js/api.js', 'frontend/js/form.js', 'frontend/js/main.js', 'frontend/js/devcraft-demos.js', 'frontend/js/three-scene.js', 'admin/js/admin.js'];
     let jsOk = true;
     for (const f of jsFiles) {
       try {

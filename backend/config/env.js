@@ -14,13 +14,15 @@ const config = {
   corsOrigin: process.env.CORS_ORIGIN || '*',
   developer: {
     name: 'Harshit',
-    brand: 'Harsh Developer',
-    role: 'Web Developer / Full-Stack Developer',
+    brand: 'DEVCRAFT Studio',
+    tagline: 'Ideas → Code → Real Solutions',
+    role: 'Lead Software Architect',
     email: process.env.DEVELOPER_EMAIL || 'shakyaharshit683@gmail.com',
     whatsapp: process.env.DEVELOPER_WHATSAPP || '+918791984082',
     phone: process.env.DEVELOPER_PHONE || '+917017022966',
     instagram: process.env.DEVELOPER_INSTAGRAM || 'https://www.instagram.com/kiro_mage/',
-    telegram: process.env.DEVELOPER_TELEGRAM || 'https://t.me/harshuuu1123'
+    telegram: process.env.DEVELOPER_TELEGRAM || 'https://t.me/harshuuu1123',
+    github: 'https://github.com/harshit234211/harsh-developer'
   }
 };
 
