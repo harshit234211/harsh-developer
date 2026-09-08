@@ -16,6 +16,8 @@ const authRoutes = require('./routes/authRoutes');
 const projectRoutes = require('./routes/projectRoutes');
 const enquiryRoutes = require('./routes/enquiryRoutes');
 const userRoutes = require('./routes/userRoutes');
+const couponRoutes = require('./routes/couponRoutes');
+const adminCouponRoutes = require('./routes/adminCouponRoutes');
 
 // DevCraft Catalog Datasets
 const DEVCRAFT_SERVICES = require('../scripts/data_services');
@@ -121,10 +123,12 @@ app.get('/api/demos', (req, res) => {
 // API Routes
 app.use('/api/admin', authRoutes);
 app.use('/api/admin/enquiries', enquiryRoutes);
+app.use('/api/admin/coupons', adminCouponRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/contact', enquiryRoutes);
 app.use('/api/enquiries', enquiryRoutes);
+app.use('/api/coupons', couponRoutes);
 
 // Static files for Admin Portal
 app.use('/admin', express.static(path.join(__dirname, '../admin')));
@@ -162,7 +166,43 @@ app.get('/client-portal', (req, res) => {
 });
 
 app.get('/client-login', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/pages/client-portal.html'));
+  res.redirect('/login');
+});
+
+app.get('/register', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/pages/register.html'));
+});
+
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/pages/login.html'));
+});
+
+app.get('/forgot-password', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/pages/forgot-password.html'));
+});
+
+app.get('/reset-password', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/pages/reset-password.html'));
+});
+
+app.get('/dashboard', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/pages/dashboard.html'));
+});
+
+app.get('/profile', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/pages/profile.html'));
+});
+
+app.get('/settings', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/pages/profile.html'));
+});
+
+app.get('/my-projects', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/pages/dashboard.html'));
+});
+
+app.get('/saved-demos', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/pages/dashboard.html'));
 });
 
 // Catch-all 404 for APIs

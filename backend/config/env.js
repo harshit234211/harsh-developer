@@ -9,6 +9,7 @@ const config = {
   mongoUri: process.env.MONGODB_URI || '',
   jwtSecret: process.env.JWT_SECRET || 'harsh_developer_fallback_secret_key_2026',
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '7d',
+  couponPepper: process.env.COUPON_SECRET_PEPPER || 'devcraft_secure_coupon_pepper_hash_salt_2026_x89a',
   adminEmail: process.env.ADMIN_EMAIL || 'shakyaharshit683@gmail.com',
   adminPassword: process.env.ADMIN_PASSWORD || 'harsshit9696',
   corsOrigin: process.env.CORS_ORIGIN || '*',

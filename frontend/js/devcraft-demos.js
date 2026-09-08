@@ -77,6 +77,10 @@ window.devcraftDemos = (function() {
       ],
       couponApplied: false,
       discountPercent: 0,
+      discountAmount: 0,
+      codeMask: null,
+      appliedRawCode: null,
+      couponError: null,
       orderSuccess: null
     },
     timeslot: {
@@ -872,9 +876,11 @@ window.devcraftDemos = (function() {
       : novacartProducts.filter(p => p.category === s.category);
 
     const subtotal = s.cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-    const discountAmount = s.couponApplied ? Math.round(subtotal * 0.1) : 0;
+    const discountAmount = s.couponApplied && s.discountPercent
+      ? Math.round(subtotal * (s.discountPercent / 100))
+      : 0;
     const shipping = subtotal > 5000 || subtotal === 0 ? 0 : 250;
-    const grandTotal = subtotal - discountAmount + shipping;
+    const grandTotal = Math.max(0, subtotal - discountAmount + shipping);
 
     container.innerHTML = `
       <div class="novacart-stage">
@@ -946,15 +952,18 @@ window.devcraftDemos = (function() {
 
             ${s.cart.length > 0 ? `
               <!-- Coupon Box -->
-              <div class="coupon-box">
-                <input type="text" id="novacart-coupon-input" class="form-control" placeholder="Promo code (try DEVCRAFT10)" />
-                <button class="btn btn-xs btn-outline" onclick="devcraftDemos.novacartApplyCoupon()">Apply</button>
+              <div class="coupon-box" style="display: flex; gap: 8px; margin-top: 14px;">
+                <input type="text" id="novacart-coupon-input" class="form-control" placeholder="Enter promo code" value="${s.appliedRawCode || ''}" ${s.couponApplied ? 'readonly' : ''} />
+                ${s.couponApplied 
+                  ? `<button class="btn btn-xs btn-outline" onclick="devcraftDemos.novacartRemoveCoupon()">Remove</button>`
+                  : `<button class="btn btn-xs btn-outline" onclick="devcraftDemos.novacartApplyCoupon()">Apply</button>`}
               </div>
-              ${s.couponApplied ? `<div class="coupon-success text-emerald">✓ Coupon DEVCRAFT10 applied: 10% OFF!</div>` : ''}
+              ${s.couponApplied ? `<div class="coupon-success text-emerald" style="font-size: 0.82rem; margin-top: 6px;">✓ Verified: ${s.discountPercent}% OFF applied! (${s.codeMask || 'Promo'})</div>` : ''}
+              ${s.couponError ? `<div class="coupon-error" style="font-size: 0.8rem; color: #ef4444; margin-top: 6px;">✕ ${s.couponError}</div>` : ''}
 
               <div class="drawer-summary">
                 <div class="summary-line"><span>Subtotal</span><span>₹${subtotal.toLocaleString()}</span></div>
-                ${s.couponApplied ? `<div class="summary-line text-emerald"><span>Discount (10%)</span><span>- ₹${discountAmount.toLocaleString()}</span></div>` : ''}
+                ${s.couponApplied ? `<div class="summary-line text-emerald"><span>Discount (${s.discountPercent}%)</span><span>- ₹${discountAmount.toLocaleString()}</span></div>` : ''}
                 <div class="summary-line"><span>Express Shipping</span><span>${shipping === 0 ? 'FREE' : '₹' + shipping}</span></div>
                 <div class="summary-line total-line"><span>Total</span><span class="text-gradient">₹${grandTotal.toLocaleString()}</span></div>
 
@@ -1679,26 +1688,96 @@ window.devcraftDemos = (function() {
     renderNovaCart();
   }
 
-  function novacartApplyCoupon() {
+  async function novacartApplyCoupon() {
     const input = document.getElementById('novacart-coupon-input');
-    if (input && input.value.trim().toUpperCase() === 'DEVCRAFT10') {
-      state.novacart.couponApplied = true;
+    if (!input || !input.value.trim()) {
+      state.novacart.couponError = 'Please enter a promo code.';
       renderNovaCart();
-    } else {
-      alert('Invalid coupon. Try code "DEVCRAFT10" for 10% off!');
+      return;
     }
+
+    const code = input.value.trim();
+    const subtotal = state.novacart.cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+    try {
+      const res = await fetch('/api/coupons/validate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code, subtotal })
+      });
+      const data = await res.json();
+
+      if (res.ok && data.success && data.valid) {
+        state.novacart.couponApplied = true;
+        state.novacart.discountPercent = data.discountPercentage;
+        state.novacart.discountAmount = data.discountAmount;
+        state.novacart.serverFinalAmount = data.finalAmount;
+        state.novacart.codeMask = data.codeMask;
+        state.novacart.appliedRawCode = code;
+        state.novacart.couponError = null;
+      } else {
+        state.novacart.couponApplied = false;
+        state.novacart.discountPercent = 0;
+        state.novacart.discountAmount = 0;
+        state.novacart.codeMask = null;
+        state.novacart.couponError = data.message || 'Invalid promo code.';
+      }
+    } catch (err) {
+      state.novacart.couponError = 'Connection error verifying coupon.';
+    }
+    renderNovaCart();
   }
 
-  function novacartCheckout() {
+  function novacartRemoveCoupon() {
+    state.novacart.couponApplied = false;
+    state.novacart.discountPercent = 0;
+    state.novacart.discountAmount = 0;
+    state.novacart.codeMask = null;
+    state.novacart.appliedRawCode = null;
+    state.novacart.couponError = null;
+    renderNovaCart();
+  }
+
+  async function novacartCheckout() {
     const subtotal = state.novacart.cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-    const discount = state.novacart.couponApplied ? Math.round(subtotal * 0.1) : 0;
-    const total = subtotal - discount;
+    const orderRef = 'DC-ORD-' + Math.floor(100000 + Math.random() * 900000);
+
+    let finalPayable = subtotal > 5000 || subtotal === 0 ? subtotal : subtotal + 250;
+    let appliedDiscount = 0;
+
+    // Server-side authoritative checkout redemption
+    if (state.novacart.couponApplied && state.novacart.appliedRawCode) {
+      try {
+        const res = await fetch('/api/coupons/redeem', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            code: state.novacart.appliedRawCode,
+            subtotal: subtotal,
+            orderId: orderRef,
+            notes: 'NovaCart Express Checkout Demo'
+          })
+        });
+        const redData = await res.json();
+        if (res.ok && redData.success) {
+          const shipping = subtotal > 5000 || subtotal === 0 ? 0 : 250;
+          finalPayable = redData.finalAmount + shipping;
+          appliedDiscount = redData.discountAmount;
+        }
+      } catch (_) {}
+    }
 
     state.novacart.orderSuccess = {
       tracking: 'DC-TRACK-' + Math.floor(100000 + Math.random() * 900000),
-      total: total
+      orderId: orderRef,
+      subtotal: subtotal,
+      discount: appliedDiscount,
+      discountPercent: state.novacart.discountPercent,
+      total: finalPayable
     };
     state.novacart.cart = [];
+    state.novacart.couponApplied = false;
+    state.novacart.appliedRawCode = null;
     state.novacart.cartOpen = false;
     renderNovaCart();
   }
@@ -1852,6 +1931,7 @@ window.devcraftDemos = (function() {
     novacartAddToCart,
     novacartUpdateQty,
     novacartApplyCoupon,
+    novacartRemoveCoupon,
     novacartCheckout,
     novacartDismissOrder,
 

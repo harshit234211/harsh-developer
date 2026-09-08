@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   await loadEnquiries();
   await loadProjects();
   await loadClients();
+  await loadCoupons();
 });
 
 // Auth Guard
@@ -435,4 +436,301 @@ function escapeHtml(str) {
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
+}
+
+// ==========================================
+// COUPON MANAGEMENT (CRYPTOGRAPHIC SYSTEM)
+// ==========================================
+
+let currentCoupons = [];
+
+async function loadCoupons() {
+  const tbody = document.getElementById('coupons-table-body');
+  if (!tbody) return;
+
+  try {
+    const res = await fetch(`${API_BASE}/admin/coupons`, {
+      headers: { 'Authorization': `Bearer ${authToken}` }
+    });
+
+    if (!res.ok) {
+      if (res.status === 401 || res.status === 403) {
+        window.location.href = '/admin-login';
+        return;
+      }
+      throw new Error('Failed to load coupons');
+    }
+
+    const data = await res.json();
+    currentCoupons = data.coupons || [];
+
+    // Update coupon stats
+    if (data.stats) {
+      const elTotal = document.getElementById('stat-coupons-total');
+      const elActive = document.getElementById('stat-coupons-active');
+      const elRedemptions = document.getElementById('stat-coupons-redemptions');
+      const elSavings = document.getElementById('stat-coupons-savings');
+
+      if (elTotal) elTotal.textContent = data.stats.totalCoupons;
+      if (elActive) elActive.textContent = data.stats.activeCoupons;
+      if (elRedemptions) elRedemptions.textContent = data.stats.totalRedemptions;
+      if (elSavings) elSavings.textContent = `₹${(data.stats.totalSavingsGiven || 0).toLocaleString('en-IN')}`;
+    }
+
+    renderCouponsTable(currentCoupons);
+  } catch (err) {
+    console.error('Error loading coupons:', err);
+    tbody.innerHTML = `<tr><td colspan="7" style="color: #f87171; text-align: center; padding: 20px;">Failed to load coupons: ${escapeHtml(err.message)}</td></tr>`;
+  }
+}
+
+function renderCouponsTable(coupons) {
+  const tbody = document.getElementById('coupons-table-body');
+  if (!tbody) return;
+
+  if (!coupons || coupons.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="7" style="text-align: center; color: #94a3b8; padding: 32px;">
+          No cryptographic coupons found. Click "+ Generate New Coupon" or view initial private seeds.
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  tbody.innerHTML = coupons.map(c => {
+    const isActive = c.active;
+    const isExhausted = c.max_uses && c.used_count >= c.max_uses;
+    const isExpired = c.expires_at && new Date(c.expires_at).getTime() < Date.now();
+    
+    let statusBadge = '<span class="badge badge-success" style="background: rgba(16, 185, 129, 0.2); color: #10b981; border: 1px solid #10b981; padding: 4px 8px; border-radius: 6px; font-size: 0.78rem;">Active</span>';
+    if (!isActive) {
+      statusBadge = '<span class="badge" style="background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid #ef4444; padding: 4px 8px; border-radius: 6px; font-size: 0.78rem;">Disabled</span>';
+    } else if (isExhausted) {
+      statusBadge = '<span class="badge" style="background: rgba(245, 158, 11, 0.2); color: #f59e0b; border: 1px solid #f59e0b; padding: 4px 8px; border-radius: 6px; font-size: 0.78rem;">Exhausted</span>';
+    } else if (isExpired) {
+      statusBadge = '<span class="badge" style="background: rgba(148, 163, 184, 0.2); color: #94a3b8; border: 1px solid #94a3b8; padding: 4px 8px; border-radius: 6px; font-size: 0.78rem;">Expired</span>';
+    }
+
+    const discountColor = c.discount_percentage >= 90 ? '#a855f7' : (c.discount_percentage >= 50 ? '#00f0ff' : '#10b981');
+    const expiryText = c.expires_at ? new Date(c.expires_at).toLocaleDateString() : 'Never';
+    const restrictionText = c.user_restriction ? escapeHtml(c.user_restriction) : '<span style="color: #64748b;">Public / Any Client</span>';
+
+    return `
+      <tr>
+        <td>
+          <div style="font-family: \'JetBrains Mono\', monospace; font-weight: 700; color: #f1f5f9; letter-spacing: 1px;">
+            ${escapeHtml(c.code_mask)}
+          </div>
+          ${c.notes ? `<div style="font-size: 0.78rem; color: #94a3b8; margin-top: 2px;">${escapeHtml(c.notes)}</div>` : ''}
+        </td>
+        <td>
+          <span style="font-weight: 800; font-size: 1.1rem; color: ${discountColor};">
+            ${c.discount_percentage}% OFF
+          </span>
+        </td>
+        <td>${statusBadge}</td>
+        <td>
+          <div style="font-family: \'JetBrains Mono\', monospace; font-size: 0.88rem;">
+            <strong>${c.used_count || 0}</strong> / ${c.max_uses ? c.max_uses : '∞'}
+          </div>
+        </td>
+        <td style="font-size: 0.85rem;">${restrictionText}</td>
+        <td style="font-size: 0.85rem; color: #94a3b8;">${expiryText}</td>
+        <td>
+          <div class="action-btns" style="display: flex; gap: 6px;">
+            <button onclick="toggleCouponStatus(\'${c._id}\')" class="action-btn" title="${isActive ? 'Deactivate' : 'Activate'}" style="padding: 4px 8px; font-size: 0.78rem;">
+              ${isActive ? '⏸️ Pause' : '▶️ Enable'}
+            </button>
+            <button onclick="regenerateCoupon(\'${c._id}\')" class="action-btn" title="Regenerate random key" style="padding: 4px 8px; font-size: 0.78rem; background: rgba(0, 240, 255, 0.1); border-color: var(--cyan); color: var(--cyan);">
+              🔄 Re-roll
+            </button>
+            <button onclick="revokeCoupon(\'${c._id}\')" class="action-btn delete" title="Permanently delete" style="padding: 4px 8px; font-size: 0.78rem;">
+              🗑️
+            </button>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function openGenerateCouponModal() {
+  const form = document.getElementById('generate-coupon-form');
+  if (form) form.reset();
+  const modal = document.getElementById('generate-coupon-modal');
+  if (modal) modal.classList.add('active');
+}
+
+async function handleGenerateCoupon(event) {
+  event.preventDefault();
+
+  const discount = Number(document.getElementById('gen-discount').value);
+  const maxUses = Number(document.getElementById('gen-max-uses').value) || 1;
+  const expiresAt = document.getElementById('gen-expires-at').value || null;
+  const userRestriction = document.getElementById('gen-restriction').value.trim() || null;
+  const notes = document.getElementById('gen-notes').value.trim() || null;
+
+  try {
+    const res = await fetch(`${API_BASE}/admin/coupons/generate`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authToken}`
+      },
+      body: JSON.stringify({
+        discountPercentage: discount,
+        maxUses,
+        expiresAt,
+        userRestriction,
+        notes
+      })
+    });
+
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || 'Coupon generation failed');
+
+    closeModals();
+
+    // Show One-Time Reveal Modal
+    const revealModal = document.getElementById('reveal-coupon-modal');
+    document.getElementById('reveal-raw-code').textContent = data.rawCode;
+    document.getElementById('reveal-discount-badge').textContent = `${data.coupon.discount_percentage}% Discount | Mask: ${data.coupon.code_mask} | Max Uses: ${data.coupon.max_uses}`;
+    
+    const copyBtn = document.getElementById('reveal-copy-btn');
+    if (copyBtn) {
+      copyBtn.textContent = '📋 Copy Code to Clipboard';
+      copyBtn.disabled = false;
+    }
+
+    if (revealModal) revealModal.classList.add('active');
+
+    await loadCoupons();
+  } catch (err) {
+    alert(`Error: ${err.message}`);
+  }
+}
+
+async function toggleCouponStatus(id) {
+  try {
+    const res = await fetch(`${API_BASE}/admin/coupons/${id}/toggle`, {
+      method: 'PATCH',
+      headers: { 'Authorization': `Bearer ${authToken}` }
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || 'Failed to toggle status');
+    await loadCoupons();
+  } catch (err) {
+    alert(err.message);
+  }
+}
+
+async function regenerateCoupon(id) {
+  if (!confirm('Are you sure you want to regenerate this coupon code? The old code will immediately stop working and a new cryptographically random code will be generated.')) {
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API_BASE}/admin/coupons/${id}/regenerate`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${authToken}` }
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || 'Failed to regenerate code');
+
+    // Reveal new code
+    const revealModal = document.getElementById('reveal-coupon-modal');
+    document.getElementById('reveal-raw-code').textContent = data.rawCode;
+    document.getElementById('reveal-discount-badge').textContent = `New Code for ${data.coupon.discount_percentage}% Discount | Mask: ${data.coupon.code_mask}`;
+    
+    const copyBtn = document.getElementById('reveal-copy-btn');
+    if (copyBtn) {
+      copyBtn.textContent = '📋 Copy Code to Clipboard';
+      copyBtn.disabled = false;
+    }
+
+    if (revealModal) revealModal.classList.add('active');
+    await loadCoupons();
+  } catch (err) {
+    alert(err.message);
+  }
+}
+
+async function revokeCoupon(id) {
+  if (!confirm('Are you sure you want to permanently delete/revoke this coupon? This action cannot be undone.')) {
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API_BASE}/admin/coupons/${id}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${authToken}` }
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || 'Failed to delete coupon');
+    await loadCoupons();
+  } catch (err) {
+    alert(err.message);
+  }
+}
+
+async function viewPrivateSeedsModal() {
+  const modal = document.getElementById('private-seeds-modal');
+  const container = document.getElementById('private-seeds-list');
+  if (!modal || !container) return;
+
+  container.innerHTML = '<div style="color: #94a3b8; text-align: center; padding: 20px;">Loading private seeds...</div>';
+  modal.classList.add('active');
+
+  try {
+    const res = await fetch(`${API_BASE}/admin/coupons/private-seeds`, {
+      headers: { 'Authorization': `Bearer ${authToken}` }
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || 'Failed to retrieve seeds');
+
+    const seeds = data.seeds || [];
+    if (seeds.length === 0) {
+      container.innerHTML = '<div style="color: #94a3b8; text-align: center; padding: 12px;">No seeded private offers available.</div>';
+      return;
+    }
+
+    container.innerHTML = seeds.map(s => {
+      const color = s.discountPercentage >= 90 ? '#a855f7' : (s.discountPercentage >= 50 ? '#00f0ff' : '#10b981');
+      return `
+        <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 14px; display: flex; justify-content: space-between; align-items: center; gap: 12px;">
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+              <span style="font-weight: 800; color: ${color}; font-size: 1rem;">${s.discountPercentage}% DISCOUNT</span>
+              <span style="font-size: 0.75rem; color: #94a3b8; background: rgba(255, 255, 255, 0.05); padding: 2px 6px; border-radius: 4px;">${escapeHtml(s.tier || 'Offer')}</span>
+            </div>
+            <div style="font-family: \'JetBrains Mono\', monospace; font-weight: 700; color: #fff; font-size: 1.1rem; letter-spacing: 1px;">
+              ${escapeHtml(s.rawCode)}
+            </div>
+            <div style="font-size: 0.78rem; color: #94a3b8; margin-top: 2px;">
+              ${escapeHtml(s.description || '')} (Max Uses: ${s.maxUses || 'Unlimited'})
+            </div>
+          </div>
+          <button onclick="navigator.clipboard.writeText(\'${s.rawCode}\').then(() => alert(\'Copied ${s.rawCode} to clipboard!\'))" class="action-btn" style="background: rgba(0, 240, 255, 0.15); border-color: var(--cyan); color: var(--cyan); padding: 8px 14px; font-weight: 600; white-space: nowrap;">
+            📋 Copy Code
+          </button>
+        </div>
+      `;
+    }).join('');
+  } catch (err) {
+    container.innerHTML = `<div style="color: #f87171; text-align: center; padding: 12px;">${escapeHtml(err.message)}</div>`;
+  }
+}
+
+function copyRevealedCode() {
+  const codeEl = document.getElementById('reveal-raw-code');
+  if (!codeEl) return;
+  const code = codeEl.textContent.trim();
+  navigator.clipboard.writeText(code).then(() => {
+    const btn = document.getElementById('reveal-copy-btn');
+    if (btn) btn.textContent = '✅ Copied to Clipboard!';
+  }).catch(() => {
+    prompt('Copy your coupon code:', code);
+  });
 }

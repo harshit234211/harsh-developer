@@ -1,4 +1,4 @@
-﻿const mongoose = require('mongoose');
+const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 const UserSchema = new mongoose.Schema({
@@ -32,6 +32,22 @@ const UserSchema = new mongoose.Schema({
   role: {
     type: String,
     default: 'client'
+  },
+  savedDemos: {
+    type: [String],
+    default: []
+  },
+  resetPasswordToken: {
+    type: String,
+    default: null
+  },
+  resetPasswordExpires: {
+    type: Date,
+    default: null
+  },
+  lastLogin: {
+    type: Date,
+    default: null
   }
 }, { timestamps: true });
 

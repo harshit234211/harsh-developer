@@ -40,6 +40,10 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
             <span>Registered Clients</span>
           </div>
+          <div class="admin-nav-item" data-section="coupons">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v2z"></path><line x1="9" y1="12" x2="15" y2="12"></line></svg>
+            <span>Coupons Manager</span>
+          </div>
         </nav>
       </div>
 
@@ -239,6 +243,75 @@
           </table>
         </div>
       </div>
+
+      <!-- Coupons Section -->
+      <div id="section-coupons" class="admin-section">
+        <div class="section-toolbar">
+          <div>
+            <h2 style="font-size: 1.3rem;">Cryptographic Coupon Management</h2>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">Manage private discount offers with HMAC-SHA256 hashing and rate-limiting.</p>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button onclick="viewPrivateSeedsModal()" class="action-btn" style="background: rgba(0, 240, 255, 0.1); border-color: var(--cyan); color: var(--cyan);">
+              🔑 View 3 Initial Private Codes
+            </button>
+            <button onclick="openGenerateCouponModal()" class="action-btn" style="background: var(--cyan); color: #000; font-weight: 600;">
+              + Generate New Coupon
+            </button>
+          </div>
+        </div>
+
+        <!-- Coupons Stats -->
+        <div class="stats-grid" style="margin-bottom: 24px;">
+          <div class="stat-card">
+            <div class="stat-icon icon-blue">🎟️</div>
+            <div class="stat-info">
+              <span class="stat-val" id="stat-coupons-total">0</span>
+              <span class="stat-label">Total Coupons</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon icon-green">⚡</div>
+            <div class="stat-info">
+              <span class="stat-val" id="stat-coupons-active">0</span>
+              <span class="stat-label">Active Coupons</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon icon-purple">🔄</div>
+            <div class="stat-info">
+              <span class="stat-val" id="stat-coupons-redemptions">0</span>
+              <span class="stat-label">Redemptions</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon icon-yellow">💰</div>
+            <div class="stat-info">
+              <span class="stat-val" id="stat-coupons-savings">₹0</span>
+              <span class="stat-label">Total Discounts Given</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Identifier / Mask</th>
+                <th>Discount</th>
+                <th>Status</th>
+                <th>Usage (Used / Max)</th>
+                <th>Client Restriction</th>
+                <th>Expiration</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="coupons-table-body">
+              <!-- Rendered by /admin/js/admin.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
     </main>
   </div>
 
@@ -327,6 +400,114 @@
           </div>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- Generate Coupon Modal -->
+  <div id="generate-coupon-modal" class="modal-backdrop">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Generate Cryptographic Coupon</h3>
+        <button class="modal-close" onclick="closeModals()">&times;</button>
+      </div>
+      <form id="generate-coupon-form" onsubmit="handleGenerateCoupon(event)">
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div>
+            <label class="form-label">Discount Percentage Tier *</label>
+            <select id="gen-discount" class="filter-select" style="width: 100%;" required>
+              <option value="20">Offer 1: 20% Discount</option>
+              <option value="50">Offer 2: 50% Discount</option>
+              <option value="95">Offer 3: 95% Discount (VIP Pass)</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="form-label">Maximum Redemptions Allowed *</label>
+            <input type="number" id="gen-max-uses" class="search-input" style="width: 100%;" value="1" min="1" max="1000" required />
+            <small style="color: var(--text-muted); font-size: 0.75rem;">Set to 1 for exclusive single-use client vouchers.</small>
+          </div>
+
+          <div>
+            <label class="form-label">Expiration Date (Optional)</label>
+            <input type="date" id="gen-expires-at" class="search-input" style="width: 100%;" />
+          </div>
+
+          <div>
+            <label class="form-label">Restrict to Client Email (Optional)</label>
+            <input type="email" id="gen-restriction" class="search-input" style="width: 100%;" placeholder="client@company.com (Leave empty for anyone)" />
+          </div>
+
+          <div>
+            <label class="form-label">Internal Audit Notes</label>
+            <input type="text" id="gen-notes" class="search-input" style="width: 100%;" placeholder="e.g. Q4 Startup Grant for Client X" />
+          </div>
+
+          <div style="display: flex; gap: 12px; margin-top: 10px;">
+            <button type="submit" class="action-btn" style="background: var(--cyan); color: #000; font-weight: 600; padding: 10px 20px; flex-grow: 1;">
+              ⚡ Generate Secure Code
+            </button>
+            <button type="button" onclick="closeModals()" class="action-btn" style="padding: 10px 20px;">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- One-Time Secret Key Reveal Modal -->
+  <div id="reveal-coupon-modal" class="modal-backdrop">
+    <div class="modal-card" style="border: 2px solid #10b981; max-width: 520px;">
+      <div class="modal-header">
+        <h3 style="color: #10b981;">⚠️ One-Time Secret Key Reveal</h3>
+        <button class="modal-close" onclick="closeModals()">&times;</button>
+      </div>
+      <div style="padding: 10px 0;">
+        <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 14px;">
+          This cryptographically random code is shown <strong>ONLY ONCE</strong> upon generation. The server stores only its one-way HMAC-SHA256 hash. Copy and share it securely:
+        </p>
+
+        <div style="background: rgba(0, 0, 0, 0.6); border: 1px solid var(--emerald); border-radius: 10px; padding: 16px; text-align: center; margin-bottom: 16px;">
+          <div id="reveal-raw-code" style="font-family: 'JetBrains Mono', monospace; font-size: 1.4rem; font-weight: 800; color: #10b981; letter-spacing: 2px;">
+            DEV-XXXX-XXXX-XXXX
+          </div>
+          <div id="reveal-discount-badge" style="font-size: 0.85rem; color: var(--text-muted); margin-top: 6px;"></div>
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+          <button id="reveal-copy-btn" onclick="copyRevealedCode()" class="action-btn" style="background: #10b981; color: #000; font-weight: 700; flex-grow: 1; justify-content: center; padding: 12px;">
+            📋 Copy Code to Clipboard
+          </button>
+          <button onclick="closeModals()" class="action-btn" style="padding: 12px 18px;">
+            Done / Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Initial Private Seeds Modal -->
+  <div id="private-seeds-modal" class="modal-backdrop">
+    <div class="modal-card" style="max-width: 600px;">
+      <div class="modal-header">
+        <h3>🔑 Initial 3 Private Offers</h3>
+        <button class="modal-close" onclick="closeModals()">&times;</button>
+      </div>
+      <div style="padding: 10px 0;">
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 16px;">
+          These 3 private codes were securely seeded for Harshit. They are never exposed in the public frontend or public APIs:
+        </p>
+
+        <div id="private-seeds-list" style="display: flex; flex-direction: column; gap: 12px;">
+          <!-- Loaded by JS -->
+        </div>
+
+        <div style="margin-top: 20px; text-align: right;">
+          <button onclick="closeModals()" class="action-btn" style="padding: 10px 20px;">
+            Close
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 

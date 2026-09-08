@@ -1,13 +1,13 @@
 {
   "admins": [
     {
-      "_id": "77f34e12-7b34-4af9-98fa-eaee9caaee2a",
+      "_id": "a7d8d9c2-daff-49a6-9028-541daf6cecb3",
       "name": "Harshit (Harsh Developer)",
       "email": "shakyaharshit683@gmail.com",
-      "password": "$2a$10$z4E/lVgAtmGzHz4T2Dnm9eNzqR1HTtwAcP2u6GhcpOq/yez8YQ6WG",
+      "password": "$2a$10$yFZS26PPA6dR.Z4npth3X.f2KhlRX4KUg.5UwP.uPh4qh0ZQ.zDR.",
       "role": "superadmin",
-      "createdAt": "2026-09-08T10:20:11.709Z",
-      "updatedAt": "2026-09-08T10:20:11.709Z"
+      "createdAt": "2026-09-08T11:21:41.869Z",
+      "updatedAt": "2026-09-08T11:21:41.869Z"
     }
   ],
   "projects": [
@@ -292,6 +292,44 @@
       "notes": "",
       "createdAt": "2026-09-08T10:20:11.826Z",
       "updatedAt": "2026-09-08T10:20:11.960Z"
+    },
+    {
+      "_id": "3bbb7edf-f788-41fc-a8c1-4d98af21a6db",
+      "name": "Johnathan Vance",
+      "email": "john.vance@techcorp.io",
+      "phone": "+919876543210",
+      "whatsapp": "+919876543210",
+      "service": "Web Application Development",
+      "budget": "₹75,000 - ₹1,50,000 / $950 - $1,800",
+      "projectType": "New Project",
+      "deadline": "1 Month",
+      "description": "We need a high-performance SaaS analytics application with Three.js 3D dashboards.",
+      "message": "",
+      "referenceUrl": "https://example.com/demo",
+      "userId": null,
+      "status": "In Progress",
+      "notes": "",
+      "createdAt": "2026-09-08T11:20:51.791Z",
+      "updatedAt": "2026-09-08T11:20:51.920Z"
+    },
+    {
+      "_id": "b9ade899-3def-49b2-9e04-db1ad7843fd6",
+      "name": "Johnathan Vance",
+      "email": "john.vance@techcorp.io",
+      "phone": "+919876543210",
+      "whatsapp": "+919876543210",
+      "service": "Web Application Development",
+      "budget": "₹75,000 - ₹1,50,000 / $950 - $1,800",
+      "projectType": "New Project",
+      "deadline": "1 Month",
+      "description": "We need a high-performance SaaS analytics application with Three.js 3D dashboards.",
+      "message": "",
+      "referenceUrl": "https://example.com/demo",
+      "userId": null,
+      "status": "In Progress",
+      "notes": "",
+      "createdAt": "2026-09-08T11:21:41.985Z",
+      "updatedAt": "2026-09-08T11:21:42.124Z"
     }
   ],
   "users": [
@@ -301,7 +339,7 @@
       "email": "shakyaharshit683@gmail.com",
       "phone": "+918791984082",
       "company": "Harsh Developer",
-      "password": "$2a$10$z4E/lVgAtmGzHz4T2Dnm9eNzqR1HTtwAcP2u6GhcpOq/yez8YQ6WG",
+      "password": "$2a$10$yFZS26PPA6dR.Z4npth3X.f2KhlRX4KUg.5UwP.uPh4qh0ZQ.zDR.",
       "role": "client",
       "createdAt": "2026-09-07T16:41:21.999Z",
       "updatedAt": "2026-09-07T16:41:22.000Z"
@@ -360,6 +398,96 @@
       "role": "client",
       "createdAt": "2026-09-08T10:20:12.032Z",
       "updatedAt": "2026-09-08T10:20:12.032Z"
+    },
+    {
+      "_id": "28b3225b-be15-41b7-88a8-8d6df26734e5",
+      "name": "QA Test Client Updated",
+      "email": "qa.client.1788866502129@example.com",
+      "phone": "",
+      "company": "QA Enterprise Global",
+      "password": "$2a$10$3vqORyZtek2FSoRwot3hVut5EJjH89XC7Gh9aBPNFcV4KlyM9nfry",
+      "role": "client",
+      "createdAt": "2026-09-08T11:21:42.195Z",
+      "updatedAt": "2026-09-08T11:21:42.277Z",
+      "lastLogin": "2026-09-08T11:21:42.264Z",
+      "resetPasswordToken": "7b5888b53ba8dce2950ae8791bd41a0cb6980a5e30cc71a9f05b5caa94b45cc3",
+      "resetPasswordExpires": "2026-09-08T12:21:42.277Z"
+    }
+  ],
+  "coupons": [
+    {
+      "_id": "7b8c2286-a476-474e-9caa-3e00cbd081d5",
+      "code_hash": "79fa7dc1acae2e717a46ea26540f378428f820fd8c9144cc0f9d353f37b1ebfc",
+      "code_mask": "DEV-****-****-5EHH",
+      "discount_percentage": 20,
+      "active": true,
+      "expires_at": "2027-09-08T10:45:00.256Z",
+      "max_uses": 100,
+      "used_count": 2,
+      "user_restriction": null,
+      "notes": "Standard Private Client Incentive (20% Off)",
+      "createdAt": "2026-09-08T10:45:00.257Z",
+      "updatedAt": "2026-09-08T11:21:42.301Z"
+    },
+    {
+      "_id": "0200ccc4-fa6f-481d-b737-21bc990a6c93",
+      "code_hash": "bed07d69e8dc093caf72d565fbf5502571352d89c7d7687a47798f2f3042dbdd",
+      "code_mask": "DEV-****-****-DRLA",
+      "discount_percentage": 50,
+      "active": true,
+      "expires_at": "2027-09-08T10:45:00.256Z",
+      "max_uses": 50,
+      "used_count": 0,
+      "user_restriction": null,
+      "notes": "Exclusive Partner & Startup Grant (50% Off)",
+      "createdAt": "2026-09-08T10:45:00.257Z",
+      "updatedAt": "2026-09-08T10:45:00.257Z"
+    },
+    {
+      "_id": "4d8a6f27-3901-4e8e-92cc-631a338ae31e",
+      "code_hash": "24d6713049236d02a67e6a3dae4c0c155d0d7c8ed1dc07648300af71cd569b2a",
+      "code_mask": "DEV-****-****-836Z",
+      "discount_percentage": 95,
+      "active": true,
+      "expires_at": "2027-09-08T10:45:00.256Z",
+      "max_uses": 10,
+      "used_count": 0,
+      "user_restriction": null,
+      "notes": "VIP Studio Leadership Pass (95% Off)",
+      "createdAt": "2026-09-08T10:45:00.257Z",
+      "updatedAt": "2026-09-08T10:45:00.257Z"
+    }
+  ],
+  "couponUsages": [
+    {
+      "_id": "3f8233fb-b9d8-4c44-ac9f-759ebec5fb0b",
+      "coupon_id": "7b8c2286-a476-474e-9caa-3e00cbd081d5",
+      "code_mask": "DEV-****-****-5EHH",
+      "discount_percentage": 20,
+      "user_id": null,
+      "user_email": "qa.client.1788866451925@example.com",
+      "order_id": "ORD-1788866451955",
+      "original_amount": 50000,
+      "discount_amount": 10000,
+      "final_amount": 40000,
+      "notes": "QA Automated Redemption Test",
+      "createdAt": "2026-09-08T11:20:51.958Z",
+      "updatedAt": "2026-09-08T11:20:51.958Z"
+    },
+    {
+      "_id": "4bf9ef50-7854-43fc-aadd-4daf13d8e766",
+      "coupon_id": "7b8c2286-a476-474e-9caa-3e00cbd081d5",
+      "code_mask": "DEV-****-****-5EHH",
+      "discount_percentage": 20,
+      "user_id": null,
+      "user_email": "qa.client.1788866502129@example.com",
+      "order_id": "ORD-1788866502299",
+      "original_amount": 50000,
+      "discount_amount": 10000,
+      "final_amount": 40000,
+      "notes": "QA Automated Redemption Test",
+      "createdAt": "2026-09-08T11:21:42.302Z",
+      "updatedAt": "2026-09-08T11:21:42.302Z"
     }
   ]
 }

@@ -5,9 +5,11 @@ const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 const config = require('../config/env');
 const logger = require('./logger');
+const couponSecurity = require('./couponSecurity');
 
 const DB_DIR = path.join(__dirname, '../../database');
 const DB_FILE = path.join(DB_DIR, 'store.json');
+const PRIVATE_COUPONS_FILE = path.join(DB_DIR, '.devcraft_private_coupons.json');
 
 // Ensure database directory exists
 if (!fs.existsSync(DB_DIR)) {
@@ -19,7 +21,9 @@ let localDb = {
   admins: [],
   users: [],
   projects: [],
-  enquiries: []
+  enquiries: [],
+  coupons: [],
+  couponUsages: []
 };
 
 const loadLocalDb = () => {
@@ -31,6 +35,8 @@ const loadLocalDb = () => {
       if (!localDb.admins) localDb.admins = [];
       if (!localDb.projects) localDb.projects = [];
       if (!localDb.enquiries) localDb.enquiries = [];
+      if (!localDb.coupons) localDb.coupons = [];
+      if (!localDb.couponUsages) localDb.couponUsages = [];
     } else {
       saveLocalDb();
     }
@@ -230,8 +236,106 @@ const seedInitialData = async () => {
 
       saveLocalDb();
     }
+
+    // Seed Initial 3 Private Coupon Offers (Hashed & Non-public)
+    await seedPrivateCoupons();
   } catch (err) {
     logger.error('Error during data seeding', err);
+  }
+};
+
+const seedPrivateCoupons = async () => {
+  try {
+    let privateSeeds = [];
+    if (fs.existsSync(PRIVATE_COUPONS_FILE)) {
+      try {
+        const raw = fs.readFileSync(PRIVATE_COUPONS_FILE, 'utf8').replace(/^\uFEFF/, '');
+        privateSeeds = JSON.parse(raw);
+      } catch (_) {}
+    }
+
+    if (!Array.isArray(privateSeeds) || privateSeeds.length < 3) {
+      privateSeeds = [
+        {
+          offerName: 'Offer 1: 20% Discount',
+          discountPercentage: 20,
+          rawCode: couponSecurity.generateCouponCode(),
+          maxUses: 100,
+          expiresAt: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString(),
+          userRestriction: null,
+          notes: 'Standard Private Client Incentive (20% Off)'
+        },
+        {
+          offerName: 'Offer 2: 50% Discount',
+          discountPercentage: 50,
+          rawCode: couponSecurity.generateCouponCode(),
+          maxUses: 50,
+          expiresAt: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString(),
+          userRestriction: null,
+          notes: 'Exclusive Partner & Startup Grant (50% Off)'
+        },
+        {
+          offerName: 'Offer 3: 95% Discount',
+          discountPercentage: 95,
+          rawCode: couponSecurity.generateCouponCode(),
+          maxUses: 10,
+          expiresAt: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString(),
+          userRestriction: null,
+          notes: 'VIP Studio Leadership Pass (95% Off)'
+        }
+      ];
+      fs.writeFileSync(PRIVATE_COUPONS_FILE, JSON.stringify(privateSeeds, null, 2), 'utf8');
+      logger.info('Generated initial 3 cryptographically unique private coupon offers');
+    }
+
+    if (isMongoActive()) {
+      const Coupon = require('../models/Coupon');
+      for (const item of privateSeeds) {
+        const hash = couponSecurity.hashCouponCode(item.rawCode);
+        const existing = await Coupon.findOne({ code_hash: hash });
+        if (!existing) {
+          await Coupon.create({
+            code_hash: hash,
+            code_mask: couponSecurity.maskCouponCode(item.rawCode),
+            discount_percentage: item.discountPercentage,
+            active: true,
+            expires_at: item.expiresAt,
+            max_uses: item.maxUses,
+            used_count: 0,
+            user_restriction: item.userRestriction,
+            notes: item.notes
+          });
+        }
+      }
+      logger.success('Private coupon hashes active in MongoDB');
+    } else {
+      loadLocalDb();
+      if (!localDb.coupons) localDb.coupons = [];
+      for (const item of privateSeeds) {
+        const hash = couponSecurity.hashCouponCode(item.rawCode);
+        const exists = localDb.coupons.some(c => c.code_hash === hash);
+        if (!exists) {
+          localDb.coupons.push({
+            _id: crypto.randomUUID(),
+            code_hash: hash,
+            code_mask: couponSecurity.maskCouponCode(item.rawCode),
+            discount_percentage: item.discountPercentage,
+            active: true,
+            expires_at: item.expiresAt,
+            max_uses: item.maxUses,
+            used_count: 0,
+            user_restriction: item.userRestriction,
+            notes: item.notes,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+          });
+        }
+      }
+      saveLocalDb();
+      logger.success('Private coupon hashes active in document store');
+    }
+  } catch (err) {
+    logger.error('Error seeding private coupons', err);
   }
 };
 
@@ -319,6 +423,49 @@ const dbService = {
       }
       loadLocalDb();
       return localDb.users.map(({ password, ...safe }) => safe).reverse();
+    },
+    findByIdWithPassword: async (id) => {
+      if (isMongoActive()) {
+        const User = require('../models/User');
+        return await User.findById(id);
+      }
+      loadLocalDb();
+      const user = localDb.users.find(u => u._id === id);
+      return user ? { ...user } : null;
+    },
+    findByIdAndUpdate: async (id, updateData) => {
+      if (isMongoActive()) {
+        const User = require('../models/User');
+        return await User.findByIdAndUpdate(id, updateData, { new: true, runValidators: true });
+      }
+      loadLocalDb();
+      const idx = localDb.users.findIndex(u => u._id === id);
+      if (idx === -1) return null;
+      localDb.users[idx] = {
+        ...localDb.users[idx],
+        ...updateData,
+        updatedAt: new Date().toISOString()
+      };
+      saveLocalDb();
+      const { password, ...safeUser } = localDb.users[idx];
+      return safeUser;
+    },
+    findByResetToken: async (tokenHash) => {
+      if (isMongoActive()) {
+        const User = require('../models/User');
+        return await User.findOne({
+          resetPasswordToken: tokenHash,
+          resetPasswordExpires: { $gt: new Date() }
+        });
+      }
+      loadLocalDb();
+      const now = Date.now();
+      const user = localDb.users.find(u => 
+        u.resetPasswordToken === tokenHash && 
+        u.resetPasswordExpires && 
+        new Date(u.resetPasswordExpires).getTime() > now
+      );
+      return user ? { ...user } : null;
     },
     countDocuments: async (filter = {}) => {
       if (isMongoActive()) {
@@ -523,6 +670,191 @@ const dbService = {
       return localDb.enquiries.filter(e => {
         for (const [k, v] of Object.entries(filter)) {
           if (e[k] !== v) return false;
+        }
+        return true;
+      }).length;
+    }
+  },
+
+  getPrivateCouponsSeed: () => {
+    if (fs.existsSync(PRIVATE_COUPONS_FILE)) {
+      try {
+        const raw = fs.readFileSync(PRIVATE_COUPONS_FILE, 'utf8').replace(/^\uFEFF/, '');
+        return JSON.parse(raw);
+      } catch (_) {}
+    }
+    return [];
+  },
+
+  Coupon: {
+    findOne: async (query) => {
+      if (isMongoActive()) {
+        const Coupon = require('../models/Coupon');
+        return await Coupon.findOne(query);
+      }
+      loadLocalDb();
+      const coupon = localDb.coupons.find(c => {
+        if (query.code_hash && c.code_hash !== query.code_hash) return false;
+        if (query.active !== undefined && c.active !== query.active) return false;
+        if (query._id && c._id !== query._id) return false;
+        return true;
+      });
+      return coupon ? { ...coupon } : null;
+    },
+    findById: async (id) => {
+      if (isMongoActive()) {
+        const Coupon = require('../models/Coupon');
+        return await Coupon.findById(id);
+      }
+      loadLocalDb();
+      const coupon = localDb.coupons.find(c => c._id === id);
+      return coupon ? { ...coupon } : null;
+    },
+    find: async (filter = {}) => {
+      if (isMongoActive()) {
+        const Coupon = require('../models/Coupon');
+        let q = {};
+        if (filter.active !== undefined) q.active = filter.active;
+        if (filter.discount_percentage) q.discount_percentage = filter.discount_percentage;
+        return await Coupon.find(q).sort({ createdAt: -1 });
+      }
+      loadLocalDb();
+      let list = [...localDb.coupons];
+      if (filter.active !== undefined) {
+        list = list.filter(c => c.active === filter.active);
+      }
+      if (filter.discount_percentage) {
+        list = list.filter(c => c.discount_percentage === Number(filter.discount_percentage));
+      }
+      return list.reverse();
+    },
+    create: async (data) => {
+      if (isMongoActive()) {
+        const Coupon = require('../models/Coupon');
+        return await Coupon.create(data);
+      }
+      loadLocalDb();
+      const newCoupon = {
+        _id: crypto.randomUUID(),
+        code_hash: data.code_hash,
+        code_mask: data.code_mask,
+        discount_percentage: Number(data.discount_percentage),
+        active: data.active !== undefined ? Boolean(data.active) : true,
+        expires_at: data.expires_at || null,
+        max_uses: Number(data.max_uses) || 1,
+        used_count: Number(data.used_count) || 0,
+        user_restriction: data.user_restriction ? data.user_restriction.toLowerCase().trim() : null,
+        notes: data.notes || '',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+      localDb.coupons.push(newCoupon);
+      saveLocalDb();
+      return newCoupon;
+    },
+    findByIdAndUpdate: async (id, updateData) => {
+      if (isMongoActive()) {
+        const Coupon = require('../models/Coupon');
+        return await Coupon.findByIdAndUpdate(id, updateData, { new: true, runValidators: true });
+      }
+      loadLocalDb();
+      const idx = localDb.coupons.findIndex(c => c._id === id);
+      if (idx === -1) return null;
+      localDb.coupons[idx] = {
+        ...localDb.coupons[idx],
+        ...updateData,
+        updatedAt: new Date().toISOString()
+      };
+      saveLocalDb();
+      return { ...localDb.coupons[idx] };
+    },
+    findByIdAndDelete: async (id) => {
+      if (isMongoActive()) {
+        const Coupon = require('../models/Coupon');
+        return await Coupon.findByIdAndDelete(id);
+      }
+      loadLocalDb();
+      const idx = localDb.coupons.findIndex(c => c._id === id);
+      if (idx === -1) return null;
+      const removed = localDb.coupons.splice(idx, 1)[0];
+      saveLocalDb();
+      return removed;
+    },
+    countDocuments: async (filter = {}) => {
+      if (isMongoActive()) {
+        const Coupon = require('../models/Coupon');
+        return await Coupon.countDocuments(filter);
+      }
+      loadLocalDb();
+      if (!filter || Object.keys(filter).length === 0) return localDb.coupons.length;
+      return localDb.coupons.filter(c => {
+        for (const [k, v] of Object.entries(filter)) {
+          if (c[k] !== v) return false;
+        }
+        return true;
+      }).length;
+    }
+  },
+
+  CouponUsage: {
+    create: async (data) => {
+      if (isMongoActive()) {
+        const CouponUsage = require('../models/CouponUsage');
+        return await CouponUsage.create(data);
+      }
+      loadLocalDb();
+      const newUsage = {
+        _id: crypto.randomUUID(),
+        coupon_id: data.coupon_id,
+        code_mask: data.code_mask,
+        discount_percentage: Number(data.discount_percentage),
+        user_id: data.user_id || null,
+        user_email: data.user_email ? data.user_email.toLowerCase().trim() : null,
+        order_id: data.order_id,
+        original_amount: Number(data.original_amount),
+        discount_amount: Number(data.discount_amount),
+        final_amount: Number(data.final_amount),
+        notes: data.notes || '',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+      localDb.couponUsages.push(newUsage);
+      saveLocalDb();
+      return newUsage;
+    },
+    find: async (filter = {}) => {
+      if (isMongoActive()) {
+        const CouponUsage = require('../models/CouponUsage');
+        let q = {};
+        if (filter.user_email) q.user_email = filter.user_email.toLowerCase();
+        if (filter.user_id) q.user_id = filter.user_id;
+        if (filter.coupon_id) q.coupon_id = filter.coupon_id;
+        return await CouponUsage.find(q).sort({ createdAt: -1 });
+      }
+      loadLocalDb();
+      let list = [...localDb.couponUsages];
+      if (filter.user_email) {
+        const em = filter.user_email.toLowerCase().trim();
+        list = list.filter(u => u.user_email && u.user_email.toLowerCase() === em);
+      }
+      if (filter.user_id) {
+        list = list.filter(u => u.user_id === filter.user_id);
+      }
+      if (filter.coupon_id) {
+        list = list.filter(u => u.coupon_id === filter.coupon_id);
+      }
+      return list.reverse();
+    },
+    countDocuments: async (filter = {}) => {
+      if (isMongoActive()) {
+        const CouponUsage = require('../models/CouponUsage');
+        return await CouponUsage.countDocuments(filter);
+      }
+      loadLocalDb();
+      if (!filter || Object.keys(filter).length === 0) return localDb.couponUsages.length;
+      return localDb.couponUsages.filter(u => {
+        for (const [k, v] of Object.entries(filter)) {
+          if (u[k] !== v) return false;
         }
         return true;
       }).length;

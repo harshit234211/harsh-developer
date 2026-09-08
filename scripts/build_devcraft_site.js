@@ -980,6 +980,7 @@ function renderClientDataScripts() {
 
   <!-- DevCraft Core Scripts -->
   <script src="/js/api.js"></script>
+  <script src="/js/devcraft-auth.js"></script>
   <script src="/js/devcraft-demos.js"></script>
   <script src="/js/three-scene.js"></script>
   <script src="/js/main.js"></script>

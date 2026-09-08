@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Client Workspace Dashboard | DEVCRAFT Studio</title>
+  <meta name="description" content="View commissioned project requests, track sprint milestones, and launch interactive demo simulators." />
+  <link rel="icon" type="image/svg+xml" href="/assets/images/avatar-harshit.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/responsive.css" />
+</head>
+<body data-theme="futuristic-dev">
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="/" class="brand-logo" aria-label="DEVCRAFT Home">
+        <div class="brand-badge-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="16 18 22 12 16 6"></polyline>
+            <polyline points="8 6 2 12 8 18"></polyline>
+          </svg>
+        </div>
+        <div class="brand-name">DEV<span>CRAFT</span></div>
+        <span class="brand-tagline-mini">PORTAL</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="/services" class="nav-link">Services</a></li>
+        <li><a href="/projects" class="nav-link">Demos</a></li>
+        <li><a href="/dashboard" class="nav-link active">Dashboard</a></li>
+        <li><a href="/profile" class="nav-link">My Profile</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="/profile" class="user-nav-chip">
+          <span class="user-avatar-initials" id="dash-nav-initials">U</span>
+          <span class="user-chip-name" id="dash-nav-name">Client</span>
+        </a>
+        <a href="/contact" class="btn btn-primary btn-sm btn-start-project-nav">+ Start Project</a>
+        <button onclick="DevCraftAuth.logout()" class="btn btn-ghost btn-sm text-muted">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Dashboard Main View -->
+  <main style="padding: 120px 0 80px; min-height: 85vh;">
+    <div class="container">
+      <!-- Welcome Header Banner -->
+      <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-glass); border-radius: 20px; padding: 32px; margin-bottom: 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+        <div>
+          <div style="display: inline-flex; align-items: center; gap: 8px; font-size: 0.82rem; color: var(--accent); text-transform: uppercase; font-weight: 700; letter-spacing: 1px; margin-bottom: 8px;">
+            <span class="status-dot"></span> Authenticated Client Workspace
+          </div>
+          <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 6px;">
+            Welcome, <span id="dash-user-greeting" class="text-gradient">Valued Client</span> 👋
+          </h1>
+          <p style="color: var(--text-muted); font-size: 0.92rem;" id="dash-user-sub">
+            Connected as client account. Track your sprint proposals and test production staging sandboxes.
+          </p>
+        </div>
+
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <a href="/contact" class="btn btn-primary" style="padding: 10px 20px; font-weight: 700;">
+            + Commission New Project
+          </a>
+          <a href="/profile" class="btn btn-outline" style="padding: 10px 20px;">
+            Account Settings ⚙️
+          </a>
+        </div>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="dashboard-grid">
+        <div class="dashboard-stat-card">
+          <span style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Total Inquiries</span>
+          <span class="stat-val text-gradient" id="stat-my-total">0</span>
+          <small style="color: var(--text-muted);">Submitted project scopes</small>
+        </div>
+
+        <div class="dashboard-stat-card">
+          <span style="font-size: 0.8rem; color: #f59e0b; text-transform: uppercase; font-weight: 600;">Active Sprints</span>
+          <span class="stat-val" style="color: #f59e0b;" id="stat-my-active">0</span>
+          <small style="color: var(--text-muted);">In progress or review</small>
+        </div>
+
+        <div class="dashboard-stat-card">
+          <span style="font-size: 0.8rem; color: var(--emerald); text-transform: uppercase; font-weight: 600;">Completed Projects</span>
+          <span class="stat-val text-emerald" id="stat-my-completed">0</span>
+          <small style="color: var(--text-muted);">Shipped & deployed</small>
+        </div>
+
+        <div class="dashboard-stat-card">
+          <span style="font-size: 0.8rem; color: var(--accent); text-transform: uppercase; font-weight: 600;">Saved Showcases</span>
+          <span class="stat-val" style="color: var(--accent);" id="stat-my-demos">0</span>
+          <small style="color: var(--text-muted);">Bookmarked tech demos</small>
+        </div>
+      </div>
+
+      <!-- Tabs Navigation -->
+      <div class="dashboard-tabs-bar">
+        <button class="dash-tab-btn active" onclick="switchDashTab('requests', this)">📋 My Project Requests</button>
+        <button class="dash-tab-btn" onclick="switchDashTab('demos', this)">⭐ Bookmarked Demos</button>
+        <button class="dash-tab-btn" onclick="switchDashTab('coupons', this)">🎟️ Applied Coupon Discounts</button>
+        <button class="dash-tab-btn" onclick="switchDashTab('activity', this)">🕒 Recent Activity</button>
+      </div>
+
+      <!-- TAB 1: My Project Requests -->
+      <div id="dash-pane-requests" class="dash-tab-pane active">
+        <div style="background: rgba(13, 17, 23, 0.7); border: 1px solid var(--border-glass); border-radius: 16px; padding: 24px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+            <div>
+              <h3 style="font-size: 1.2rem; font-weight: 700;">Project Commission Roster</h3>
+              <p style="color: var(--text-muted); font-size: 0.85rem;">All software requests linked directly to your authenticated email.</p>
+            </div>
+            <button onclick="loadUserDashboard()" class="btn btn-xs btn-outline">🔄 Refresh</button>
+          </div>
+
+          <div id="requests-loading" style="text-align: center; padding: 40px; color: var(--text-muted);">
+            Loading your project requests...
+          </div>
+
+          <div id="requests-empty" style="display: none; text-align: center; padding: 50px 20px; border: 1px dashed var(--border-glass); border-radius: 12px;">
+            <p style="color: var(--text-secondary); margin-bottom: 16px; font-size: 0.95rem;">You have not submitted any project enquiries yet.</p>
+            <a href="/contact" class="btn btn-primary btn-sm">Start Your First Project →</a>
+          </div>
+
+          <div class="table-container" id="requests-table-wrap" style="display: none;">
+            <table class="devcraft-table">
+              <thead>
+                <tr>
+                  <th>Requested Service</th>
+                  <th>Budget Estimate</th>
+                  <th>Timeline</th>
+                  <th>Current Status</th>
+                  <th>Date Submitted</th>
+                </tr>
+              </thead>
+              <tbody id="requests-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: Bookmarked Demos -->
+      <div id="dash-pane-demos" class="dash-tab-pane">
+        <div style="background: rgba(13, 17, 23, 0.7); border: 1px solid var(--border-glass); border-radius: 16px; padding: 24px;">
+          <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 8px;">Saved Interactive Demos</h3>
+          <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 24px;">Quickly jump into test environments you have bookmarked.</p>
+          
+          <div class="novacart-catalog-grid" id="saved-demos-grid">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: Applied Coupons -->
+      <div id="dash-pane-coupons" class="dash-tab-pane">
+        <div style="background: rgba(13, 17, 23, 0.7); border: 1px solid var(--border-glass); border-radius: 16px; padding: 24px;">
+          <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 8px;">My Redeemed Coupon Discounts</h3>
+          <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">Review discounts securely applied to your commissioned orders and project invoices.</p>
+          
+          <div id="user-coupons-loading" style="text-align: center; padding: 30px; color: var(--text-muted);">
+            Checking redeemed coupons...
+          </div>
+          <div id="user-coupons-empty" style="display: none; text-align: center; padding: 40px; border: 1px dashed var(--border-glass); border-radius: 12px; color: var(--text-muted);">
+            No coupons redeemed on this account yet. Valid promo codes can be applied during project checkout.
+          </div>
+          <div class="table-container" id="user-coupons-table-wrap" style="display: none;">
+            <table class="devcraft-table">
+              <thead>
+                <tr>
+                  <th>Order Reference</th>
+                  <th>Discount Rate</th>
+                  <th>Amount Saved</th>
+                  <th>Final Payable</th>
+                  <th>Redemption Date</th>
+                </tr>
+              </thead>
+              <tbody id="user-coupons-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 4: Recent Activity -->
+      <div id="dash-pane-activity" class="dash-tab-pane">
+        <div style="background: rgba(13, 17, 23, 0.7); border: 1px solid var(--border-glass); border-radius: 16px; padding: 24px;">
+          <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 16px;">Account Audit &amp; Event Stream</h3>
+          <ul id="activity-stream-list" style="list-style: none; display: flex; flex-direction: column; gap: 14px; padding: 0;">
+            <!-- Rendered by JS -->
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="/js/devcraft-auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Protected Route Guard
+      if (!DevCraftAuth.protectRoute()) return;
+
+      await loadUserDashboard();
+    });
+
+    function switchDashTab(tabKey, btn) {
+      document.querySelectorAll('.dash-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.dash-tab-pane').forEach(p => p.classList.remove('active'));
+
+      btn.classList.add('active');
+      const targetPane = document.getElementById(`dash-pane-${tabKey}`);
+      if (targetPane) targetPane.classList.add('active');
+    }
+
+    async function loadUserDashboard() {
+      const token = DevCraftAuth.getToken();
+      if (!token) return;
+
+      try {
+        // Fetch User Me & Stats
+        const meRes = await fetch('/api/users/me', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        if (!meRes.ok) {
+          DevCraftAuth.logout();
+          return;
+        }
+
+        const meData = await meRes.json();
+        const user = meData.user;
+        const stats = meData.stats || {};
+
+        document.getElementById('dash-user-greeting').textContent = user.name;
+        document.getElementById('dash-user-sub').textContent = `Connected as ${user.email} (${user.company || 'Private Client'}).`;
+        document.getElementById('dash-nav-name').textContent = user.name.split(' ')[0];
+        document.getElementById('dash-nav-initials').textContent = user.name.slice(0, 2).toUpperCase();
+
+        document.getElementById('stat-my-total').textContent = stats.totalEnquiries || 0;
+        document.getElementById('stat-my-active').textContent = stats.activeEnquiries || 0;
+        document.getElementById('stat-my-completed').textContent = stats.completedEnquiries || 0;
+        document.getElementById('stat-my-demos').textContent = stats.savedDemosCount || 0;
+
+        // Fetch User's Inquiries
+        await loadMyEnquiries(token);
+
+        // Fetch User's Redeemed Coupons
+        await loadMyCoupons(token);
+
+        // Render Saved Demos
+        renderSavedDemos(user.savedDemos || []);
+
+        // Render Activity Feed
+        renderActivityFeed(user);
+      } catch (err) {
+        console.error('Error loading dashboard:', err);
+      }
+    }
+
+    async function loadMyEnquiries(token) {
+      const loadingEl = document.getElementById('requests-loading');
+      const emptyEl = document.getElementById('requests-empty');
+      const tableWrap = document.getElementById('requests-table-wrap');
+      const tbody = document.getElementById('requests-table-body');
+
+      try {
+        const res = await fetch('/api/users/my-enquiries', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await res.json();
+        const enquiries = data.enquiries || [];
+
+        loadingEl.style.display = 'none';
+
+        if (enquiries.length === 0) {
+          emptyEl.style.display = 'block';
+          tableWrap.style.display = 'none';
+          return;
+        }
+
+        emptyEl.style.display = 'none';
+        tableWrap.style.display = 'block';
+
+        tbody.innerHTML = enquiries.map(e => {
+          let statusClass = 'chip-pending';
+          if (e.status === 'In Progress') statusClass = 'chip-active';
+          if (e.status === 'Completed') statusClass = 'chip-active';
+          return `
+            <tr>
+              <td>
+                <strong>${e.service || 'Custom Development'}</strong>
+                <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;">${e.projectType || 'Standard Sprint'}</div>
+              </td>
+              <td style="color: var(--accent); font-weight: 600;">${e.budget || 'Custom Quote'}</td>
+              <td>${e.deadline || 'Flexible'}</td>
+              <td><span class="status-chip ${statusClass}">${e.status || 'New'}</span></td>
+              <td style="color: var(--text-muted); font-size: 0.8rem;">${new Date(e.createdAt).toLocaleDateString()}</td>
+            </tr>
+          `;
+        }).join('');
+      } catch (err) {
+        loadingEl.textContent = 'Failed to load project requests. Please try refreshing.';
+      }
+    }
+
+    async function loadMyCoupons(token) {
+      const loadingEl = document.getElementById('user-coupons-loading');
+      const emptyEl = document.getElementById('user-coupons-empty');
+      const tableWrap = document.getElementById('user-coupons-table-wrap');
+      const tbody = document.getElementById('user-coupons-table-body');
+
+      try {
+        const res = await fetch('/api/coupons/my-usages', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await res.json();
+        const usages = data.usages || [];
+
+        loadingEl.style.display = 'none';
+
+        if (usages.length === 0) {
+          emptyEl.style.display = 'block';
+          tableWrap.style.display = 'none';
+          return;
+        }
+
+        emptyEl.style.display = 'none';
+        tableWrap.style.display = 'block';
+
+        tbody.innerHTML = usages.map(u => `
+          <tr>
+            <td><code>${u.order_id || 'DC-ORD-77492'}</code></td>
+            <td class="text-emerald"><strong>${u.discount_percentage}% OFF</strong></td>
+            <td>₹${(u.discount_amount || 0).toLocaleString()}</td>
+            <td style="font-weight: 700;">₹${(u.final_amount || 0).toLocaleString()}</td>
+            <td style="color: var(--text-muted); font-size: 0.8rem;">${new Date(u.createdAt).toLocaleDateString()}</td>
+          </tr>
+        `).join('');
+      } catch (err) {
+        loadingEl.textContent = 'Unable to fetch coupon history.';
+      }
+    }
+
+    function renderSavedDemos(savedList) {
+      const grid = document.getElementById('saved-demos-grid');
+      if (!savedList || savedList.length === 0) {
+        grid.innerHTML = `
+          <div style="grid-column: 1/-1; text-align: center; padding: 40px; border: 1px dashed var(--border-glass); border-radius: 12px; color: var(--text-muted);">
+            No tech demos bookmarked yet. Visit the <a href="/projects" style="color: var(--accent);">Demos Showcase</a> to launch and save simulators!
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = savedList.map(id => `
+        <div class="novacart-product-card" style="padding: 20px;">
+          <h4 style="margin-bottom: 6px; text-transform: uppercase;">${id}</h4>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">Interactive Production Simulator</p>
+          <a href="/projects#demos" class="btn btn-xs btn-primary btn-block">Launch Demo Simulator 🚀</a>
+        </div>
+      `).join('');
+    }
+
+    function renderActivityFeed(user) {
+      const list = document.getElementById('activity-stream-list');
+      list.innerHTML = `
+        <li style="display: flex; gap: 12px; align-items: center; font-size: 0.85rem;">
+          <span style="color: var(--emerald);">●</span>
+          <div>
+            <strong>Session Authenticated</strong> — Logged into client portal successfully.
+            <div style="font-size: 0.75rem; color: var(--text-muted);">${new Date().toLocaleString()}</div>
+          </div>
+        </li>
+        <li style="display: flex; gap: 12px; align-items: center; font-size: 0.85rem;">
+          <span style="color: var(--accent);">●</span>
+          <div>
+            <strong>Account Registered</strong> — Profile verified under <code>${user.email}</code>.
+            <div style="font-size: 0.75rem; color: var(--text-muted);">${new Date(user.createdAt || Date.now()).toLocaleDateString()}</div>
+          </div>
+        </li>
+      `;
+    }
+  </script>
+</body>
+</html>

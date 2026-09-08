@@ -39,7 +39,7 @@ const navbar = (active = 'home') => `
         <li><a href="#pricing" class="nav-link">Pricing</a></li>
         <li><a href="#about" class="nav-link">About</a></li>
         <li><a href="#contact" class="nav-link ${active === 'contact' ? 'active' : ''}">Contact</a></li>
-        <li><a href="/client-portal" class="nav-link client-nav-link">Client Portal</a></li>
+        <li class="auth-group-logged-in" style="display: none;"><a href="/dashboard" class="nav-link">Dashboard</a></li>
       </ul>
 
       <div class="nav-actions">
@@ -75,7 +75,22 @@ const navbar = (active = 'home') => `
           </div>
         </div>
 
-        <a href="#contact" class="btn btn-primary btn-sm btn-start-project-nav">Start a Project</a>
+        <!-- Logged Out Auth Buttons -->
+        <div class="auth-group-logged-out" style="display: flex; gap: 8px; align-items: center;">
+          <a href="/login" class="btn btn-ghost btn-sm">Sign In</a>
+          <a href="/register" class="btn btn-outline btn-sm">Register</a>
+          <a href="#contact" class="btn btn-primary btn-sm btn-start-project-nav">Start Project</a>
+        </div>
+
+        <!-- Logged In Auth Buttons -->
+        <div class="auth-group-logged-in" style="display: none; align-items: center; gap: 8px;">
+          <a href="/dashboard" class="user-nav-chip" title="My Dashboard">
+            <span class="user-avatar-initials nav-user-initials">U</span>
+            <span class="user-chip-name nav-user-name">Client</span>
+          </a>
+          <a href="/dashboard" class="btn btn-xs btn-outline">Dashboard</a>
+          <button onclick="DevCraftAuth.logout()" class="btn btn-xs btn-ghost text-muted" title="Logout">Logout</button>
+        </div>
 
         <button class="mobile-toggle" id="mobile-toggle-btn" aria-label="Toggle menu">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -104,8 +119,21 @@ const navbar = (active = 'home') => `
       <a href="#pricing" class="mobile-nav-link">Pricing & Calculator <span>→</span></a>
       <a href="#about" class="mobile-nav-link">About DevCraft Studio <span>→</span></a>
       <a href="#contact" class="mobile-nav-link">Project Inquiry Form <span>→</span></a>
-      <a href="/client-portal" class="mobile-nav-link" style="color: var(--accent);">Client Portal Access <span>👤</span></a>
-      <a href="/admin-login" class="mobile-nav-link" style="color: var(--warning);">Admin Portal <span>🔒</span></a>
+
+      <!-- Mobile Auth Logged Out -->
+      <div class="auth-group-logged-out" style="display: flex; flex-direction: column; gap: 8px; margin: 8px 0;">
+        <a href="/login" class="mobile-nav-link" style="color: var(--accent);">Sign In <span>🔑</span></a>
+        <a href="/register" class="mobile-nav-link" style="color: var(--emerald);">Create Client Account <span>👤</span></a>
+      </div>
+
+      <!-- Mobile Auth Logged In -->
+      <div class="auth-group-logged-in" style="display: none; flex-direction: column; gap: 8px; margin: 8px 0;">
+        <a href="/dashboard" class="mobile-nav-link" style="color: var(--accent);">Client Workspace Dashboard <span>📊</span></a>
+        <a href="/profile" class="mobile-nav-link">Profile &amp; Security Settings <span>⚙️</span></a>
+        <a href="javascript:void(0)" onclick="DevCraftAuth.logout()" class="mobile-nav-link" style="color: #ef4444;">Sign Out <span>🚪</span></a>
+      </div>
+
+      <a href="/admin-login" class="mobile-nav-link" style="color: var(--warning);">Studio Admin Login <span>🔒</span></a>
     </div>
 
     <!-- Mobile Theme Switcher -->

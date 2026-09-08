@@ -33,7 +33,8 @@ const createEnquiry = async (req, res, next) => {
       deadline,
       description,
       message,
-      referenceUrl
+      referenceUrl,
+      userId: req.user ? (req.user._id || req.user.id) : null
     });
 
     logger.success(`New project enquiry received from: ${name} (${email}) for service "${service}"`);

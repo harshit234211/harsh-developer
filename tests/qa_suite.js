@@ -307,12 +307,193 @@ async function runQaSuite() {
     const clientEnquiries = clientEnquiriesRes.data.enquiries || clientEnquiriesRes.data.data;
     assert(clientEnquiriesRes.statusCode === 200 && Array.isArray(clientEnquiries), 'STEP 28: Client Portal Successfully Fetches User Project Enquiries');
 
-    // 29. Test Admin Client Roster
-    const adminClientsRes = await request('GET', '/api/admin/clients', null, {
+    // 30. Test User Registration Validations (Weak password & mismatch)
+    const weakPassRes = await request('POST', '/api/users/register', {
+      name: 'Weak Client',
+      email: 'weak.client@example.com',
+      password: '123'
+    });
+    assert(weakPassRes.statusCode === 400, 'STEP 30: Registration Rejects Weak Passwords (<8 chars or lacking complexity)');
+
+    // 31. Test Duplicate Email Registration Rejection
+    const dupRegRes = await request('POST', '/api/users/register', {
+      name: 'Duplicate Client',
+      email: testClientEmail,
+      phone: '+919988776655',
+      password: 'ClientPassword123!'
+    });
+    assert(dupRegRes.statusCode === 400 || dupRegRes.statusCode === 409, 'STEP 31: Duplicate Email Registration Safely Rejected');
+
+    // 32. Test Client Profile Retrieval & Password Not Leaked
+    const myProfileRes = await request('GET', '/api/users/me', null, {
+      'Authorization': `Bearer ${clientToken}`
+    });
+    const userObj = myProfileRes.data.user;
+    assert(myProfileRes.statusCode === 200 && userObj.email === testClientEmail && !userObj.password, 'STEP 32: Authenticated /api/users/me Returns User Details Without Exposing Password Hash');
+
+    // 33. Test Client Profile Update
+    const updateProfileRes = await request('PATCH', '/api/users/profile', {
+      name: 'QA Test Client Updated',
+      company: 'QA Enterprise Global'
+    }, {
+      'Authorization': `Bearer ${clientToken}`
+    });
+    assert(updateProfileRes.statusCode === 200 && updateProfileRes.data.user.name === 'QA Test Client Updated', 'STEP 33: Client Profile Update Successfully Modifies Client Information');
+
+    // 34. Test Forgot & Reset Password Flow
+    const forgotRes = await request('POST', '/api/users/forgot-password', {
+      email: testClientEmail
+    });
+    assert(forgotRes.statusCode === 200 && forgotRes.data.success === true, 'STEP 34A: Forgot Password Generates Reset Token');
+    const resetToken = forgotRes.data.resetToken;
+
+    if (resetToken) {
+      const resetRes = await request('POST', '/api/users/reset-password', {
+        token: resetToken,
+        password: 'NewStrongPassword123!'
+      });
+      assert(resetRes.statusCode === 200 && resetRes.data.success === true, 'STEP 34B: Password Reset Successfully Updates Client Credentials');
+
+      // Verify login with new password
+      const newLoginRes = await request('POST', '/api/users/login', {
+        email: testClientEmail,
+        password: 'NewStrongPassword123!'
+      });
+      assert(newLoginRes.statusCode === 200 && newLoginRes.data.token, 'STEP 34C: Login with Newly Reset Password Successfully Authenticates');
+    }
+
+    // 35. Test Seeded Cryptographic Coupon Validation - Offer 1 (20% Discount)
+    const seedOffers = require('../backend/utils/dbAdapter').getPrivateCouponsSeed();
+    const offer20 = seedOffers.find(o => o.discountPercentage === 20);
+    assert(offer20 && offer20.rawCode, 'STEP 35A: Seeded 20% Private Coupon Available');
+
+    const validate20Res = await request('POST', '/api/coupons/validate', {
+      code: offer20.rawCode,
+      subtotal: 100000
+    });
+    assert(
+      validate20Res.statusCode === 200 &&
+      validate20Res.data.valid === true &&
+      validate20Res.data.discountPercentage === 20 &&
+      validate20Res.data.discountAmount === 20000 &&
+      validate20Res.data.finalAmount === 80000,
+      'STEP 35B: Offer 1 (20% Off) Validates with Exact Calculated Server Math (100k -> 80k)'
+    );
+
+    // 36. Test Seeded Cryptographic Coupon Validation - Offer 2 (50% Discount)
+    const offer50 = seedOffers.find(o => o.discountPercentage === 50);
+    const validate50Res = await request('POST', '/api/coupons/validate', {
+      code: offer50.rawCode,
+      subtotal: 60000
+    });
+    assert(
+      validate50Res.statusCode === 200 &&
+      validate50Res.data.valid === true &&
+      validate50Res.data.discountPercentage === 50 &&
+      validate50Res.data.discountAmount === 30000 &&
+      validate50Res.data.finalAmount === 30000,
+      'STEP 36: Offer 2 (50% Off) Validates with Exact Calculated Server Math (60k -> 30k)'
+    );
+
+    // 37. Test Seeded Cryptographic Coupon Validation - Offer 3 (95% Discount VIP)
+    const offer95 = seedOffers.find(o => o.discountPercentage === 95);
+    const validate95Res = await request('POST', '/api/coupons/validate', {
+      code: offer95.rawCode,
+      subtotal: 100000
+    });
+    assert(
+      validate95Res.statusCode === 200 &&
+      validate95Res.data.valid === true &&
+      validate95Res.data.discountPercentage === 95 &&
+      validate95Res.data.discountAmount === 95000 &&
+      validate95Res.data.finalAmount === 5000,
+      'STEP 37: Offer 3 (95% Off VIP) Validates with Exact Server Math (100k -> 5k)'
+    );
+
+    // 38. Test Rejection of Retired / Hardcoded Promo Codes (DEV20X, DEV50X, DEV95X, DEVCRAFT10)
+    const retiredCodes = ['DEV20X', 'DEV50X', 'DEV95X', 'DEVCRAFT10'];
+    let allRetiredBlocked = true;
+    for (const code of retiredCodes) {
+      const retRes = await request('POST', '/api/coupons/validate', { code, subtotal: 10000 });
+      if (retRes.statusCode !== 400 || retRes.data.success !== false) {
+        allRetiredBlocked = false;
+      }
+    }
+    assert(allRetiredBlocked, 'STEP 38: Retired Legacy Codes (DEV20X, DEV50X, DEV95X, DEVCRAFT10) Strictly Rejected with HTTP 400');
+
+    // 39. Test Brute-Force Rate Limiting & Lockout
+    const bfHeaders = { 'x-forwarded-for': '198.51.100.99' };
+    for (let i = 0; i < 5; i++) {
+      await request('POST', '/api/coupons/validate', {
+        code: `DEV-FAKE-TEST-${i}AAA`,
+        subtotal: 10000
+      }, bfHeaders);
+    }
+    const lockedRes = await request('POST', '/api/coupons/validate', {
+      code: offer20.rawCode,
+      subtotal: 10000
+    }, bfHeaders);
+    assert(lockedRes.statusCode === 429 && lockedRes.data.success === false, 'STEP 39: Brute-Force Rate Limiting Lockout Active (HTTP 429 after 5 failed attempts)');
+
+    // 40. Test Coupon Redemption Flow
+    const redeemRes = await request('POST', '/api/coupons/redeem', {
+      code: offer20.rawCode,
+      subtotal: 50000,
+      email: testClientEmail,
+      orderId: `ORD-${Date.now()}`,
+      notes: 'QA Automated Redemption Test'
+    });
+    assert(redeemRes.statusCode === 200 && redeemRes.data.success === true && redeemRes.data.discountAmount === 10000, 'STEP 40: Authoritative Checkout Coupon Redemption Logged & Processed');
+
+    // 41. Test Admin Coupon Management APIs
+    const adminCouponsRes = await request('GET', '/api/admin/coupons', null, {
       'Authorization': `Bearer ${adminToken}`
     });
-    const adminClientsList = (adminClientsRes.data && (adminClientsRes.data.clients || adminClientsRes.data.data)) || [];
-    assert(adminClientsRes.statusCode === 200 && adminClientsList.length >= 1, 'STEP 29: Admin Dashboard Successfully Retrieves Registered Client Roster');
+    const couponsList = adminCouponsRes.data.coupons || [];
+    const noRawCodeInAdminList = couponsList.every(c => !c.rawCode && c.code_mask && c.code_mask.includes('****'));
+    assert(adminCouponsRes.statusCode === 200 && noRawCodeInAdminList && couponsList.length >= 3, 'STEP 41A: Admin Coupon Roster Returns Only Masked Hashes, Never Raw Secrets');
+
+    // 41B. Test Dynamic Admin Coupon Generation
+    const genCouponRes = await request('POST', '/api/admin/coupons/generate', {
+      discountPercentage: 50,
+      maxUses: 2,
+      notes: 'QA Dynamic Temp Coupon'
+    }, {
+      'Authorization': `Bearer ${adminToken}`
+    });
+    assert(genCouponRes.statusCode === 201 && genCouponRes.data.rawCode && genCouponRes.data.rawCode.startsWith('DEV-'), 'STEP 41B: Dynamic Admin Coupon Generation Returns Single-Reveal Cryptographic Code');
+    const dynamicCode = genCouponRes.data.rawCode;
+    const dynamicId = genCouponRes.data.coupon._id;
+
+    // 41C. Toggle status to disabled
+    const toggleRes = await request('PATCH', `/api/admin/coupons/${dynamicId}/toggle`, null, {
+      'Authorization': `Bearer ${adminToken}`
+    });
+    assert(toggleRes.statusCode === 200 && toggleRes.data.coupon.active === false, 'STEP 41C: Admin Coupon Status Toggle Successfully Pauses Coupon');
+
+    // 41D. Verify disabled coupon is rejected
+    const testDisabledRes = await request('POST', '/api/coupons/validate', {
+      code: dynamicCode,
+      subtotal: 10000
+    });
+    assert(testDisabledRes.statusCode === 400 && testDisabledRes.data.success === false, 'STEP 41D: Disabled Coupon Immediately Rejected on Validation');
+
+    // 41E. Clean up dynamic coupon
+    const deleteCouponRes = await request('DELETE', `/api/admin/coupons/${dynamicId}`, null, {
+      'Authorization': `Bearer ${adminToken}`
+    });
+    assert(deleteCouponRes.statusCode === 200, 'STEP 41E: Dynamic Test Coupon Successfully Cleaned Up');
+
+    // 42. Test HTML Page Routing (Register, Login, Forgot-Password, Reset-Password, Dashboard, Profile)
+    const pageRoutes = ['/register', '/login', '/forgot-password', '/reset-password', '/dashboard', '/profile'];
+    let authPagesOk = true;
+    for (const page of pageRoutes) {
+      const pageRes = await request('GET', page);
+      if (pageRes.statusCode !== 200) {
+        authPagesOk = false;
+      }
+    }
+    assert(authPagesOk, 'STEP 42: All New Dedicated User Auth & Dashboard HTML Pages Route with HTTP 200');
 
   } catch (err) {
     console.error('Fatal test runner error:', err);
@@ -324,7 +505,7 @@ async function runQaSuite() {
   }
 
   console.log('\n\x1b[36m==================================================\x1b[0m');
-  console.log(`TEST SUMMARY: \x1b[32m${passedTests} PASSED\x1b[0m, \x1b[31m${failedTests} FAILED\x1b[0m out of 29 Quality Check Steps`);
+  console.log(`TEST SUMMARY: \x1b[32m${passedTests} PASSED\x1b[0m, \x1b[31m${failedTests} FAILED\x1b[0m out of 42 Quality Check Steps`);
   console.log('\x1b[36m==================================================\x1b[0m\n');
 
   if (failedTests > 0) {

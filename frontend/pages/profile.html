@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Account Settings & Profile | DEVCRAFT Studio</title>
+  <meta name="description" content="Manage your client profile details, security passkeys, and contact information." />
+  <link rel="icon" type="image/svg+xml" href="/assets/images/avatar-harshit.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/responsive.css" />
+</head>
+<body data-theme="futuristic-dev">
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="/" class="brand-logo" aria-label="DEVCRAFT Home">
+        <div class="brand-badge-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="16 18 22 12 16 6"></polyline>
+            <polyline points="8 6 2 12 8 18"></polyline>
+          </svg>
+        </div>
+        <div class="brand-name">DEV<span>CRAFT</span></div>
+        <span class="brand-tagline-mini">PORTAL</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="/services" class="nav-link">Services</a></li>
+        <li><a href="/projects" class="nav-link">Demos</a></li>
+        <li><a href="/dashboard" class="nav-link">Dashboard</a></li>
+        <li><a href="/profile" class="nav-link active">My Profile</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="/dashboard" class="btn btn-outline btn-sm">← Back to Dashboard</a>
+        <button onclick="DevCraftAuth.logout()" class="btn btn-ghost btn-sm text-muted">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Profile Main View -->
+  <main style="padding: 120px 0 80px; min-height: 85vh;">
+    <div class="container" style="max-width: 800px;">
+      
+      <div style="margin-bottom: 28px;">
+        <h1 style="font-size: 2rem; font-weight: 800;">Account Settings & Profile</h1>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">Manage your organization profile, contact records, and account credentials.</p>
+      </div>
+
+      <!-- Alerts -->
+      <div id="profile-alert" class="auth-alert"></div>
+
+      <!-- Section 1: Basic Information -->
+      <div style="background: rgba(13, 17, 23, 0.8); border: 1px solid var(--border-glass); border-radius: 18px; padding: 32px; margin-bottom: 32px;">
+        <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 6px;">Profile Information</h3>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">Your primary contact identity used across project inquiries and sprint milestones.</p>
+
+        <form id="profile-info-form" class="auth-form">
+          <div class="form-group">
+            <label class="input-label" for="prof-email">Email Address (Account Identifier)</label>
+            <input type="email" id="prof-email" class="form-control" readonly disabled style="opacity: 0.7; cursor: not-allowed;" />
+            <small style="color: var(--text-muted); font-size: 0.78rem; margin-top: 4px; display: block;">Email is your verified login key and cannot be changed casually.</small>
+          </div>
+
+          <div class="form-group">
+            <label class="input-label" for="prof-name">Full Name *</label>
+            <input type="text" id="prof-name" class="form-control" required />
+          </div>
+
+          <div class="form-group">
+            <label class="input-label" for="prof-phone">Phone Number *</label>
+            <input type="tel" id="prof-phone" class="form-control" required />
+          </div>
+
+          <div class="form-group">
+            <label class="input-label" for="prof-company">Company / Venture Name</label>
+            <input type="text" id="prof-company" class="form-control" placeholder="e.g. Acme Innovations Ltd" />
+          </div>
+
+          <button type="submit" id="prof-save-btn" class="btn btn-primary" style="align-self: flex-start; padding: 10px 24px;">
+            Save Profile Details
+          </button>
+        </form>
+      </div>
+
+      <!-- Section 2: Change Password -->
+      <div style="background: rgba(13, 17, 23, 0.8); border: 1px solid var(--border-glass); border-radius: 18px; padding: 32px; margin-bottom: 32px;">
+        <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 6px;">Security & Password</h3>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">Change your account password securely.</p>
+
+        <form id="password-change-form" class="auth-form">
+          <div class="form-group">
+            <label class="input-label" for="curr-password">Current Password</label>
+            <input type="password" id="curr-password" class="form-control" placeholder="••••••••" required />
+          </div>
+
+          <div class="form-group">
+            <label class="input-label" for="new-pass">New Password (min 8 chars, letters &amp; numbers)</label>
+            <input type="password" id="new-pass" class="form-control" placeholder="••••••••" required />
+          </div>
+
+          <div class="form-group">
+            <label class="input-label" for="confirm-new-pass">Confirm New Password</label>
+            <input type="password" id="confirm-new-pass" class="form-control" placeholder="••••••••" required />
+          </div>
+
+          <button type="submit" id="pass-save-btn" class="btn btn-outline" style="align-self: flex-start; padding: 10px 24px;">
+            Update Password
+          </button>
+        </form>
+      </div>
+
+      <!-- Section 3: Session Controls -->
+      <div style="background: rgba(239, 68, 68, 0.04); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 18px; padding: 28px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+        <div>
+          <h4 style="font-size: 1.1rem; color: #fca5a5; margin-bottom: 4px;">Sign Out of Workspace</h4>
+          <p style="color: var(--text-muted); font-size: 0.85rem;">Terminates your client authentication session on this browser.</p>
+        </div>
+        <button onclick="DevCraftAuth.logout()" class="btn btn-sm" style="background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.4);">
+          Sign Out Now
+        </button>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="/js/devcraft-auth.js"></script>
+  <script>
+    const alertBox = document.getElementById('profile-alert');
+
+    function showAlert(msg, type = 'danger') {
+      alertBox.textContent = msg;
+      alertBox.className = `auth-alert ${type}`;
+      alertBox.style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (!DevCraftAuth.protectRoute()) return;
+
+      const token = DevCraftAuth.getToken();
+      try {
+        const res = await fetch('/api/users/me', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (res.ok) {
+          const data = await res.json();
+          const user = data.user;
+          document.getElementById('prof-email').value = user.email || '';
+          document.getElementById('prof-name').value = user.name || '';
+          document.getElementById('prof-phone').value = user.phone || '';
+          document.getElementById('prof-company').value = user.company || '';
+        }
+      } catch (_) {}
+    });
+
+    // Handle Profile Form
+    document.getElementById('profile-info-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      alertBox.style.display = 'none';
+
+      const name = document.getElementById('prof-name').value.trim();
+      const phone = document.getElementById('prof-phone').value.trim();
+      const company = document.getElementById('prof-company').value.trim();
+      const token = DevCraftAuth.getToken();
+
+      const btn = document.getElementById('prof-save-btn');
+      btn.disabled = true;
+      btn.textContent = 'Saving...';
+
+      try {
+        const res = await fetch('/api/users/profile', {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ name, phone, company })
+        });
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          showAlert('Profile details updated successfully!', 'success');
+        } else {
+          showAlert(data.message || 'Failed to update profile.');
+        }
+      } catch (err) {
+        showAlert('Network error updating profile.');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Save Profile Details';
+      }
+    });
+
+    // Handle Password Change Form
+    document.getElementById('password-change-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      alertBox.style.display = 'none';
+
+      const currentPassword = document.getElementById('curr-password').value;
+      const newPassword = document.getElementById('new-pass').value;
+      const confirmPassword = document.getElementById('confirm-new-pass').value;
+      const token = DevCraftAuth.getToken();
+
+      if (newPassword !== confirmPassword) {
+        return showAlert('New password and confirmation do not match.');
+      }
+      if (newPassword.length < 8 || !/[a-zA-Z]/.test(newPassword) || !/[0-9]/.test(newPassword)) {
+        return showAlert('New password must be at least 8 characters with both letters and numbers.');
+      }
+
+      const btn = document.getElementById('pass-save-btn');
+      btn.disabled = true;
+      btn.textContent = 'Updating...';
+
+      try {
+        const res = await fetch('/api/users/change-password', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ currentPassword, newPassword, confirmPassword })
+        });
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          showAlert('Password updated successfully!', 'success');
+          document.getElementById('password-change-form').reset();
+        } else {
+          showAlert(data.message || 'Current password incorrect.');
+        }
+      } catch (err) {
+        showAlert('Network error changing password.');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Update Password';
+      }
+    });
+  </script>
+</body>
+</html>

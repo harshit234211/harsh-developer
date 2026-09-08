@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Client Account | DEVCRAFT Studio</title>
+  <meta name="description" content="Create a DevCraft client account to commission custom software, track active development sprints, and view invoices." />
+  <link rel="icon" type="image/svg+xml" href="/assets/images/avatar-harshit.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/responsive.css" />
+</head>
+<body data-theme="futuristic-dev">
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="/" class="brand-logo" aria-label="DEVCRAFT Home">
+        <div class="brand-badge-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="16 18 22 12 16 6"></polyline>
+            <polyline points="8 6 2 12 8 18"></polyline>
+          </svg>
+        </div>
+        <div class="brand-name">DEV<span>CRAFT</span></div>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="/services" class="nav-link">Services</a></li>
+        <li><a href="/projects" class="nav-link">Demos</a></li>
+        <li><a href="/about" class="nav-link">About</a></li>
+        <li><a href="/contact" class="nav-link">Contact</a></li>
+        <li><a href="/login" class="nav-link">Login</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="/login" class="btn btn-ghost btn-sm">Sign In</a>
+        <a href="/contact" class="btn btn-primary btn-sm btn-start-project-nav">Start Project</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Register Main Container -->
+  <main class="auth-page-wrapper">
+    <div class="auth-card">
+      <div class="auth-header">
+        <div class="brand-badge-icon" style="margin: 0 auto 14px;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="8.5" cy="7" r="4"></circle>
+            <line x1="20" y1="8" x2="20" y2="14"></line>
+            <line x1="23" y1="11" x2="17" y2="11"></line>
+          </svg>
+        </div>
+        <h1>Create Client Account</h1>
+        <p>Commission projects, track development milestones & access staging environments.</p>
+      </div>
+
+      <div id="register-alert" class="auth-alert"></div>
+
+      <form id="register-form" class="auth-form" novalidate>
+        <div class="form-group">
+          <label class="input-label" for="reg-name">Full Name *</label>
+          <input type="text" id="reg-name" class="form-control" placeholder="e.g. Johnathan Vance" required autocomplete="name" />
+        </div>
+
+        <div class="form-group">
+          <label class="input-label" for="reg-email">Email Address *</label>
+          <input type="email" id="reg-email" class="form-control" placeholder="name@company.com" required autocomplete="email" />
+        </div>
+
+        <div class="form-group">
+          <label class="input-label" for="reg-phone">Phone Number *</label>
+          <input type="tel" id="reg-phone" class="form-control" placeholder="+91 98765 43210" required autocomplete="tel" />
+        </div>
+
+        <div class="form-group">
+          <label class="input-label" for="reg-company">Company / Organization (Optional)</label>
+          <input type="text" id="reg-company" class="form-control" placeholder="e.g. Acme Innovations" autocomplete="organization" />
+        </div>
+
+        <div class="form-group">
+          <label class="input-label" for="reg-password">Password (min 8 chars, letters & numbers) *</label>
+          <div class="input-password-wrap">
+            <input type="password" id="reg-password" class="form-control" placeholder="Create strong password" required autocomplete="new-password" />
+            <button type="button" class="password-toggle-btn" aria-label="Toggle password visibility" onclick="togglePassVisibility('reg-password', this)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="input-label" for="reg-confirm-password">Confirm Password *</label>
+          <div class="input-password-wrap">
+            <input type="password" id="reg-confirm-password" class="form-control" placeholder="Repeat your password" required autocomplete="new-password" />
+            <button type="button" class="password-toggle-btn" aria-label="Toggle password visibility" onclick="togglePassVisibility('reg-confirm-password', this)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="auth-checkbox-row">
+          <label class="auth-checkbox-label">
+            <input type="checkbox" id="reg-terms" required checked />
+            <span>I agree to DevCraft's <a href="/about#terms" style="color: var(--accent);">Terms of Service</a> &amp; Privacy Policy</span>
+          </label>
+        </div>
+
+        <button type="submit" id="reg-submit-btn" class="btn btn-primary btn-block" style="padding: 14px; font-weight: 700; margin-top: 8px;">
+          Create Client Account →
+        </button>
+      </form>
+
+      <div class="auth-footer-links">
+        Already have an account? <a href="/login">Sign in here</a>
+      </div>
+    </div>
+  </main>
+
+  <script src="/js/devcraft-auth.js"></script>
+  <script>
+    // Redirect if already logged in
+    document.addEventListener('DOMContentLoaded', () => {
+      DevCraftAuth.redirectIfAuthenticated('/dashboard');
+    });
+
+    function togglePassVisibility(inputId, btn) {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+      if (input.type === 'password') {
+        input.type = 'text';
+        btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>';
+      } else {
+        input.type = 'password';
+        btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
+      }
+    }
+
+    const form = document.getElementById('register-form');
+    const alertBox = document.getElementById('register-alert');
+    const submitBtn = document.getElementById('reg-submit-btn');
+
+    function showAlert(message, type = 'danger') {
+      alertBox.textContent = message;
+      alertBox.className = `auth-alert ${type}`;
+      alertBox.style.display = 'block';
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      alertBox.style.display = 'none';
+
+      const name = document.getElementById('reg-name').value.trim();
+      const email = document.getElementById('reg-email').value.trim();
+      const phone = document.getElementById('reg-phone').value.trim();
+      const company = document.getElementById('reg-company').value.trim();
+      const password = document.getElementById('reg-password').value;
+      const confirmPassword = document.getElementById('reg-confirm-password').value;
+      const termsAgreed = document.getElementById('reg-terms').checked;
+
+      // Client validations
+      if (!name || name.length < 2) {
+        return showAlert('Please provide your full name (minimum 2 characters).');
+      }
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        return showAlert('Please provide a valid corporate or personal email.');
+      }
+      if (!phone || phone.length < 7) {
+        return showAlert('Please provide a valid contact phone number.');
+      }
+      if (!password || password.length < 8) {
+        return showAlert('Password must be at least 8 characters long.');
+      }
+      if (!/[a-zA-Z]/.test(password) || !/[0-9]/.test(password)) {
+        return showAlert('Password must contain both letters and numbers for account security.');
+      }
+      if (password !== confirmPassword) {
+        return showAlert('Passwords do not match. Please re-enter your password confirmation.');
+      }
+      if (!termsAgreed) {
+        return showAlert('You must accept the Terms of Service to create an account.');
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Registering Account...';
+
+      try {
+        await DevCraftAuth.register({
+          name,
+          email,
+          phone,
+          company,
+          password,
+          confirmPassword,
+          termsAgreed
+        });
+
+        showAlert('Account created successfully! Redirecting to your dashboard...', 'success');
+        setTimeout(() => {
+          window.location.href = '/dashboard';
+        }, 800);
+      } catch (err) {
+        showAlert(err.message || 'Registration encountered an error. Please try again.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Create Client Account →';
+      }
+    });
+  </script>
+</body>
+</html>

@@ -275,7 +275,7 @@ const DEVCRAFT_DEMOS = [
       'Interactive product catalog with category tags (Hardware, Wearables, Audio)',
       'Quick-view product detail modal with specs, ratings, and stock counter',
       'Slide-over cart drawer with quantity increments, removals, and subtotal',
-      'Working coupon code system (try code "DEVCRAFT10" for 10% instant discount)',
+      'Cryptographically secure server-validated promo code & discount engine',
       'Simulated 3-step checkout with instant order confirmation and tracking number'
     ],
     caseStudy: {
