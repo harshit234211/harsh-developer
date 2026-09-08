@@ -23,7 +23,9 @@ let localDb = {
   projects: [],
   enquiries: [],
   coupons: [],
-  couponUsages: []
+  couponUsages: [],
+  orders: [],
+  shareEvents: []
 };
 
 const loadLocalDb = () => {
@@ -37,6 +39,8 @@ const loadLocalDb = () => {
       if (!localDb.enquiries) localDb.enquiries = [];
       if (!localDb.coupons) localDb.coupons = [];
       if (!localDb.couponUsages) localDb.couponUsages = [];
+      if (!localDb.orders) localDb.orders = [];
+      if (!localDb.shareEvents) localDb.shareEvents = [];
     } else {
       saveLocalDb();
     }
@@ -855,6 +859,105 @@ const dbService = {
       return localDb.couponUsages.filter(u => {
         for (const [k, v] of Object.entries(filter)) {
           if (u[k] !== v) return false;
+        }
+        return true;
+      }).length;
+    }
+  },
+
+  Order: {
+    create: async (data) => {
+      loadLocalDb();
+      const newOrder = {
+        _id: crypto.randomUUID(),
+        orderId: data.orderId || ('DC-ORD-' + Math.floor(100000 + Math.random() * 900000)),
+        productId: data.productId,
+        productName: data.productName,
+        productType: data.productType || 'app',
+        originalPrice: Number(data.originalPrice),
+        productDiscountPercent: Number(data.productDiscountPercent),
+        productDiscountAmount: Number(data.productDiscountAmount),
+        discountedPrice: Number(data.discountedPrice),
+        couponCodeMask: data.couponCodeMask || null,
+        couponDiscountPercent: Number(data.couponDiscountPercent || 0),
+        couponDiscountAmount: Number(data.couponDiscountAmount || 0),
+        finalAmount: Number(data.finalAmount),
+        userId: data.userId || null,
+        clientName: data.clientName || 'Guest Client',
+        clientEmail: data.clientEmail ? data.clientEmail.toLowerCase().trim() : '',
+        clientPhone: data.clientPhone || '',
+        notes: data.notes || '',
+        status: data.status || 'Confirmed',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+      localDb.orders.push(newOrder);
+      saveLocalDb();
+      return newOrder;
+    },
+    find: async (filter = {}) => {
+      loadLocalDb();
+      let list = [...localDb.orders];
+      if (filter.userId) {
+        list = list.filter(o => o.userId === filter.userId);
+      }
+      if (filter.clientEmail) {
+        const em = filter.clientEmail.toLowerCase().trim();
+        list = list.filter(o => o.clientEmail && o.clientEmail.toLowerCase() === em);
+      }
+      if (filter.productId) {
+        list = list.filter(o => o.productId === filter.productId);
+      }
+      return list.reverse();
+    },
+    findById: async (id) => {
+      loadLocalDb();
+      return localDb.orders.find(o => o._id === id || o.orderId === id) || null;
+    },
+    countDocuments: async (filter = {}) => {
+      loadLocalDb();
+      if (!filter || Object.keys(filter).length === 0) return localDb.orders.length;
+      return localDb.orders.filter(o => {
+        for (const [k, v] of Object.entries(filter)) {
+          if (o[k] !== v) return false;
+        }
+        return true;
+      }).length;
+    }
+  },
+
+  ShareEvent: {
+    create: async (data) => {
+      loadLocalDb();
+      const newEvent = {
+        _id: crypto.randomUUID(),
+        productId: data.productId,
+        sharePlatform: data.sharePlatform || 'unknown',
+        userId: data.userId || null,
+        ip: data.ip || '127.0.0.1',
+        timestamp: new Date().toISOString()
+      };
+      localDb.shareEvents.push(newEvent);
+      saveLocalDb();
+      return newEvent;
+    },
+    find: async (filter = {}) => {
+      loadLocalDb();
+      let list = [...localDb.shareEvents];
+      if (filter.productId) {
+        list = list.filter(e => e.productId === filter.productId);
+      }
+      if (filter.sharePlatform) {
+        list = list.filter(e => e.sharePlatform === filter.sharePlatform);
+      }
+      return list.reverse();
+    },
+    countDocuments: async (filter = {}) => {
+      loadLocalDb();
+      if (!filter || Object.keys(filter).length === 0) return localDb.shareEvents.length;
+      return localDb.shareEvents.filter(e => {
+        for (const [k, v] of Object.entries(filter)) {
+          if (e[k] !== v) return false;
         }
         return true;
       }).length;

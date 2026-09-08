@@ -30,7 +30,8 @@ const navbar = (active = 'home') => `
       </a>
 
       <ul class="nav-links">
-        <li><a href="#services" class="nav-link ${active === 'services' ? 'active' : ''}">Services</a></li>
+        <li><a href="#services" class="nav-link ${active === 'services' ? 'active' : ''}">Services (50% OFF)</a></li>
+        <li><a href="#aptitude" class="nav-link">Aptitude (30% OFF)</a></li>
         <li><a href="#demos" class="nav-link ${active === 'demos' ? 'active' : ''}">Demos</a></li>
         <li><a href="#why-devcraft" class="nav-link">Why Us</a></li>
         <li><a href="#process" class="nav-link">Process</a></li>
@@ -110,7 +111,8 @@ const navbar = (active = 'home') => `
       <button class="mobile-drawer-close" id="mobile-drawer-close" aria-label="Close menu">&times;</button>
     </div>
     <div class="mobile-drawer-links">
-      <a href="#services" class="mobile-nav-link">20 Development Services <span>→</span></a>
+      <a href="#services" class="mobile-nav-link">20 Development Services (50% OFF) <span>→</span></a>
+      <a href="#aptitude" class="mobile-nav-link">Aptitude &amp; Placement Hub (30% OFF) <span>→</span></a>
       <a href="#demos" class="mobile-nav-link">10 Interactive Demos <span>→</span></a>
       <a href="#why-devcraft" class="mobile-nav-link">Why DevCraft <span>→</span></a>
       <a href="#process" class="mobile-nav-link">6-Step Agile Process <span>→</span></a>

@@ -1,13 +1,13 @@
 {
   "admins": [
     {
-      "_id": "a7d8d9c2-daff-49a6-9028-541daf6cecb3",
+      "_id": "c6bc5f28-a743-4597-9808-f2f7ef6a823d",
       "name": "Harshit (Harsh Developer)",
       "email": "shakyaharshit683@gmail.com",
-      "password": "$2a$10$yFZS26PPA6dR.Z4npth3X.f2KhlRX4KUg.5UwP.uPh4qh0ZQ.zDR.",
+      "password": "$2a$10$crE/XMiItkq7wLKQby510..9g9Wn8dSb8TaoBH34CzbB8oSf2o5De",
       "role": "superadmin",
-      "createdAt": "2026-09-08T11:21:41.869Z",
-      "updatedAt": "2026-09-08T11:21:41.869Z"
+      "createdAt": "2026-09-08T16:47:54.361Z",
+      "updatedAt": "2026-09-08T16:47:54.361Z"
     }
   ],
   "projects": [
@@ -330,6 +330,44 @@
       "notes": "",
       "createdAt": "2026-09-08T11:21:41.985Z",
       "updatedAt": "2026-09-08T11:21:42.124Z"
+    },
+    {
+      "_id": "62348e26-f043-44e7-9be0-d3ed3be2d995",
+      "name": "Johnathan Vance",
+      "email": "john.vance@techcorp.io",
+      "phone": "+919876543210",
+      "whatsapp": "+919876543210",
+      "service": "Web Application Development",
+      "budget": "₹75,000 - ₹1,50,000 / $950 - $1,800",
+      "projectType": "New Project",
+      "deadline": "1 Month",
+      "description": "We need a high-performance SaaS analytics application with Three.js 3D dashboards.",
+      "message": "",
+      "referenceUrl": "https://example.com/demo",
+      "userId": null,
+      "status": "In Progress",
+      "notes": "",
+      "createdAt": "2026-09-08T16:42:15.772Z",
+      "updatedAt": "2026-09-08T16:42:15.929Z"
+    },
+    {
+      "_id": "fdb06a74-ec32-419a-85a4-ea51c1b3e7a9",
+      "name": "Johnathan Vance",
+      "email": "john.vance@techcorp.io",
+      "phone": "+919876543210",
+      "whatsapp": "+919876543210",
+      "service": "Web Application Development",
+      "budget": "₹75,000 - ₹1,50,000 / $950 - $1,800",
+      "projectType": "New Project",
+      "deadline": "1 Month",
+      "description": "We need a high-performance SaaS analytics application with Three.js 3D dashboards.",
+      "message": "",
+      "referenceUrl": "https://example.com/demo",
+      "userId": null,
+      "status": "In Progress",
+      "notes": "",
+      "createdAt": "2026-09-08T16:47:54.481Z",
+      "updatedAt": "2026-09-08T16:47:54.619Z"
     }
   ],
   "users": [
@@ -339,7 +377,7 @@
       "email": "shakyaharshit683@gmail.com",
       "phone": "+918791984082",
       "company": "Harsh Developer",
-      "password": "$2a$10$yFZS26PPA6dR.Z4npth3X.f2KhlRX4KUg.5UwP.uPh4qh0ZQ.zDR.",
+      "password": "$2a$10$crE/XMiItkq7wLKQby510..9g9Wn8dSb8TaoBH34CzbB8oSf2o5De",
       "role": "client",
       "createdAt": "2026-09-07T16:41:21.999Z",
       "updatedAt": "2026-09-07T16:41:22.000Z"
@@ -412,6 +450,34 @@
       "lastLogin": "2026-09-08T11:21:42.264Z",
       "resetPasswordToken": "7b5888b53ba8dce2950ae8791bd41a0cb6980a5e30cc71a9f05b5caa94b45cc3",
       "resetPasswordExpires": "2026-09-08T12:21:42.277Z"
+    },
+    {
+      "_id": "75563b91-6b63-4d09-971d-3a3b0592cc16",
+      "name": "QA Test Client Updated",
+      "email": "qa.client.1788885735935@example.com",
+      "phone": "",
+      "company": "QA Enterprise Global",
+      "password": "$2a$10$a3BbMmwn3QRo2.XExIZSpuh9ayooRaZV3lLqlS8AR3SWolkULgJ7W",
+      "role": "client",
+      "createdAt": "2026-09-08T16:42:16.005Z",
+      "updatedAt": "2026-09-08T16:42:16.097Z",
+      "lastLogin": "2026-09-08T16:42:16.079Z",
+      "resetPasswordToken": "376d3ab16bfaa3700dda09e5710c5bcef24d7b109a9a918cf807cc964628ed18",
+      "resetPasswordExpires": "2026-09-08T17:42:16.096Z"
+    },
+    {
+      "_id": "8bf0feb4-e78a-4702-951c-8386804cc532",
+      "name": "QA Test Client Updated",
+      "email": "qa.client.1788886074624@example.com",
+      "phone": "",
+      "company": "QA Enterprise Global",
+      "password": "$2a$10$KYUGWzIADPDDyWn0ZCzdDOzvKzrntJQAz1HNIeZbjVnqgCrPvk9a2",
+      "role": "client",
+      "createdAt": "2026-09-08T16:47:54.692Z",
+      "updatedAt": "2026-09-08T16:47:54.784Z",
+      "lastLogin": "2026-09-08T16:47:54.766Z",
+      "resetPasswordToken": "1f43536e19ee6c4a8e285f4885a44e67e2e3123ad284ad86c09ddbfcdfefe0a7",
+      "resetPasswordExpires": "2026-09-08T17:47:54.784Z"
     }
   ],
   "coupons": [
@@ -423,11 +489,11 @@
       "active": true,
       "expires_at": "2027-09-08T10:45:00.256Z",
       "max_uses": 100,
-      "used_count": 2,
+      "used_count": 6,
       "user_restriction": null,
       "notes": "Standard Private Client Incentive (20% Off)",
       "createdAt": "2026-09-08T10:45:00.257Z",
-      "updatedAt": "2026-09-08T11:21:42.301Z"
+      "updatedAt": "2026-09-08T16:47:54.851Z"
     },
     {
       "_id": "0200ccc4-fa6f-481d-b737-21bc990a6c93",
@@ -488,6 +554,132 @@
       "notes": "QA Automated Redemption Test",
       "createdAt": "2026-09-08T11:21:42.302Z",
       "updatedAt": "2026-09-08T11:21:42.302Z"
+    },
+    {
+      "_id": "38daccd5-8f44-408a-afd2-d3b6cf32d237",
+      "coupon_id": "7b8c2286-a476-474e-9caa-3e00cbd081d5",
+      "code_mask": "DEV-****-****-5EHH",
+      "discount_percentage": 20,
+      "user_id": null,
+      "user_email": "qa.client.1788885735935@example.com",
+      "order_id": "ORD-1788885736126",
+      "original_amount": 50000,
+      "discount_amount": 10000,
+      "final_amount": 40000,
+      "notes": "QA Automated Redemption Test",
+      "createdAt": "2026-09-08T16:42:16.129Z",
+      "updatedAt": "2026-09-08T16:42:16.129Z"
+    },
+    {
+      "_id": "f1b05443-c51a-45cc-a3e2-e60df596a22f",
+      "coupon_id": "7b8c2286-a476-474e-9caa-3e00cbd081d5",
+      "code_mask": "DEV-****-****-5EHH",
+      "discount_percentage": 20,
+      "user_id": "75563b91-6b63-4d09-971d-3a3b0592cc16",
+      "user_email": "qa.client.1788885735935@example.com",
+      "order_id": "DC-ORD-601157",
+      "original_amount": 3500,
+      "discount_amount": 700,
+      "final_amount": 2800,
+      "notes": "Redeemed for Developer Aptitude & Problem Solving Mastery",
+      "createdAt": "2026-09-08T16:42:16.177Z",
+      "updatedAt": "2026-09-08T16:42:16.177Z"
+    },
+    {
+      "_id": "3d742a0d-6fe7-4bd0-9def-ab4fbf0f0724",
+      "coupon_id": "7b8c2286-a476-474e-9caa-3e00cbd081d5",
+      "code_mask": "DEV-****-****-5EHH",
+      "discount_percentage": 20,
+      "user_id": null,
+      "user_email": "qa.client.1788886074624@example.com",
+      "order_id": "ORD-1788886074808",
+      "original_amount": 50000,
+      "discount_amount": 10000,
+      "final_amount": 40000,
+      "notes": "QA Automated Redemption Test",
+      "createdAt": "2026-09-08T16:47:54.812Z",
+      "updatedAt": "2026-09-08T16:47:54.812Z"
+    },
+    {
+      "_id": "058c6b60-2ad7-4f26-81c4-d212187e555f",
+      "coupon_id": "7b8c2286-a476-474e-9caa-3e00cbd081d5",
+      "code_mask": "DEV-****-****-5EHH",
+      "discount_percentage": 20,
+      "user_id": "8bf0feb4-e78a-4702-951c-8386804cc532",
+      "user_email": "qa.client.1788886074624@example.com",
+      "order_id": "DC-ORD-390973",
+      "original_amount": 3500,
+      "discount_amount": 700,
+      "final_amount": 2800,
+      "notes": "Redeemed for Developer Aptitude & Problem Solving Mastery",
+      "createdAt": "2026-09-08T16:47:54.852Z",
+      "updatedAt": "2026-09-08T16:47:54.852Z"
+    }
+  ],
+  "orders": [
+    {
+      "_id": "ed02cf45-8f8f-4ebf-8470-7e4f45e666d9",
+      "orderId": "DC-ORD-601157",
+      "productId": "aptitude-mastery",
+      "productName": "Developer Aptitude & Problem Solving Mastery",
+      "productType": "aptitude",
+      "originalPrice": 5000,
+      "productDiscountPercent": 30,
+      "productDiscountAmount": 1500,
+      "discountedPrice": 3500,
+      "couponCodeMask": "DEV-****-****-5EHH",
+      "couponDiscountPercent": 20,
+      "couponDiscountAmount": 700,
+      "finalAmount": 2800,
+      "userId": "75563b91-6b63-4d09-971d-3a3b0592cc16",
+      "clientName": "QA Test Client Updated",
+      "clientEmail": "qa.client.1788885735935@example.com",
+      "clientPhone": "+919988776655",
+      "notes": "QA Automated Test Order",
+      "status": "Confirmed",
+      "createdAt": "2026-09-08T16:42:16.175Z",
+      "updatedAt": "2026-09-08T16:42:16.175Z"
+    },
+    {
+      "_id": "674c4ede-651b-4bca-98b6-80d348cf9190",
+      "orderId": "DC-ORD-390973",
+      "productId": "aptitude-mastery",
+      "productName": "Developer Aptitude & Problem Solving Mastery",
+      "productType": "aptitude",
+      "originalPrice": 5000,
+      "productDiscountPercent": 30,
+      "productDiscountAmount": 1500,
+      "discountedPrice": 3500,
+      "couponCodeMask": "DEV-****-****-5EHH",
+      "couponDiscountPercent": 20,
+      "couponDiscountAmount": 700,
+      "finalAmount": 2800,
+      "userId": "8bf0feb4-e78a-4702-951c-8386804cc532",
+      "clientName": "QA Test Client Updated",
+      "clientEmail": "qa.client.1788886074624@example.com",
+      "clientPhone": "+919988776655",
+      "notes": "QA Automated Test Order",
+      "status": "Confirmed",
+      "createdAt": "2026-09-08T16:47:54.851Z",
+      "updatedAt": "2026-09-08T16:47:54.851Z"
+    }
+  ],
+  "shareEvents": [
+    {
+      "_id": "9609290d-8fa6-4c4e-ba35-3e166423bd99",
+      "productId": "cravex-app",
+      "sharePlatform": "whatsapp",
+      "userId": "75563b91-6b63-4d09-971d-3a3b0592cc16",
+      "ip": "::1",
+      "timestamp": "2026-09-08T16:42:16.183Z"
+    },
+    {
+      "_id": "2b6f38db-036e-428a-abbc-ba199760ad22",
+      "productId": "cravex-app",
+      "sharePlatform": "whatsapp",
+      "userId": "8bf0feb4-e78a-4702-951c-8386804cc532",
+      "ip": "::1",
+      "timestamp": "2026-09-08T16:47:54.859Z"
     }
   ]
 }

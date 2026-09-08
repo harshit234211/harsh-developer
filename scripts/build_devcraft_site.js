@@ -3,6 +3,7 @@ const path = require('path');
 
 const DEVCRAFT_SERVICES = require('./data_services');
 const DEVCRAFT_DEMOS = require('./data_demos');
+const { DEVCRAFT_PRODUCTS, calculatePricing } = require('./data_products');
 const { commonHead, navbar, floatingActions, footer } = require('./components');
 
 const ROOT = path.join(__dirname, '..');
@@ -14,6 +15,7 @@ if (!fs.existsSync(PAGES)) fs.mkdirSync(PAGES, { recursive: true });
 // Helper to escape JSON for safe script tag embedding
 const safeJsonServices = JSON.stringify(DEVCRAFT_SERVICES).replace(/</g, '\\u003c');
 const safeJsonDemos = JSON.stringify(DEVCRAFT_DEMOS).replace(/</g, '\\u003c');
+const safeJsonProducts = JSON.stringify(DEVCRAFT_PRODUCTS).replace(/</g, '\\u003c');
 
 // ==========================================
 // 1. ALL 16 SECTIONS GENERATORS
@@ -111,7 +113,7 @@ function renderHeroSection() {
   `;
 }
 
-// Section 3: Services Showcase (All 20 Services)
+// Section 3: Services Showcase (All 20 Services with Dynamic 50% Discount)
 function renderServicesSection() {
   const categories = ['All', 'Mobile Apps', 'Web Apps', 'Websites', 'AI & ML', 'Dashboards', 'Custom Software', 'Automation'];
 
@@ -119,10 +121,10 @@ function renderServicesSection() {
   <section class="section" id="services">
     <div class="container">
       <div class="section-header text-center">
-        <div class="section-badge">Full Engineering Catalog</div>
+        <div class="section-badge">Full Engineering Catalog • 50% OFF</div>
         <h2 class="section-title">20 Complete <span class="text-gradient">Developer Services</span></h2>
         <p class="section-desc">
-          From native mobile experiences and multi-tenant SaaS platforms to autonomous AI agents and cloud DevOps. Everything engineered in-house with production standards.
+          From native mobile experiences and multi-tenant SaaS platforms to autonomous AI agents and cloud DevOps. All services include an automatic <strong>50% promotional discount</strong> with transparent upfront pricing.
         </p>
       </div>
 
@@ -133,9 +135,16 @@ function renderServicesSection() {
         `).join('')}
       </div>
 
-      <!-- 20 Service Cards Grid -->
+      <!-- 20 Service Cards Grid (Requirement 1: 50% DISCOUNT) -->
       <div class="services-catalog-grid" id="services-catalog-grid">
-        ${DEVCRAFT_SERVICES.map(service => `
+        ${DEVCRAFT_SERVICES.map(service => {
+          const matchingProduct = DEVCRAFT_PRODUCTS.find(p => p.id === service.id || p.name === service.name || (p.linkedServiceId && p.linkedServiceId === service.id));
+          const prodId = matchingProduct ? matchingProduct.id : service.id;
+          const parsed = parseInt(service.pricingStarting.replace(/[^0-9]/g, ''), 10) || 24999;
+          const originalPrice = matchingProduct ? matchingProduct.originalPrice : (parsed * 2);
+          const finalPrice = matchingProduct ? matchingProduct.finalPrice : parsed;
+
+          return `
           <div class="service-card" data-category="${service.category}">
             <div class="service-card-top">
               <span class="service-badge">${service.category} • ${service.badge}</span>
@@ -147,13 +156,97 @@ function renderServicesSection() {
             </div>
 
             <div class="service-card-bottom">
-              <div class="service-pricing-tag">Starting from <strong>${service.pricingStarting}</strong></div>
-              <div class="service-card-actions">
-                <button class="btn btn-outline btn-xs" onclick="devcraftDemos.openServiceModal('${service.id}')">
-                  View Service Details
+              <!-- Requirement 1: Original Price -> 50% OFF -> Final Price -->
+              <div class="card-pricing-block">
+                <div class="price-top-row">
+                  <span class="price-label">Original Price:</span>
+                  <del class="price-original">₹${originalPrice.toLocaleString('en-IN')}</del>
+                  <span class="badge-discount pill-app">50% OFF</span>
+                </div>
+                <div class="price-bottom-row">
+                  <span class="price-final-label">Final Price:</span>
+                  <span class="price-final-value">₹${finalPrice.toLocaleString('en-IN')}</span>
+                </div>
+              </div>
+
+              <!-- Requirement 5 & 9: Actions with Share -->
+              <div class="card-shop-actions">
+                <button class="btn btn-outline btn-xs" onclick="devcraftShop.openProductModal('${prodId}')">
+                  View Details
                 </button>
-                <button class="btn btn-primary btn-xs" onclick="devcraftDemos.startProjectFor('${service.name}')">
-                  Start Project →
+                <button class="btn btn-primary btn-xs btn-buy" onclick="devcraftShop.openCheckoutModal('${prodId}')">
+                  ⚡ Order (₹${finalPrice.toLocaleString('en-IN')}) →
+                </button>
+                <button type="button" class="btn-share-icon" title="Share Offer" onclick="devcraftShop.openShareModal('${prodId}')">
+                  🔗 Share
+                </button>
+              </div>
+            </div>
+          </div>
+          `;
+        }).join('')}
+      </div>
+    </div>
+  </section>
+  `;
+}
+
+// Section: Aptitude & Placement Hub (Requirement 2: 30% DISCOUNT)
+function renderAptitudeSection() {
+  const aptitudeProducts = DEVCRAFT_PRODUCTS.filter(p => p.type === 'aptitude');
+
+  return `
+  <section class="section" id="aptitude" style="background: radial-gradient(circle at 50% 0%, rgba(168, 85, 247, 0.08) 0%, transparent 70%);">
+    <div class="container">
+      <div class="section-header text-center">
+        <div class="section-badge" style="border-color: rgba(168, 85, 247, 0.4); color: #c084fc; background: rgba(168, 85, 247, 0.1);">
+          Campus &amp; Technical Placement Hub • 30% OFF
+        </div>
+        <h2 class="section-title">Developer Aptitude &amp; <span class="text-gradient" style="background: linear-gradient(135deg, #c084fc, #00f0ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Placement Prep</span></h2>
+        <p class="section-desc">
+          Master technical screening rounds required by product startups, FAANG, and top IT recruiters. Speed math shortcuts, logical reasoning drills, CS fundamentals, and timed test simulators with an <strong>exclusive 30% discount</strong>.
+        </p>
+      </div>
+
+      <!-- 5 Aptitude Cards Grid (Requirement 2: 30% OFF) -->
+      <div class="services-catalog-grid" id="aptitude-catalog-grid">
+        ${aptitudeProducts.map(item => `
+          <div class="service-card" style="border-color: rgba(168, 85, 247, 0.25);">
+            <div class="service-card-top">
+              <span class="service-badge" style="background: rgba(168, 85, 247, 0.12); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3);">
+                ${item.category} • ${item.badge}
+              </span>
+              <h3 class="service-title">${item.name}</h3>
+              <p class="service-desc">${item.shortDesc}</p>
+              <div class="service-tech-pills">
+                ${(item.technologies || []).slice(0, 4).map(t => `<span class="tech-tag" style="border-color: rgba(168, 85, 247, 0.3); color: #e9d5ff;">${t}</span>`).join('')}
+              </div>
+            </div>
+
+            <div class="service-card-bottom">
+              <!-- Requirement 2: Original Price -> 30% OFF -> Final Price -->
+              <div class="card-pricing-block" style="border-color: rgba(168, 85, 247, 0.2); background: rgba(168, 85, 247, 0.04);">
+                <div class="price-top-row">
+                  <span class="price-label">Original Price:</span>
+                  <del class="price-original">₹${item.originalPrice.toLocaleString('en-IN')}</del>
+                  <span class="badge-discount pill-aptitude">30% OFF</span>
+                </div>
+                <div class="price-bottom-row">
+                  <span class="price-final-label">Final Price:</span>
+                  <span class="price-final-value" style="color: #c084fc;">₹${item.finalPrice.toLocaleString('en-IN')}</span>
+                </div>
+              </div>
+
+              <!-- Requirement 5 & 9: Actions with Share -->
+              <div class="card-shop-actions">
+                <button class="btn btn-outline btn-xs" onclick="devcraftShop.openProductModal('${item.id}')">
+                  View Syllabus
+                </button>
+                <button class="btn btn-primary btn-xs btn-buy" style="background: linear-gradient(135deg, #a855f7, #00f0ff); border: none;" onclick="devcraftShop.openCheckoutModal('${item.id}')">
+                  ⚡ Enroll (₹${item.finalPrice.toLocaleString('en-IN')}) →
+                </button>
+                <button type="button" class="btn-share-icon" title="Share Course" onclick="devcraftShop.openShareModal('${item.id}')">
+                  🔗 Share
                 </button>
               </div>
             </div>
@@ -226,9 +319,14 @@ function renderFeaturedDemosSection() {
                     <span>📖 Case Study</span>
                   </button>
                 </div>
-                <button class="btn btn-ghost btn-xs text-muted" style="text-align: center;" onclick="devcraftDemos.startProjectFor('${demo.title}')">
-                  Start Similar Project →
-                </button>
+                <div style="display: flex; gap: 8px; margin-top: 8px; align-items: center;">
+                  <button class="btn btn-ghost btn-xs text-muted" style="flex-grow: 1; text-align: left;" onclick="devcraftDemos.startProjectFor('${demo.title}')">
+                    Start Similar Project →
+                  </button>
+                  <button type="button" class="btn-share-icon" title="Share Demo" onclick="devcraftShop.openShareModal('${demo.id}')">
+                    🔗 Share
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -963,6 +1061,57 @@ function renderModalsMarkup() {
       </div>
     </div>
   </div>
+
+  <!-- 5. Product Detail Modal (Requirement 9) -->
+  <div class="devcraft-modal" id="product-detail-modal">
+    <div class="devcraft-modal-dialog product-modal-dialog">
+      <button class="devcraft-modal-close" onclick="devcraftShop.hideModal('product-detail-modal')" aria-label="Close modal">&times;</button>
+      <div class="devcraft-modal-body" id="product-detail-modal-body">
+        <!-- Rendered dynamically by devcraftShop.openProductModal -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Share Product Modal (Requirement 5, 6, 7) -->
+  <div class="devcraft-modal" id="share-product-modal">
+    <div class="devcraft-modal-dialog share-modal-dialog">
+      <div class="devcraft-modal-header">
+        <div class="modal-header-text">
+          <h3>Share with Network</h3>
+          <p>Spread the word via WhatsApp, Telegram, X, or direct link</p>
+        </div>
+        <button class="devcraft-modal-close" onclick="devcraftShop.hideModal('share-product-modal')" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="devcraft-modal-body" id="share-product-modal-body">
+        <!-- Rendered dynamically by devcraftShop.openShareModal -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. Checkout & Coupon Order Modal (Requirement 3 & 4) -->
+  <div class="devcraft-modal" id="checkout-order-modal">
+    <div class="devcraft-modal-dialog checkout-modal-dialog">
+      <div class="devcraft-modal-header">
+        <div class="modal-header-text">
+          <h3>Order &amp; Project Checkout</h3>
+          <p>Instant booking with automatic discounts and secure coupon verification</p>
+        </div>
+        <button class="devcraft-modal-close" onclick="devcraftShop.hideModal('checkout-order-modal')" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="devcraft-modal-body" id="checkout-order-modal-body">
+        <!-- Rendered dynamically by devcraftShop.openCheckoutModal -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. Order Success Modal -->
+  <div class="devcraft-modal" id="order-success-modal">
+    <div class="devcraft-modal-dialog" style="max-width: 540px;">
+      <div class="devcraft-modal-body" id="order-success-modal-body">
+        <!-- Rendered dynamically by devcraftShop.showOrderSuccess -->
+      </div>
+    </div>
+  </div>
   `;
 }
 
@@ -973,6 +1122,7 @@ function renderClientDataScripts() {
   <script>
     window.DEVCRAFT_SERVICES_DATA = ${safeJsonServices};
     window.DEVCRAFT_DEMOS_DATA = ${safeJsonDemos};
+    window.DEVCRAFT_PRODUCTS_DATA = ${safeJsonProducts};
   </script>
 
   <!-- External CDNs for Three.js WebGL (Safe fallback handled in three-scene.js) -->
@@ -982,6 +1132,7 @@ function renderClientDataScripts() {
   <script src="/js/api.js"></script>
   <script src="/js/devcraft-auth.js"></script>
   <script src="/js/devcraft-demos.js"></script>
+  <script src="/js/devcraft-shop.js"></script>
   <script src="/js/three-scene.js"></script>
   <script src="/js/main.js"></script>
   <script src="/js/form.js"></script>
@@ -1003,6 +1154,7 @@ function buildIndexHtml() {
   <main>
     ${renderHeroSection()}
     ${renderServicesSection()}
+    ${renderAptitudeSection()}
     ${renderFeaturedDemosSection()}
     ${renderDemoLabSection()}
     ${renderWhySection()}
@@ -1035,13 +1187,14 @@ function buildServicesPage() {
   const html = `<!DOCTYPE html>
 <html lang="en" data-theme="futuristic-dev">
 <head>
-  ${commonHead('All 20 Development Services', 'Explore DevCraft’s comprehensive catalog of 20 software development services with detailed capabilities, use cases, and tech stacks.')}
+  ${commonHead('All 20 Development Services & Aptitude Hub', 'Explore DevCraft’s comprehensive catalog of 20 software development services (50% OFF) and Campus Aptitude & Placement Prep courses (30% OFF).')}
 </head>
 <body>
   ${navbar('services')}
 
   <main style="padding-top: 100px;">
     ${renderServicesSection()}
+    ${renderAptitudeSection()}
     ${renderPricingSection()}
     ${renderContactSection()}
   </main>

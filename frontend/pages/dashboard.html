@@ -102,14 +102,58 @@
 
       <!-- Tabs Navigation -->
       <div class="dashboard-tabs-bar">
-        <button class="dash-tab-btn active" onclick="switchDashTab('requests', this)">📋 My Project Requests</button>
+        <button class="dash-tab-btn active" onclick="switchDashTab('orders', this)">🛍️ My Orders &amp; Enrolled Courses</button>
+        <button class="dash-tab-btn" onclick="switchDashTab('requests', this)">📋 My Project Requests</button>
         <button class="dash-tab-btn" onclick="switchDashTab('demos', this)">⭐ Bookmarked Demos</button>
         <button class="dash-tab-btn" onclick="switchDashTab('coupons', this)">🎟️ Applied Coupon Discounts</button>
         <button class="dash-tab-btn" onclick="switchDashTab('activity', this)">🕒 Recent Activity</button>
       </div>
 
+      <!-- TAB 0: My Orders & Enrolled Courses (Requirement 10) -->
+      <div id="dash-pane-orders" class="dash-tab-pane active">
+        <div style="background: rgba(13, 17, 23, 0.7); border: 1px solid var(--border-glass); border-radius: 16px; padding: 24px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+            <div>
+              <h3 style="font-size: 1.2rem; font-weight: 700;">Purchased App Services &amp; Enrolled Courses</h3>
+              <p style="color: var(--text-muted); font-size: 0.85rem;">All confirmed software bookings and aptitude enrollments with verified server-side discounts.</p>
+            </div>
+            <div style="display: flex; gap: 10px;">
+              <a href="/services" class="btn btn-xs btn-primary">+ Browse Catalog</a>
+              <button onclick="loadUserDashboard()" class="btn btn-xs btn-outline">🔄 Refresh</button>
+            </div>
+          </div>
+
+          <div id="orders-loading" style="text-align: center; padding: 40px; color: var(--text-muted);">
+            Loading your orders and enrolled courses...
+          </div>
+
+          <div id="orders-empty" style="display: none; text-align: center; padding: 50px 20px; border: 1px dashed var(--border-glass); border-radius: 12px;">
+            <p style="color: var(--text-secondary); margin-bottom: 16px; font-size: 0.95rem;">You haven't ordered any software services or aptitude courses yet.</p>
+            <a href="/services" class="btn btn-primary btn-sm">Explore Services (50% OFF) &amp; Aptitude (30% OFF) →</a>
+          </div>
+
+          <div class="table-container" id="orders-table-wrap" style="display: none;">
+            <table class="devcraft-table">
+              <thead>
+                <tr>
+                  <th>Order Reference</th>
+                  <th>Product / Course</th>
+                  <th>Original Price</th>
+                  <th>Discount</th>
+                  <th>Coupon</th>
+                  <th>Final Amount</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody id="orders-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
       <!-- TAB 1: My Project Requests -->
-      <div id="dash-pane-requests" class="dash-tab-pane active">
+      <div id="dash-pane-requests" class="dash-tab-pane">
         <div style="background: rgba(13, 17, 23, 0.7); border: 1px solid var(--border-glass); border-radius: 16px; padding: 24px;">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
             <div>
@@ -246,6 +290,9 @@
         document.getElementById('stat-my-completed').textContent = stats.completedEnquiries || 0;
         document.getElementById('stat-my-demos').textContent = stats.savedDemosCount || 0;
 
+        // Fetch User's Orders & Enrolled Courses (Requirement 10)
+        await loadMyOrders(token);
+
         // Fetch User's Inquiries
         await loadMyEnquiries(token);
 
@@ -259,6 +306,65 @@
         renderActivityFeed(user);
       } catch (err) {
         console.error('Error loading dashboard:', err);
+      }
+    }
+
+    async function loadMyOrders(token) {
+      const loadingEl = document.getElementById('orders-loading');
+      const emptyEl = document.getElementById('orders-empty');
+      const tableWrap = document.getElementById('orders-table-wrap');
+      const tbody = document.getElementById('orders-table-body');
+
+      try {
+        const res = await fetch('/api/orders/my-orders', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await res.json();
+        const orders = data.orders || [];
+
+        if (loadingEl) loadingEl.style.display = 'none';
+
+        if (orders.length === 0) {
+          if (emptyEl) emptyEl.style.display = 'block';
+          if (tableWrap) tableWrap.style.display = 'none';
+          return;
+        }
+
+        if (emptyEl) emptyEl.style.display = 'none';
+        if (tableWrap) tableWrap.style.display = 'block';
+
+        tbody.innerHTML = orders.map(o => {
+          const isAptitude = o.productType === 'aptitude' || (o.productCategory && o.productCategory.toLowerCase().includes('aptitude'));
+          const couponInfo = o.couponCodeMask ? 
+            `<span style="color: #c084fc; font-weight: 600;">${o.couponCodeMask} (${o.couponDiscountPercent}% OFF)</span>` : 
+            `<span style="color: var(--text-muted);">—</span>`;
+
+          return `
+            <tr>
+              <td>
+                <strong style="font-family: var(--font-mono); color: var(--cyan);">${o.orderId}</strong>
+              </td>
+              <td>
+                <div><strong>${o.productName}</strong></div>
+                <span class="badge-discount ${isAptitude ? 'pill-aptitude' : 'pill-app'}" style="font-size: 0.72rem; padding: 2px 8px; margin-top: 4px; display: inline-block;">
+                  ${isAptitude ? 'Aptitude Prep' : 'App Service'}
+                </span>
+              </td>
+              <td><del style="color: #94a3b8;">₹${(o.originalPrice || 0).toLocaleString('en-IN')}</del></td>
+              <td><span style="color: #10b981; font-weight: 600;">${o.productDiscountPercent}% OFF</span></td>
+              <td>${couponInfo}</td>
+              <td style="font-weight: 800; color: var(--cyan); font-size: 1.05rem;">
+                ₹${(o.finalAmount || 0).toLocaleString('en-IN')}
+              </td>
+              <td><span class="status-chip chip-active">${o.status || 'Confirmed'}</span></td>
+              <td style="color: var(--text-muted); font-size: 0.8rem;">
+                ${new Date(o.createdAt).toLocaleDateString()}
+              </td>
+            </tr>
+          `;
+        }).join('');
+      } catch (err) {
+        if (loadingEl) loadingEl.textContent = 'Unable to fetch orders. Please try refreshing.';
       }
     }
 

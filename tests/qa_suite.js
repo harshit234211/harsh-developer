@@ -412,9 +412,10 @@ async function runQaSuite() {
 
     // 38. Test Rejection of Retired / Hardcoded Promo Codes (DEV20X, DEV50X, DEV95X, DEVCRAFT10)
     const retiredCodes = ['DEV20X', 'DEV50X', 'DEV95X', 'DEVCRAFT10'];
+    const retiredHeaders = { 'x-forwarded-for': '198.51.100.88' };
     let allRetiredBlocked = true;
     for (const code of retiredCodes) {
-      const retRes = await request('POST', '/api/coupons/validate', { code, subtotal: 10000 });
+      const retRes = await request('POST', '/api/coupons/validate', { code, subtotal: 10000 }, retiredHeaders);
       if (retRes.statusCode !== 400 || retRes.data.success !== false) {
         allRetiredBlocked = false;
       }
@@ -475,7 +476,7 @@ async function runQaSuite() {
     const testDisabledRes = await request('POST', '/api/coupons/validate', {
       code: dynamicCode,
       subtotal: 10000
-    });
+    }, { 'x-forwarded-for': '198.51.100.89' });
     assert(testDisabledRes.statusCode === 400 && testDisabledRes.data.success === false, 'STEP 41D: Disabled Coupon Immediately Rejected on Validation');
 
     // 41E. Clean up dynamic coupon
@@ -495,6 +496,156 @@ async function runQaSuite() {
     }
     assert(authPagesOk, 'STEP 42: All New Dedicated User Auth & Dashboard HTML Pages Route with HTTP 200');
 
+    // 43. Test Products & Courses Catalog (App 50% & Aptitude 30% discount dynamic rules)
+    const { DEVCRAFT_PRODUCTS: testProducts } = require('../scripts/data_products');
+    const appProds = testProducts.filter(p => p.type !== 'aptitude' && p.category !== 'Aptitude');
+    const aptProds = testProducts.filter(p => p.type === 'aptitude' || p.category === 'Aptitude');
+    const allApp50 = appProds.every(p => p.discountPercent === 50 && p.finalPrice === Math.round(p.originalPrice * 0.5));
+    const allApt30 = aptProds.every(p => p.discountPercent === 30 && p.finalPrice === Math.round(p.originalPrice * 0.7));
+    assert(allApp50 && appProds.length >= 10, 'STEP 43A: All App Products Have Dynamic 50% OFF (Original -> 50% -> Final)');
+    assert(allApt30 && aptProds.length >= 5, 'STEP 43B: All Aptitude Products Have Dynamic 30% OFF (Original -> 30% -> Final)');
+
+    // 44. Test Server-Authoritative Price Calculation (POST /api/orders/calculate)
+    const sampleApp = appProds[0];
+    const calcAppRes = await request('POST', '/api/orders/calculate', {
+      productId: sampleApp.id
+    });
+    assert(
+      calcAppRes.statusCode === 200 &&
+      calcAppRes.data.success === true &&
+      calcAppRes.data.calculation.originalPrice === sampleApp.originalPrice &&
+      calcAppRes.data.calculation.productDiscountPercent === 50 &&
+      calcAppRes.data.calculation.finalAmount === Math.round(sampleApp.originalPrice * 0.5),
+      'STEP 44A: Server Authoritative Calculation for App Product Verified'
+    );
+
+    const sampleApt = aptProds[0];
+    const calcAptRes = await request('POST', '/api/orders/calculate', {
+      productId: sampleApt.id
+    });
+    assert(
+      calcAptRes.statusCode === 200 &&
+      calcAptRes.data.success === true &&
+      calcAptRes.data.calculation.originalPrice === sampleApt.originalPrice &&
+      calcAptRes.data.calculation.productDiscountPercent === 30 &&
+      calcAptRes.data.calculation.finalAmount === Math.round(sampleApt.originalPrice * 0.7),
+      'STEP 44B: Server Authoritative Calculation for Aptitude Course Verified'
+    );
+
+    // 45. Test Coupon Application on Discounted Price (Original -> Product Disc -> Coupon Disc -> Final)
+    const calcWithCouponRes = await request('POST', '/api/orders/calculate', {
+      productId: sampleApp.id,
+      couponCode: offer20.rawCode
+    });
+    const calcC = calcWithCouponRes.data.calculation;
+    const expectedDiscounted = Math.round(sampleApp.originalPrice * 0.5);
+    const expectedCouponDiscount = Math.round(expectedDiscounted * 0.2);
+    const expectedFinal = expectedDiscounted - expectedCouponDiscount;
+    assert(
+      calcWithCouponRes.statusCode === 200 &&
+      calcC.couponApplied === true &&
+      calcC.couponDiscountAmount === expectedCouponDiscount &&
+      calcC.finalAmount === expectedFinal,
+      'STEP 45: Coupon Applied Strictly on Discounted Price (Original -> Product Disc -> Coupon Disc -> Final Payable)'
+    );
+
+    // 46. Test Negative Price Protection & Invalid Coupon Handling
+    const seedOffer95 = seedOffers.find(o => o.discountPercentage === 95);
+    const calc95Res = await request('POST', '/api/orders/calculate', {
+      productId: sampleApt.id,
+      couponCode: seedOffer95.rawCode
+    });
+    assert(
+      calc95Res.statusCode === 200 &&
+      calc95Res.data.calculation.finalAmount >= 0,
+      'STEP 46A: Negative Price Protection Verified (Final Amount >= 0)'
+    );
+
+    const calcInvalidCoupon = await request('POST', '/api/orders/calculate', {
+      productId: sampleApp.id,
+      couponCode: 'DEV-FAKE-CODE-9999'
+    }, { 'x-forwarded-for': '198.51.100.91' });
+    assert(
+      calcInvalidCoupon.statusCode === 400 &&
+      calcInvalidCoupon.data.success === false &&
+      calcInvalidCoupon.data.message.includes('Invalid or expired'),
+      'STEP 46B: Invalid Coupon Code Properly Rejected with Clear Feedback'
+    );
+
+    // 47. Test Order Checkout & Account Linkage (POST /api/orders/checkout)
+    const userAuthToken = (typeof newLoginRes !== 'undefined' && newLoginRes.data && newLoginRes.data.token) ? newLoginRes.data.token : clientToken;
+    const checkoutRes = await request('POST', '/api/orders/checkout', {
+      productId: sampleApt.id,
+      couponCode: offer20.rawCode,
+      clientName: 'QA Test Client',
+      clientEmail: testClientEmail,
+      clientPhone: '+919988776655',
+      notes: 'QA Automated Test Order'
+    }, {
+      'Authorization': `Bearer ${userAuthToken}`
+    });
+    assert(
+      checkoutRes.statusCode === 201 &&
+      checkoutRes.data.success === true &&
+      checkoutRes.data.order.orderId.startsWith('DC-ORD-'),
+      'STEP 47: Order Checkout Successfully Registers and Returns Order ID'
+    );
+    const createdOrderId = checkoutRes.data.order ? checkoutRes.data.order.orderId : null;
+
+    // 48. Test Authenticated User Orders (GET /api/orders/my-orders)
+    const myOrdersRes = await request('GET', '/api/orders/my-orders', null, {
+      'Authorization': `Bearer ${userAuthToken}`
+    });
+    const ordersList = myOrdersRes.data.orders || [];
+    const foundMyOrder = ordersList.find(o => o.orderId === createdOrderId);
+    assert(
+      myOrdersRes.statusCode === 200 &&
+      foundMyOrder &&
+      foundMyOrder.clientEmail === testClientEmail &&
+      foundMyOrder.couponCodeMask.includes('****'),
+      'STEP 48: User Dashboard /api/orders/my-orders Securely Returns User Orders with Masked Coupons'
+    );
+
+    // 49. Test Share Analytics Tracking (POST & GET /api/analytics/share)
+    const trackShareRes = await request('POST', '/api/analytics/share', {
+      productId: sampleApp.id,
+      sharePlatform: 'whatsapp'
+    }, {
+      'Authorization': `Bearer ${userAuthToken}`
+    });
+    assert(
+      (trackShareRes.statusCode === 200 || trackShareRes.statusCode === 201) &&
+      trackShareRes.data.success === true,
+      'STEP 49A: Share Event Tracked (product_id, share_platform, timestamp, user_id)'
+    );
+
+    const shareStatsRes = await request('GET', '/api/analytics/share', null, {
+      'Authorization': `Bearer ${adminToken}`
+    });
+    assert(
+      shareStatsRes.statusCode === 200 &&
+      shareStatsRes.data.success === true &&
+      shareStatsRes.data.stats.totalShares >= 1,
+      'STEP 49B: Admin Analytics Correctly Aggregates Real Share Counts'
+    );
+
+    // 50. Test Static Assets & Scripts Availability
+    const shopJsRes = await request('GET', '/js/devcraft-shop.js');
+    assert(
+      shopJsRes.statusCode === 200 &&
+      shopJsRes.data.includes('devcraftShop'),
+      'STEP 50A: /js/devcraft-shop.js Serves Cleanly with HTTP 200'
+    );
+
+    const indexHtmlRes = await request('GET', '/');
+    assert(
+      indexHtmlRes.statusCode === 200 &&
+      indexHtmlRes.data.includes('50% OFF') &&
+      indexHtmlRes.data.includes('30% OFF') &&
+      indexHtmlRes.data.includes('devcraftShop'),
+      'STEP 50B: Frontend Home Page Renders 50% & 30% Dynamic Pricing Badges & Shop Engine'
+    );
+
   } catch (err) {
     console.error('Fatal test runner error:', err);
     failedTests++;
@@ -505,7 +656,7 @@ async function runQaSuite() {
   }
 
   console.log('\n\x1b[36m==================================================\x1b[0m');
-  console.log(`TEST SUMMARY: \x1b[32m${passedTests} PASSED\x1b[0m, \x1b[31m${failedTests} FAILED\x1b[0m out of 42 Quality Check Steps`);
+  console.log(`TEST SUMMARY: \x1b[32m${passedTests} PASSED\x1b[0m, \x1b[31m${failedTests} FAILED\x1b[0m out of 55 Quality Check Steps`);
   console.log('\x1b[36m==================================================\x1b[0m\n');
 
   if (failedTests > 0) {

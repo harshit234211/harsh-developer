@@ -18,10 +18,12 @@ const enquiryRoutes = require('./routes/enquiryRoutes');
 const userRoutes = require('./routes/userRoutes');
 const couponRoutes = require('./routes/couponRoutes');
 const adminCouponRoutes = require('./routes/adminCouponRoutes');
+const orderRoutes = require('./routes/orderRoutes');
 
 // DevCraft Catalog Datasets
 const DEVCRAFT_SERVICES = require('../scripts/data_services');
 const DEVCRAFT_DEMOS = require('../scripts/data_demos');
+const { DEVCRAFT_PRODUCTS } = require('../scripts/data_products');
 
 const app = express();
 
@@ -129,6 +131,7 @@ app.use('/api/projects', projectRoutes);
 app.use('/api/contact', enquiryRoutes);
 app.use('/api/enquiries', enquiryRoutes);
 app.use('/api/coupons', couponRoutes);
+app.use('/api', orderRoutes);
 
 // Static files for Admin Portal
 app.use('/admin', express.static(path.join(__dirname, '../admin')));
