@@ -1210,7 +1210,7 @@ function renderModalsMarkup() {
           Thank you for reaching out to <strong>DEVCRAFT</strong>. Our lead software architect will review your project requirements and connect with you via email and WhatsApp within 24 hours.
         </p>
         <div style="background: rgba(255,255,255,0.04); border-radius: 10px; padding: 12px; margin: 20px 0; font-family: var(--font-mono); font-size: 0.85rem;" id="inquiry-ref-box">
-          Inquiry Ref: DC-INQ-${Math.floor(100000 + Math.random() * 900000)}
+          Inquiry Ref: DC-INQ-705532
         </div>
         <button class="btn btn-primary btn-block" onclick="devcraftDemos.hideModal('inquiry-success-modal')">
           Back to DevCraft Studio
@@ -1598,7 +1598,7 @@ function buildProductsPage() {
     const isAptitude = p.type === 'aptitude' || p.category === 'Aptitude';
     const discountPercent = isAptitude ? 30 : 50;
     const originalPrice = Number(p.originalPrice) || 10000;
-    const finalPrice = Math.round(originalPrice * (1 - discountPercent / 100));
+    const finalPrice = p.finalPrice !== undefined ? p.finalPrice : Math.round(originalPrice * (1 - discountPercent / 100));
 
     let detailsLink = '/products';
     if (p.id === 'joya-ai') detailsLink = '/joya';

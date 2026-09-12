@@ -99,17 +99,10 @@ const ensureProductsSeeded = () => {
         const idx = localDb.products.findIndex(existing => existing.id === p.id);
         if (idx !== -1) {
           const ep = localDb.products[idx];
-          if (ep.name !== p.name || ep.originalPrice !== p.originalPrice || ep.badge !== p.badge || ep.shortDesc !== p.shortDesc) {
+          if (ep.name !== p.name || ep.originalPrice !== p.originalPrice || ep.badge !== p.badge || ep.shortDesc !== p.shortDesc || ep.finalPrice !== p.finalPrice) {
             localDb.products[idx] = {
               ...ep,
-              name: p.name,
-              originalPrice: p.originalPrice,
-              badge: p.badge,
-              shortDesc: p.shortDesc,
-              detailedDesc: p.detailedDesc,
-              fileDetails: p.fileDetails,
-              features: p.features,
-              requirements: p.requirements,
+              ...p,
               updatedAt: new Date().toISOString()
             };
             modified = true;

@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node backend/server.js",
     "dev": "node backend/server.js",
+    "build": "node scripts/build_devcraft_site.js",
     "test": "node tests/qa_suite.js",
     "seed": "node backend/utils/seedData.js"
   },
