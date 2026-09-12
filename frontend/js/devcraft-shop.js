@@ -536,8 +536,12 @@ window.devcraftShop = (function() {
 
       hideModal('checkout-order-modal');
 
-      // Show Order Confirmation Modal
-      showOrderSuccess(data.order);
+      // Hand off to dynamic UPI Payment & Verification
+      if (data.payment && data.payment.upiUri) {
+        openUpiPaymentModal(data.order, data.payment);
+      } else {
+        showOrderSuccess(data.order);
+      }
     } catch (err) {
       alert(`Error during checkout: ${err.message}`);
       submitBtn.disabled = false;
@@ -561,11 +565,11 @@ window.devcraftShop = (function() {
         <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 18px; text-align: left; margin-bottom: 24px;">
           <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
             <span style="color: var(--text-secondary); font-size: 0.85rem;">Order Reference ID:</span>
-            <strong style="font-family: var(--font-mono); color: var(--cyan);">${order.orderId}</strong>
+            <strong style="font-family: var(--font-mono); color: var(--cyan);">${escapeHtml(order.orderId)}</strong>
           </div>
           <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
             <span style="color: var(--text-secondary); font-size: 0.85rem;">Product / Course:</span>
-            <strong>${order.productName}</strong>
+            <strong>${escapeHtml(order.productName)}</strong>
           </div>
           <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
             <span style="color: var(--text-secondary); font-size: 0.85rem;">Original Price:</span>
@@ -577,12 +581,12 @@ window.devcraftShop = (function() {
           </div>
           ${order.couponCodeMask ? `
           <div style="display: flex; justify-content: space-between; margin-bottom: 8px; color: #a855f7;">
-            <span style="font-size: 0.85rem;">Coupon (${order.couponCodeMask}):</span>
+            <span style="font-size: 0.85rem;">Coupon (${escapeHtml(order.couponCodeMask)}):</span>
             <strong>${order.couponDiscountPercent}% OFF (- ${formatCurrency(order.couponDiscountAmount)})</strong>
           </div>
           ` : ''}
           <div style="border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 10px; margin-top: 10px; display: flex; justify-content: space-between; align-items: center;">
-            <span style="font-weight: 700;">Final Amount Paid:</span>
+            <span style="font-weight: 700;">Final Amount:</span>
             <span style="font-size: 1.3rem; font-weight: 800; color: var(--cyan);">${formatCurrency(order.finalAmount)}</span>
           </div>
         </div>
@@ -597,6 +601,278 @@ window.devcraftShop = (function() {
         </div>
       </div>
     `;
+
+    modal.style.display = 'flex';
+    setTimeout(() => { modal.classList.add('active'); }, 20);
+  }
+
+  // ==========================================
+  // DYNAMIC UPI PAYMENT & VERIFICATION ENGINE
+  // ==========================================
+  let upiPollingTimer = null;
+  let upiCountdownTimer = null;
+  let activePaymentOrder = null;
+
+  function openUpiPaymentModal(order, payment) {
+    activePaymentOrder = order;
+    const modal = document.getElementById('upi-payment-modal');
+    const body = document.getElementById('upi-payment-modal-body');
+    if (!modal || !body) return;
+
+    if (upiPollingTimer) clearInterval(upiPollingTimer);
+    if (upiCountdownTimer) clearInterval(upiCountdownTimer);
+
+    try {
+      localStorage.setItem('devcraft_last_order', JSON.stringify({
+        orderId: order.orderId,
+        productId: order.productId,
+        email: order.clientEmail
+      }));
+    } catch (_) {}
+
+    const upiUri = payment.upiUri || `upi://pay?pa=devcraft@upi&pn=DEVCRAFT%20STUDIO&am=${Number(order.finalAmount).toFixed(2)}&cu=INR&tr=${encodeURIComponent(order.orderId)}&tn=${encodeURIComponent('DevCraft ' + order.orderId)}`;
+    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(upiUri)}`;
+
+    body.innerHTML = `
+      <div style="text-align: center;">
+        <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.03); border: 1px solid var(--border-glass); border-radius: 12px; padding: 12px 16px; margin-bottom: 20px; text-align: left;">
+          <div>
+            <div style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Order Reference</div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-top: 2px;">
+              <strong style="font-family: var(--font-mono); color: var(--cyan); font-size: 0.95rem;">${escapeHtml(order.orderId)}</strong>
+              <button type="button" class="btn btn-ghost btn-xs" onclick="navigator.clipboard.writeText('${escapeHtml(order.orderId)}'); devcraftShop.showToast('Order ID copied!');" title="Copy Order ID" style="padding: 2px 6px;">📋</button>
+            </div>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Amount Payable</div>
+            <div class="text-gradient" style="font-size: 1.4rem; font-weight: 800;">${formatCurrency(order.finalAmount)}</div>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 16px;">
+          <h4 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 6px;">${escapeHtml(order.productName)}</h4>
+          <div style="display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap;">
+            <span id="upi-status-badge" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); padding: 3px 12px; border-radius: 9999px; font-weight: 700; font-size: 0.78rem; display: inline-flex; align-items: center; gap: 6px;">
+              <span class="status-dot" style="background: #fbbf24;"></span> Awaiting UPI Payment
+            </span>
+            <span id="upi-countdown-timer" style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted);">
+              Expires in: 15:00
+            </span>
+          </div>
+        </div>
+
+        <div id="upi-qr-container" style="background: #0f172a; border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 20px; display: inline-block; margin-bottom: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+          <div style="background: #ffffff; padding: 10px; border-radius: 12px; display: inline-block;">
+            <img id="upi-qr-image" src="${qrUrl}" alt="Dynamic UPI QR Code" style="width: 200px; height: 200px; display: block; border-radius: 6px;" />
+          </div>
+          <div style="margin-top: 12px; font-size: 0.82rem; color: #94a3b8;">
+            Merchant UPI ID: <strong style="color: var(--cyan); font-family: var(--font-mono);">${escapeHtml(payment.merchantVpa || 'devcraft@upi')}</strong>
+          </div>
+          <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">
+            Scan with GPay, PhonePe, Paytm, BHIM, Cred or any bank UPI app
+          </div>
+        </div>
+
+        <div id="upi-pay-app-btn-wrap" style="margin-bottom: 20px;">
+          <a href="${upiUri}" class="btn btn-primary btn-block" style="display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 700; text-decoration: none; padding: 12px;">
+            <span>⚡ Pay via UPI App (GPay / PhonePe / Paytm)</span>
+          </a>
+        </div>
+
+        <div id="upi-utr-form-wrap" style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); border-radius: 14px; padding: 16px; text-align: left; margin-bottom: 16px;">
+          <label style="display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 6px;">
+            Verify Payment (Enter 12-digit UPI Ref / UTR):
+          </label>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="upi-utr-input" placeholder="e.g. 423589123456" maxlength="24" style="flex-grow: 1; padding: 10px 14px; background: rgba(0,0,0,0.5); border: 1px solid var(--border-glass); border-radius: 8px; color: #fff; font-family: var(--font-mono); font-size: 0.9rem;" />
+            <button id="upi-verify-btn" type="button" class="btn btn-emerald" onclick="devcraftShop.verifyUpiPayment('${escapeHtml(order.orderId)}')">
+              Verify Payment →
+            </button>
+          </div>
+          <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 6px;">
+            Found in your UPI app payment receipt (UTR / UPI Transaction ID / Ref No).
+          </div>
+          <div id="upi-verify-feedback" style="display: none; margin-top: 12px; padding: 10px 14px; border-radius: 8px; font-size: 0.85rem;"></div>
+        </div>
+
+        <div id="upi-success-panel" style="display: none;"></div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px;">
+          <button type="button" class="btn btn-ghost btn-sm" onclick="devcraftShop.hideModal('upi-payment-modal')">
+            ✕ Pay Later / Close
+          </button>
+          <a href="/dashboard" class="btn btn-outline btn-sm">
+            View in Dashboard →
+          </a>
+        </div>
+      </div>
+    `;
+
+    modal.style.display = 'flex';
+    setTimeout(() => { modal.classList.add('active'); }, 20);
+
+    let totalSeconds = 15 * 60;
+    upiCountdownTimer = setInterval(() => {
+      totalSeconds--;
+      if (totalSeconds <= 0) {
+        clearInterval(upiCountdownTimer);
+        const timerEl = document.getElementById('upi-countdown-timer');
+        if (timerEl) {
+          timerEl.textContent = 'Payment window expired. Please re-order.';
+          timerEl.style.color = '#ef4444';
+        }
+        return;
+      }
+      const mins = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
+      const secs = (totalSeconds % 60).toString().padStart(2, '0');
+      const timerEl = document.getElementById('upi-countdown-timer');
+      if (timerEl) timerEl.textContent = `Expires in: ${mins}:${secs}`;
+    }, 1000);
+
+    upiPollingTimer = setInterval(async () => {
+      await checkUpiStatus(order.orderId, false);
+    }, 7000);
+  }
+
+  async function verifyUpiPayment(orderId) {
+    const utrInput = document.getElementById('upi-utr-input');
+    const verifyBtn = document.getElementById('upi-verify-btn');
+    const feedback = document.getElementById('upi-verify-feedback');
+    const utr = utrInput ? utrInput.value.trim() : '';
+
+    if (!utr) {
+      if (feedback) {
+        feedback.style.display = 'block';
+        feedback.style.background = 'rgba(239, 68, 68, 0.15)';
+        feedback.style.border = '1px solid rgba(239, 68, 68, 0.3)';
+        feedback.style.color = '#fca5a5';
+        feedback.textContent = 'Please enter the 12-digit UPI Reference Number / UTR from your payment app.';
+      }
+      return;
+    }
+
+    if (verifyBtn) {
+      verifyBtn.disabled = true;
+      verifyBtn.textContent = 'Verifying with Bank...';
+    }
+
+    if (feedback) {
+      feedback.style.display = 'block';
+      feedback.style.background = 'rgba(59, 130, 246, 0.15)';
+      feedback.style.border = '1px solid rgba(59, 130, 246, 0.3)';
+      feedback.style.color = '#93c5fd';
+      feedback.textContent = 'Contacting Tranz UPI gateway & verifying cryptographic ledger...';
+    }
+
+    try {
+      const headers = { 'Content-Type': 'application/json' };
+      const token = localStorage.getItem('devcraft_user_token');
+      if (token) headers['Authorization'] = `Bearer ${token}`;
+
+      const res = await fetch(`/api/payments/verify/${encodeURIComponent(orderId)}`, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({ utr })
+      });
+
+      const data = await res.json();
+
+      if (data.verified || data.success) {
+        handleUpiSuccess(data.order || activePaymentOrder || { orderId });
+      } else {
+        if (verifyBtn) {
+          verifyBtn.disabled = false;
+          verifyBtn.textContent = 'Retry Verification';
+        }
+        if (feedback) {
+          feedback.style.display = 'block';
+          feedback.style.background = 'rgba(245, 158, 11, 0.15)';
+          feedback.style.border = '1px solid rgba(245, 158, 11, 0.3)';
+          feedback.style.color = '#fcd34d';
+          feedback.innerHTML = `<strong>Payment Recorded:</strong> ${escapeHtml(data.message || 'Payment reference submitted and queued for review.')}`;
+        }
+        const badge = document.getElementById('upi-status-badge');
+        if (badge) {
+          badge.style.background = 'rgba(59, 130, 246, 0.15)';
+          badge.style.borderColor = 'rgba(59, 130, 246, 0.4)';
+          badge.style.color = '#60a5fa';
+          badge.innerHTML = '<span class="status-dot" style="background: #60a5fa;"></span> Payment Under Verification';
+        }
+      }
+    } catch (err) {
+      if (verifyBtn) {
+        verifyBtn.disabled = false;
+        verifyBtn.textContent = 'Verify Payment →';
+      }
+      if (feedback) {
+        feedback.style.display = 'block';
+        feedback.style.background = 'rgba(239, 68, 68, 0.15)';
+        feedback.style.border = '1px solid rgba(239, 68, 68, 0.3)';
+        feedback.style.color = '#fca5a5';
+        feedback.textContent = `Verification error: ${err.message}`;
+      }
+    }
+  }
+
+  async function checkUpiStatus(orderId, silent = true) {
+    try {
+      const res = await fetch(`/api/payments/status/${encodeURIComponent(orderId)}`);
+      const data = await res.json();
+      if (data.success && data.isPaid) {
+        handleUpiSuccess(data.order || activePaymentOrder || { orderId });
+      }
+    } catch (_) {}
+  }
+
+  function handleUpiSuccess(order) {
+    if (upiPollingTimer) clearInterval(upiPollingTimer);
+    if (upiCountdownTimer) clearInterval(upiCountdownTimer);
+
+    const badge = document.getElementById('upi-status-badge');
+    if (badge) {
+      badge.style.background = 'rgba(16, 185, 129, 0.2)';
+      badge.style.borderColor = 'rgba(16, 185, 129, 0.5)';
+      badge.style.color = '#34d399';
+      badge.innerHTML = '✓ Payment Verified &amp; Paid';
+    }
+
+    const timerEl = document.getElementById('upi-countdown-timer');
+    if (timerEl) timerEl.innerHTML = '<strong style="color: #34d399;">Order Fulfilled</strong>';
+
+    const qrBox = document.getElementById('upi-qr-container');
+    if (qrBox) qrBox.style.display = 'none';
+    const utrBox = document.getElementById('upi-utr-form-wrap');
+    if (utrBox) utrBox.style.display = 'none';
+    const payAppBtn = document.getElementById('upi-pay-app-btn-wrap');
+    if (payAppBtn) payAppBtn.style.display = 'none';
+
+    const successPanel = document.getElementById('upi-success-panel');
+    if (successPanel) {
+      const productId = order.productId || (activePaymentOrder && activePaymentOrder.productId) || 'joya-ai';
+      const isFlagship = productId === 'joya-ai' || productId === 'jarvis-ai';
+      const downloadLabel = isFlagship ? '⬇️ Download Full Source Code (.ZIP)' : '⬇️ Download Purchased Package';
+      const emailParam = order.clientEmail || (activePaymentOrder && activePaymentOrder.clientEmail) || '';
+
+      successPanel.style.display = 'block';
+      successPanel.innerHTML = `
+        <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 20px; text-align: center; margin-top: 16px;">
+          <div style="font-size: 2.5rem; margin-bottom: 8px;">🎉</div>
+          <h3 style="color: #34d399; font-size: 1.3rem; font-weight: 800; margin-bottom: 6px;">Payment Confirmed!</h3>
+          <p style="color: var(--text-secondary); font-size: 0.88rem; margin-bottom: 16px;">
+            Your transaction has been verified server-side. Your commercial license and full source code entitlements have been activated.
+          </p>
+
+          <a href="/api/downloads/${encodeURIComponent(productId)}?orderId=${encodeURIComponent(order.orderId)}&email=${encodeURIComponent(emailParam)}" class="btn btn-emerald btn-lg btn-block" style="display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 800; font-size: 1rem; text-decoration: none; padding: 14px; margin-bottom: 12px; box-shadow: 0 0 24px rgba(16, 185, 129, 0.4);">
+            <span>${downloadLabel}</span>
+          </a>
+
+          <a href="/dashboard" class="btn btn-outline btn-sm btn-block" style="text-decoration: none;">
+            Go to My Client Workspace Dashboard →
+          </a>
+        </div>
+      `;
+    }
+  }
 
   // ==========================================
   // 4. SHOPPING CART ENGINE
@@ -913,8 +1189,12 @@ window.devcraftShop = (function() {
       // Clear Cart
       clearCart();
 
-      // Show Order Success Modal
-      showOrderSuccess(data.order);
+      // Hand off to dynamic UPI Payment & Verification
+      if (data.payment && data.payment.upiUri) {
+        openUpiPaymentModal(data.order, data.payment);
+      } else {
+        showOrderSuccess(data.order);
+      }
     } catch (err) {
       alert(`Checkout failed: ${err.message}`);
       submitBtn.disabled = false;
@@ -1098,8 +1378,28 @@ window.devcraftShop = (function() {
   }
 
   function downloadProduct(productId) {
-    showToast('Starting secure direct download...');
-    window.location.href = `/api/downloads/${encodeURIComponent(productId)}`;
+    let orderId = '';
+    let email = '';
+    try {
+      const stored = localStorage.getItem('devcraft_last_order');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (parsed.productId === productId || parsed.orderId) {
+          orderId = parsed.orderId;
+          email = parsed.email || '';
+        }
+      }
+    } catch (_) {}
+
+    showToast('Initiating secure direct download...');
+    let url = `/api/downloads/${encodeURIComponent(productId)}`;
+    const params = new URLSearchParams();
+    if (orderId) params.append('orderId', orderId);
+    if (email) params.append('email', email);
+    const qs = params.toString();
+    if (qs) url += `?${qs}`;
+
+    window.location.href = url;
   }
 
   // Keyboard shortcut listener for Ctrl+K
@@ -1130,7 +1430,16 @@ window.devcraftShop = (function() {
 
   function hideModal(modalId) {
     const modal = document.getElementById(modalId);
-    if (modal) modal.classList.remove('active');
+    if (modal) {
+      modal.classList.remove('active');
+      if (modalId === 'upi-payment-modal') {
+        if (upiPollingTimer) clearInterval(upiPollingTimer);
+        if (upiCountdownTimer) clearInterval(upiCountdownTimer);
+      }
+      setTimeout(() => {
+        modal.style.display = 'none';
+      }, 200);
+    }
   }
 
   function escapeHtml(str) {
@@ -1173,7 +1482,11 @@ window.devcraftShop = (function() {
     // Flagships & Downloads
     simulateJoyaWakeWord,
     simulateJarvisCommand,
-    downloadProduct
+    downloadProduct,
+    // Dynamic UPI Payment & Verification
+    openUpiPaymentModal,
+    verifyUpiPayment,
+    checkUpiStatus
   };
 })();
 

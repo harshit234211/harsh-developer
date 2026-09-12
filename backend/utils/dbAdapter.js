@@ -25,6 +25,10 @@ let localDb = {
   coupons: [],
   couponUsages: [],
   orders: [],
+  payments: [],
+  paymentTransactions: [],
+  savedProducts: [],
+  activityLogs: [],
   shareEvents: [],
   products: [],
   productFiles: [],
@@ -44,6 +48,10 @@ const loadLocalDb = () => {
       if (!localDb.coupons) localDb.coupons = [];
       if (!localDb.couponUsages) localDb.couponUsages = [];
       if (!localDb.orders) localDb.orders = [];
+      if (!localDb.payments) localDb.payments = [];
+      if (!localDb.paymentTransactions) localDb.paymentTransactions = [];
+      if (!localDb.savedProducts) localDb.savedProducts = [];
+      if (!localDb.activityLogs) localDb.activityLogs = [];
       if (!localDb.shareEvents) localDb.shareEvents = [];
       if (!localDb.products) localDb.products = [];
       if (!localDb.productFiles) localDb.productFiles = [];
@@ -68,9 +76,9 @@ const saveLocalDb = () => {
 
 const ensureProductsSeeded = () => {
   loadLocalDb();
-  if (!localDb.products || localDb.products.length === 0) {
-    try {
-      const { DEVCRAFT_PRODUCTS } = require('../../scripts/data_products');
+  try {
+    const { DEVCRAFT_PRODUCTS } = require('../../scripts/data_products');
+    if (!localDb.products || localDb.products.length === 0) {
       localDb.products = DEVCRAFT_PRODUCTS.map(p => ({
         _id: crypto.randomUUID(),
         ...p,
@@ -79,70 +87,144 @@ const ensureProductsSeeded = () => {
         updatedAt: new Date().toISOString()
       }));
       saveLocalDb();
-    } catch (e) {
-      logger.error('Error seeding products:', e);
+    } else {
+      let modified = false;
+      DEVCRAFT_PRODUCTS.forEach(p => {
+        const idx = localDb.products.findIndex(existing => existing.id === p.id);
+        if (idx !== -1) {
+          const ep = localDb.products[idx];
+          if (ep.name !== p.name || ep.originalPrice !== p.originalPrice || ep.badge !== p.badge || ep.shortDesc !== p.shortDesc) {
+            localDb.products[idx] = {
+              ...ep,
+              name: p.name,
+              originalPrice: p.originalPrice,
+              badge: p.badge,
+              shortDesc: p.shortDesc,
+              detailedDesc: p.detailedDesc,
+              fileDetails: p.fileDetails,
+              features: p.features,
+              requirements: p.requirements,
+              updatedAt: new Date().toISOString()
+            };
+            modified = true;
+          }
+        } else {
+          localDb.products.push({
+            _id: crypto.randomUUID(),
+            ...p,
+            active: true,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+          });
+          modified = true;
+        }
+      });
+      if (modified) saveLocalDb();
     }
+  } catch (e) {
+    logger.error('Error seeding products:', e);
   }
 };
 
 const ensureProductFilesSeeded = () => {
   loadLocalDb();
+  const requiredFiles = [
+    {
+      productId: 'joya-ai',
+      filename: 'joya-ai-source-code-v2.4.0.zip',
+      originalName: 'joya-ai-source-code-v2.4.0.zip',
+      fileSize: '12.4 MB',
+      mimeType: 'application/zip',
+      version: 'v2.4.0',
+      platform: 'Android Studio / Kotlin',
+      changelog: 'Complete Android Studio project source code with wake word and WhatsApp automation.',
+      filePath: 'uploads/products/joya-ai-source-code-v2.4.0.zip',
+      isSourcePackage: true
+    },
+    {
+      productId: 'joya-ai',
+      filename: 'joya-ai-v2.4.0.apk',
+      originalName: 'joya-ai-v2.4.0.apk',
+      fileSize: '48.2 MB',
+      mimeType: 'application/vnd.android.package-archive',
+      version: 'v2.4.0',
+      platform: 'Android',
+      changelog: 'Enhanced offline wake-word acoustic model; battery drain reduced by 35%.',
+      filePath: 'uploads/products/joya-ai-v2.4.0.apk'
+    },
+    {
+      productId: 'jarvis-ai',
+      filename: 'jarvis-ai-source-code-v3.1.2.zip',
+      originalName: 'jarvis-ai-source-code-v3.1.2.zip',
+      fileSize: '18.6 MB',
+      mimeType: 'application/zip',
+      version: 'v3.1.2',
+      platform: 'Windows / PC (Electron / Python)',
+      changelog: 'Complete PC desktop project source code with voice listener, web scraper, and Ollama bridge.',
+      filePath: 'uploads/products/jarvis-ai-source-code-v3.1.2.zip',
+      isSourcePackage: true
+    },
+    {
+      productId: 'jarvis-ai',
+      filename: 'jarvis-ai-desktop-v3.1.2.exe',
+      originalName: 'jarvis-ai-desktop-v3.1.2.exe',
+      fileSize: '118.5 MB',
+      mimeType: 'application/octet-stream',
+      version: 'v3.1.2',
+      platform: 'Windows / PC',
+      changelog: 'Direct Ollama local model bridge; native Windows 11 Fluent dark glass UI.',
+      filePath: 'uploads/products/jarvis-ai-desktop-v3.1.2.exe'
+    },
+    {
+      productId: 'cravex-app',
+      filename: 'cravex-mobile-suite-v4.2.0.zip',
+      originalName: 'cravex-mobile-suite-v4.2.0.zip',
+      fileSize: '64.8 MB',
+      mimeType: 'application/zip',
+      version: 'v4.2.0',
+      platform: 'Android & iOS',
+      changelog: 'Production ready React Native suite with GPS delivery tracking.',
+      filePath: 'uploads/products/cravex-mobile-suite-v4.2.0.zip'
+    },
+    {
+      productId: 'aptitude-mastery',
+      filename: 'aptitude-mastery-syllabus-bundle.pdf',
+      originalName: 'aptitude-mastery-syllabus-bundle.pdf',
+      fileSize: '18.4 MB',
+      mimeType: 'application/pdf',
+      version: '2026 Edition',
+      platform: 'Universal PDF',
+      changelog: 'Placement training syllabus bundle with FAANG preparation roadmap.',
+      filePath: 'uploads/products/aptitude-mastery-syllabus-bundle.pdf'
+    }
+  ];
+
   if (!localDb.productFiles || localDb.productFiles.length === 0) {
-    localDb.productFiles = [
-      {
-        _id: crypto.randomUUID(),
-        productId: 'joya-ai',
-        filename: 'joya-ai-v2.4.0.apk',
-        originalName: 'joya-ai-v2.4.0.apk',
-        fileSize: '48.2 MB',
-        mimeType: 'application/vnd.android.package-archive',
-        version: 'v2.4.0',
-        platform: 'Android',
-        changelog: 'Enhanced offline wake-word acoustic model; battery drain reduced by 35%.',
-        filePath: 'uploads/products/joya-ai-v2.4.0.apk',
-        uploadedAt: new Date().toISOString()
-      },
-      {
-        _id: crypto.randomUUID(),
-        productId: 'jarvis-ai',
-        filename: 'jarvis-ai-desktop-v3.1.2.exe',
-        originalName: 'jarvis-ai-desktop-v3.1.2.exe',
-        fileSize: '118.5 MB',
-        mimeType: 'application/octet-stream',
-        version: 'v3.1.2',
-        platform: 'Windows / PC',
-        changelog: 'Direct Ollama local model bridge; native Windows 11 Fluent dark glass UI.',
-        filePath: 'uploads/products/jarvis-ai-desktop-v3.1.2.exe',
-        uploadedAt: new Date().toISOString()
-      },
-      {
-        _id: crypto.randomUUID(),
-        productId: 'cravex-app',
-        filename: 'cravex-mobile-suite-v4.2.0.zip',
-        originalName: 'cravex-mobile-suite-v4.2.0.zip',
-        fileSize: '64.8 MB',
-        mimeType: 'application/zip',
-        version: 'v4.2.0',
-        platform: 'Android & iOS',
-        changelog: 'Production ready React Native suite with GPS delivery tracking.',
-        filePath: 'uploads/products/cravex-mobile-suite-v4.2.0.zip',
-        uploadedAt: new Date().toISOString()
-      },
-      {
-        _id: crypto.randomUUID(),
-        productId: 'aptitude-mastery',
-        filename: 'aptitude-mastery-syllabus-bundle.pdf',
-        originalName: 'aptitude-mastery-syllabus-bundle.pdf',
-        fileSize: '18.4 MB',
-        mimeType: 'application/pdf',
-        version: '2026 Edition',
-        platform: 'Web Course & Portal',
-        changelog: '50+ Quantitative & Logical Reasoning modules with video solutions.',
-        filePath: 'uploads/products/aptitude-mastery-syllabus-bundle.pdf',
-        uploadedAt: new Date().toISOString()
-      }
-    ];
+    localDb.productFiles = requiredFiles.map(f => ({
+      _id: crypto.randomUUID(),
+      ...f,
+      uploadedAt: new Date().toISOString()
+    }));
     saveLocalDb();
+  } else {
+    let changed = false;
+    requiredFiles.forEach(rf => {
+      const idx = localDb.productFiles.findIndex(f => f.filename === rf.filename);
+      if (idx === -1) {
+        localDb.productFiles.push({
+          _id: crypto.randomUUID(),
+          ...rf,
+          uploadedAt: new Date().toISOString()
+        });
+        changed = true;
+      } else {
+        if (rf.isSourcePackage && !localDb.productFiles[idx].isSourcePackage) {
+          localDb.productFiles[idx].isSourcePackage = true;
+          changed = true;
+        }
+      }
+    });
+    if (changed) saveLocalDb();
   }
 };
 
@@ -976,7 +1058,14 @@ const dbService = {
         clientEmail: data.clientEmail ? data.clientEmail.toLowerCase().trim() : '',
         clientPhone: data.clientPhone || '',
         notes: data.notes || '',
-        status: data.status || 'Confirmed',
+        status: data.status || 'pending', // pending, payment_processing, paid, failed, cancelled, refunded
+        paymentStatus: data.paymentStatus || (Number(data.finalAmount) === 0 ? 'paid' : 'unpaid'),
+        paymentMethod: data.paymentMethod || 'upi_tranz',
+        transactionId: data.transactionId || null,
+        utr: data.utr || null,
+        tranzReferenceId: data.tranzReferenceId || null,
+        entitlements: data.entitlements || (data.items && data.items.map(i => i.productId)) || (data.productId ? [data.productId] : []),
+        paidAt: data.paidAt || (data.paymentStatus === 'paid' ? new Date().toISOString() : null),
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString()
       };
@@ -997,11 +1086,41 @@ const dbService = {
       if (filter.productId) {
         list = list.filter(o => o.productId === filter.productId || (o.items && o.items.some(i => i.productId === filter.productId)));
       }
+      if (filter.status) {
+        list = list.filter(o => o.status === filter.status);
+      }
+      if (filter.paymentStatus) {
+        list = list.filter(o => o.paymentStatus === filter.paymentStatus);
+      }
       return list.reverse();
     },
     findById: async (id) => {
       loadLocalDb();
       return localDb.orders.find(o => o._id === id || o.orderId === id) || null;
+    },
+    findOne: async (query = {}) => {
+      loadLocalDb();
+      const o = localDb.orders.find(item => {
+        if (query.orderId && item.orderId !== query.orderId) return false;
+        if (query._id && item._id !== query._id) return false;
+        if (query.transactionId && item.transactionId !== query.transactionId) return false;
+        if (query.utr && item.utr !== query.utr) return false;
+        if (query.clientEmail && item.clientEmail && item.clientEmail.toLowerCase() !== query.clientEmail.toLowerCase()) return false;
+        return true;
+      });
+      return o ? { ...o } : null;
+    },
+    findByIdAndUpdate: async (id, updateData) => {
+      loadLocalDb();
+      const idx = localDb.orders.findIndex(o => o._id === id || o.orderId === id);
+      if (idx === -1) return null;
+      localDb.orders[idx] = {
+        ...localDb.orders[idx],
+        ...updateData,
+        updatedAt: new Date().toISOString()
+      };
+      saveLocalDb();
+      return { ...localDb.orders[idx] };
     },
     countDocuments: async (filter = {}) => {
       loadLocalDb();
@@ -1012,6 +1131,151 @@ const dbService = {
         }
         return true;
       }).length;
+    }
+  },
+
+  Payment: {
+    create: async (data) => {
+      loadLocalDb();
+      const newPayment = {
+        _id: crypto.randomUUID(),
+        paymentId: data.paymentId || ('DC-PAY-' + Math.floor(100000 + Math.random() * 900000)),
+        orderId: data.orderId,
+        gateway: data.gateway || 'tranz_upi',
+        amount: Number(data.amount),
+        currency: data.currency || 'INR',
+        status: data.status || 'created', // created, pending, paid, failed, cancelled
+        upiUri: data.upiUri || '',
+        gatewayOrderId: data.gatewayOrderId || '',
+        gatewayTxnId: data.gatewayTxnId || '',
+        utr: data.utr || '',
+        customerEmail: data.customerEmail || '',
+        customerPhone: data.customerPhone || '',
+        metadata: data.metadata || {},
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+      localDb.payments.push(newPayment);
+      saveLocalDb();
+      return newPayment;
+    },
+    findOne: async (query = {}) => {
+      loadLocalDb();
+      const item = localDb.payments.find(p => {
+        if (query._id && p._id !== query._id) return false;
+        if (query.paymentId && p.paymentId !== query.paymentId) return false;
+        if (query.orderId && p.orderId !== query.orderId) return false;
+        if (query.gatewayTxnId && p.gatewayTxnId !== query.gatewayTxnId) return false;
+        if (query.utr && p.utr !== query.utr) return false;
+        return true;
+      });
+      return item ? { ...item } : null;
+    },
+    findByIdAndUpdate: async (id, updateData) => {
+      loadLocalDb();
+      const idx = localDb.payments.findIndex(p => p._id === id || p.paymentId === id || p.orderId === id);
+      if (idx === -1) return null;
+      localDb.payments[idx] = {
+        ...localDb.payments[idx],
+        ...updateData,
+        updatedAt: new Date().toISOString()
+      };
+      saveLocalDb();
+      return { ...localDb.payments[idx] };
+    },
+    find: async (filter = {}) => {
+      loadLocalDb();
+      let list = [...localDb.payments];
+      if (filter.orderId) list = list.filter(p => p.orderId === filter.orderId);
+      if (filter.status) list = list.filter(p => p.status === filter.status);
+      return list.reverse();
+    }
+  },
+
+  PaymentTransaction: {
+    create: async (data) => {
+      loadLocalDb();
+      const txn = {
+        _id: crypto.randomUUID(),
+        paymentId: data.paymentId,
+        orderId: data.orderId,
+        amount: Number(data.amount),
+        status: data.status,
+        txnId: data.txnId || '',
+        utr: data.utr || '',
+        gatewayResponse: data.gatewayResponse || {},
+        verifiedAt: new Date().toISOString(),
+        createdAt: new Date().toISOString()
+      };
+      localDb.paymentTransactions.push(txn);
+      saveLocalDb();
+      return txn;
+    },
+    find: async (filter = {}) => {
+      loadLocalDb();
+      let list = [...localDb.paymentTransactions];
+      if (filter.orderId) list = list.filter(t => t.orderId === filter.orderId);
+      return list.reverse();
+    }
+  },
+
+  SavedProduct: {
+    create: async (data) => {
+      loadLocalDb();
+      const sp = {
+        _id: crypto.randomUUID(),
+        userId: data.userId,
+        productId: data.productId,
+        createdAt: new Date().toISOString()
+      };
+      localDb.savedProducts.push(sp);
+      saveLocalDb();
+      return sp;
+    },
+    find: async (filter = {}) => {
+      loadLocalDb();
+      let list = [...localDb.savedProducts];
+      if (filter.userId) list = list.filter(s => s.userId === filter.userId);
+      if (filter.productId) list = list.filter(s => s.productId === filter.productId);
+      return list;
+    },
+    deleteOne: async (filter = {}) => {
+      loadLocalDb();
+      const idx = localDb.savedProducts.findIndex(s => {
+        if (filter.userId && s.userId !== filter.userId) return false;
+        if (filter.productId && s.productId !== filter.productId) return false;
+        return true;
+      });
+      if (idx !== -1) {
+        const removed = localDb.savedProducts.splice(idx, 1)[0];
+        saveLocalDb();
+        return removed;
+      }
+      return null;
+    }
+  },
+
+  ActivityLog: {
+    create: async (data) => {
+      loadLocalDb();
+      const logItem = {
+        _id: crypto.randomUUID(),
+        action: data.action,
+        actor: data.actor || 'system',
+        details: data.details || {},
+        ip: data.ip || '127.0.0.1',
+        timestamp: new Date().toISOString()
+      };
+      localDb.activityLogs.push(logItem);
+      if (localDb.activityLogs.length > 1000) {
+        localDb.activityLogs = localDb.activityLogs.slice(-1000);
+      }
+      saveLocalDb();
+      return logItem;
+    },
+    find: async (filter = {}) => {
+      loadLocalDb();
+      return [...localDb.activityLogs].reverse();
     }
   },
 
@@ -1105,6 +1369,7 @@ const dbService = {
       ensureProductFilesSeeded();
       let list = [...(localDb.productFiles || [])];
       if (filter.productId) list = list.filter(f => f.productId === filter.productId);
+      if (filter.isSourcePackage !== undefined) list = list.filter(f => Boolean(f.isSourcePackage) === Boolean(filter.isSourcePackage));
       return list;
     },
     findOne: async (query = {}) => {
@@ -1112,6 +1377,8 @@ const dbService = {
       return (localDb.productFiles || []).find(f => {
         if (query.productId && f.productId !== query.productId) return false;
         if (query._id && f._id !== query._id) return false;
+        if (query.isSourcePackage !== undefined && Boolean(f.isSourcePackage) !== Boolean(query.isSourcePackage)) return false;
+        if (query.filename && f.filename !== query.filename) return false;
         return true;
       }) || null;
     },

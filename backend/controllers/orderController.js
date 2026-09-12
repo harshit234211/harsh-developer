@@ -1,5 +1,6 @@
 const dbService = require('../utils/dbAdapter');
 const { calculateAuthoritativePrice, calculateAuthoritativeCart, findProductById, DEVCRAFT_PRODUCTS } = require('../utils/pricingEngine');
+const tranzUpiService = require('../services/tranzUpiService');
 const logger = require('../utils/logger');
 
 /**
@@ -272,9 +273,12 @@ const checkoutOrder = async (req, res, next) => {
 
     logger.success(`Order created: ${order.orderId} for ${order.productName} by ${order.clientEmail}. Final: ₹${order.finalAmount}`);
 
+    // Generate dynamic UPI payment intent
+    const paymentIntent = await tranzUpiService.createPaymentIntent(order);
+
     res.status(201).json({
       success: true,
-      message: 'Order placed successfully! DevCraft will contact you to initiate onboarding.',
+      message: 'Order placed successfully! Please complete your UPI payment to unlock full access.',
       order: {
         id: order._id,
         orderId: order.orderId,
@@ -289,8 +293,11 @@ const checkoutOrder = async (req, res, next) => {
         couponDiscountAmount: order.couponDiscountAmount,
         finalAmount: order.finalAmount,
         status: order.status,
+        paymentStatus: order.paymentStatus,
+        entitlements: order.entitlements,
         createdAt: order.createdAt
-      }
+      },
+      payment: paymentIntent
     });
   } catch (err) {
     next(err);

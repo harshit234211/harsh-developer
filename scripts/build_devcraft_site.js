@@ -129,18 +129,21 @@ function renderFlagshipsSection() {
         <div class="glass-card" style="padding: 30px; border-radius: 20px; border: 1px solid rgba(168, 85, 247, 0.3); display: flex; flex-direction: column; justify-content: space-between;">
           <div>
             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
-              <span class="flagship-hero-badge">🎙️ Android Voice Assistant</span>
-              <span class="pill-tag" style="background: rgba(0, 240, 255, 0.15); color: var(--cyan); font-weight: 700;">50% OFF</span>
+              <span class="flagship-hero-badge">🎙️ Android Native • Full Source Code Included</span>
+              <span class="pill-tag" style="background: rgba(16, 185, 129, 0.15); color: #10b981; font-weight: 700;">50% OFF</span>
             </div>
 
-            <h3 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 8px;">Joya AI</h3>
+            <h3 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 8px;">Joya AI — Full Source Code</h3>
             <p style="color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; margin-bottom: 16px;">
-              Autonomous personal voice assistant for Android. Responds to the custom wake phrase <span class="wake-word-highlight">"Wake up Joya"</span>, automates WhatsApp messaging, places hands-free calls, and manages background tasks with zero cloud latency.
+              Autonomous on-device voice assistant for Android with custom wake word <strong>"Wake up Joya"</strong>. Hands-free WhatsApp messaging, calls, alarms, and offline speech recognition. Customer gets the complete Joya Android source code after successful purchase.
             </p>
 
             <!-- Interactive Voice Waveform Simulator -->
             <div class="voice-wave-simulator">
-              <div style="font-size: 0.78rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; letter-spacing: 0.5px;">Neural Acoustic Voice Engine</div>
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 0.75rem; font-weight: 700; color: var(--cyan); text-transform: uppercase;">Wake Word: "Wake up Joya"</span>
+                <span class="status-pill-online" style="font-size: 0.7rem;"><span class="status-dot"></span> Active</span>
+              </div>
               <div class="voice-bars-wrap">
                 <span class="voice-bar"></span>
                 <span class="voice-bar"></span>
@@ -158,6 +161,7 @@ function renderFlagshipsSection() {
             </div>
 
             <ul class="product-features-list" style="margin-top: 18px;">
+              <li><span class="check-icon">✓</span> Complete Android Studio Kotlin project source code</li>
               <li><span class="check-icon">✓</span> Responsive wake word detection ("Wake up Joya")</li>
               <li><span class="check-icon">✓</span> WhatsApp &amp; Phone Dialer hands-free automation</li>
               <li><span class="check-icon">✓</span> 100% On-device privacy &amp; offline voice synthesis</li>
@@ -167,19 +171,16 @@ function renderFlagshipsSection() {
           <div style="margin-top: 24px; border-top: 1px solid var(--border-glass); padding-top: 18px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
               <div>
-                <del style="color: var(--text-muted); font-size: 0.9rem;">₹2,000</del>
+                <del style="color: var(--text-muted); font-size: 0.9rem;">₹1,999</del>
                 <span style="color: #10b981; font-size: 0.8rem; font-weight: 700; margin-left: 6px;">50% OFF</span>
-                <div style="font-size: 1.4rem; font-weight: 800; color: var(--cyan);">₹1,000</div>
+                <div style="font-size: 1.4rem; font-weight: 800; color: var(--cyan);">₹999</div>
               </div>
-              <span style="font-size: 0.78rem; color: var(--text-muted);">APK v2.4.0 • 48.2 MB</span>
+              <span style="font-size: 0.78rem; color: #10b981; font-weight: 600;">Full Source Code Included</span>
             </div>
 
             <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-              <button class="btn btn-primary btn-sm" onclick="devcraftShop.downloadProduct('joya-ai')">
-                Download APK ⬇️
-              </button>
               <button class="btn btn-emerald btn-sm" onclick="devcraftShop.openCheckoutModal('joya-ai')">
-                Buy License
+                Buy Source Code (₹999) ⚡
               </button>
               <button class="btn btn-outline btn-sm" onclick="devcraftShop.addToCart('joya-ai')">
                 + Cart 🛒
@@ -193,13 +194,13 @@ function renderFlagshipsSection() {
         <div class="glass-card" style="padding: 30px; border-radius: 20px; border: 1px solid rgba(59, 130, 246, 0.3); display: flex; flex-direction: column; justify-content: space-between;">
           <div>
             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
-              <span class="flagship-hero-badge" style="background: rgba(59, 130, 246, 0.15); color: #93c5fd; border-color: rgba(59, 130, 246, 0.4);">💻 Desktop Intelligence Agent</span>
+              <span class="flagship-hero-badge" style="background: rgba(59, 130, 246, 0.15); color: #93c5fd; border-color: rgba(59, 130, 246, 0.4);">💻 PC Desktop • Full Source Code Included</span>
               <span class="pill-tag" style="background: rgba(0, 240, 255, 0.15); color: var(--cyan); font-weight: 700;">50% OFF</span>
             </div>
 
-            <h3 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 8px;">Jarvis AI</h3>
+            <h3 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 8px;">Jarvis AI — Full Source Code</h3>
             <p style="color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; margin-bottom: 16px;">
-              Autonomous desktop assistant for PC (Windows/Mac/Linux). Executes terminal scripts, automates web browser workflows, indexes workspace files, and connects to local LLMs (Ollama).
+              Autonomous desktop assistant for PC (Windows/Mac/Linux). Executes terminal scripts, automates web browser workflows, indexes workspace files, and connects to local LLMs (Ollama). Customer gets the complete Jarvis PC source code after successful purchase.
             </p>
 
             <!-- Interactive Terminal Sandbox Mockup -->
@@ -214,15 +215,16 @@ function renderFlagshipsSection() {
                 <div class="cmd-line">[Ready] Jarvis PC Agent v3.1.2 online...</div>
                 <div class="out-line">Hotkeys enabled: Ctrl+Space listener active.</div>
               </div>
-              <div style="padding: 8px 12px; background: #0b1120; border-top: 1px solid rgba(255, 255, 255, 0.06); display: flex; gap: 6px;">
-                <button type="button" class="btn btn-xs btn-ghost" onclick="devcraftShop.simulateJarvisCommand('index')">Index</button>
-                <button type="button" class="btn btn-xs btn-ghost" onclick="devcraftShop.simulateJarvisCommand('scrape')">Scraper</button>
+              <div style="padding: 8px 14px; background: #0b1120; border-top: 1px solid rgba(255, 255, 255, 0.06); display: flex; gap: 8px; flex-wrap: wrap;">
+                <button type="button" class="btn btn-xs btn-ghost" onclick="devcraftShop.simulateJarvisCommand('index')">Index Files</button>
+                <button type="button" class="btn btn-xs btn-ghost" onclick="devcraftShop.simulateJarvisCommand('scrape')">Web Scraper</button>
                 <button type="button" class="btn btn-xs btn-ghost" onclick="devcraftShop.simulateJarvisCommand('diag')">Diagnostics</button>
               </div>
             </div>
 
             <ul class="product-features-list" style="margin-top: 18px;">
-              <li><span class="check-icon">✓</span> Voice &amp; Hotkey desktop command center</li>
+              <li><span class="check-icon">✓</span> Complete PC Desktop project source code (Electron + Python)</li>
+              <li><span class="check-icon">✓</span> Voice &amp; Hotkey (Ctrl+Space) desktop command center</li>
               <li><span class="check-icon">✓</span> Local LLM bridge (Ollama / Llama-3) &amp; script executor</li>
               <li><span class="check-icon">✓</span> Automated web scraper and file organization sentinel</li>
             </ul>
@@ -231,19 +233,16 @@ function renderFlagshipsSection() {
           <div style="margin-top: 24px; border-top: 1px solid var(--border-glass); padding-top: 18px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
               <div>
-                <del style="color: var(--text-muted); font-size: 0.9rem;">₹4,000</del>
+                <del style="color: var(--text-muted); font-size: 0.9rem;">₹3,199</del>
                 <span style="color: #10b981; font-size: 0.8rem; font-weight: 700; margin-left: 6px;">50% OFF</span>
-                <div style="font-size: 1.4rem; font-weight: 800; color: var(--cyan);">₹2,000</div>
+                <div style="font-size: 1.4rem; font-weight: 800; color: var(--cyan);">₹1,599</div>
               </div>
-              <span style="font-size: 0.78rem; color: var(--text-muted);">EXE v3.1.2 • 118.5 MB</span>
+              <span style="font-size: 0.78rem; color: #10b981; font-weight: 600;">Full Source Code Included</span>
             </div>
 
             <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-              <button class="btn btn-primary btn-sm" onclick="devcraftShop.downloadProduct('jarvis-ai')">
-                Download PC App ⬇️
-              </button>
               <button class="btn btn-emerald btn-sm" onclick="devcraftShop.openCheckoutModal('jarvis-ai')">
-                Buy License
+                Buy Source Code (₹1,599) ⚡
               </button>
               <button class="btn btn-outline btn-sm" onclick="devcraftShop.addToCart('jarvis-ai')">
                 + Cart 🛒
@@ -1257,6 +1256,25 @@ function renderModalsMarkup() {
       </div>
     </div>
   </div>
+
+  <!-- 9. Dynamic UPI Payment & Verification Modal -->
+  <div class="devcraft-modal" id="upi-payment-modal">
+    <div class="devcraft-modal-dialog upi-modal-dialog" style="max-width: 560px;">
+      <div class="devcraft-modal-header">
+        <div class="modal-header-text">
+          <div style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.75rem; color: #10b981; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">
+            <span class="status-dot"></span> Secure UPI Payment Gateway
+          </div>
+          <h3 id="upi-modal-title" style="margin-top: 4px;">Dynamic UPI QR &amp; Verification</h3>
+          <p id="upi-modal-subtitle">Pay securely via any UPI App or scan QR to unlock instant source code download</p>
+        </div>
+        <button class="devcraft-modal-close" onclick="devcraftShop.hideModal('upi-payment-modal')" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="devcraft-modal-body" id="upi-payment-modal-body">
+        <!-- Rendered dynamically by devcraftShop.openUpiPaymentModal -->
+      </div>
+    </div>
+  </div>
   `;
 }
 
@@ -1744,7 +1762,7 @@ function buildJoyaPage() {
   const html = `<!DOCTYPE html>
 <html lang="en" data-theme="futuristic-dev">
 <head>
-  ${commonHead('Joya AI — Autonomous Voice & Personal Mobile Assistant (Android APK)', 'Joya AI is an autonomous on-device personal voice assistant for Android with custom wake word "Wake up Joya", WhatsApp automation, and offline neural synthesis.')}
+  ${commonHead('Joya AI — Full Source Code (Android Studio / Kotlin)', 'Customer gets the complete Joya Android source code after successful purchase. Joya AI is an autonomous on-device personal voice assistant for Android with custom wake word "Wake up Joya", WhatsApp automation, and offline neural synthesis.')}
 </head>
 <body>
   ${navbar('joya')}
@@ -1754,12 +1772,12 @@ function buildJoyaPage() {
       <!-- Hero Section -->
       <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: center; margin-bottom: 60px;">
         <div>
-          <div class="flagship-hero-badge">🎙️ Android Native APK • 50% Promotional Offer</div>
+          <div class="flagship-hero-badge">🎙️ Android Native (Kotlin) • Full Source Code Included</div>
           <h1 style="font-size: 2.8rem; font-weight: 800; line-height: 1.2; margin-bottom: 16px;">
-            Joya AI — <span class="text-gradient">Voice-First Intelligence</span> for Android
+            Joya AI — <span class="text-gradient">Full Source Code</span> (Android)
           </h1>
           <p style="color: var(--text-secondary); font-size: 1.1rem; line-height: 1.7; margin-bottom: 24px;">
-            Say <span class="wake-word-highlight">"Wake up Joya"</span> to awaken a completely private, on-device mobile assistant. Joya dictates WhatsApp messages, initiates phone calls, creates voice memos, and schedules alarms without sending your speech to any remote cloud.
+            Customer gets the complete Joya Android source code after successful purchase. Say <span class="wake-word-highlight">"Wake up Joya"</span> to awaken a completely private, on-device mobile assistant. Joya dictates WhatsApp messages, initiates phone calls, creates voice memos, and schedules alarms with zero cloud dependence.
           </p>
 
           <!-- Interactive Voice Waveform Simulator -->
@@ -1791,20 +1809,18 @@ function buildJoyaPage() {
           <!-- Pricing & Direct CTAs -->
           <div style="background: var(--bg-card); border: 1px solid var(--border-glass); border-radius: 16px; padding: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px;">
             <div>
-              <div style="font-size: 0.8rem; color: var(--text-muted);">Special Promotional Discount:</div>
+              <div style="font-size: 0.8rem; color: var(--text-muted);">Special Promotional Discount (50% OFF):</div>
               <div style="display: flex; align-items: baseline; gap: 10px;">
-                <del style="color: var(--text-muted); font-size: 1.1rem;">₹2,000</del>
+                <del style="color: var(--text-muted); font-size: 1.2rem;">₹1,999</del>
                 <span style="background: rgba(16, 185, 129, 0.15); color: #10b981; font-weight: 800; padding: 2px 8px; border-radius: 6px; font-size: 0.85rem;">50% OFF</span>
-                <span class="text-gradient" style="font-size: 2rem; font-weight: 800;">₹1,000</span>
+                <span class="text-gradient" style="font-size: 2.2rem; font-weight: 800;">₹999</span>
               </div>
+              <div style="font-size: 0.82rem; color: #10b981; font-weight: 600; margin-top: 4px;">✓ Full Android Studio Source Code Included</div>
             </div>
 
             <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-              <button class="btn btn-primary" onclick="devcraftShop.downloadProduct('joya-ai')">
-                Download APK ⬇️
-              </button>
               <button class="btn btn-emerald" onclick="devcraftShop.openCheckoutModal('joya-ai')">
-                Buy Lifetime License
+                Buy Full Source Code (₹999) ⚡
               </button>
               <button class="btn btn-outline" onclick="devcraftShop.addToCart('joya-ai')">
                 + Cart 🛒
@@ -1822,35 +1838,35 @@ function buildJoyaPage() {
           
           <div style="display: flex; flex-direction: column; gap: 14px;">
             <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-glass); padding-bottom: 10px;">
+              <span style="color: var(--text-secondary);">Delivered Package:</span>
+              <strong style="color: var(--cyan);">Full Source Code (.ZIP) + Demo APK</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-glass); padding-bottom: 10px;">
               <span style="color: var(--text-secondary);">Target Platform:</span>
-              <strong>Android 8.0+ (Oreo, Pie, 10, 11, 12, 13, 14, 15)</strong>
+              <strong>Android 8.0+ (API 26 to 34, Android 14/15)</strong>
             </div>
             <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-glass); padding-bottom: 10px;">
-              <span style="color: var(--text-secondary);">Package Artifact:</span>
-              <strong style="font-family: var(--font-mono); color: var(--cyan);">joya-ai-v2.4.0.apk</strong>
+              <span style="color: var(--text-secondary);">Source Package:</span>
+              <strong style="font-family: var(--font-mono); color: var(--cyan);">joya-ai-source-code-v2.4.0.zip</strong>
             </div>
             <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-glass); padding-bottom: 10px;">
-              <span style="color: var(--text-secondary);">Binary Size:</span>
-              <strong>48.2 MB (ARM64 &amp; x86_64)</strong>
+              <span style="color: var(--text-secondary);">Wake Engine:</span>
+              <strong>Porcupine Micro-Wake ("Wake up Joya")</strong>
             </div>
             <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-glass); padding-bottom: 10px;">
-              <span style="color: var(--text-secondary);">Acoustic Wake Engine:</span>
-              <strong>Porcupine Micro-Wake + TensorFlow Lite</strong>
+              <span style="color: var(--text-secondary);">Automation Core:</span>
+              <strong>WhatsApp Dispatch, Dialer, Alarms, TTS</strong>
             </div>
             <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-glass); padding-bottom: 10px;">
-              <span style="color: var(--text-secondary);">Cloud Dependency:</span>
-              <strong style="color: #10b981;">0% (100% Offline Capable)</strong>
-            </div>
-            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-glass); padding-bottom: 10px;">
-              <span style="color: var(--text-secondary);">Battery Impact:</span>
-              <strong>&lt; 1.8% per 24 Hours (Smart Sleep States)</strong>
+              <span style="color: var(--text-secondary);">License &amp; Ownership:</span>
+              <strong style="color: #10b981;">100% Commercial Source Code Handover</strong>
             </div>
           </div>
 
           <div style="margin-top: 24px;">
-            <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 10px;">Architecture Frameworks:</h4>
+            <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 10px;">Architecture Technologies:</h4>
             <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-              ${(joya.technologies || ['Kotlin', 'Android NDK', 'Porcupine', 'TensorFlow Lite', 'Room DB']).map(t => `<span class="tech-tag">${t}</span>`).join('')}
+              ${(joya.technologies || ['Kotlin', 'Android NDK', 'Porcupine Wake Word', 'TensorFlow Lite', 'Room DB', 'Coroutines']).map(t => `<span class="tech-tag">${t}</span>`).join('')}
             </div>
           </div>
         </div>
@@ -1858,28 +1874,47 @@ function buildJoyaPage() {
 
       <!-- Features Deep Dive -->
       <div style="margin-bottom: 60px;">
-        <h2 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 24px; text-align: center;">Everything Included with <span class="text-gradient">Joya AI</span></h2>
+        <h2 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 24px; text-align: center;">What You Receive with <span class="text-gradient">Joya AI Source Code</span></h2>
         
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
           <div class="glass-card" style="padding: 24px; border-radius: 16px;">
+            <div style="font-size: 2rem; margin-bottom: 12px;">📁</div>
+            <h4 style="font-weight: 700; margin-bottom: 8px;">Complete Android Studio Project</h4>
+            <p style="color: var(--text-secondary); font-size: 0.88rem;">Ready-to-compile Gradle project with Kotlin 1.9, modern ViewBinding / Jetpack Compose layouts, and clean architecture.</p>
+          </div>
+          <div class="glass-card" style="padding: 24px; border-radius: 16px;">
             <div style="font-size: 2rem; margin-bottom: 12px;">🎙️</div>
-            <h4 style="font-weight: 700; margin-bottom: 8px;">Responsive Wake Word</h4>
-            <p style="color: var(--text-secondary); font-size: 0.88rem;">Trained specifically for the exact phrase "Wake up Joya" with high noise rejection and false-positive protection.</p>
+            <h4 style="font-weight: 700; margin-bottom: 8px;">Custom Wake Word Engine</h4>
+            <p style="color: var(--text-secondary); font-size: 0.88rem;">Complete foreground audio service with low battery drain and Porcupine acoustic model tuned for "Wake up Joya".</p>
           </div>
           <div class="glass-card" style="padding: 24px; border-radius: 16px;">
             <div style="font-size: 2rem; margin-bottom: 12px;">💬</div>
-            <h4 style="font-weight: 700; margin-bottom: 8px;">WhatsApp Automation</h4>
-            <p style="color: var(--text-secondary); font-size: 0.88rem;">Dictate and send WhatsApp messages hands-free while driving, working, or cooking without touching the screen.</p>
+            <h4 style="font-weight: 700; margin-bottom: 8px;">WhatsApp &amp; App Automation</h4>
+            <p style="color: var(--text-secondary); font-size: 0.88rem;">Hands-free voice messaging, automated contact matching, and phone dialer integrations ready to customize.</p>
           </div>
           <div class="glass-card" style="padding: 24px; border-radius: 16px;">
-            <div style="font-size: 2rem; margin-bottom: 12px;">🔒</div>
-            <h4 style="font-weight: 700; margin-bottom: 8px;">100% On-Device Privacy</h4>
-            <p style="color: var(--text-secondary); font-size: 0.88rem;">Audio stays on your phone. No voice snippets, transcripts, or personal data ever leaves your device.</p>
+            <div style="font-size: 2rem; margin-bottom: 12px;">📖</div>
+            <h4 style="font-weight: 700; margin-bottom: 8px;">Build Docs &amp; Developer Guide</h4>
+            <p style="color: var(--text-secondary); font-size: 0.88rem;">Comprehensive README.md with compilation steps, permission guides, and instructions to retrain the wake word.</p>
           </div>
-          <div class="glass-card" style="padding: 24px; border-radius: 16px;">
-            <div style="font-size: 2rem; margin-bottom: 12px;">⚡</div>
-            <h4 style="font-weight: 700; margin-bottom: 8px;">Sub-100ms Reaction</h4>
-            <p style="color: var(--text-secondary); font-size: 0.88rem;">Hardware accelerated NDK neural pipelines provide instant voice responses with zero roundtrip cloud lag.</p>
+        </div>
+      </div>
+
+      <!-- FAQ Section (Requirement 18) -->
+      <div class="glass-card" style="padding: 30px; border-radius: 20px; margin-bottom: 40px;">
+        <h3 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 20px;">Frequently Asked Questions — Joya AI</h3>
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div>
+            <h4 style="font-size: 1rem; font-weight: 700; color: var(--cyan); margin-bottom: 6px;">Q: Do I get the complete source code?</h4>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin: 0;">Yes! Immediately after your payment is verified, you receive download access to the complete Android Studio Kotlin project zip archive (all code, layouts, and build files).</p>
+          </div>
+          <div>
+            <h4 style="font-size: 1rem; font-weight: 700; color: var(--cyan); margin-bottom: 6px;">Q: Can I change the wake word to something else?</h4>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin: 0;">Yes. The project includes modular acoustic model binding so you can retrain or swap the wake word model to any custom name of your choice.</p>
+          </div>
+          <div>
+            <h4 style="font-size: 1rem; font-weight: 700; color: var(--cyan); margin-bottom: 6px;">Q: What are the minimum requirements to build?</h4>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin: 0;">Android Studio Hedgehog or higher, Android SDK 26+, and Kotlin 1.9+. Compiles cleanly with zero missing dependencies.</p>
           </div>
         </div>
       </div>
@@ -1926,7 +1961,7 @@ function buildJarvisPage() {
   const html = `<!DOCTYPE html>
 <html lang="en" data-theme="futuristic-dev">
 <head>
-  ${commonHead('Jarvis AI — Desktop Intelligence & Workflow Automation Agent (PC / Mac / Linux)', 'Jarvis AI is an autonomous desktop computing assistant for PC with terminal command execution, active workspace file indexing, web scraping, and local LLM bridge.')}
+  ${commonHead('Jarvis AI — Full Source Code & Desktop Automation Agent', 'Jarvis AI is an autonomous desktop computing assistant for PC with terminal command execution, active workspace file indexing, web scraping, and local LLM bridge. Full source code included.')}
 </head>
 <body>
   ${navbar('jarvis')}
@@ -1937,10 +1972,10 @@ function buildJarvisPage() {
       <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: center; margin-bottom: 60px;">
         <div>
           <div class="flagship-hero-badge" style="background: rgba(59, 130, 246, 0.15); color: #93c5fd; border-color: rgba(59, 130, 246, 0.4);">
-            💻 PC Desktop Intelligence • 50% Promotional Offer
+            💻 PC Desktop Intelligence • Full Source Code Included • 50% OFF
           </div>
           <h1 style="font-size: 2.8rem; font-weight: 800; line-height: 1.2; margin-bottom: 16px;">
-            Jarvis AI — <span class="text-gradient">Desktop Automation</span> Agent
+            Jarvis AI — <span class="text-gradient">Full Source Code</span>
           </h1>
           <p style="color: var(--text-secondary); font-size: 1.1rem; line-height: 1.7; margin-bottom: 24px;">
             Take commanding control of your PC workflow. Activated via global hotkey <span class="wake-word-highlight">Ctrl + Space</span>, Jarvis indexes your hard drive, writes and tests shell scripts, automates browser data scraping, and bridges local LLMs (Ollama) into your editor.
@@ -1970,18 +2005,18 @@ function buildJarvisPage() {
             <div>
               <div style="font-size: 0.8rem; color: var(--text-muted);">Special Promotional Discount:</div>
               <div style="display: flex; align-items: baseline; gap: 10px;">
-                <del style="color: var(--text-muted); font-size: 1.1rem;">₹4,000</del>
+                <del style="color: var(--text-muted); font-size: 1.1rem;">₹3,199</del>
                 <span style="background: rgba(16, 185, 129, 0.15); color: #10b981; font-weight: 800; padding: 2px 8px; border-radius: 6px; font-size: 0.85rem;">50% OFF</span>
-                <span class="text-gradient" style="font-size: 2rem; font-weight: 800;">₹2,000</span>
+                <span class="text-gradient" style="font-size: 2rem; font-weight: 800;">₹1,599</span>
               </div>
             </div>
 
             <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <button class="btn btn-emerald" onclick="devcraftShop.openCheckoutModal('jarvis-ai')">
+                Buy Full Source Code (₹1,599) ⚡
+              </button>
               <button class="btn btn-primary" onclick="devcraftShop.downloadProduct('jarvis-ai')">
                 Download PC App ⬇️
-              </button>
-              <button class="btn btn-emerald" onclick="devcraftShop.openCheckoutModal('jarvis-ai')">
-                Buy Lifetime License
               </button>
               <button class="btn btn-outline" onclick="devcraftShop.addToCart('jarvis-ai')">
                 + Cart 🛒
@@ -1999,32 +2034,83 @@ function buildJarvisPage() {
           
           <div style="display: flex; flex-direction: column; gap: 14px;">
             <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-glass); padding-bottom: 10px;">
+              <span style="color: var(--text-secondary);">Delivered Package:</span>
+              <strong style="color: var(--cyan);">Full Source Code (.ZIP) + PC Installer</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-glass); padding-bottom: 10px;">
+              <span style="color: var(--text-secondary);">Source Package:</span>
+              <strong style="font-family: var(--font-mono); color: var(--cyan);">jarvis-ai-source-code-v3.1.2.zip</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-glass); padding-bottom: 10px;">
               <span style="color: var(--text-secondary);">Operating Systems:</span>
               <strong>Windows 10/11 64-bit, macOS 12+, Ubuntu</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-glass); padding-bottom: 10px;">
+              <span style="color: var(--text-secondary);">Local LLM Integration:</span>
+              <strong style="color: #10b981;">Ollama (Llama-3, Mistral, Phi-3, DeepSeek)</strong>
             </div>
             <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-glass); padding-bottom: 10px;">
               <span style="color: var(--text-secondary);">PC Installer Artifact:</span>
               <strong style="font-family: var(--font-mono); color: var(--cyan);">jarvis-ai-desktop-v3.1.2.exe</strong>
             </div>
             <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-glass); padding-bottom: 10px;">
-              <span style="color: var(--text-secondary);">Package Size:</span>
-              <strong>118.5 MB (Full Standalone Bundle)</strong>
-            </div>
-            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-glass); padding-bottom: 10px;">
-              <span style="color: var(--text-secondary);">Local LLM Integration:</span>
-              <strong style="color: #10b981;">Ollama (Llama-3, Mistral, Phi-3)</strong>
-            </div>
-            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-glass); padding-bottom: 10px;">
-              <span style="color: var(--text-secondary);">Recommended RAM:</span>
-              <strong>8 GB (4 GB Minimum)</strong>
+              <span style="color: var(--text-secondary);">License &amp; Ownership:</span>
+              <strong style="color: #10b981;">100% Commercial Source Code Handover</strong>
             </div>
           </div>
 
           <div style="margin-top: 24px;">
             <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 10px;">Core Engineering Stack:</h4>
             <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-              ${(jarvis.technologies || ['Electron', 'Node.js', 'Python', 'Ollama', 'PyAutoGUI']).map(t => `<span class="tech-tag">${t}</span>`).join('')}
+              ${(jarvis.technologies || ['Electron', 'Node.js', 'Python', 'Ollama', 'PyAutoGUI', 'SQLite']).map(t => `<span class="tech-tag">${t}</span>`).join('')}
             </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Features Deep Dive -->
+      <div style="margin-bottom: 60px;">
+        <h2 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 24px; text-align: center;">What You Receive with <span class="text-gradient">Jarvis AI Source Code</span></h2>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+          <div class="glass-card" style="padding: 24px; border-radius: 16px;">
+            <div style="font-size: 2rem; margin-bottom: 12px;">💻</div>
+            <h4 style="font-weight: 700; margin-bottom: 8px;">Complete Electron &amp; Node.js Project</h4>
+            <p style="color: var(--text-secondary); font-size: 0.88rem;">Production Electron desktop architecture with translucent glass HUD, system tray integration, and native IPC bridges.</p>
+          </div>
+          <div class="glass-card" style="padding: 24px; border-radius: 16px;">
+            <div style="font-size: 2rem; margin-bottom: 12px;">🧠</div>
+            <h4 style="font-weight: 700; margin-bottom: 8px;">Local Ollama &amp; Cloud LLM Core</h4>
+            <p style="color: var(--text-secondary); font-size: 0.88rem;">Zero-cloud-cost inference pipeline connecting to local LLMs via Ollama, plus extensible hooks for OpenAI, Claude, and Gemini.</p>
+          </div>
+          <div class="glass-card" style="padding: 24px; border-radius: 16px;">
+            <div style="font-size: 2rem; margin-bottom: 12px;">⚙️</div>
+            <h4 style="font-weight: 700; margin-bottom: 8px;">Python Automation &amp; Terminal Runner</h4>
+            <p style="color: var(--text-secondary); font-size: 0.88rem;">Autonomous terminal execution scripts, desktop PyAutoGUI clickers, web scrapers, and filesystem search indexers.</p>
+          </div>
+          <div class="glass-card" style="padding: 24px; border-radius: 16px;">
+            <div style="font-size: 2rem; margin-bottom: 12px;">📖</div>
+            <h4 style="font-weight: 700; margin-bottom: 8px;">Developer Documentation &amp; Setup</h4>
+            <p style="color: var(--text-secondary); font-size: 0.88rem;">Step-by-step developer guide to package .exe for Windows, .dmg for macOS, and configure custom system triggers.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ Section -->
+      <div class="glass-card" style="padding: 30px; border-radius: 20px; margin-bottom: 40px;">
+        <h3 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 20px;">Frequently Asked Questions — Jarvis AI</h3>
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div>
+            <h4 style="font-size: 1rem; font-weight: 700; color: var(--cyan); margin-bottom: 6px;">Q: Do I get the complete Jarvis AI source code?</h4>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin: 0;">Yes! Upon payment confirmation, you receive immediate download access to the complete source package zip (Electron frontend, Python automation engines, and package build configurations).</p>
+          </div>
+          <div>
+            <h4 style="font-size: 1rem; font-weight: 700; color: var(--cyan); margin-bottom: 6px;">Q: Does it require paid third-party API subscriptions?</h4>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin: 0;">No. Jarvis is built with a local LLM bridge to Ollama (Llama 3, Mistral, DeepSeek), allowing 100% private, offline execution without monthly subscription costs.</p>
+          </div>
+          <div>
+            <h4 style="font-size: 1rem; font-weight: 700; color: var(--cyan); margin-bottom: 6px;">Q: Can I build installers for Windows and macOS?</h4>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin: 0;">Yes. The project includes cross-platform electron-builder scripts configured to produce Windows .exe installers and macOS .dmg packages.</p>
           </div>
         </div>
       </div>

@@ -21,6 +21,7 @@ const adminCouponRoutes = require('./routes/adminCouponRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const productRoutes = require('./routes/productRoutes');
 const downloadRoutes = require('./routes/downloadRoutes');
+const paymentRoutes = require('./routes/paymentRoutes');
 
 // DevCraft Catalog Datasets
 const DEVCRAFT_SERVICES = require('../scripts/data_services');
@@ -135,6 +136,7 @@ app.use('/api/enquiries', enquiryRoutes);
 app.use('/api/coupons', couponRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/downloads', downloadRoutes);
+app.use('/api/payments', paymentRoutes);
 app.use('/api', orderRoutes);
 
 // Static files for Admin Portal

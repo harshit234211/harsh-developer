@@ -3,13 +3,17 @@ const router = express.Router();
 const {
   upload,
   uploadProductFile,
+  generateDownloadToken,
   downloadProductFile,
   getDownloadHistory
 } = require('../controllers/downloadController');
 const { protectAdmin, optionalUserAuth } = require('../middleware/authMiddleware');
 
-// Public / Client file download endpoint
+// Public / Client file download endpoint (Requires authorization for paid products)
 router.get('/:productId', optionalUserAuth, downloadProductFile);
+
+// Secure temporary download token generation for paid orders
+router.get('/token/:orderId/:productId', optionalUserAuth, generateDownloadToken);
 
 // User / Admin download history
 router.get('/history/all', optionalUserAuth, getDownloadHistory);

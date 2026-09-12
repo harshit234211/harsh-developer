@@ -500,10 +500,21 @@ async function runQaSuite() {
     const { DEVCRAFT_PRODUCTS: testProducts } = require('../scripts/data_products');
     const appProds = testProducts.filter(p => p.type !== 'aptitude' && p.category !== 'Aptitude');
     const aptProds = testProducts.filter(p => p.type === 'aptitude' || p.category === 'Aptitude');
-    const allApp50 = appProds.every(p => p.discountPercent === 50 && p.finalPrice === Math.round(p.originalPrice * 0.5));
-    const allApt30 = aptProds.every(p => p.discountPercent === 30 && p.finalPrice === Math.round(p.originalPrice * 0.7));
+    const allApp50 = appProds.every(p => p.discountPercent === 50 && p.finalPrice === (p.originalPrice - Math.round(p.originalPrice * 0.5)));
+    const allApt30 = aptProds.every(p => p.discountPercent === 30 && p.finalPrice === (p.originalPrice - Math.round(p.originalPrice * 0.3)));
     assert(allApp50 && appProds.length >= 10, 'STEP 43A: All App Products Have Dynamic 50% OFF (Original -> 50% -> Final)');
     assert(allApt30 && aptProds.length >= 5, 'STEP 43B: All Aptitude Products Have Dynamic 30% OFF (Original -> 30% -> Final)');
+
+    const joyaProd = testProducts.find(p => p.id === 'joya-ai');
+    const jarvisProd = testProducts.find(p => p.id === 'jarvis-ai');
+    assert(
+      joyaProd && joyaProd.originalPrice === 1999 && joyaProd.finalPrice === 999 && joyaProd.discountPercent === 50 && joyaProd.name === 'Joya AI — Full Source Code',
+      'STEP 43C: Joya AI Final Exact Pricing Verified (Original ₹1,999, Sale ₹999, 50% OFF, Full Source Code)'
+    );
+    assert(
+      jarvisProd && jarvisProd.originalPrice === 3199 && jarvisProd.finalPrice === 1599 && jarvisProd.discountPercent === 50 && jarvisProd.name === 'Jarvis AI — Full Source Code',
+      'STEP 43D: Jarvis AI Final Exact Pricing Verified (Original ₹3,199, Sale ₹1,599, 50% OFF, Full Source Code)'
+    );
 
     // 44. Test Server-Authoritative Price Calculation (POST /api/orders/calculate)
     const sampleApp = appProds[0];
@@ -515,7 +526,7 @@ async function runQaSuite() {
       calcAppRes.data.success === true &&
       calcAppRes.data.calculation.originalPrice === sampleApp.originalPrice &&
       calcAppRes.data.calculation.productDiscountPercent === 50 &&
-      calcAppRes.data.calculation.finalAmount === Math.round(sampleApp.originalPrice * 0.5),
+      calcAppRes.data.calculation.finalAmount === (sampleApp.originalPrice - Math.round(sampleApp.originalPrice * 0.5)),
       'STEP 44A: Server Authoritative Calculation for App Product Verified'
     );
 
@@ -528,7 +539,7 @@ async function runQaSuite() {
       calcAptRes.data.success === true &&
       calcAptRes.data.calculation.originalPrice === sampleApt.originalPrice &&
       calcAptRes.data.calculation.productDiscountPercent === 30 &&
-      calcAptRes.data.calculation.finalAmount === Math.round(sampleApt.originalPrice * 0.7),
+      calcAptRes.data.calculation.finalAmount === (sampleApt.originalPrice - Math.round(sampleApt.originalPrice * 0.3)),
       'STEP 44B: Server Authoritative Calculation for Aptitude Course Verified'
     );
 
@@ -538,7 +549,7 @@ async function runQaSuite() {
       couponCode: offer20.rawCode
     });
     const calcC = calcWithCouponRes.data.calculation;
-    const expectedDiscounted = Math.round(sampleApp.originalPrice * 0.5);
+    const expectedDiscounted = sampleApp.originalPrice - Math.round(sampleApp.originalPrice * 0.5);
     const expectedCouponDiscount = Math.round(expectedDiscounted * 0.2);
     const expectedFinal = expectedDiscounted - expectedCouponDiscount;
     assert(
@@ -651,8 +662,9 @@ async function runQaSuite() {
     assert(
       joyaPageRes.statusCode === 200 &&
       joyaPageRes.data.includes('Wake up Joya') &&
-      joyaPageRes.data.includes('joya-ai-v2.4.0.apk'),
-      'STEP 51: Joya AI Page (/joya) Renders Wake Word & APK Specs'
+      joyaPageRes.data.includes('joya-ai-source-code-v2.4.0.zip') &&
+      joyaPageRes.data.includes('999'),
+      'STEP 51: Joya AI Page (/joya) Renders Wake Word, Source Package (.ZIP) & ₹999 Price'
     );
 
     // 52. Test Jarvis AI Dedicated Page (GET /jarvis)
@@ -660,8 +672,9 @@ async function runQaSuite() {
     assert(
       jarvisPageRes.statusCode === 200 &&
       jarvisPageRes.data.includes('Ctrl + Space') &&
-      jarvisPageRes.data.includes('jarvis-ai-desktop-v3.1.2.exe'),
-      'STEP 52: Jarvis AI Page (/jarvis) Renders Terminal Mockup & PC Specs'
+      jarvisPageRes.data.includes('jarvis-ai-source-code-v3.1.2.zip') &&
+      jarvisPageRes.data.includes('1,599'),
+      'STEP 52: Jarvis AI Page (/jarvis) Renders Hotkey, Source Package (.ZIP) & ₹1,599 Price'
     );
 
     // 53. Test Dedicated Products Page (GET /products)
@@ -730,13 +743,12 @@ async function runQaSuite() {
       'STEP 58: Multi-Item Cart Authoritative Server Calculation Verified with 50% & 30% Rules'
     );
 
-    // 59. Test Direct Download Streaming Endpoint (GET /api/downloads/:productId)
-    const downloadRes = await request('GET', '/api/downloads/joya-ai');
+    // 59. Test Unauthorized Access Denied with HTTP 403 Forbidden for Paid Source Code
+    const unauthorizedDownloadRes = await request('GET', '/api/downloads/joya-ai');
     assert(
-      downloadRes.statusCode === 200 &&
-      downloadRes.headers['content-disposition'] &&
-      downloadRes.headers['content-disposition'].includes('joya-ai'),
-      'STEP 59: Secure File Download Endpoint (/api/downloads/joya-ai) Streams APK Attachment'
+      unauthorizedDownloadRes.statusCode === 403 &&
+      unauthorizedDownloadRes.data.requiresPayment === true,
+      'STEP 59: Secure File Download Rejects Unauthorized Access with HTTP 403 Forbidden'
     );
 
     // 60. Test Admin Products & Discount Rules API
@@ -748,6 +760,117 @@ async function runQaSuite() {
       adminProductsRes.data.success === true &&
       adminProductsRes.data.count >= 5,
       'STEP 60: Admin Products CMS API (/api/products/admin/all) Returns Managed Store Items'
+    );
+
+    // 61. Test Dynamic UPI Payment Intent Creation with Actual Order Amount
+    const joyaCheckoutRes = await request('POST', '/api/orders/checkout', {
+      productId: 'joya-ai',
+      clientName: 'QA Joya Purchaser',
+      clientEmail: 'joya.buyer@devcraft.io',
+      clientPhone: '+919876501234'
+    });
+    assert(
+      joyaCheckoutRes.statusCode === 201 &&
+      joyaCheckoutRes.data.order.finalAmount === 999 &&
+      joyaCheckoutRes.data.payment &&
+      joyaCheckoutRes.data.payment.upiUri &&
+      joyaCheckoutRes.data.payment.upiUri.startsWith('upi://pay?') &&
+      joyaCheckoutRes.data.payment.upiUri.includes('am=999.00'),
+      'STEP 61: Checkout Generates Dynamic UPI Payment Intent with Exact Order Amount (₹999)'
+    );
+    const joyaOrderId = joyaCheckoutRes.data.order.orderId;
+
+    // 62. Test Verification Without Gateway Key Does Not Fake Success
+    const verifyAttemptRes = await request('POST', `/api/payments/verify/${joyaOrderId}`, {
+      utr: '123456789012'
+    });
+    assert(
+      (verifyAttemptRes.statusCode === 200 || verifyAttemptRes.statusCode === 202) &&
+      verifyAttemptRes.data.verified === false &&
+      verifyAttemptRes.data.requiresGatewayKey === true,
+      'STEP 62: Payment Verification Safely Refuses to Fake Success Without Configured Gateway Key'
+    );
+
+    // 63. Test Admin Payment Verification & Entitlement Fulfill
+    const adminVerifyRes = await request('POST', '/api/payments/admin/verify-manual', {
+      orderId: joyaOrderId,
+      utr: 'UTR-QA-99998888',
+      adminNotes: 'Verified via studio banking panel'
+    }, {
+      'Authorization': `Bearer ${adminToken}`
+    });
+    assert(
+      adminVerifyRes.statusCode === 200 &&
+      adminVerifyRes.data.success === true &&
+      adminVerifyRes.data.order.paymentStatus === 'paid' &&
+      adminVerifyRes.data.order.entitlements.includes('joya-ai'),
+      'STEP 63: Studio Admin Manual Verification Successfully Marks Order Paid with Entitlements'
+    );
+
+    // 64. Test Payment Status Endpoint Reflects Paid
+    const statusCheckRes = await request('GET', `/api/payments/status/${joyaOrderId}`);
+    assert(
+      statusCheckRes.statusCode === 200 &&
+      statusCheckRes.data.isPaid === true,
+      'STEP 64: Payment Status Endpoint (/api/payments/status/:orderId) Authoritatively Reports Paid'
+    );
+
+    // 65. Test Authorized Full Source Code Download for Paid Joya Order
+    const authorizedJoyaDownload = await request('GET', `/api/downloads/joya-ai?orderId=${joyaOrderId}`);
+    assert(
+      authorizedJoyaDownload.statusCode === 200 &&
+      authorizedJoyaDownload.headers['content-disposition'] &&
+      authorizedJoyaDownload.headers['content-disposition'].includes('joya-ai-source-code'),
+      'STEP 65: Verified Paid Order Unlocks Full Joya AI Kotlin Source Code Package (.ZIP)'
+    );
+
+    // 66. Test Jarvis AI Buy, Verification & Full Source Code Delivery
+    const jarvisCheckoutRes = await request('POST', '/api/orders/checkout', {
+      productId: 'jarvis-ai',
+      clientName: 'QA Jarvis Purchaser',
+      clientEmail: 'jarvis.buyer@devcraft.io',
+      clientPhone: '+919876543210'
+    });
+    assert(
+      jarvisCheckoutRes.statusCode === 201 &&
+      jarvisCheckoutRes.data.order.finalAmount === 1599 &&
+      jarvisCheckoutRes.data.payment.upiUri.includes('am=1599.00'),
+      'STEP 66A: Jarvis AI Checkout Creates Order with Exact Sale Price ₹1,599 & UPI Intent'
+    );
+    const jarvisOrderId = jarvisCheckoutRes.data.order.orderId;
+
+    const adminVerifyJarvisRes = await request('POST', '/api/payments/admin/verify-manual', {
+      orderId: jarvisOrderId,
+      utr: 'UTR-JARVIS-12345678',
+      adminNotes: 'Verified for QA suite'
+    }, {
+      'Authorization': `Bearer ${adminToken}`
+    });
+    assert(
+      adminVerifyJarvisRes.statusCode === 200 &&
+      adminVerifyJarvisRes.data.order.paymentStatus === 'paid',
+      'STEP 66B: Jarvis AI Order Verified as Paid'
+    );
+
+    const authorizedJarvisDownload = await request('GET', `/api/downloads/jarvis-ai?orderId=${jarvisOrderId}`);
+    assert(
+      authorizedJarvisDownload.statusCode === 200 &&
+      authorizedJarvisDownload.headers['content-disposition'] &&
+      authorizedJarvisDownload.headers['content-disposition'].includes('jarvis-ai-source-code'),
+      'STEP 66C: Verified Paid Order Unlocks Complete Jarvis AI Electron+Python Source Code (.ZIP)'
+    );
+
+    // 67. Test Tranz Webhook Ingestion & Idempotency
+    const webhookRes = await request('POST', '/api/payments/webhook/tranz', {
+      orderId: jarvisOrderId,
+      status: 'PAID',
+      amount: 1599,
+      txn_id: 'TXN-WEBHOOK-9988'
+    });
+    assert(
+      webhookRes.statusCode === 200 &&
+      webhookRes.data.success === true,
+      'STEP 67: Tranz Gateway Webhook (/api/payments/webhook/tranz) Ingests & Confirms Idempotently'
     );
 
 
