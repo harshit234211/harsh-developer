@@ -10,7 +10,8 @@ const {
   updateProfile,
   changePassword,
   toggleSavedDemo,
-  getMyEnquiries
+  getMyEnquiries,
+  getReferralStats
 } = require('../controllers/userAuthController');
 const { protectUser } = require('../middleware/userAuthMiddleware');
 const { loginLimiter } = require('../middleware/rateLimiter');
@@ -28,5 +29,6 @@ router.patch('/profile', protectUser, updateProfile);
 router.post('/change-password', protectUser, changePassword);
 router.post('/saved-demos/toggle', protectUser, toggleSavedDemo);
 router.get('/my-enquiries', protectUser, getMyEnquiries);
+router.get('/referrals', protectUser, getReferralStats);
 
 module.exports = router;

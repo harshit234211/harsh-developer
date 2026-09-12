@@ -71,6 +71,26 @@ const register = async (req, res, next) => {
       });
     }
 
+    // Referral Code handling (Requirement 9)
+    let referrerUser = null;
+    const rawRefCode = req.body.referralCode || req.body.ref;
+    if (rawRefCode && typeof rawRefCode === 'string' && rawRefCode.trim().length > 0) {
+      const cleanRefCode = rawRefCode.trim().toUpperCase();
+      referrerUser = await dbService.User.findOne({ referralCode: cleanRefCode });
+      if (!referrerUser) {
+        return res.status(400).json({
+          success: false,
+          message: 'The referral code you entered is invalid. Please check the code or clear the field to proceed.'
+        });
+      }
+      if (referrerUser.email.toLowerCase() === cleanEmail) {
+        return res.status(400).json({
+          success: false,
+          message: 'Self-referral is not permitted. You cannot use your own referral code.'
+        });
+      }
+    }
+
     // Hash password with bcrypt (never plaintext)
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -82,14 +102,27 @@ const register = async (req, res, next) => {
       company: company ? company.trim() : '',
       password: hashedPassword,
       role: 'client',
+      referredBy: referrerUser ? referrerUser.referralCode : null,
       savedDemos: [],
       lastLogin: new Date().toISOString()
     });
 
+    // Record referral attribution in database
+    if (referrerUser) {
+      await dbService.Referral.create({
+        referrerId: referrerUser._id,
+        referrerCode: referrerUser.referralCode,
+        referredUserId: user._id,
+        referredUserEmail: user.email,
+        status: 'registered'
+      });
+      logger.info(`[Referral Recorded] User ${user.email} registered using referral code ${referrerUser.referralCode} from ${referrerUser.email}`);
+    }
+
     const token = generateToken(user._id, false);
     setSessionCookie(res, token, false);
 
-    logger.success(`New client registered: ${user.name} (${user.email})`);
+    logger.success(`New client registered: ${user.name} (${user.email}) [Ref: ${user.referralCode}]`);
 
     res.status(201).json({
       success: true,
@@ -101,6 +134,9 @@ const register = async (req, res, next) => {
         email: user.email,
         phone: user.phone,
         company: user.company,
+        referralCode: user.referralCode,
+        referralLink: `${config.publicSiteUrl}/register?ref=${user.referralCode}`,
+        referredBy: user.referredBy || null,
         savedDemos: user.savedDemos || []
       }
     });
@@ -182,6 +218,8 @@ const login = async (req, res, next) => {
         email: user.email,
         phone: user.phone || '',
         company: user.company || '',
+        referralCode: user.referralCode || 'DEV-STUDIO',
+        referralLink: `${config.publicSiteUrl}/register?ref=${user.referralCode || 'DEV-STUDIO'}`,
         savedDemos: user.savedDemos || []
       }
     });
@@ -332,6 +370,8 @@ const getMe = async (req, res, next) => {
         email: user.email,
         phone: user.phone || '',
         company: user.company || '',
+        referralCode: user.referralCode || 'DEV-STUDIO',
+        referralLink: `${config.publicSiteUrl}/register?ref=${user.referralCode || 'DEV-STUDIO'}`,
         savedDemos: user.savedDemos || [],
         role: user.role || 'client',
         createdAt: user.createdAt
@@ -482,6 +522,62 @@ const getMyEnquiries = async (req, res, next) => {
   }
 };
 
+/**
+ * 11. Get User Referral Stats & Performance (Requirements 8, 9, 10)
+ */
+const getReferralStats = async (req, res, next) => {
+  try {
+    const user = req.user;
+    if (!user) {
+      return res.status(401).json({ success: false, message: 'Unauthorized session.' });
+    }
+
+    const referrals = await dbService.Referral.find({ referrerId: user._id });
+    const siteSettings = await dbService.SiteSetting.get();
+    const rewardPercent = Number(siteSettings.referralRewardPercent) || 10;
+
+    const totalReferrals = referrals.length;
+    const successfulReferrals = referrals.filter(r => r.status === 'converted').length;
+    const totalRewards = referrals.reduce((acc, r) => acc + (Number(r.rewardAmount) || 0), 0);
+    const pendingRewards = referrals.filter(r => r.status === 'converted' && !r.paid).reduce((acc, r) => acc + (Number(r.rewardAmount) || 0), 0);
+    const paidRewards = referrals.filter(r => r.paid).reduce((acc, r) => acc + (Number(r.rewardAmount) || 0), 0);
+
+    const maskedReferrals = referrals.map(r => {
+      const parts = (r.referredUserEmail || '').split('@');
+      const maskedEmail = parts[0].length > 2 
+        ? parts[0].substring(0, 2) + '***@' + (parts[1] || '') 
+        : '***@' + (parts[1] || '');
+      return {
+        id: r._id,
+        referredUserEmail: maskedEmail,
+        status: r.status,
+        orderId: r.orderId,
+        rewardPercent: r.rewardPercent,
+        rewardAmount: r.rewardAmount,
+        paid: r.paid,
+        createdAt: r.createdAt
+      };
+    });
+
+    res.status(200).json({
+      success: true,
+      referralCode: user.referralCode || 'DEV-STUDIO',
+      referralLink: `${config.publicSiteUrl}/register?ref=${user.referralCode || 'DEV-STUDIO'}`,
+      rewardPercent,
+      stats: {
+        totalReferrals,
+        successfulReferrals,
+        totalRewards,
+        pendingRewards,
+        paidRewards
+      },
+      referrals: maskedReferrals
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   register,
   login,
@@ -492,5 +588,6 @@ module.exports = {
   updateProfile,
   changePassword,
   toggleSavedDemo,
-  getMyEnquiries
+  getMyEnquiries,
+  getReferralStats
 };

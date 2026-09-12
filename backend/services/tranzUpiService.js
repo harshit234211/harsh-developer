@@ -12,7 +12,7 @@ class TranzUpiService {
     this.secret = config.tranzUpi.secret || '';
     this.baseUrl = config.tranzUpi.baseUrl || 'https://api.tranzupi.com';
     this.merchantVpa = config.tranzUpi.merchantVpa || 'devcraft@upi';
-    this.publicSiteUrl = config.publicSiteUrl || 'https://harsh-developer.onrender.com';
+    this.publicSiteUrl = config.publicSiteUrl || 'https://kiromage.shop';
   }
 
   /**
@@ -433,6 +433,53 @@ class TranzUpiService {
         entitlements
       }
     });
+
+    // Referral System Conversion & Reward Attribution (Requirement 9)
+    try {
+      let buyerUser = null;
+      if (order.userId) {
+        buyerUser = await dbService.User.findById(order.userId);
+      }
+      if (!buyerUser && order.clientEmail) {
+        buyerUser = await dbService.User.findOne({ email: order.clientEmail });
+      }
+
+      if (buyerUser && buyerUser.referredBy) {
+        // Find existing referral record for this referred user
+        const refRecord = await dbService.Referral.findOne({ referredUserId: buyerUser._id });
+        if (refRecord) {
+          const siteSettings = await dbService.SiteSetting.get();
+          const rewardPercent = Number(siteSettings.referralRewardPercent) || 10;
+          const rewardAmount = Math.round(Number(order.finalAmount) * (rewardPercent / 100));
+
+          // Only convert if not already converted or if it was in 'registered' status
+          if (refRecord.status === 'registered') {
+            await dbService.Referral.findByIdAndUpdate(refRecord._id, {
+              status: 'converted',
+              orderId: order.orderId,
+              rewardPercent,
+              rewardAmount,
+              updatedAt: new Date().toISOString()
+            });
+
+            await dbService.ReferralReward.create({
+              referralId: refRecord._id,
+              referrerId: refRecord.referrerId,
+              referredUserId: buyerUser._id,
+              orderId: order.orderId,
+              orderAmount: order.finalAmount,
+              rewardPercent,
+              rewardAmount,
+              status: 'pending'
+            });
+
+            logger.success(`[Referral Reward] Successfully attributed ₹${rewardAmount} (${rewardPercent}%) to referrer ${refRecord.referrerCode} for order ${order.orderId} by ${buyerUser.email}`);
+          }
+        }
+      }
+    } catch (refErr) {
+      logger.warn(`[Referral Conversion Warning] ${refErr.message}`);
+    }
 
     return updatedOrder;
   }

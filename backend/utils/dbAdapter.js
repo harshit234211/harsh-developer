@@ -33,7 +33,10 @@ let localDb = {
   products: [],
   productFiles: [],
   discountRules: { appDefaultDiscount: 50, aptitudeDefaultDiscount: 30 },
-  downloads: []
+  downloads: [],
+  referrals: [],
+  referralRewards: [],
+  siteSettings: { referralRewardPercent: 10, minPayout: 500 }
 };
 
 const loadLocalDb = () => {
@@ -57,6 +60,9 @@ const loadLocalDb = () => {
       if (!localDb.productFiles) localDb.productFiles = [];
       if (!localDb.discountRules) localDb.discountRules = { appDefaultDiscount: 50, aptitudeDefaultDiscount: 30 };
       if (!localDb.downloads) localDb.downloads = [];
+      if (!localDb.referrals) localDb.referrals = [];
+      if (!localDb.referralRewards) localDb.referralRewards = [];
+      if (!localDb.siteSettings) localDb.siteSettings = { referralRewardPercent: 10, minPayout: 500 };
     } else {
       saveLocalDb();
     }
@@ -395,7 +401,16 @@ const seedInitialData = async () => {
         logger.success(`Configured Harshit client account (${targetEmail}) in document store`);
       } else {
         localDb.users[userIdx].password = defaultPasswordHash;
+        if (!localDb.users[userIdx].referralCode) {
+          localDb.users[userIdx].referralCode = 'DEV-A8791984';
+        }
       }
+      // Ensure all users have a referralCode
+      localDb.users.forEach(u => {
+        if (!u.referralCode) {
+          u.referralCode = 'DEV-' + crypto.randomBytes(4).toString('hex').toUpperCase();
+        }
+      });
       saveLocalDb();
 
       if (!localDb.projects || localDb.projects.length === 0) {
@@ -554,6 +569,8 @@ const dbService = {
       loadLocalDb();
       const user = localDb.users.find(u => {
         if (query.email && u.email.toLowerCase() !== query.email.toLowerCase()) return false;
+        if (query._id && u._id !== query._id) return false;
+        if (query.referralCode && (!u.referralCode || u.referralCode.toUpperCase() !== query.referralCode.toUpperCase())) return false;
         return true;
       });
       return user || null;
@@ -575,6 +592,7 @@ const dbService = {
         return await User.create(data);
       }
       loadLocalDb();
+      const referralCode = data.referralCode || ('DEV-' + crypto.randomBytes(4).toString('hex').toUpperCase());
       const newUser = {
         _id: crypto.randomUUID(),
         name: data.name,
@@ -583,6 +601,9 @@ const dbService = {
         company: data.company || '',
         password: data.password, // already hashed
         role: 'client',
+        referralCode,
+        referredBy: data.referredBy || null,
+        savedDemos: data.savedDemos || [],
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString()
       };
@@ -1488,6 +1509,125 @@ const dbService = {
         }
         return true;
       }).length;
+    }
+  },
+
+  Referral: {
+    create: async (data) => {
+      loadLocalDb();
+      if (!localDb.referrals) localDb.referrals = [];
+      const newRef = {
+        _id: crypto.randomUUID(),
+        referrerId: data.referrerId,
+        referrerCode: (data.referrerCode || '').toUpperCase(),
+        referredUserId: data.referredUserId,
+        referredUserEmail: (data.referredUserEmail || '').toLowerCase().trim(),
+        status: data.status || 'registered', // 'registered', 'converted'
+        orderId: data.orderId || null,
+        rewardPercent: Number(data.rewardPercent) || 10,
+        rewardAmount: Number(data.rewardAmount) || 0,
+        paid: Boolean(data.paid),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+      localDb.referrals.push(newRef);
+      saveLocalDb();
+      return newRef;
+    },
+    find: async (filter = {}) => {
+      loadLocalDb();
+      let list = [...(localDb.referrals || [])];
+      if (filter.referrerId) list = list.filter(r => r.referrerId === filter.referrerId);
+      if (filter.referrerCode) list = list.filter(r => r.referrerCode === filter.referrerCode.toUpperCase());
+      if (filter.referredUserId) list = list.filter(r => r.referredUserId === filter.referredUserId);
+      if (filter.status) list = list.filter(r => r.status === filter.status);
+      return list.reverse();
+    },
+    findOne: async (query = {}) => {
+      loadLocalDb();
+      const r = (localDb.referrals || []).find(item => {
+        if (query._id && item._id !== query._id) return false;
+        if (query.referrerId && item.referrerId !== query.referrerId) return false;
+        if (query.referredUserId && item.referredUserId !== query.referredUserId) return false;
+        if (query.referredUserEmail && item.referredUserEmail.toLowerCase() !== query.referredUserEmail.toLowerCase()) return false;
+        if (query.status && item.status !== query.status) return false;
+        return true;
+      });
+      return r ? { ...r } : null;
+    },
+    findByIdAndUpdate: async (id, updateData) => {
+      loadLocalDb();
+      const idx = (localDb.referrals || []).findIndex(r => r._id === id);
+      if (idx === -1) return null;
+      localDb.referrals[idx] = {
+        ...localDb.referrals[idx],
+        ...updateData,
+        updatedAt: new Date().toISOString()
+      };
+      saveLocalDb();
+      return { ...localDb.referrals[idx] };
+    },
+    countDocuments: async (filter = {}) => {
+      loadLocalDb();
+      if (!filter || Object.keys(filter).length === 0) return (localDb.referrals || []).length;
+      return (localDb.referrals || []).filter(r => {
+        for (const [k, v] of Object.entries(filter)) {
+          if (r[k] !== v) return false;
+        }
+        return true;
+      }).length;
+    }
+  },
+
+  ReferralReward: {
+    create: async (data) => {
+      loadLocalDb();
+      if (!localDb.referralRewards) localDb.referralRewards = [];
+      const newReward = {
+        _id: crypto.randomUUID(),
+        referralId: data.referralId,
+        referrerId: data.referrerId,
+        referredUserId: data.referredUserId,
+        orderId: data.orderId,
+        orderAmount: Number(data.orderAmount),
+        rewardPercent: Number(data.rewardPercent) || 10,
+        rewardAmount: Number(data.rewardAmount),
+        status: data.status || 'pending', // 'pending', 'approved', 'paid'
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+      localDb.referralRewards.push(newReward);
+      saveLocalDb();
+      return newReward;
+    },
+    find: async (filter = {}) => {
+      loadLocalDb();
+      let list = [...(localDb.referralRewards || [])];
+      if (filter.referrerId) list = list.filter(r => r.referrerId === filter.referrerId);
+      if (filter.orderId) list = list.filter(r => r.orderId === filter.orderId);
+      if (filter.status) list = list.filter(r => r.status === filter.status);
+      return list.reverse();
+    }
+  },
+
+  SiteSetting: {
+    get: async () => {
+      loadLocalDb();
+      if (!localDb.siteSettings) {
+        localDb.siteSettings = { referralRewardPercent: 10, minPayout: 500 };
+        saveLocalDb();
+      }
+      return localDb.siteSettings;
+    },
+    update: async (settings) => {
+      loadLocalDb();
+      localDb.siteSettings = {
+        ...(localDb.siteSettings || { referralRewardPercent: 10, minPayout: 500 }),
+        ...settings,
+        updatedAt: new Date().toISOString()
+      };
+      saveLocalDb();
+      return localDb.siteSettings;
     }
   }
 };

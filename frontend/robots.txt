@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /admin-login
+Disallow: /api/admin/
+Disallow: /api/downloads/
+
+Sitemap: https://kiromage.shop/sitemap.xml

@@ -1,12 +1,19 @@
-const commonHead = (title, desc) => `
+const commonHead = (title, desc, canonicalPath = '') => `
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${title} | DEVCRAFT Studio</title>
   <meta name="description" content="${desc || 'DEVCRAFT: Ideas → Code → Real Solutions. High-performance software engineering studio offering mobile apps, web applications, enterprise dashboards, AI workflows, and cloud architecture.'}" />
   <meta name="keywords" content="DevCraft, Software Development Studio, Mobile Apps, Web Applications, React Native, Next.js, Node.js, AI Solutions, Android Developer, Cloud Deployment" />
+  <link rel="canonical" href="https://kiromage.shop${canonicalPath}" />
   <meta property="og:title" content="${title} | DEVCRAFT Studio" />
   <meta property="og:description" content="${desc || 'Ideas → Code → Real Solutions. Production-grade software development for high-growth businesses.'}" />
-  <meta property="og:image" content="/assets/images/project-ai.svg" />
+  <meta property="og:image" content="https://kiromage.shop/assets/images/project-ai.svg" />
+  <meta property="og:url" content="https://kiromage.shop${canonicalPath}" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="${title} | DEVCRAFT Studio" />
+  <meta name="twitter:description" content="${desc || 'Ideas → Code → Real Solutions. Production-grade software development.'}" />
+  <meta name="twitter:image" content="https://kiromage.shop/assets/images/project-ai.svg" />
   <link rel="icon" type="image/svg+xml" href="/assets/images/avatar-harshit.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -38,6 +45,7 @@ const navbar = (active = 'home') => `
         <li><a href="/services" class="nav-link ${active === 'services' ? 'active' : ''}">Services</a></li>
         <li><a href="/portfolio" class="nav-link ${active === 'portfolio' ? 'active' : ''}">Portfolio</a></li>
         <li><a href="/about" class="nav-link ${active === 'about' ? 'active' : ''}">About</a></li>
+        <li><a href="/faq" class="nav-link ${active === 'faq' ? 'active' : ''}">FAQ</a></li>
         <li><a href="/contact" class="nav-link ${active === 'contact' ? 'active' : ''}">Contact</a></li>
       </ul>
 
@@ -60,52 +68,20 @@ const navbar = (active = 'home') => `
           <span class="nav-cart-badge" id="nav-cart-badge">0</span>
         </a>
 
-        <!-- 3-Theme Selector -->
-        <div class="theme-selector-dropdown" id="theme-selector">
-          <button class="theme-btn" id="theme-toggle-btn" aria-label="Select UI Theme" title="Switch UI Theme">
-            <span class="theme-preview-dot"></span>
-            <span class="theme-active-label" id="current-theme-label">Futuristic Dev</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </button>
-          <div class="theme-menu" id="theme-menu">
-            <button class="theme-option" data-theme-value="futuristic-dev">
-              <span class="theme-swatch cyan-purple"></span>
-              <div>
-                <strong>Option A: Futuristic Dev</strong>
-                <small>Cyan & Purple Neon Glow</small>
-              </div>
-            </button>
-            <button class="theme-option" data-theme-value="premium-saas">
-              <span class="theme-swatch slate-indigo"></span>
-              <div>
-                <strong>Option B: Premium SaaS</strong>
-                <small>Slate Minimalist Violet</small>
-              </div>
-            </button>
-            <button class="theme-option" data-theme-value="cyber-studio">
-              <span class="theme-swatch emerald-yellow"></span>
-              <div>
-                <strong>Option C: Cyber Studio</strong>
-                <small>Pitch Black & Emerald Terminal</small>
-              </div>
-            </button>
-          </div>
-        </div>
-
         <!-- Logged Out Auth Buttons -->
         <div class="auth-group-logged-out" style="display: flex; gap: 8px; align-items: center;">
-          <a href="/login" class="btn btn-ghost btn-sm">Sign In</a>
+          <a href="/login" class="btn btn-outline btn-sm">Sign In</a>
           <a href="/register" class="btn btn-primary btn-sm">Register</a>
         </div>
 
         <!-- Logged In Auth Buttons -->
         <div class="auth-group-logged-in" style="display: none; align-items: center; gap: 8px;">
-          <a href="/profile" class="user-nav-chip" title="My Profile">
+          <a href="/dashboard" class="user-nav-chip" title="My Dashboard">
             <span class="user-avatar-initials nav-user-initials">U</span>
             <span class="user-chip-name nav-user-name">Client</span>
           </a>
-          <a href="/dashboard" class="btn btn-xs btn-outline">Dashboard</a>
-          <button onclick="DevCraftAuth.logout()" class="btn btn-xs btn-ghost text-muted" title="Logout">Logout</button>
+          <a href="/dashboard" class="btn btn-sm btn-outline">Dashboard</a>
+          <button onclick="DevCraftAuth.logout()" class="btn btn-sm btn-outline" style="color: #dc2626;" title="Logout">Logout</button>
         </div>
 
         <button class="mobile-toggle" id="mobile-toggle-btn" aria-label="Toggle menu">

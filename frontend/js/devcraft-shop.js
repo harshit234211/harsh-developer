@@ -131,8 +131,8 @@ window.devcraftShop = (function() {
     const finalPrice = Math.round(originalPrice * (1 - discountPercent / 100));
 
     // Construct Product URL
-    const baseUrl = window.location.origin || 'https://harsh-developer.onrender.com';
-    const productUrl = `${baseUrl}/services?product=${encodeURIComponent(p.id)}`;
+    const baseUrl = (window.location.origin && window.location.origin.includes('http')) ? window.location.origin : 'https://kiromage.shop';
+    const productUrl = `${baseUrl}/products/${encodeURIComponent(p.id)}`;
 
     // Build pre-filled sharing message strictly matching requirement 6:
     const shareMessage = `Check out ${p.name} on DevCraft.\nOriginal Price: ${formatCurrency(originalPrice)}\nCurrent Offer: ${discountPercent}% OFF\nFinal Price: ${formatCurrency(finalPrice)}\nView: ${productUrl}`;

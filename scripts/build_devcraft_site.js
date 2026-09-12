@@ -33,8 +33,21 @@ function renderHeroSection() {
 
         <div class="hero-tagline-lead">DEVCRAFT STUDIO • IDEAS → CODE → REAL SOLUTIONS</div>
         <h1 class="hero-headline">
-          Build Your Idea. <span class="text-gradient">Launch Your Solution.</span>
+          Turn Your Ideas Into <span class="text-gradient">Real Software.</span>
         </h1>
+
+        <!-- Visual Workflow: Idea → Design → Code → Product → Launch -->
+        <div class="hero-workflow-stepper">
+          <span class="step-item"><span class="step-num">1</span> Idea</span>
+          <span class="step-arrow">→</span>
+          <span class="step-item"><span class="step-num">2</span> Design</span>
+          <span class="step-arrow">→</span>
+          <span class="step-item"><span class="step-num">3</span> Code</span>
+          <span class="step-arrow">→</span>
+          <span class="step-item"><span class="step-num">4</span> Product</span>
+          <span class="step-arrow">→</span>
+          <span class="step-item"><span class="step-num">5</span> Launch</span>
+        </div>
 
         <p class="hero-bio">
           DevCraft is a high-performance software engineering studio. We architect and ship full-stack web platforms, native mobile applications, intelligent AI workflows, and mission-critical cloud infrastructure for ambitious founders and growing enterprises.
@@ -2418,6 +2431,443 @@ function buildLegalPages() {
   });
 }
 
+function buildFaqPage() {
+  const html = `<!DOCTYPE html>
+<html lang="en" data-theme="futuristic-dev">
+<head>
+  ${commonHead('Frequently Asked Questions (FAQ) & Knowledge Base', 'Comprehensive questions and answers regarding DevCraft software development sprints, source code ownership, Joya & Jarvis AI, Tranz UPI payments, and referral commissions.', '/faq')}
+</head>
+<body>
+  ${navbar('faq')}
+
+  <main style="padding-top: 100px;">
+    ${renderFaqSection()}
+    ${renderContactSection()}
+  </main>
+
+  ${floatingActions()}
+  ${footer()}
+  ${renderModalsMarkup()}
+  ${renderClientDataScripts()}
+</body>
+</html>`;
+
+  fs.writeFileSync(path.join(PAGES, 'faq.html'), html, 'utf8');
+  fs.writeFileSync(path.join(FRONTEND, 'faq.html'), html, 'utf8');
+  console.log('✓ Generated frontend/pages/faq.html & frontend/faq.html');
+}
+
+function build404Page() {
+  const html = `<!DOCTYPE html>
+<html lang="en" data-theme="futuristic-dev">
+<head>
+  ${commonHead('404 - Page Not Found', 'The requested page or resource could not be found on DevCraft Studio.', '/404')}
+</head>
+<body>
+  ${navbar('')}
+
+  <main style="padding: 140px 0 100px; min-height: 80vh; display: flex; align-items: center;">
+    <div class="container" style="max-width: 720px; text-align: center;">
+      <div class="glass-card" style="padding: 50px 30px; border-radius: 24px; border: 1px solid var(--border-glass);">
+        <div style="font-family: var(--font-mono); font-size: 5rem; font-weight: 900; line-height: 1; color: var(--accent); margin-bottom: 16px;">
+          404
+        </div>
+        <div style="display: inline-block; padding: 4px 14px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 9999px; color: #1d4ed8; font-weight: 700; font-size: 0.82rem; margin-bottom: 16px;">
+          PAGE NOT FOUND
+        </div>
+        <h1 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 14px; color: var(--text-primary);">
+          Lost in Cyberspace?
+        </h1>
+        <p style="color: var(--text-secondary); font-size: 1.05rem; line-height: 1.7; margin-bottom: 30px; max-width: 540px; margin-left: auto; margin-right: auto;">
+          The route you navigated to does not exist or has been relocated. Explore our production software products, development services, or return to home.
+        </p>
+
+        <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 24px;">
+          <a href="/" class="btn btn-primary" style="padding: 12px 24px;">
+            ← Return to Home
+          </a>
+          <a href="/products" class="btn btn-emerald" style="padding: 12px 24px;">
+            Software Products (50% OFF) ⚡
+          </a>
+          <a href="/services" class="btn btn-outline" style="padding: 12px 24px;">
+            View Services
+          </a>
+          <a href="/contact" class="btn btn-outline" style="padding: 12px 24px;">
+            Contact Support
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  ${floatingActions()}
+  ${footer()}
+  ${renderModalsMarkup()}
+  ${renderClientDataScripts()}
+</body>
+</html>`;
+
+  fs.writeFileSync(path.join(PAGES, '404.html'), html, 'utf8');
+  fs.writeFileSync(path.join(FRONTEND, '404.html'), html, 'utf8');
+  console.log('✓ Generated frontend/pages/404.html & frontend/404.html');
+}
+
+function buildServiceSubPages() {
+  const SERVICES_PAGES = path.join(PAGES, 'services');
+  if (!fs.existsSync(SERVICES_PAGES)) fs.mkdirSync(SERVICES_PAGES, { recursive: true });
+
+  const subServices = [
+    {
+      slug: 'android-development',
+      name: 'Android App Development',
+      category: 'Mobile Engineering',
+      badge: 'Native Android Kotlin',
+      headline: 'Native Android Apps Built with Kotlin & Jetpack Compose',
+      subtitle: 'From conceptual wireframes to Google Play Store launch. We engineer reactive, high-performance native Android apps with sub-100ms startup times, offline-first Room caching, and seamless UPI payments.',
+      heroStat1: '100% Native Kotlin',
+      heroStat2: 'API 26-34 Ready',
+      heroStat3: '60 FPS Smooth UI',
+      heroStat4: '100% Code Handover',
+      capabilities: [
+        { title: 'Jetpack Compose UI', desc: 'Modern declarative UI components with Material Design 3, fluid animations, and dark/light themes.' },
+        { title: 'Offline-First Room DB', desc: 'Robust local data persistence, SQLite synchronization, and offline mutation queues.' },
+        { title: 'Payment & UPI Integration', desc: 'In-app purchases, Google Play Billing, and dynamic NPCI UPI QR code generation.' },
+        { title: 'Firebase Cloud Messaging', desc: 'Real-time targeted push notifications, deep links, analytics, and crash reporting.' },
+        { title: 'Hardware Sensors & GPS', desc: 'Precision geolocation, background tracking, Bluetooth BLE, camera, and biometric authentication.' },
+        { title: 'Play Store Publishing', desc: 'Complete APK/AAB signing, Google Play Store compliance, review assistance, and CI/CD.' }
+      ],
+      techStack: ['Kotlin', 'Android Studio', 'Jetpack Compose', 'Room DB', 'Retrofit', 'Coroutines', 'Flow', 'Hilt', 'Firebase'],
+      pricing: 'Starting at ₹24,999'
+    },
+    {
+      slug: 'web-development',
+      name: 'Web Development',
+      category: 'Full-Stack Web',
+      badge: 'Next.js & React',
+      headline: 'Ultra-Fast, High-Converting Websites & Web Applications',
+      subtitle: 'Bespoke corporate websites, SaaS landing portals, and responsive web applications engineered for 100/100 Core Web Vitals, organic search dominance, and conversion architectures.',
+      heroStat1: '99+ Lighthouse Score',
+      heroStat2: '<50ms Response',
+      heroStat3: '100% Responsive',
+      heroStat4: 'Zero Vendor Lock-in',
+      capabilities: [
+        { title: 'Server-Side Rendering (SSR)', desc: 'Next.js dynamic rendering and edge routing for instant page loads and premier SEO indexing.' },
+        { title: 'Design System & Tailwind', desc: 'Modular, accessible design components built with Tailwind CSS and clean typography.' },
+        { title: 'E-Commerce & Dynamic UPI', desc: 'High-speed headless commerce cart, express checkout, and instant payment verification.' },
+        { title: 'Headless CMS Integration', desc: 'Easy content management with Strapi, Sanity, or custom markdown database backends.' },
+        { title: 'Edge CDN & SSL Shielding', desc: 'Cloudflare enterprise caching, automated DDoS protection, and SSL certificates.' },
+        { title: 'Automated Lead Funnels', desc: 'High-converting lead capture forms with instant WhatsApp and email notifications.' }
+      ],
+      techStack: ['Next.js', 'React', 'Tailwind CSS', 'TypeScript', 'Node.js', 'Express', 'PostgreSQL', 'Cloudflare'],
+      pricing: 'Starting at ₹14,999'
+    },
+    {
+      slug: 'software-development',
+      name: 'Custom Software Development',
+      category: 'Custom Engineering',
+      badge: 'Enterprise & Desktop',
+      headline: 'Enterprise-Grade Custom Software Built for Your Exact Workflow',
+      subtitle: 'Replace fragmented SaaS tools and fragile spreadsheets with unified, proprietary software systems. Full intellectual property ownership, zero recurring user licenses.',
+      heroStat1: '100% IP Ownership',
+      heroStat2: 'Zero Seat Licenses',
+      heroStat3: 'Cross-Platform',
+      heroStat4: 'Bespoke Architecture',
+      capabilities: [
+        { title: 'Multi-Tenant Client Portals', desc: 'Secure web portals with role-based access control (RBAC), audit logging, and isolated client data.' },
+        { title: 'Desktop Software (Electron)', desc: 'Cross-platform desktop executables for Windows, macOS, and Linux with local file access.' },
+        { title: 'Custom Relational DBs', desc: 'PostgreSQL database modeling, migrations, ACID transaction safety, and indexing.' },
+        { title: 'Background Task Workers', desc: 'Asynchronous task processing, scheduled reporting jobs, and automated PDF invoice engines.' },
+        { title: 'Biometric & Local Security', desc: 'Encrypted token storage, zero-knowledge credentials, and tamper-resistant licensing.' },
+        { title: 'Git & Complete Docs', desc: 'Clean, modular codebase handed over with full developer architecture documentation.' }
+      ],
+      techStack: ['Node.js', 'Electron', 'Python', 'PostgreSQL', 'MongoDB', 'Redis', 'Docker', 'TypeScript'],
+      pricing: 'Starting at ₹39,999'
+    },
+    {
+      slug: 'ai-solutions',
+      name: 'AI Solutions & Agent Development',
+      category: 'Artificial Intelligence',
+      badge: 'Autonomous AI & LLMs',
+      headline: 'Autonomous AI Agents, Custom LLM Bridges & Neural Assistants',
+      subtitle: 'Harness the power of cutting-edge generative AI and lightweight on-device models. We develop autonomous agent workflows, RAG vector pipelines, and voice assistants like Joya AI and Jarvis AI.',
+      heroStat1: 'On-Device Inference',
+      heroStat2: 'Zero Cloud Leakage',
+      heroStat3: 'Multi-Model Fallback',
+      heroStat4: 'Voice & Automation',
+      capabilities: [
+        { title: 'Local Offline LLM Bridges', desc: 'Ollama local model integration (Llama 3, Mistral, DeepSeek) for zero-cost, private inference.' },
+        { title: 'Acoustic Wake Word Systems', desc: 'Lightweight on-device wake-word detection (e.g. "Wake up Joya") and neural voice processing.' },
+        { title: 'Retrieval-Augmented Generation', desc: 'Vector database search over internal business manuals, FAQs, and product catalogs.' },
+        { title: 'Multi-Agent Tool Orchestration', desc: 'Collaborative autonomous agents that read databases, call APIs, and execute desktop actions.' },
+        { title: 'Desktop & Mobile Voice HUDs', desc: 'Always-listening background voice companions with hotkey toggles and floating UI.' },
+        { title: 'Full Source Code Licensing', desc: 'Deploy proprietary AI pipelines with 100% source ownership and zero recurring token markup.' }
+      ],
+      techStack: ['Python', 'Ollama', 'LangChain', 'PyTorch', 'OpenAI API', 'TensorFlow Lite', 'Porcupine', 'Node.js'],
+      pricing: 'Starting at ₹44,999'
+    },
+    {
+      slug: 'automation',
+      name: 'Workflow Automation',
+      category: 'Business Automation',
+      badge: 'Zero-Touch Workflows',
+      headline: 'Eliminate Repetitive Tasks with Bulletproof Business Automation',
+      subtitle: 'Connect fragmented software, automate customer messaging, and orchestrate complex multi-step data pipelines. We build webhook listeners, WhatsApp bots, and background task queues that run 24/7.',
+      heroStat1: '24/7 Zero-Touch',
+      heroStat2: '100% Reliable Queues',
+      heroStat3: 'Multi-Channel Bots',
+      heroStat4: 'Automated Alerts',
+      capabilities: [
+        { title: 'WhatsApp Business Cloud API', desc: 'Automated instant notifications, order alerts, transactional receipts, and interactive menu bots.' },
+        { title: 'Distributed Job Queues', desc: 'High-throughput BullMQ and Redis queues with automatic retry exponential backoff policies.' },
+        { title: 'Webhook Data Pipelines', desc: 'Real-time event receivers reconciling payment gateways, CRM contacts, and ERP inventories.' },
+        { title: 'Headless Web Scraping', desc: 'Puppeteer and Playwright scrapers extracting dynamic web data and competitive intelligence.' },
+        { title: 'Spreadsheet & Google Sheets Sync', desc: 'Automatic bidirectional data synchronization with Excel, Google Sheets, and Airtable.' },
+        { title: 'Incident & Failure Alerts', desc: 'Immediate alerting via Telegram, WhatsApp, and Slack when critical pipeline thresholds breach.' }
+      ],
+      techStack: ['Node.js', 'BullMQ', 'Redis', 'Puppeteer', 'WhatsApp Cloud API', 'Docker', 'Webhooks'],
+      pricing: 'Starting at ₹19,999'
+    },
+    {
+      slug: 'api-integration',
+      name: 'API Integration & Microservices',
+      category: 'Backend & APIs',
+      badge: 'High Throughput Microservices',
+      headline: 'High-Performance REST & GraphQL APIs with Sub-50ms Latency',
+      subtitle: 'Connect third-party payment gateways, CRM databases, logistics partners, and external SaaS platforms. We build bulletproof endpoints protected by cryptographic signatures, rate limiting, and Redis caching.',
+      heroStat1: '<50ms Response Latency',
+      heroStat2: 'HMAC-SHA256 Security',
+      heroStat3: 'Swagger / OpenAPI Ready',
+      heroStat4: 'Zero Downtime',
+      capabilities: [
+        { title: 'Payment Gateway Integration', desc: 'NPCI UPI dynamic QR, Razorpay, Cashfree, and Stripe integrations with webhook reconciliation.' },
+        { title: 'Redis Cache Acceleration', desc: 'Sub-50ms query caching, token bucket rate limiting, and distributed session storage.' },
+        { title: 'Cryptographic Verification', desc: 'HMAC-SHA256 request signatures, JWT authentication, and AES-256 payload encryption.' },
+        { title: 'Interactive API Documentation', desc: 'Full Swagger/OpenAPI interactive specifications with mock request generators.' },
+        { title: 'Bi-Directional WebSockets', desc: 'Sub-second real-time event streaming for chat, live bidding, and telemetry monitors.' },
+        { title: 'Microservice Containerization', desc: 'Dockerized microservice deployments with health check probes and automated restart policies.' }
+      ],
+      techStack: ['Express', 'Node.js', 'Redis', 'PostgreSQL', 'GraphQL', 'JWT', 'HMAC-SHA256', 'OpenAPI/Swagger'],
+      pricing: 'Starting at ₹16,999'
+    },
+    {
+      slug: 'ui-ux',
+      name: 'UI/UX Design & Frontend Engineering',
+      category: 'Design & Frontend',
+      badge: 'Design Systems & Modern UI',
+      headline: 'Intuitive, Accessible & High-Conversion Digital Interfaces',
+      subtitle: 'Transform complex software products into delightful, intuitive user journeys. We engineer cohesive design systems in Figma, build production-grade HTML/CSS components, and create cinematic micro-interactions.',
+      heroStat1: 'WCAG 2.1 AA Compliant',
+      heroStat2: '30+ Devices Tested',
+      heroStat3: 'Figma Design System',
+      heroStat4: 'Production Code Ready',
+      capabilities: [
+        { title: 'Figma Design Systems', desc: 'Comprehensive Figma component libraries, typography hierarchies, and reusable design tokens.' },
+        { title: 'Responsive Multi-Device Layouts', desc: 'Pixel-perfect interfaces verified across smartphones, tablets, laptops, and ultra-wide displays.' },
+        { title: 'Micro-Interactions & Transitions', desc: 'High-speed CSS animations, buttery hover states, and smooth modal transitions.' },
+        { title: 'Accessibility & Reduced Motion', desc: 'WCAG 2.1 AA compliant color contrast, keyboard navigation, and prefers-reduced-motion support.' },
+        { title: 'Interactive Prototypes', desc: 'Clickable client prototypes allowing stakeholder alignment prior to writing production code.' },
+        { title: 'Zero-Bloat Frontend Code', desc: 'Clean, semantic HTML5, CSS3, and Vanilla JS with zero unnecessary bundle bloat.' }
+      ],
+      techStack: ['Figma', 'CSS Grid/Flexbox', 'Tailwind CSS', 'Three.js', 'SVG Animation', 'Design Tokens'],
+      pricing: 'Starting at ₹18,999'
+    },
+    {
+      slug: 'maintenance',
+      name: 'Maintenance & Project Improvements',
+      category: 'Support & DevOps',
+      badge: '24/7 Reliability & SLA',
+      headline: '24/7 Software Maintenance, Bug Fixing & Production Upgrades',
+      subtitle: 'Keep your live applications fast, secure, and bug-free. We provide emergency bug fixing, security patching, cloud database optimization, memory leak debugging, and 24/7 uptime monitoring.',
+      heroStat1: '24/7 Server Monitoring',
+      heroStat2: '<15m Urgent Response',
+      heroStat3: 'Weekly Security Patches',
+      heroStat4: 'Direct WhatsApp Line',
+      capabilities: [
+        { title: '24/7 Automated Uptime Pings', desc: 'Continuous health check pings preventing server sleep and notifying architects on anomalies.' },
+        { title: 'Security Vulnerability Patching', desc: 'Continuous auditing of npm and pip dependencies with prompt patching of discovered CVEs.' },
+        { title: 'Database Optimization & Indexing', desc: 'Query profiling, index creation, table vacuuming, and memory caching to eliminate lag.' },
+        { title: 'Code Refactoring & Debt Payoff', desc: 'Cleaning legacy antipatterns, upgrading deprecated frameworks, and adding test suites.' },
+        { title: 'Zero-Downtime Deployments', desc: 'Seamless rolling releases, container restarts, automated daily database backups, and rollback safeguards.' },
+        { title: 'Direct Engineer Standby', desc: 'Direct WhatsApp and phone access to our lead software architect for mission-critical emergencies.' }
+      ],
+      techStack: ['Docker', 'GitHub Actions', 'PM2', 'New Relic', 'Linux Servers', 'Sentry', 'Redis', 'Nginx'],
+      pricing: 'Starting at ₹12,999 / mo'
+    }
+  ];
+
+  subServices.forEach(srv => {
+    const html = `<!DOCTYPE html>
+<html lang="en" data-theme="futuristic-dev">
+<head>
+  ${commonHead(`${srv.name} Services`, srv.subtitle, `/services/${srv.slug}`)}
+</head>
+<body>
+  ${navbar('services')}
+
+  <main style="padding-top: 100px;">
+    <!-- Service Subpage Hero -->
+    <section class="section" style="padding-bottom: 40px;">
+      <div class="container">
+        <nav style="display: flex; align-items: center; gap: 8px; font-size: 0.85rem; margin-bottom: 24px;">
+          <a href="/" style="color: var(--text-muted); text-decoration: none;">Home</a>
+          <span style="color: var(--card-border);">/</span>
+          <a href="/services" style="color: var(--text-muted); text-decoration: none;">Services</a>
+          <span style="color: var(--card-border);">/</span>
+          <span style="color: var(--accent); font-weight: 600;">${srv.name}</span>
+        </nav>
+
+        <div style="display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 9999px; color: #1d4ed8; font-weight: 700; font-size: 0.85rem; margin-bottom: 16px;">
+          <span>⚡ ${srv.category}</span> • <span>${srv.badge}</span>
+        </div>
+
+        <h1 style="font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 800; line-height: 1.15; color: var(--text-primary); margin-bottom: 20px;">
+          ${srv.headline}
+        </h1>
+
+        <p style="font-size: 1.15rem; line-height: 1.7; color: var(--text-secondary); max-width: 820px; margin-bottom: 32px;">
+          ${srv.subtitle}
+        </p>
+
+        <div style="display: flex; gap: 14px; flex-wrap: wrap; align-items: center; margin-bottom: 40px;">
+          <a href="/contact?service=${srv.slug}" class="btn btn-primary" style="padding: 12px 28px;">
+            Book Production Sprint →
+          </a>
+          <a href="/products" class="btn btn-emerald" style="padding: 12px 24px;">
+            Explore Software Products (50% OFF) ⚡
+          </a>
+          <a href="/services" class="btn btn-outline" style="padding: 12px 24px;">
+            All 20 Services Catalog
+          </a>
+        </div>
+
+        <!-- Trust Stats Strip -->
+        <div class="hero-stats-strip" style="background: var(--bg-card); border: 1px solid var(--card-border); border-radius: 16px; padding: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px;">
+          <div>
+            <div style="font-size: 1.3rem; font-weight: 800; color: var(--accent);">${srv.heroStat1}</div>
+            <div style="font-size: 0.82rem; color: var(--text-muted); font-weight: 500;">Architectural Baseline</div>
+          </div>
+          <div>
+            <div style="font-size: 1.3rem; font-weight: 800; color: var(--emerald);">${srv.heroStat2}</div>
+            <div style="font-size: 0.82rem; color: var(--text-muted); font-weight: 500;">Engineered Capability</div>
+          </div>
+          <div>
+            <div style="font-size: 1.3rem; font-weight: 800; color: var(--cyan);">${srv.heroStat3}</div>
+            <div style="font-size: 0.82rem; color: var(--text-muted); font-weight: 500;">Performance Target</div>
+          </div>
+          <div>
+            <div style="font-size: 1.3rem; font-weight: 800; color: #f59e0b;">${srv.heroStat4}</div>
+            <div style="font-size: 0.82rem; color: var(--text-muted); font-weight: 500;">IP Transfer &amp; Rights</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Capabilities Grid -->
+    <section class="section" style="padding-top: 20px; padding-bottom: 40px;">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-badge">Core Architecture</div>
+          <h2 class="section-title">What We Build &amp; <span class="text-gradient">Deliver</span></h2>
+          <p class="section-desc">Production-grade engineering standards applied to every layer of your ${srv.name.toLowerCase()} sprint.</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+          ${srv.capabilities.map((c, i) => `
+            <div class="glass-card" style="padding: 28px; border-radius: 18px;">
+              <div style="width: 36px; height: 36px; border-radius: 10px; background: #eff6ff; border: 1px solid #bfdbfe; color: #2563eb; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.9rem; margin-bottom: 16px;">
+                0${i + 1}
+              </div>
+              <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">
+                ${c.title}
+              </h3>
+              <p style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6;">
+                ${c.desc}
+              </p>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </section>
+
+    <!-- Technologies Strip -->
+    <section class="section" style="padding-top: 20px; padding-bottom: 40px; background: #f1f5f9;">
+      <div class="container">
+        <div style="text-align: center; margin-bottom: 24px;">
+          <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--text-primary); margin-bottom: 8px;">
+            Battle-Tested Tech Stack
+          </h3>
+          <p style="color: var(--text-secondary); font-size: 0.9rem;">Modern tooling selected for speed, security, and developer ergonomics.</p>
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
+          ${srv.techStack.map(t => `
+            <span style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px; background: #ffffff; border: 1px solid var(--card-border); border-radius: 9999px; font-size: 0.85rem; font-weight: 600; color: var(--text-primary); box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+              <span style="color: var(--accent);">⚡</span> ${t}
+            </span>
+          `).join('')}
+        </div>
+      </div>
+    </section>
+
+    <!-- 5-Step Sprint Process -->
+    <section class="section" style="padding-top: 40px; padding-bottom: 40px;">
+      <div class="container">
+        <div class="section-header text-center">
+          <div class="section-badge">Sprint Methodology</div>
+          <h2 class="section-title">How We Ship Your <span class="text-gradient">Project</span></h2>
+          <p class="section-desc">From initial requirement analysis to live production launch with zero ambiguity.</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+          <div class="glass-card" style="padding: 24px; border-radius: 16px;">
+            <div style="font-size: 0.8rem; font-weight: 800; color: var(--accent); margin-bottom: 6px;">STEP 01</div>
+            <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 6px;">Scoping &amp; Architecture</h4>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">Technical specification, milestones breakdown, and NDA execution.</p>
+          </div>
+          <div class="glass-card" style="padding: 24px; border-radius: 16px;">
+            <div style="font-size: 0.8rem; font-weight: 800; color: var(--accent); margin-bottom: 6px;">STEP 02</div>
+            <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 6px;">Wireframes &amp; Design</h4>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">Component system, responsive UI layouts, and prototype validation.</p>
+          </div>
+          <div class="glass-card" style="padding: 24px; border-radius: 16px;">
+            <div style="font-size: 0.8rem; font-weight: 800; color: var(--accent); margin-bottom: 6px;">STEP 03</div>
+            <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 6px;">Bi-Weekly Sprints</h4>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">Rapid full-stack coding with live staging deployments at every milestone.</p>
+          </div>
+          <div class="glass-card" style="padding: 24px; border-radius: 16px;">
+            <div style="font-size: 0.8rem; font-weight: 800; color: var(--accent); margin-bottom: 6px;">STEP 04</div>
+            <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 6px;">Automated QA &amp; Audit</h4>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">Security hardening, load stress tests, and cross-device testing.</p>
+          </div>
+          <div class="glass-card" style="padding: 24px; border-radius: 16px; border-color: #86efac;">
+            <div style="font-size: 0.8rem; font-weight: 800; color: var(--emerald); margin-bottom: 6px;">STEP 05</div>
+            <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 6px;">Launch &amp; 100% IP Handover</h4>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">Production cutover, DNS routing, and complete Git repo transfer.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing & Inquiries -->
+    ${renderPricingSection()}
+    ${renderContactSection()}
+  </main>
+
+  ${floatingActions()}
+  ${footer()}
+  ${renderModalsMarkup()}
+  ${renderClientDataScripts()}
+</body>
+</html>`;
+
+    fs.writeFileSync(path.join(SERVICES_PAGES, `${srv.slug}.html`), html, 'utf8');
+    // Also save in root PAGES and FRONTEND with hyphenated name for flat routing fallbacks
+    fs.writeFileSync(path.join(PAGES, `${srv.slug}.html`), html, 'utf8');
+    fs.writeFileSync(path.join(FRONTEND, `${srv.slug}.html`), html, 'utf8');
+    console.log(`✓ Generated service page: ${srv.slug}.html`);
+  });
+}
+
 // Master execution
 function buildAll() {
   console.log('🚀 Starting DEVCRAFT Master Site Generation...');
@@ -2435,6 +2885,9 @@ function buildAll() {
   buildLegalPages();
   buildClientPortalPage();
   buildAdminLoginPage();
+  buildFaqPage();
+  build404Page();
+  buildServiceSubPages();
   console.log('🎉 All DevCraft HTML pages generated successfully!');
 }
 

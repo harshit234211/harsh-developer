@@ -102,11 +102,13 @@
 
       <!-- Tabs Navigation -->
       <div class="dashboard-tabs-bar">
-        <button class="dash-tab-btn active" onclick="switchDashTab('orders', this)">🛍️ My Orders &amp; Enrolled Courses</button>
-        <button class="dash-tab-btn" onclick="switchDashTab('requests', this)">📋 My Project Requests</button>
-        <button class="dash-tab-btn" onclick="switchDashTab('demos', this)">⭐ Bookmarked Demos</button>
-        <button class="dash-tab-btn" onclick="switchDashTab('coupons', this)">🎟️ Applied Coupon Discounts</button>
-        <button class="dash-tab-btn" onclick="switchDashTab('activity', this)">🕒 Recent Activity</button>
+        <button class="dash-tab-btn active" data-tab="orders" onclick="switchDashTab('orders', this)">🛍️ Orders &amp; Purchases</button>
+        <button class="dash-tab-btn" data-tab="downloads" onclick="switchDashTab('downloads', this)">⬇️ Software Downloads</button>
+        <button class="dash-tab-btn" data-tab="referrals" onclick="switchDashTab('referrals', this)">🤝 Referral Program</button>
+        <button class="dash-tab-btn" data-tab="requests" onclick="switchDashTab('requests', this)">📋 Project Requests</button>
+        <button class="dash-tab-btn" data-tab="demos" onclick="switchDashTab('demos', this)">⭐ Saved Demos</button>
+        <button class="dash-tab-btn" data-tab="coupons" onclick="switchDashTab('coupons', this)">🎟️ Coupons</button>
+        <button class="dash-tab-btn" data-tab="activity" onclick="switchDashTab('activity', this)">🕒 Activity</button>
       </div>
 
       <!-- TAB 0: My Orders & Enrolled Courses (Requirement 10) -->
@@ -231,6 +233,113 @@
         </div>
       </div>
 
+      <!-- TAB: Software Downloads -->
+      <div id="dash-pane-downloads" class="dash-tab-pane">
+        <div style="background: rgba(13, 17, 23, 0.7); border: 1px solid var(--border-glass); border-radius: 16px; padding: 24px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+            <div>
+              <h3 style="font-size: 1.2rem; font-weight: 700;">Software Source Code &amp; Packages</h3>
+              <p style="color: var(--text-muted); font-size: 0.85rem;">Access your purchased Joya AI, Jarvis AI, and custom software packages directly.</p>
+            </div>
+            <div style="display: flex; gap: 10px;">
+              <a href="/products" class="btn btn-xs btn-primary">+ Products Catalog</a>
+              <button onclick="loadUserDashboard()" class="btn btn-xs btn-outline">🔄 Refresh</button>
+            </div>
+          </div>
+
+          <div id="downloads-loading" style="text-align: center; padding: 40px; color: var(--text-muted);">
+            Verifying purchase entitlements...
+          </div>
+
+          <div id="downloads-empty" style="display: none; text-align: center; padding: 50px 20px; border: 1px dashed var(--border-glass); border-radius: 12px;">
+            <p style="color: var(--text-secondary); margin-bottom: 16px; font-size: 0.95rem;">You haven't completed any software purchases yet. Completed orders unlock instant full source code downloads here.</p>
+            <a href="/products" class="btn btn-emerald btn-sm">Explore Joya AI, Jarvis AI &amp; Products (50% OFF) →</a>
+          </div>
+
+          <div id="downloads-grid" style="display: none; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: Referral Program -->
+      <div id="dash-pane-referrals" class="dash-tab-pane">
+        <div style="background: rgba(13, 17, 23, 0.7); border: 1px solid var(--border-glass); border-radius: 16px; padding: 24px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 12px;">
+            <div>
+              <h3 style="font-size: 1.2rem; font-weight: 700;">Client Referral &amp; Affiliate Partner Program</h3>
+              <p style="color: var(--text-muted); font-size: 0.85rem;">Earn 10% commission on every software product or engineering sprint purchased by clients you refer.</p>
+            </div>
+            <span class="status-chip chip-active">● Affiliate Active</span>
+          </div>
+
+          <!-- Referral Share Box -->
+          <div class="glass-card" style="padding: 20px; border-radius: 14px; margin-bottom: 24px; border: 1px solid #bfdbfe; background: #eff6ff;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+              <div>
+                <div style="font-size: 0.8rem; color: #1e40af; font-weight: 700; text-transform: uppercase;">Your Unique Referral Code:</div>
+                <div style="font-family: var(--font-mono); font-size: 1.6rem; font-weight: 800; color: #1d4ed8;" id="dash-ref-code">DEV-STUDIO</div>
+              </div>
+              <div style="flex: 1; max-width: 440px;">
+                <div style="font-size: 0.8rem; color: #1e40af; font-weight: 700; text-transform: uppercase; margin-bottom: 6px;">Your Invitation Link:</div>
+                <div style="display: flex; gap: 8px;">
+                  <input type="text" id="dash-ref-link" class="form-control" readonly value="https://kiromage.shop/register?ref=..." style="background: #ffffff; color: #0f172a; font-family: var(--font-mono); font-size: 0.85rem;" />
+                  <button type="button" id="btn-copy-ref" class="btn btn-primary btn-sm" onclick="copyReferralLink()">Copy Link</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Referral Stats Grid -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 24px;">
+            <div class="dashboard-stat-card">
+              <span style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Total Referred</span>
+              <span class="stat-val text-gradient" id="dash-ref-total">0</span>
+              <small style="color: var(--text-muted);">Registered accounts</small>
+            </div>
+            <div class="dashboard-stat-card">
+              <span style="font-size: 0.8rem; color: var(--emerald); text-transform: uppercase; font-weight: 600;">Conversions</span>
+              <span class="stat-val text-emerald" id="dash-ref-converted">0</span>
+              <small style="color: var(--text-muted);">Paid orders</small>
+            </div>
+            <div class="dashboard-stat-card">
+              <span style="font-size: 0.8rem; color: #f59e0b; text-transform: uppercase; font-weight: 600;">Commission Rate</span>
+              <span class="stat-val" style="color: #f59e0b;" id="dash-ref-rate">10%</span>
+              <small style="color: var(--text-muted);">Per paid order</small>
+            </div>
+            <div class="dashboard-stat-card">
+              <span style="font-size: 0.8rem; color: var(--accent); text-transform: uppercase; font-weight: 600;">Total Earned</span>
+              <span class="stat-val" style="color: var(--accent);" id="dash-ref-rewards">₹0</span>
+              <small style="color: var(--text-muted);">Rewards attributed</small>
+            </div>
+          </div>
+
+          <!-- Referrals Table -->
+          <div>
+            <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 12px;">Attributed Referral Activity</h4>
+            <div id="ref-loading" style="text-align: center; padding: 20px; color: var(--text-muted);">Loading referral records...</div>
+            <div id="ref-empty" style="display: none; text-align: center; padding: 30px; border: 1px dashed var(--border-glass); border-radius: 12px; color: var(--text-muted);">
+              No referrals recorded yet. Share your unique link with colleagues or clients to earn rewards!
+            </div>
+            <div class="table-container" id="ref-table-wrap" style="display: none;">
+              <table class="devcraft-table">
+                <thead>
+                  <tr>
+                    <th>Referred Client</th>
+                    <th>Status</th>
+                    <th>Order Reference</th>
+                    <th>Reward Earned</th>
+                    <th>Payout Status</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+                <tbody id="ref-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- TAB 4: Recent Activity -->
       <div id="dash-pane-activity" class="dash-tab-pane">
         <div style="background: rgba(13, 17, 23, 0.7); border: 1px solid var(--border-glass); border-radius: 16px; padding: 24px;">
@@ -251,13 +360,42 @@
       if (!DevCraftAuth.protectRoute()) return;
 
       await loadUserDashboard();
+
+      // Deep link tab handler
+      const pathParts = window.location.pathname.split('/');
+      const lastPart = pathParts[pathParts.length - 1];
+      const urlParams = new URLSearchParams(window.location.search);
+      const tabParam = urlParams.get('tab') || lastPart;
+
+      const tabMap = {
+        'orders': 'orders',
+        'purchases': 'orders',
+        'downloads': 'downloads',
+        'referrals': 'referrals',
+        'requests': 'requests',
+        'projects': 'requests',
+        'demos': 'demos',
+        'coupons': 'coupons',
+        'activity': 'activity'
+      };
+
+      if (tabParam && tabMap[tabParam]) {
+        const key = tabMap[tabParam];
+        const btn = document.querySelector(`.dash-tab-btn[data-tab="${key}"]`);
+        switchDashTab(key, btn);
+      }
     });
 
     function switchDashTab(tabKey, btn) {
       document.querySelectorAll('.dash-tab-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.dash-tab-pane').forEach(p => p.classList.remove('active'));
 
-      btn.classList.add('active');
+      if (btn) {
+        btn.classList.add('active');
+      } else {
+        const matchingBtn = document.querySelector(`.dash-tab-btn[data-tab="${tabKey}"]`);
+        if (matchingBtn) matchingBtn.classList.add('active');
+      }
       const targetPane = document.getElementById(`dash-pane-${tabKey}`);
       if (targetPane) targetPane.classList.add('active');
     }
@@ -293,6 +431,9 @@
 
         // Fetch User's Orders & Enrolled Courses (Requirement 10)
         await loadMyOrders(token);
+
+        // Fetch User's Referrals (Requirement 8 & 9)
+        await loadMyReferrals(token);
 
         // Fetch User's Inquiries
         await loadMyEnquiries(token);
@@ -388,8 +529,111 @@
             </tr>
           `;
         }).join('');
+
+        // Populate Software Downloads Grid
+        const paidOrders = orders.filter(o => o.status === 'paid' || o.paymentStatus === 'paid');
+        const dlLoading = document.getElementById('downloads-loading');
+        const dlEmpty = document.getElementById('downloads-empty');
+        const dlGrid = document.getElementById('downloads-grid');
+        if (dlLoading) dlLoading.style.display = 'none';
+
+        if (paidOrders.length === 0) {
+          if (dlEmpty) dlEmpty.style.display = 'block';
+          if (dlGrid) dlGrid.style.display = 'none';
+        } else {
+          if (dlEmpty) dlEmpty.style.display = 'none';
+          if (dlGrid) {
+            dlGrid.style.display = 'grid';
+            dlGrid.innerHTML = paidOrders.map(o => {
+              const isFlagship = o.productId === 'joya-ai' || o.productId === 'jarvis-ai';
+              return `
+                <div class="glass-card" style="padding: 24px; border-radius: 16px; border: 1px solid var(--card-border);">
+                  <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+                    <span class="status-chip chip-active">✓ Entitlement Verified</span>
+                    <small style="font-family: var(--font-mono); color: var(--text-muted);">${o.orderId}</small>
+                  </div>
+                  <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; color: var(--text-primary);">${o.productName}</h4>
+                  <p style="font-size: 0.84rem; color: var(--text-secondary); margin-bottom: 16px;">
+                    ${isFlagship ? 'Full source code project archive with complete build instructions.' : 'Distribution package deliverable archive.'}
+                  </p>
+                  <a href="/api/downloads/${encodeURIComponent(o.productId)}?orderId=${encodeURIComponent(o.orderId)}" class="btn btn-sm btn-emerald btn-block" style="text-align: center; justify-content: center; font-weight: 700;">
+                    ⬇️ Download Source Code Package
+                  </a>
+                </div>
+              `;
+            }).join('');
+          }
+        }
       } catch (err) {
         if (loadingEl) loadingEl.textContent = 'Unable to fetch orders. Please try refreshing.';
+      }
+    }
+
+    async function loadMyReferrals(token) {
+      const codeEl = document.getElementById('dash-ref-code');
+      const linkInput = document.getElementById('dash-ref-link');
+      const totalEl = document.getElementById('dash-ref-total');
+      const convertedEl = document.getElementById('dash-ref-converted');
+      const rateEl = document.getElementById('dash-ref-rate');
+      const rewardsEl = document.getElementById('dash-ref-rewards');
+      const loadingEl = document.getElementById('ref-loading');
+      const emptyEl = document.getElementById('ref-empty');
+      const tableWrap = document.getElementById('ref-table-wrap');
+      const tbody = document.getElementById('ref-table-body');
+
+      try {
+        const res = await fetch('/api/users/referrals', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await res.json();
+        if (!data.success) return;
+
+        if (codeEl) codeEl.textContent = data.referralCode;
+        if (linkInput) linkInput.value = data.referralLink;
+        if (totalEl) totalEl.textContent = data.stats.totalReferrals || 0;
+        if (convertedEl) convertedEl.textContent = data.stats.successfulReferrals || 0;
+        if (rateEl) rateEl.textContent = `${data.rewardPercent || 10}%`;
+        if (rewardsEl) rewardsEl.textContent = `₹${(data.stats.totalRewards || 0).toLocaleString()}`;
+
+        if (loadingEl) loadingEl.style.display = 'none';
+
+        const refs = data.referrals || [];
+        if (refs.length === 0) {
+          if (emptyEl) emptyEl.style.display = 'block';
+          if (tableWrap) tableWrap.style.display = 'none';
+        } else {
+          if (emptyEl) emptyEl.style.display = 'none';
+          if (tableWrap) tableWrap.style.display = 'block';
+          if (tbody) {
+            tbody.innerHTML = refs.map(r => `
+              <tr>
+                <td><code>${r.referredUserEmail}</code></td>
+                <td><span class="status-chip ${r.status === 'converted' ? 'chip-active' : 'chip-pending'}">${r.status.toUpperCase()}</span></td>
+                <td>${r.orderId || '—'}</td>
+                <td class="text-emerald"><strong>₹${(r.rewardAmount || 0).toLocaleString()}</strong></td>
+                <td><span class="status-chip ${r.paid ? 'chip-active' : 'chip-pending'}">${r.paid ? 'PAID' : 'PENDING'}</span></td>
+                <td style="color: var(--text-muted); font-size: 0.8rem;">${new Date(r.createdAt).toLocaleDateString()}</td>
+              </tr>
+            `).join('');
+          }
+        }
+      } catch (err) {
+        console.warn('Failed to load referrals:', err);
+      }
+    }
+
+    function copyReferralLink() {
+      const linkInput = document.getElementById('dash-ref-link');
+      if (linkInput) {
+        linkInput.select();
+        navigator.clipboard.writeText(linkInput.value).then(() => {
+          const btn = document.getElementById('btn-copy-ref');
+          if (btn) {
+            const orig = btn.textContent;
+            btn.textContent = '✓ Copied!';
+            setTimeout(() => { btn.textContent = orig; }, 2000);
+          }
+        });
       }
     }
 

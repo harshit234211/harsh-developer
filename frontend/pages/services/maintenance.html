@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="futuristic-dev">
+<head>
+  
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maintenance & Project Improvements Services | DEVCRAFT Studio</title>
+  <meta name="description" content="Keep your live applications fast, secure, and bug-free. We provide emergency bug fixing, security patching, cloud database optimization, memory leak debugging, and 24/7 uptime monitoring." />
+  <meta name="keywords" content="DevCraft, Software Development Studio, Mobile Apps, Web Applications, React Native, Next.js, Node.js, AI Solutions, Android Developer, Cloud Deployment" />
+  <link rel="canonical" href="https://kiromage.shop/services/maintenance" />
+  <meta property="og:title" content="Maintenance & Project Improvements Services | DEVCRAFT Studio" />
+  <meta property="og:description" content="Keep your live applications fast, secure, and bug-free. We provide emergency bug fixing, security patching, cloud database optimization, memory leak debugging, and 24/7 uptime monitoring." />
+  <meta property="og:image" content="https://kiromage.shop/assets/images/project-ai.svg" />
+  <meta property="og:url" content="https://kiromage.shop/services/maintenance" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Maintenance & Project Improvements Services | DEVCRAFT Studio" />
+  <meta name="twitter:description" content="Keep your live applications fast, secure, and bug-free. We provide emergency bug fixing, security patching, cloud database optimization, memory leak debugging, and 24/7 uptime monitoring." />
+  <meta name="twitter:image" content="https://kiromage.shop/assets/images/project-ai.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/images/avatar-harshit.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/responsive.css" />
+
+</head>
+<body>
+  
+  <nav class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="/" class="brand-logo" aria-label="DEVCRAFT Home">
+        <div class="brand-badge-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="16 18 22 12 16 6"></polyline>
+            <polyline points="8 6 2 12 8 18"></polyline>
+          </svg>
+        </div>
+        <div class="brand-name">DEV<span>CRAFT</span></div>
+        <span class="brand-tagline-mini">STUDIO</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="/" class="nav-link ">Home</a></li>
+        <li><a href="/products" class="nav-link ">Products <span class="nav-pill-badge">50% OFF</span></a></li>
+        <li><a href="/joya" class="nav-link ">Joya AI <span class="nav-pill-voice">Voice</span></a></li>
+        <li><a href="/jarvis" class="nav-link ">Jarvis AI <span class="nav-pill-pc">PC</span></a></li>
+        <li><a href="/aptitude" class="nav-link ">Aptitude <span class="nav-pill-aptitude">30% OFF</span></a></li>
+        <li><a href="/services" class="nav-link active">Services</a></li>
+        <li><a href="/portfolio" class="nav-link ">Portfolio</a></li>
+        <li><a href="/about" class="nav-link ">About</a></li>
+        <li><a href="/faq" class="nav-link ">FAQ</a></li>
+        <li><a href="/contact" class="nav-link ">Contact</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <!-- Search Trigger Button -->
+        <button class="nav-action-btn" id="nav-search-btn" onclick="devcraftShop && devcraftShop.openSearchModal ? devcraftShop.openSearchModal() : window.location.href='/products'" aria-label="Search catalog" title="Search Apps & Services">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+
+        <!-- Cart Trigger Button with Live Counter Badge -->
+        <a href="/cart" class="nav-action-btn nav-cart-btn" id="nav-cart-btn" aria-label="View Cart" title="Shopping Cart">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <span class="nav-cart-badge" id="nav-cart-badge">0</span>
+        </a>
+
+        <!-- Logged Out Auth Buttons -->
+        <div class="auth-group-logged-out" style="display: flex; gap: 8px; align-items: center;">
+          <a href="/login" class="btn btn-outline btn-sm">Sign In</a>
+          <a href="/register" class="btn btn-primary btn-sm">Register</a>
+        </div>
+
+        <!-- Logged In Auth Buttons -->
+        <div class="auth-group-logged-in" style="display: none; align-items: center; gap: 8px;">
+          <a href="/dashboard" class="user-nav-chip" title="My Dashboard">
+            <span class="user-avatar-initials nav-user-initials">U</span>
+            <span class="user-chip-name nav-user-name">Client</span>
+          </a>
+          <a href="/dashboard" class="btn btn-sm btn-outline">Dashboard</a>
+          <button onclick="DevCraftAuth.logout()" class="btn btn-sm btn-outline" style="color: #dc2626;" title="Logout">Logout</button>
+        </div>
+
+        <button class="mobile-toggle" id="mobile-toggle-btn" aria-label="Toggle menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-drawer" id="mobile-drawer">
+    <div class="mobile-drawer-header">
+      <div class="brand-name">DEV<span>CRAFT</span></div>
+      <button class="mobile-drawer-close" id="mobile-drawer-close" aria-label="Close menu">&times;</button>
+    </div>
+    <div class="mobile-drawer-links">
+      <a href="/" class="mobile-nav-link ">Home <span>🏠</span></a>
+      <a href="/products" class="mobile-nav-link ">Products (50% OFF) <span>📦</span></a>
+      <a href="/joya" class="mobile-nav-link ">Joya AI Voice Assistant <span>🎙️</span></a>
+      <a href="/jarvis" class="mobile-nav-link ">Jarvis AI PC Assistant <span>💻</span></a>
+      <a href="/aptitude" class="mobile-nav-link ">Aptitude Courses (30% OFF) <span>🎓</span></a>
+      <a href="/services" class="mobile-nav-link active">Developer Services <span>⚡</span></a>
+      <a href="/portfolio" class="mobile-nav-link ">Portfolio &amp; Simulators <span>🚀</span></a>
+      <a href="/about" class="mobile-nav-link ">About DevCraft <span>🏢</span></a>
+      <a href="/contact" class="mobile-nav-link ">Contact Studio <span>📩</span></a>
+      <a href="/cart" class="mobile-nav-link">Shopping Cart (<span id="mobile-cart-count">0</span>) <span>🛒</span></a>
+
+      <!-- Mobile Auth Logged Out -->
+      <div class="auth-group-logged-out" style="display: flex; flex-direction: column; gap: 8px; margin: 10px 0;">
+        <a href="/login" class="btn btn-outline" style="justify-content: center; width: 100%;">Sign In 🔑</a>
+        <a href="/register" class="btn btn-primary" style="justify-content: center; width: 100%;">Create Client Account 👤</a>
+      </div>
+
+      <!-- Mobile Auth Logged In -->
+      <div class="auth-group-logged-in" style="display: none; flex-direction: column; gap: 8px; margin: 10px 0;">
+        <a href="/dashboard" class="mobile-nav-link" style="color: var(--accent);">Client Dashboard <span>📊</span></a>
+        <a href="/profile" class="mobile-nav-link">Profile &amp; Settings <span>⚙️</span></a>
+        <a href="javascript:void(0)" onclick="DevCraftAuth.logout()" class="mobile-nav-link" style="color: #ef4444;">Sign Out <span>🚪</span></a>
+      </div>
+
+      <a href="/admin-login" class="mobile-nav-link" style="color: var(--warning); font-size: 0.85rem;">Studio Admin Login <span>🔒</span></a>
+    </div>
+
+    <!-- Mobile Theme Switcher -->
+    <div class="mobile-theme-bar">
+      <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 8px; font-weight: 600; text-transform: uppercase;">Select Site Theme</div>
+      <div class="mobile-theme-buttons">
+        <button class="btn btn-xs theme-picker-btn" data-theme-value="futuristic-dev">A: Futuristic</button>
+        <button class="btn btn-xs theme-picker-btn" data-theme-value="premium-saas">B: SaaS Slate</button>
+        <button class="btn btn-xs theme-picker-btn" data-theme-value="cyber-studio">C: Cyber Green</button>
+      </div>
+    </div>
+
+    <div style="margin-top: 18px; display: flex; flex-direction: column; gap: 10px;">
+      <a href="/contact" class="btn btn-primary" style="width: 100%; justify-content: center;">Start a Project Now</a>
+      <a href="https://wa.me/918791984082?text=Hi%20DevCraft,%20I'm%20interested%20in%20discussing%20a%20project." target="_blank" rel="noopener noreferrer" class="btn btn-emerald" style="width: 100%; justify-content: center;">
+        WhatsApp Studio Lead
+      </a>
+      <a href="tel:+917017022966" class="btn btn-outline" style="width: 100%; justify-content: center;">
+        Direct Call +91 7017022966
+      </a>
+    </div>
+  </div>
+
+
+  <main style="padding-top: 100px;">
+    <!-- Service Subpage Hero -->
+    <section class="section" style="padding-bottom: 40px;">
+      <div class="container">
+        <nav style="display: flex; align-items: center; gap: 8px; font-size: 0.85rem; margin-bottom: 24px;">
+          <a href="/" style="color: var(--text-muted); text-decoration: none;">Home</a>
+          <span style="color: var(--card-border);">/</span>
+          <a href="/services" style="color: var(--text-muted); text-decoration: none;">Services</a>
+          <span style="color: var(--card-border);">/</span>
+          <span style="color: var(--accent); font-weight: 600;">Maintenance & Project Improvements</span>
+        </nav>
+
+        <div style="display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 9999px; color: #1d4ed8; font-weight: 700; font-size: 0.85rem; margin-bottom: 16px;">
+          <span>⚡ Support & DevOps</span> • <span>24/7 Reliability & SLA</span>
+        </div>
+
+        <h1 style="font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 800; line-height: 1.15; color: var(--text-primary); margin-bottom: 20px;">
+          24/7 Software Maintenance, Bug Fixing & Production Upgrades
+        </h1>
+
+        <p style="font-size: 1.15rem; line-height: 1.7; color: var(--text-secondary); max-width: 820px; margin-bottom: 32px;">
+          Keep your live applications fast, secure, and bug-free. We provide emergency bug fixing, security patching, cloud database optimization, memory leak debugging, and 24/7 uptime monitoring.
+        </p>
+
+        <div style="display: flex; gap: 14px; flex-wrap: wrap; align-items: center; margin-bottom: 40px;">
+          <a href="/contact?service=maintenance" class="btn btn-primary" style="padding: 12px 28px;">
+            Book Production Sprint →
+          </a>
+          <a href="/products" class="btn btn-emerald" style="padding: 12px 24px;">
+            Explore Software Products (50% OFF) ⚡
+          </a>
+          <a href="/services" class="btn btn-outline" style="padding: 12px 24px;">
+            All 20 Services Catalog
+          </a>
+        </div>
+
+        <!-- Trust Stats Strip -->
+        <div class="hero-stats-strip" style="background: var(--bg-card); border: 1px solid var(--card-border); border-radius: 16px; padding: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px;">
+          <div>
+            <div style="font-size: 1.3rem; font-weight: 800; color: var(--accent);">24/7 Server Monitoring</div>
+            <div style="font-size: 0.82rem; color: var(--text-muted); font-weight: 500;">Architectural Baseline</div>
+          </div>
+          <div>
+            <div style="font-size: 1.3rem; font-weight: 800; color: var(--emerald);"><15m Urgent Response</div>
+            <div style="font-size: 0.82rem; color: var(--text-muted); font-weight: 500;">Engineered Capability</div>
+          </div>
+          <div>
+            <div style="font-size: 1.3rem; font-weight: 800; color: var(--cyan);">Weekly Security Patches</div>
+            <div style="font-size: 0.82rem; color: var(--text-muted); font-weight: 500;">Performance Target</div>
+          </div>
+          <div>
+            <div style="font-size: 1.3rem; font-weight: 800; color: #f59e0b;">Direct WhatsApp Line</div>
+            <div style="font-size: 0.82rem; color: var(--text-muted); font-weight: 500;">IP Transfer &amp; Rights</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Capabilities Grid -->
+    <section class="section" style="padding-top: 20px; padding-bottom: 40px;">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-badge">Core Architecture</div>
+          <h2 class="section-title">What We Build &amp; <span class="text-gradient">Deliver</span></h2>
+          <p class="section-desc">Production-grade engineering standards applied to every layer of your maintenance & project improvements sprint.</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+          
+            <div class="glass-card" style="padding: 28px; border-radius: 18px;">
+              <div style="width: 36px; height: 36px; border-radius: 10px; background: #eff6ff; border: 1px solid #bfdbfe; color: #2563eb; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.9rem; margin-bottom: 16px;">
+                01
+              </div>
+              <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">
+                24/7 Automated Uptime Pings
+              </h3>
+              <p style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6;">
+                Continuous health check pings preventing server sleep and notifying architects on anomalies.
+              </p>
+            </div>
+          
+            <div class="glass-card" style="padding: 28px; border-radius: 18px;">
+              <div style="width: 36px; height: 36px; border-radius: 10px; background: #eff6ff; border: 1px solid #bfdbfe; color: #2563eb; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.9rem; margin-bottom: 16px;">
+                02
+              </div>
+              <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">
+                Security Vulnerability Patching
+              </h3>
+              <p style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6;">
+                Continuous auditing of npm and pip dependencies with prompt patching of discovered CVEs.
+              </p>
+            </div>
+          
+            <div class="glass-card" style="padding: 28px; border-radius: 18px;">
+              <div style="width: 36px; height: 36px; border-radius: 10px; background: #eff6ff; border: 1px solid #bfdbfe; color: #2563eb; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.9rem; margin-bottom: 16px;">
+                03
+              </div>
+              <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">
+                Database Optimization & Indexing
+              </h3>
+              <p style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6;">
+                Query profiling, index creation, table vacuuming, and memory caching to eliminate lag.
+              </p>
+            </div>
+          
+            <div class="glass-card" style="padding: 28px; border-radius: 18px;">
+              <div style="width: 36px; height: 36px; border-radius: 10px; background: #eff6ff; border: 1px solid #bfdbfe; color: #2563eb; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.9rem; margin-bottom: 16px;">
+                04
+              </div>
+              <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">
+                Code Refactoring & Debt Payoff
+              </h3>
+              <p style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6;">
+                Cleaning legacy antipatterns, upgrading deprecated frameworks, and adding test suites.
+              </p>
+            </div>
+          
+            <div class="glass-card" style="padding: 28px; border-radius: 18px;">
+              <div style="width: 36px; height: 36px; border-radius: 10px; background: #eff6ff; border: 1px solid #bfdbfe; color: #2563eb; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.9rem; margin-bottom: 16px;">
+                05
+              </div>
+              <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">
+                Zero-Downtime Deployments
+              </h3>
+              <p style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6;">
+                Seamless rolling releases, container restarts, automated daily database backups, and rollback safeguards.
+              </p>
+            </div>
+          
+            <div class="glass-card" style="padding: 28px; border-radius: 18px;">
+              <div style="width: 36px; height: 36px; border-radius: 10px; background: #eff6ff; border: 1px solid #bfdbfe; color: #2563eb; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.9rem; margin-bottom: 16px;">
+                06
+              </div>
+              <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">
+                Direct Engineer Standby
+              </h3>
+              <p style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6;">
+                Direct WhatsApp and phone access to our lead software architect for mission-critical emergencies.
+              </p>
+            </div>
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- Technologies Strip -->
+    <section class="section" style="padding-top: 20px; padding-bottom: 40px; background: #f1f5f9;">
+      <div class="container">
+        <div style="text-align: center; margin-bottom: 24px;">
+          <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--text-primary); margin-bottom: 8px;">
+            Battle-Tested Tech Stack
+          </h3>
+          <p style="color: var(--text-secondary); font-size: 0.9rem;">Modern tooling selected for speed, security, and developer ergonomics.</p>
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
+          
+            <span style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px; background: #ffffff; border: 1px solid var(--card-border); border-radius: 9999px; font-size: 0.85rem; font-weight: 600; color: var(--text-primary); box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+              <span style="color: var(--accent);">⚡</span> Docker
+            </span>
+          
+            <span style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px; background: #ffffff; border: 1px solid var(--card-border); border-radius: 9999px; font-size: 0.85rem; font-weight: 600; color: var(--text-primary); box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+              <span style="color: var(--accent);">⚡</span> GitHub Actions
+            </span>
+          
+            <span style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px; background: #ffffff; border: 1px solid var(--card-border); border-radius: 9999px; font-size: 0.85rem; font-weight: 600; color: var(--text-primary); box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+              <span style="color: var(--accent);">⚡</span> PM2
+            </span>
+          
+            <span style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px; background: #ffffff; border: 1px solid var(--card-border); border-radius: 9999px; font-size: 0.85rem; font-weight: 600; color: var(--text-primary); box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+              <span style="color: var(--accent);">⚡</span> New Relic
+            </span>
+          
+            <span style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px; background: #ffffff; border: 1px solid var(--card-border); border-radius: 9999px; font-size: 0.85rem; font-weight: 600; color: var(--text-primary); box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+              <span style="color: var(--accent);">⚡</span> Linux Servers
+            </span>
+          
+            <span style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px; background: #ffffff; border: 1px solid var(--card-border); border-radius: 9999px; font-size: 0.85rem; font-weight: 600; color: var(--text-primary); box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+              <span style="color: var(--accent);">⚡</span> Sentry
+            </span>
+          
+            <span style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px; background: #ffffff; border: 1px solid var(--card-border); border-radius: 9999px; font-size: 0.85rem; font-weight: 600; color: var(--text-primary); box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+              <span style="color: var(--accent);">⚡</span> Redis
+            </span>
+          
+            <span style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px; background: #ffffff; border: 1px solid var(--card-border); border-radius: 9999px; font-size: 0.85rem; font-weight: 600; color: var(--text-primary); box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+              <span style="color: var(--accent);">⚡</span> Nginx
+            </span>
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- 5-Step Sprint Process -->
+    <section class="section" style="padding-top: 40px; padding-bottom: 40px;">
+      <div class="container">
+        <div class="section-header text-center">
+          <div class="section-badge">Sprint Methodology</div>
+          <h2 class="section-title">How We Ship Your <span class="text-gradient">Project</span></h2>
+          <p class="section-desc">From initial requirement analysis to live production launch with zero ambiguity.</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+          <div class="glass-card" style="padding: 24px; border-radius: 16px;">
+            <div style="font-size: 0.8rem; font-weight: 800; color: var(--accent); margin-bottom: 6px;">STEP 01</div>
+            <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 6px;">Scoping &amp; Architecture</h4>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">Technical specification, milestones breakdown, and NDA execution.</p>
+          </div>
+          <div class="glass-card" style="padding: 24px; border-radius: 16px;">
+            <div style="font-size: 0.8rem; font-weight: 800; color: var(--accent); margin-bottom: 6px;">STEP 02</div>
+            <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 6px;">Wireframes &amp; Design</h4>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">Component system, responsive UI layouts, and prototype validation.</p>
+          </div>
+          <div class="glass-card" style="padding: 24px; border-radius: 16px;">
+            <div style="font-size: 0.8rem; font-weight: 800; color: var(--accent); margin-bottom: 6px;">STEP 03</div>
+            <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 6px;">Bi-Weekly Sprints</h4>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">Rapid full-stack coding with live staging deployments at every milestone.</p>
+          </div>
+          <div class="glass-card" style="padding: 24px; border-radius: 16px;">
+            <div style="font-size: 0.8rem; font-weight: 800; color: var(--accent); margin-bottom: 6px;">STEP 04</div>
+            <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 6px;">Automated QA &amp; Audit</h4>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">Security hardening, load stress tests, and cross-device testing.</p>
+          </div>
+          <div class="glass-card" style="padding: 24px; border-radius: 16px; border-color: #86efac;">
+            <div style="font-size: 0.8rem; font-weight: 800; color: var(--emerald); margin-bottom: 6px;">STEP 05</div>
+            <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 6px;">Launch &amp; 100% IP Handover</h4>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">Production cutover, DNS routing, and complete Git repo transfer.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing & Inquiries -->
+    
+  <section class="section" id="pricing" style="background: rgba(255, 255, 255, 0.01);">
+    <div class="container">
+      <div class="section-header text-center">
+        <div class="section-badge">Transparent Investment</div>
+        <h2 class="section-title">Straightforward <span class="text-gradient">Pricing Tiers</span></h2>
+        <p class="section-desc">
+          No hidden fees or unexpected billing spikes. Fixed milestones, dedicated sprints, and predictable ROI.
+        </p>
+      </div>
+
+      <!-- Pricing Cards -->
+      <div class="pricing-tiers-grid">
+        <!-- Tier 1 -->
+        <div class="pricing-card">
+          <div class="pricing-badge">MVP / Starter</div>
+          <h3 class="pricing-title">Starter Sprint</h3>
+          <div class="pricing-price-num text-gradient">₹24,999+</div>
+          <p class="pricing-desc">Ideal for high-converting landing pages, rapid MVPs, or standalone microservices.</p>
+          <ul class="pricing-features-list">
+            <li><span>✓</span> Custom responsive UI with animations</li>
+            <li><span>✓</span> Node.js / Express backend integration</li>
+            <li><span>✓</span> Contact inquiry capture & database storage</li>
+            <li><span>✓</span> Free SSL & Render/Vercel deployment</li>
+            <li><span>✓</span> 14 days complimentary post-launch support</li>
+          </ul>
+          <button class="btn btn-outline btn-block" onclick="devcraftDemos.startProjectFor('Starter Sprint')">Select Starter Sprint</button>
+        </div>
+
+        <!-- Tier 2 (Featured) -->
+        <div class="pricing-card featured">
+          <div class="pricing-badge-popular">Most Popular</div>
+          <div class="pricing-badge">Full Solution</div>
+          <h3 class="pricing-title">Growth Studio</h3>
+          <div class="pricing-price-num text-gradient">₹59,999+</div>
+          <p class="pricing-desc">Complete full-stack web application or cross-platform mobile app with auth & payments.</p>
+          <ul class="pricing-features-list">
+            <li><span>✓</span> React / Next.js or React Native mobile app</li>
+            <li><span>✓</span> PostgreSQL or MongoDB database schema design</li>
+            <li><span>✓</span> JWT user authentication & role access control</li>
+            <li><span>✓</span> Stripe / Razorpay payment gateway integration</li>
+            <li><span>✓</span> 30 days priority warranty & support</li>
+          </ul>
+          <button class="btn btn-primary btn-block" onclick="devcraftDemos.startProjectFor('Growth Studio')">Select Growth Studio</button>
+        </div>
+
+        <!-- Tier 3 -->
+        <div class="pricing-card">
+          <div class="pricing-badge">Enterprise Scale</div>
+          <h3 class="pricing-title">Enterprise Custom</h3>
+          <div class="pricing-price-num text-gradient">₹1,20,000+</div>
+          <p class="pricing-desc">High-concurrency multi-tenant SaaS, custom AI agent workflows, and mission-critical cloud systems.</p>
+          <ul class="pricing-features-list">
+            <li><span>✓</span> Full-scale microservice & pub/sub architecture</li>
+            <li><span>✓</span> AI agent integration (GPT-4 / Claude / Vector DB)</li>
+            <li><span>✓</span> Custom admin operations cockpit & telemetry</li>
+            <li><span>✓</span> Docker containerization & AWS auto-scaling</li>
+            <li><span>✓</span> 60 days dedicated maintenance & 24/7 SLA</li>
+          </ul>
+          <button class="btn btn-outline btn-block" onclick="devcraftDemos.startProjectFor('Enterprise Custom')">Select Enterprise Custom</button>
+        </div>
+      </div>
+
+      <!-- Interactive Project Cost Estimator -->
+      <div class="pricing-estimator-box" style="margin-top: 50px;">
+        <div class="estimator-header text-center">
+          <h3>Interactive Project Cost Estimator</h3>
+          <p class="text-secondary">Get an instant preliminary estimate tailored to your project scope.</p>
+        </div>
+
+        <div class="estimator-controls-grid">
+          <div class="est-control">
+            <label class="input-label">Project Type</label>
+            <select class="form-control" id="est-type" onchange="calculateEstimate()">
+              <option value="web">Full-Stack Web App</option>
+              <option value="mobile">Mobile App (iOS & Android)</option>
+              <option value="ai">AI Agent & LLM Automation</option>
+              <option value="dashboard">Admin Operations Dashboard</option>
+              <option value="website">High-Speed Business Website</option>
+            </select>
+          </div>
+
+          <div class="est-control">
+            <label class="input-label">Complexity Level</label>
+            <select class="form-control" id="est-complexity" onchange="calculateEstimate()">
+              <option value="mvp">Lean MVP (Fast to market)</option>
+              <option value="standard" selected>Production Standard (Auth, DB, APIs)</option>
+              <option value="enterprise">Enterprise Grade (High concurrency, AI, SLA)</option>
+            </select>
+          </div>
+
+          <div class="est-control">
+            <label class="input-label">Desired Delivery Window</label>
+            <select class="form-control" id="est-speed" onchange="calculateEstimate()">
+              <option value="normal">Standard (4 - 6 Weeks)</option>
+              <option value="express">Express Sprint (2 - 3 Weeks)</option>
+              <option value="flexible">Flexible (8+ Weeks)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="estimator-result-bar">
+          <div>
+            <div class="est-label">Estimated Investment Range:</div>
+            <div class="est-value text-gradient" id="est-result-val">₹45,000 – ₹75,000</div>
+          </div>
+          <button class="btn btn-primary" onclick="devcraftDemos.startProjectFor('Custom Estimator Quote')">
+            Claim This Estimate →
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+    
+  <section class="section" id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <!-- Contact Info Column -->
+        <div class="contact-info-col">
+          <div class="section-badge">Let's Build Together</div>
+          <h2 class="section-title">Start Your <span class="text-gradient">DevCraft Project</span></h2>
+          <p class="service-desc">
+            Tell us what you want to build. We will review your requirements, prepare a comprehensive technical architecture proposal, and respond within 24 hours.
+          </p>
+
+          <div class="contact-methods-list">
+            <a href="https://wa.me/918791984082?text=Hi%20DevCraft,%20I'd%20like%20to%20discuss%20a%20project." target="_blank" rel="noopener noreferrer" class="contact-method-card">
+              <div class="method-icon wa-icon">💬</div>
+              <div>
+                <strong>Chat Directly on WhatsApp</strong>
+                <small>+91 8791984082 • Typically replies in 15 minutes</small>
+              </div>
+            </a>
+
+            <a href="tel:+917017022966" class="contact-method-card">
+              <div class="method-icon call-icon">📞</div>
+              <div>
+                <strong>Direct Studio Call</strong>
+                <small>+91 7017022966 • Available 09:00 - 21:00 IST</small>
+              </div>
+            </a>
+
+            <a href="mailto:shakyaharshit683@gmail.com" class="contact-method-card">
+              <div class="method-icon mail-icon">✉️</div>
+              <div>
+                <strong>Direct Email Address</strong>
+                <small>shakyaharshit683@gmail.com • Strict NDA compliant</small>
+              </div>
+            </a>
+          </div>
+
+          <div class="contact-trust-points">
+            <div>✓ Strict Non-Disclosure Agreement (NDA) on request</div>
+            <div>✓ Detailed scope & fixed-cost quotation guarantee</div>
+            <div>✓ Direct communication with Senior Software Architect</div>
+          </div>
+        </div>
+
+        <!-- Working Inquiry Form -->
+        <div class="contact-form-card">
+          <h3 class="form-title">Send Project Inquiry</h3>
+          <p class="form-subtitle">Fill in the specifications below to initiate your sprint.</p>
+
+          <form id="project-inquiry-form" onsubmit="submitInquiry(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="input-label" for="client-name">Your Full Name *</label>
+                <input type="text" id="client-name" name="name" class="form-control" placeholder="e.g. Rahul Sharma" required />
+              </div>
+              <div class="form-group">
+                <label class="input-label" for="client-email">Work Email *</label>
+                <input type="email" id="client-email" name="email" class="form-control" placeholder="rahul@company.com" required />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="input-label" for="client-phone">Phone / WhatsApp *</label>
+                <input type="tel" id="client-phone" name="phone" class="form-control" placeholder="+91 98765 43210" required />
+              </div>
+              <div class="form-group">
+                <label class="input-label" for="project-service">Primary Service Required *</label>
+                <select id="project-service" name="service" class="form-control" required>
+                  <option value="" disabled selected>Select a Service</option>
+                  
+                    <option value="Android App Development">Android App Development</option>
+                  
+                    <option value="Mobile App Development">Mobile App Development</option>
+                  
+                    <option value="Website Development">Website Development</option>
+                  
+                    <option value="Web App Development">Web App Development</option>
+                  
+                    <option value="Full-Stack Development">Full-Stack Development</option>
+                  
+                    <option value="Custom Software Development">Custom Software Development</option>
+                  
+                    <option value="SaaS Development">SaaS Development</option>
+                  
+                    <option value="AI Application Development">AI Application Development</option>
+                  
+                    <option value="AI Chatbot Development">AI Chatbot Development</option>
+                  
+                    <option value="AI Assistant Development">AI Assistant Development</option>
+                  
+                    <option value="Business Automation">Business Automation</option>
+                  
+                    <option value="API Development & Integration">API Development & Integration</option>
+                  
+                    <option value="Admin Dashboard Development">Admin Dashboard Development</option>
+                  
+                    <option value="E-commerce Development">E-commerce Development</option>
+                  
+                    <option value="Booking System Development">Booking System Development</option>
+                  
+                    <option value="Management Software">Management Software</option>
+                  
+                    <option value="UI/UX Development">UI/UX Development</option>
+                  
+                    <option value="Bug Fixing & Project Improvements">Bug Fixing & Project Improvements</option>
+                  
+                    <option value="Database Integration">Database Integration</option>
+                  
+                    <option value="Cloud / Deployment Support">Cloud / Deployment Support</option>
+                  
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="input-label" for="project-budget">Estimated Budget Range *</label>
+                <select id="project-budget" name="budget" class="form-control" required>
+                  <option value="Under ₹25,000">Under ₹25,000 (MVP / Starter)</option>
+                  <option value="₹25,000 - ₹60,000" selected>₹25,000 - ₹60,000 (Standard Sprints)</option>
+                  <option value="₹60,000 - ₹1,50,000">₹60,000 - ₹1,50,000 (Full-Stack Platform)</option>
+                  <option value="₹1,50,000+">₹1,50,000+ (Enterprise Custom / AI)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="input-label" for="project-timeline">Target Timeline</label>
+                <select id="project-timeline" name="timeline" class="form-control">
+                  <option value="Immediate Sprint (1-2 Weeks)">Immediate Sprint (1-2 Weeks)</option>
+                  <option value="Standard Window (3-4 Weeks)" selected>Standard Window (3-4 Weeks)</option>
+                  <option value="Quarterly Roadmap (1-2 Months)">Quarterly Roadmap (1-2 Months)</option>
+                  <option value="Flexible Schedule">Flexible Schedule</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="input-label" for="project-details">Project Summary & Technical Requirements *</label>
+              <textarea id="project-details" name="message" class="form-control" rows="4" placeholder="Briefly describe what you'd like to build, your target audience, existing stack, or any specific demo you want similar to..." required></textarea>
+            </div>
+
+            <button type="submit" id="submit-inquiry-btn" class="btn btn-primary btn-block">
+              <span>Send Project Inquiry Now →</span>
+            </button>
+            <div id="form-feedback-msg" class="form-feedback"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  </main>
+
+  
+  <div class="floating-actions-bar">
+    <a href="https://wa.me/918791984082?text=Hi%20DevCraft,%20I'm%20interested%20in%20discussing%20a%20software%20project." target="_blank" rel="noopener noreferrer" class="floating-btn wa" aria-label="Chat on WhatsApp">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.861.174.086.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.043.072.043.419-.101.824z"/></svg>
+      <span class="floating-tooltip">WhatsApp DevCraft</span>
+    </a>
+    <a href="tel:+917017022966" class="floating-btn call" aria-label="Call DevCraft">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+      <span class="floating-tooltip">Direct Studio Call</span>
+    </a>
+    <button class="floating-btn back-to-top" id="back-to-top-btn" aria-label="Scroll to top">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"></polyline></svg>
+      <span class="floating-tooltip">Top</span>
+    </button>
+  </div>
+
+  
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <div class="brand-logo">
+          <div class="brand-badge-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="16 18 22 12 16 6"></polyline>
+              <polyline points="8 6 2 12 8 18"></polyline>
+            </svg>
+          </div>
+          <div class="brand-name">DEV<span>CRAFT</span></div>
+        </div>
+        <p class="footer-tagline">
+          <strong>Ideas → Code → Real Solutions</strong><br />
+          Full-cycle software engineering studio delivering scalable mobile applications, modern web platforms, intelligent AI agents, and enterprise cloud systems.
+        </p>
+        <div class="footer-contact-details">
+          <a href="mailto:shakyaharshit683@gmail.com" class="footer-contact-item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            shakyaharshit683@gmail.com
+          </a>
+          <a href="tel:+917017022966" class="footer-contact-item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            +91 7017022966 / +91 8791984082
+          </a>
+          <span class="footer-contact-item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            Mon – Sat: 09:00 – 21:00 IST • Rapid Response Guaranteed
+          </span>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Flagship Products</div>
+        <div class="footer-links">
+          <a href="/joya" class="footer-link">Joya AI — Voice Assistant (50% OFF)</a>
+          <a href="/jarvis" class="footer-link">Jarvis AI — PC Agent (50% OFF)</a>
+          <a href="/products" class="footer-link">All App &amp; Software Products</a>
+          <a href="/aptitude" class="footer-link">Aptitude Mastery Hub (30% OFF)</a>
+          <a href="/portfolio" class="footer-link">10+ Interactive Simulators</a>
+          <a href="/cart" class="footer-link">Shopping Cart &amp; Checkout</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Engineering Services</div>
+        <div class="footer-links">
+          <a href="/services#android" class="footer-link">Android App Development</a>
+          <a href="/services#web" class="footer-link">Full-Stack Web Applications</a>
+          <a href="/services#ai" class="footer-link">AI Integration &amp; Automation</a>
+          <a href="/services#software" class="footer-link">Custom Desktop Software</a>
+          <a href="/services#cloud" class="footer-link">Cloud DevOps &amp; APIs</a>
+          <a href="/contact" class="footer-link">Request Custom Project</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Studio &amp; Legal</div>
+        <div class="footer-links">
+          <a href="/about" class="footer-link">About DevCraft Studio</a>
+          <a href="https://www.instagram.com/kiro_mage/" target="_blank" rel="noopener noreferrer" class="footer-link">Instagram (@kiro_mage)</a>
+          <a href="https://t.me/harshuuu1123" target="_blank" rel="noopener noreferrer" class="footer-link">Telegram (@harshuuu1123)</a>
+          <a href="/privacy" class="footer-link">Privacy Policy</a>
+          <a href="/terms" class="footer-link">Terms of Service</a>
+          <a href="/refund" class="footer-link">Refund &amp; Cancellation Policy</a>
+          <a href="/license" class="footer-link">Software Licensing &amp; IP</a>
+          <a href="/admin-login" class="footer-link" style="color: var(--warning); font-weight: 600;">Studio Admin Login 🔒</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <div>&copy; 2026 <strong>DEVCRAFT</strong>. All rights reserved. Ideas → Code → Real Solutions.</div>
+      <div class="footer-badges-bottom">
+        <span class="status-pill-online"><span class="status-dot"></span> All Systems Operational</span>
+        <span>Node.js • Next.js • React Native • MongoDB</span>
+      </div>
+    </div>
+
+    <!-- Search Modal Component -->
+    <div id="devcraft-search-modal" class="search-modal-overlay" style="display: none;">
+      <div class="search-modal-box">
+        <div class="search-modal-header">
+          <div class="search-input-wrapper">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="devcraft-search-input" placeholder="Search apps, AI tools, services, aptitude courses..." autocomplete="off" />
+          </div>
+          <button class="search-close-btn" onclick="devcraftShop.closeSearchModal()">&times;</button>
+        </div>
+        <div class="search-quick-tags">
+          <span class="search-tag" onclick="devcraftShop.applySearchTag('Joya AI')">Joya AI</span>
+          <span class="search-tag" onclick="devcraftShop.applySearchTag('Jarvis AI')">Jarvis AI</span>
+          <span class="search-tag" onclick="devcraftShop.applySearchTag('Android')">Android Apps</span>
+          <span class="search-tag" onclick="devcraftShop.applySearchTag('Aptitude')">Aptitude</span>
+          <span class="search-tag" onclick="devcraftShop.applySearchTag('React')">React / Web</span>
+        </div>
+        <div id="devcraft-search-results" class="search-results-container">
+          <div class="search-empty-state">Type a keyword to discover DevCraft apps, services, and courses.</div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  
+  <!-- 1. Interactive Demo Simulator Modal -->
+  <div class="devcraft-modal" id="demo-modal">
+    <div class="devcraft-modal-dialog">
+      <div class="devcraft-modal-header">
+        <div class="modal-header-text">
+          <h3 id="demo-modal-title">DevCraft Interactive Demo</h3>
+          <p id="demo-modal-subtitle">Live simulated application environment</p>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <button class="btn btn-xs btn-primary" id="demo-modal-cta">Start Similar Project →</button>
+          <button class="devcraft-modal-close" onclick="devcraftDemos.hideModal('demo-modal')" aria-label="Close modal">&times;</button>
+        </div>
+      </div>
+      <div class="devcraft-modal-body" id="demo-interactive-stage">
+        <!-- Interactive demo contents rendered here by devcraft-demos.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Case Study Modal -->
+  <div class="devcraft-modal" id="case-study-modal">
+    <div class="devcraft-modal-dialog">
+      <div class="devcraft-modal-header">
+        <div class="modal-header-text">
+          <h3>Client Case Study & Architecture</h3>
+          <p>Real challenges, engineering solutions, and measurable impact</p>
+        </div>
+        <button class="devcraft-modal-close" onclick="devcraftDemos.hideModal('case-study-modal')" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="devcraft-modal-body" id="case-study-modal-body">
+        <!-- Case study details rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Service Details Modal -->
+  <div class="devcraft-modal" id="service-modal">
+    <div class="devcraft-modal-dialog">
+      <div class="devcraft-modal-header">
+        <div class="modal-header-text">
+          <h3>Development Service Specification</h3>
+          <p>Features, use-cases, and production architectures</p>
+        </div>
+        <button class="devcraft-modal-close" onclick="devcraftDemos.hideModal('service-modal')" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="devcraft-modal-body" id="service-modal-body">
+        <!-- Service details rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Inquiry Success Confirmation Modal -->
+  <div class="devcraft-modal" id="inquiry-success-modal">
+    <div class="devcraft-modal-dialog" style="max-width: 500px; text-align: center;">
+      <div class="devcraft-modal-body" style="padding: 40px 30px;">
+        <div style="font-size: 3rem; margin-bottom: 12px;">🎉</div>
+        <h3 style="font-size: 1.5rem; margin-bottom: 8px;">Inquiry Received Successfully!</h3>
+        <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5;">
+          Thank you for reaching out to <strong>DEVCRAFT</strong>. Our lead software architect will review your project requirements and connect with you via email and WhatsApp within 24 hours.
+        </p>
+        <div style="background: rgba(255,255,255,0.04); border-radius: 10px; padding: 12px; margin: 20px 0; font-family: var(--font-mono); font-size: 0.85rem;" id="inquiry-ref-box">
+          Inquiry Ref: DC-INQ-901530
+        </div>
+        <button class="btn btn-primary btn-block" onclick="devcraftDemos.hideModal('inquiry-success-modal')">
+          Back to DevCraft Studio
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Product Detail Modal (Requirement 9) -->
+  <div class="devcraft-modal" id="product-detail-modal">
+    <div class="devcraft-modal-dialog product-modal-dialog">
+      <button class="devcraft-modal-close" onclick="devcraftShop.hideModal('product-detail-modal')" aria-label="Close modal">&times;</button>
+      <div class="devcraft-modal-body" id="product-detail-modal-body">
+        <!-- Rendered dynamically by devcraftShop.openProductModal -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Share Product Modal (Requirement 5, 6, 7) -->
+  <div class="devcraft-modal" id="share-product-modal">
+    <div class="devcraft-modal-dialog share-modal-dialog">
+      <div class="devcraft-modal-header">
+        <div class="modal-header-text">
+          <h3>Share with Network</h3>
+          <p>Spread the word via WhatsApp, Telegram, X, or direct link</p>
+        </div>
+        <button class="devcraft-modal-close" onclick="devcraftShop.hideModal('share-product-modal')" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="devcraft-modal-body" id="share-product-modal-body">
+        <!-- Rendered dynamically by devcraftShop.openShareModal -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. Checkout & Coupon Order Modal (Requirement 3 & 4) -->
+  <div class="devcraft-modal" id="checkout-order-modal">
+    <div class="devcraft-modal-dialog checkout-modal-dialog">
+      <div class="devcraft-modal-header">
+        <div class="modal-header-text">
+          <h3>Order &amp; Project Checkout</h3>
+          <p>Instant booking with automatic discounts and secure coupon verification</p>
+        </div>
+        <button class="devcraft-modal-close" onclick="devcraftShop.hideModal('checkout-order-modal')" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="devcraft-modal-body" id="checkout-order-modal-body">
+        <!-- Rendered dynamically by devcraftShop.openCheckoutModal -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. Order Success Modal -->
+  <div class="devcraft-modal" id="order-success-modal">
+    <div class="devcraft-modal-dialog" style="max-width: 540px;">
+      <div class="devcraft-modal-body" id="order-success-modal-body">
+        <!-- Rendered dynamically by devcraftShop.showOrderSuccess -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. Dynamic UPI Payment & Verification Modal -->
+  <div class="devcraft-modal" id="upi-payment-modal">
+    <div class="devcraft-modal-dialog upi-modal-dialog" style="max-width: 560px;">
+      <div class="devcraft-modal-header">
+        <div class="modal-header-text">
+          <div style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.75rem; color: #10b981; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">
+            <span class="status-dot"></span> Secure UPI Payment Gateway
+          </div>
+          <h3 id="upi-modal-title" style="margin-top: 4px;">Dynamic UPI QR &amp; Verification</h3>
+          <p id="upi-modal-subtitle">Pay securely via any UPI App or scan QR to unlock instant source code download</p>
+        </div>
+        <button class="devcraft-modal-close" onclick="devcraftShop.hideModal('upi-payment-modal')" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="devcraft-modal-body" id="upi-payment-modal-body">
+        <!-- Rendered dynamically by devcraftShop.openUpiPaymentModal -->
+      </div>
+    </div>
+  </div>
+  
+  
+  <!-- Embed Catalogs in Client Window for Zero-Lag Execution -->
+  <script>
+    window.DEVCRAFT_SERVICES_DATA = [{"id":"android-app","icon":"android","name":"Android App Development","category":"Mobile Apps","badge":"Native Android","shortDesc":"High-performance native Android apps built with Kotlin, Jetpack Compose, and modern architecture.","detailedDesc":"We architect and build top-tier Android mobile applications from concept to Google Play Store launch. Focused on smooth 60fps UI, offline-first SQLite/Room caching, real-time push notifications, and robust hardware integration (camera, GPS, biometrics).","features":["Modern Jetpack Compose & Material 3 UI systems","Offline caching & Room database synchronization","Google Play Billing, In-App Purchases & UPI Gateway","Firebase Cloud Messaging for targeted push alerts","Hardware access: Bluetooth, GPS, Biometrics & NFC","Full Play Store compliance & release automation"],"useCases":["Customer food ordering & on-demand delivery apps","Field sales force tracking & logistics companions","Healthcare patient vitals & prescription tracking","Fitness companion & gym workout trackers"],"technologies":["Kotlin","Android SDK","Jetpack Compose","Room DB","Retrofit","Firebase"],"linkedDemoId":"cravex","pricingStarting":"₹24,999"},{"id":"mobile-app","icon":"smartphone","name":"Mobile App Development","category":"Mobile Apps","badge":"iOS & Android","shortDesc":"Cross-platform mobile apps engineered with React Native and Flutter with single-codebase efficiency.","detailedDesc":"Deliver seamless experiences to both iOS and Android users simultaneously without compromising native performance. We leverage React Native and Flutter to build production applications featuring fluid gesture animations, state management, and unified design systems.","features":["Cross-platform codebase (iOS + Android 98% shared code)","Smooth 60/120fps gesture animations & micro-interactions","Secure keychain storage & biometric sign-in","Real-time WebSockets & background sync","App Store & Google Play submission guarantee","Automated CI/CD pipelines via Fastlane"],"useCases":["E-commerce & retail mobile shopping apps","Personal finance, expense & portfolio trackers","Community social networking & creator platforms","Membership & event ticketing apps"],"technologies":["React Native","Flutter","TypeScript","Redux Toolkit","Expo","Swift/Kotlin"],"linkedDemoId":"fitcore","pricingStarting":"₹29,999"},{"id":"website-dev","icon":"globe","name":"Website Development","category":"Websites","badge":"High Performance & SEO","shortDesc":"Ultra-fast, responsive business websites optimized for search rankings, conversions, and speed.","detailedDesc":"Your website is your digital flagship. We design and develop bespoke, responsive websites with cinematic visuals, 100/100 Google PageSpeed scores, semantic SEO tags, and conversion-focused copy layout that turns visitors into high-paying clients.","features":["Perfect 95-100 Google Lighthouse & Core Web Vitals","Interactive 3D Three.js & WebGL visual sections","Structured schema markup for top Google rankings","CMS integration (Headless Strapi, Sanity, or WordPress)","Lead capture forms with automated email & WhatsApp alerts","Enterprise SSL, CDN caching & DDoS shielding"],"useCases":["Corporate B2B & venture capital agency portfolios","Law firms, chartered accountants & consulting offices","High-converting SaaS product marketing pages","Real estate builder & luxury villa showcase sites"],"technologies":["Next.js","React","Tailwind CSS","HTML5/CSS3","Three.js","Cloudflare"],"linkedDemoId":"business-website","pricingStarting":"₹14,999"},{"id":"web-app","icon":"layout","name":"Web App Development","category":"Web Apps","badge":"Cloud Scale & Dynamic","shortDesc":"Complex single-page applications and client portals with reactive state and instant data rendering.","detailedDesc":"Transform desktop software and legacy spreadsheets into lightning-fast, reactive browser applications. We engineer complex web applications featuring multi-tenant authentication, dynamic drag-and-drop dashboards, interactive data tables, and instant state syncing.","features":["Single Page Application (SPA) architecture with React/Vue","Role-based access control (RBAC) & fine-grained permissions","Real-time collaborative editing & live table filters","Export capabilities: automated PDF, CSV, Excel generation","Progressive Web App (PWA) offline installation support","End-to-end automated testing with Cypress and Playwright"],"useCases":["Client relationship portals & service ticketing desks","Online educational coaching & test examination systems","Interactive property search & real estate directories","Internal team operations & resource scheduling hubs"],"technologies":["React","TypeScript","Node.js","PostgreSQL","Tailwind CSS","Redis"],"linkedDemoId":"estatex","pricingStarting":"₹34,999"},{"id":"fullstack-dev","icon":"layers","name":"Full-Stack Development","category":"Web Apps","badge":"End-to-End Engineering","shortDesc":"Complete end-to-end engineering covering modern frontends, scalable backends, and cloud databases.","detailedDesc":"From database schema normalization to pixel-perfect UI execution, our full-stack engineering ensures every tier of your software functions in harmony. We handle architecture, API design, security, server tuning, and deployment with zero handoff friction.","features":["Unified TypeScript stack across frontend and backend","REST & GraphQL API design with OpenAPI documentation","ACID-compliant transactional relational & NoSQL schemas","Zero-downtime rolling deployments on AWS/Render/DigitalOcean","Comprehensive error handling, request logging & monitoring","High concurrency handling with caching & connection pooling"],"useCases":["Custom online marketplaces connecting buyers and sellers","Multi-vendor logistics & fleet dispatch platforms","Fintech payment splitting & escrow management software","Healthcare clinic management & patient record systems"],"technologies":["Node.js","Express","React","MongoDB","PostgreSQL","Docker"],"linkedDemoId":"admin-dashboard","pricingStarting":"₹39,999"},{"id":"custom-software","icon":"cpu","name":"Custom Software Development","category":"Business Software","badge":"Tailored Business Logic","shortDesc":"Tailor-made software solutions engineered precisely to match your unique operational business logic.","detailedDesc":"Off-the-shelf software forces your business into someone else's workflow. We build custom bespoke software that matches your exact organizational processes, removes operational bottlenecks, and scales with your team's revenue growth.","features":["Custom business workflow automation & rule engines","Legacy software migration & database modernization","Hardware peripherals integration: barcode, thermal printers, RFID","Fine-grained multi-department role and access policies","On-premise or private cloud deployment capability","Complete intellectual property & source code handover"],"useCases":["Manufacturing inventory, raw materials & batch tracking","Custom billing, invoicing & GST compliance suites","Gym, fitness club & member subscription management","Educational institute ERP & examination controllers"],"technologies":["Node.js","TypeScript","React","PostgreSQL","Prisma","Linux/Docker"],"linkedDemoId":"fitcore","pricingStarting":"₹44,999"},{"id":"saas-dev","icon":"cloud","name":"SaaS Development","category":"Web Apps","badge":"Multi-Tenant Architecture","shortDesc":"Scalable Software-as-a-Service platforms featuring subscription billing, multi-tenancy, and onboarding.","detailedDesc":"Build and launch your next recurring-revenue product. We engineer multi-tenant SaaS platforms with automated self-serve customer onboarding, subscription billing via Stripe and Razorpay, team invite tiers, usage quotas, and analytical dashboards.","features":["Isolated multi-tenant data architecture (row-level or DB isolation)","Recurring subscription billing & automated invoice receipts","Customer onboarding checklist & self-serve tour widgets","Tiered feature gating, API key issuance & usage rate limits","Audit log tracking, compliance & session management","Telemetry tracking for MRR, Churn, LTV, and customer health"],"useCases":["B2B productivity tools & marketing automation software","Real estate listing & lead distribution SaaS for brokers","Appointment scheduling & customer CRM for clinics & salons","Developer analytics & server infrastructure monitors"],"technologies":["Next.js","Node.js","Stripe / Razorpay","Supabase","PostgreSQL","Redis"],"linkedDemoId":"edunova","pricingStarting":"₹49,999"},{"id":"ai-app-dev","icon":"sparkles","name":"AI Application Development","category":"AI","badge":"Intelligent Systems","shortDesc":"AI-infused applications powered by LLMs, semantic vector search, and automated content generation.","detailedDesc":"Elevate your business capabilities with intelligent AI integrations. We build custom applications that leverage state-of-the-art Large Language Models, embeddings, and vector databases for semantic document Q&A, automated report generation, and intelligent data extraction.","features":["RAG (Retrieval-Augmented Generation) over private PDF/DOCs","Semantic search & embeddings using Pinecone / pgvector","Automated multi-step reasoning workflows with LangChain","Real-time streaming text and token responses","Intelligent prompt engineering, guardrails & fallback safety","Cost optimization via semantic response caching"],"useCases":["Internal corporate knowledge bases and SOP query engines","Automated legal contract clause review and risk analysis","Intelligent code analysis, refactoring & documentation tools","AI marketing copy, email outreach & blog draft generators"],"technologies":["OpenAI API","LangChain","Python / Node.js","Pinecone","pgvector","React"],"linkedDemoId":"jarvis","pricingStarting":"₹34,999"},{"id":"ai-chatbot","icon":"message-square","name":"AI Chatbot Development","category":"AI","badge":"24/7 Smart Conversations","shortDesc":"Context-aware conversational AI chatbots that resolve customer queries and capture qualified leads.","detailedDesc":"Never miss a customer inquiry again. We deploy intelligent conversational bots trained on your exact business knowledge base. Our chatbots answer complex FAQs, qualify sales leads, book appointments, and smoothly hand off to human agents when needed.","features":["Trained on your website, PDFs, manuals & past tickets","Multi-channel: Website embed widget, WhatsApp & Telegram","Automated lead qualification and CRM contact creation","Instant human agent takeover when sentiment requires","Multi-lingual conversation support (Hindi, English & 50+ languages)","Conversation analytics, drop-off points & satisfaction scoring"],"useCases":["E-commerce order tracking, refund FAQs & product finder","Real estate instant property availability & site visit booking","Education course inquiry, fee structure & syllabus bot","Hospital & clinic patient appointment reservation bot"],"technologies":["OpenAI / Claude","Node.js","WebSockets","WhatsApp Cloud API","Redis","React"],"linkedDemoId":"ai-automation","pricingStarting":"₹19,999"},{"id":"ai-assistant","icon":"bot","name":"AI Assistant Development","category":"AI","badge":"Executive Productivity","shortDesc":"Custom autonomous assistants capable of executing multi-step tasks, scheduling, and research.","detailedDesc":"Imagine having a brilliant 24/7 technical copilot. We create customized AI assistants designed to organize tasks, summarize lengthy documents, monitor metrics, draft correspondence, and execute API-driven tool calls across your business software.","features":["Voice input & natural text command processing","Function calling & automated third-party tool execution","Persistent cross-session conversational memory","Real-time system, metric & server monitoring dashboards","Automated task checklists & deadline reminders","Local-first fallback with optional private LLM deployment"],"useCases":["Executive dashboard assistant for daily sales & KPI recaps","Developer companion for debugging, tests & code generation","Researcher assistant for aggregating news, patents & papers","Customer support team assistant drafting verified responses"],"technologies":["Python / Node.js","LLM Function Calling","Web Speech API","React","Tailwind","Vector DB"],"linkedDemoId":"jarvis","pricingStarting":"₹29,999"},{"id":"business-automation","icon":"zap","name":"Business Automation","category":"Automation","badge":"Zero Manual Busywork","shortDesc":"Automated digital pipelines connecting CRMs, payment gateways, WhatsApp, and internal workflows.","detailedDesc":"Eliminate repetitive, error-prone manual copy-pasting across your business. We build automated data pipelines that connect your website forms, payment processors, WhatsApp, Google Sheets, ERPs, and accounting software into a cohesive machine.","features":["Visual trigger-action workflow architecture","Automated WhatsApp & Email notifications upon payment","Bi-directional CRM synchronization (HubSpot, Zoho, Notion)","Automated PDF invoice generation & WhatsApp delivery","Scheduled data reconciliation & error notification webhooks","Significant reduction in manual data entry payroll hours"],"useCases":["Lead auto-assignment to sales reps with instant WhatsApp ping","Instant customer onboarding after successful Razorpay checkout","Automated monthly gym / coaching fee payment reminders","Daily executive revenue digest sent to Telegram/WhatsApp"],"technologies":["Node.js","Webhooks","WhatsApp API","Razorpay API","Zapier/Make","Cron Jobs"],"linkedDemoId":"ai-automation","pricingStarting":"₹19,999"},{"id":"api-dev","icon":"share-2","name":"API Development & Integration","category":"Web Apps","badge":"High-Throughput & Secure","shortDesc":"Enterprise REST and GraphQL APIs with token authentication, caching, rate-limiting, and docs.","detailedDesc":"Connect systems smoothly and reliably. We build robust, well-documented RESTful and GraphQL APIs designed to serve millions of requests with sub-100ms response times, JWT/OAuth2 authentication, Redis caching, and automated Swagger/OpenAPI docs.","features":["Clean OpenAPI / Swagger interactive documentation","JWT, OAuth2 & HMAC API key validation middleware","Redis distributed caching & request rate-limiting","Third-party payment, shipping, SMS & WhatsApp integrations","Structured JSON error payloads with RFC 7807 compliance","Webhook listener architecture with automatic retry queues"],"useCases":["Unified mobile app and web app shared backend gateway","Payment gateway integrations (Razorpay, Cashfree, Stripe)","Logistics courier tracking APIs (Shiprocket, Delhivery)","Third-party partner developer API ecosystems"],"technologies":["Node.js","Express","Redis","PostgreSQL","Swagger/OpenAPI","Docker"],"linkedDemoId":"admin-dashboard","pricingStarting":"₹21,999"},{"id":"admin-dashboard","icon":"bar-chart-2","name":"Admin Dashboard Development","category":"Dashboards","badge":"Operations Control Center","shortDesc":"Custom business administration panels with interactive charts, user management, and metrics.","detailedDesc":"Gain 100% control over your business metrics. We engineer tailored administrative back-offices featuring real-time graphical data visualizations, order and customer rosters, status toggles, user permissions, and one-click data exports.","features":["Interactive Canvas/SVG line, bar, doughnut & area charts","Advanced data tables: sorting, multi-column search, pagination","One-click CSV, Excel and PDF report generation","Granular role-based permissions (Owner, Manager, Staff)","Audit log of all critical edits, deletions & updates","Dark/Light theme support with ergonomic glass aesthetics"],"useCases":["E-commerce order fulfillment & inventory tracking dashboard","SaaS recurring revenue, user churn & subscription metrics","School/Coaching student attendance & grade management","Gym member workout scheduling & membership fee control"],"technologies":["React","Chart.js / Recharts","Node.js","Express","Tailwind CSS","PostgreSQL"],"linkedDemoId":"admin-dashboard","pricingStarting":"₹24,999"},{"id":"ecommerce-dev","icon":"shopping-cart","name":"E-commerce Development","category":"Websites","badge":"High-Conversion Stores","shortDesc":"Custom online shopping platforms featuring fast cart checkout, coupon engines, and payment gateways.","detailedDesc":"Sell your products online with maximum conversion speed. We create bespoke e-commerce experiences with instant product filtering, variant pickers (size, color), promo code discounts, cart sliders, automated tax/shipping calculations, and local payment gateways.","features":["Instant search & faceted category/price attribute filters","Seamless slide-out cart drawer with live subtotal updates","Promotional discount codes & bulk pricing rules","Integrated Indian & Global payment gateways (UPI, Cards, EMI)","Customer order history, shipping tracking & invoice download","Admin product inventory control & stock alert notifications"],"useCases":["Direct-to-Consumer (D2C) fashion & lifestyle brand stores","Electronics, gadget & consumer hardware retail shops","Organic food, grocery & cloud kitchen ordering portals","Digital goods, courses & downloadable software delivery"],"technologies":["React","Node.js","Express","MongoDB / Postgres","Razorpay","Tailwind CSS"],"linkedDemoId":"ecommerce","pricingStarting":"₹29,999"},{"id":"booking-system","icon":"calendar","name":"Booking System Development","category":"Web Apps","badge":"Automated Appointments","shortDesc":"Universal appointment and slot booking platforms with automated confirmations and reminders.","detailedDesc":"Stop playing telephone tag to book clients. We engineer universal appointment booking systems that allow your customers to select services, choose dates, pick live available time slots, and pay online with instant calendar invites and reminders.","features":["Real-time time slot availability engine (no double booking)","Custom working hours, buffer time & holiday exclusions","Automated confirmation email & WhatsApp reminder alerts","Upfront deposit collection or full online fee payment","Customer self-serve reschedule and cancellation controls","Staff appointment allocation & calendar sync (Google/Outlook)"],"useCases":["Doctor clinics, dental offices & diagnostic centers","Salons, luxury spas & wellness studios","Legal advisors, chartered accountants & tech consultants","Fitness personal trainers & sports turf reservation"],"technologies":["React","Node.js","Date-Fns","PostgreSQL","WhatsApp API","Tailwind CSS"],"linkedDemoId":"booking","pricingStarting":"₹24,999"},{"id":"management-software","icon":"briefcase","name":"Management Software","category":"Business Software","badge":"Operational Efficiency","shortDesc":"Comprehensive business management software uniting inventory, billing, employees, and operations.","detailedDesc":"Bring total harmony to your daily business operations. We build all-in-one management platforms uniting staff attendance, client rosters, raw material inventory, invoice generation, and expense tracking into a single easy-to-use software.","features":["Centralized client, member & student master directories","Automated recurring billing, invoice generation & GST taxes","Inventory stock monitoring with automated reorder warnings","Staff shift allocation, task tracking & attendance registers","Daily, weekly & monthly profit/loss accounting summaries","Multi-branch and multi-location management support"],"useCases":["Gym & fitness studio member and trainer management","Coaching institute batch, student & exam management","Restaurant kitchen order tickets (KOT) & table billing","Real estate broker inventory & customer lead pipeline"],"technologies":["Node.js","React","Express","MongoDB","PostgreSQL","Tailwind CSS"],"linkedDemoId":"fitcore","pricingStarting":"₹34,999"},{"id":"ui-ux-dev","icon":"feather","name":"UI/UX Development","category":"Websites","badge":"Design System & Aesthetics","shortDesc":"Award-winning user interface engineering with glassmorphism, micro-interactions, and accessibility.","detailedDesc":"Good code with bad design fails. We engineer captivating digital experiences that blend aesthetic beauty with psychological usability. From dark glassmorphism to clean SaaS minimalism, every pixel, transition, and button state is engineered to engage users.","features":["Comprehensive design systems & reusable component libraries","Micro-interactions, button state physics & fluid transitions","WCAG 2.1 AA accessibility compliance & high contrast ratios","Responsive typography scales & optical layout balance","Dark mode, Light mode & custom brand theme styling","Interactive prototype & Figma-to-production code fidelity"],"useCases":["Modernizing dated legacy portals into premium experiences","High-converting landing page redesigns for tech startups","Consumer mobile app design systems with custom iconography","Complex enterprise SaaS interface simplification"],"technologies":["Figma","Tailwind CSS","CSS Variables","Three.js / WebGL","React","Framer Motion"],"linkedDemoId":"business-website","pricingStarting":"₹17,999"},{"id":"bug-fixing","icon":"tool","name":"Bug Fixing & Project Improvements","category":"Business Software","badge":"Performance & Stability","shortDesc":"Rapid triage and resolution of critical codebase errors, broken features, and performance lag.","detailedDesc":"Stuck with broken code, unresponsive developers, or slow loading speeds? We jump into existing codebases, diagnose core issues, fix bugs, optimize database queries, resolve frontend hydration glitches, and deliver clean, stable code.","features":["Rapid root-cause error diagnostics & emergency hotfixes","Slow database query indexing & N+1 query elimination","Frontend bundle size reduction & asset compression","Security patching, dependency updates & vulnerability fixes","Resolving cross-browser mobile layout and layout shifts","Code refactoring & architectural cleanup for future scalability"],"useCases":["Emergency rescue of stalled or abandoned developer projects","Fixing broken payment gateway and webhook sync issues","Optimizing slow mobile app loading times and memory leaks","Resolving API timeouts and unhandled server promise crashes"],"technologies":["JavaScript/TypeScript","Node.js","React","SQL/NoSQL","Profiler Tools","Git"],"linkedDemoId":"admin-dashboard","pricingStarting":"₹9,999"},{"id":"database-integration","icon":"database","name":"Database Integration","category":"Web Apps","badge":"ACID Data Architecture","shortDesc":"Robust database architecture, schema migrations, query optimization, and secure persistent storage.","detailedDesc":"Data is the core of every digital business. We design normalized relational and high-speed document databases that maintain data integrity, eliminate redundancy, support complex aggregation queries, and scale effortlessly under heavy concurrent traffic.","features":["Relational (PostgreSQL, MySQL) & NoSQL (MongoDB, Redis) design","Zero-downtime database migrations & version-controlled schemas","Advanced indexing strategies & query execution plan tuning","Automated daily backup workflows & disaster recovery plans","Connection pooling, connection retry logic & connection limits","Data encryption at rest and in transit (SSL/TLS)"],"useCases":["Migrating from unstable spreadsheet data to managed PostgreSQL","Architecting multi-tenant database partitioning for SaaS","Integrating Redis caching to slash database load by 80%","Setting up automated cloud database replication on AWS/Atlas"],"technologies":["PostgreSQL","MongoDB","Redis","Prisma ORM","Mongoose","Supabase"],"linkedDemoId":"edunova","pricingStarting":"₹19,999"},{"id":"cloud-deployment","icon":"server","name":"Cloud / Deployment Support","category":"Automation","badge":"24/7 DevOps & Uptime","shortDesc":"Production cloud setup, automated CI/CD pipelines, SSL encryption, and continuous monitoring.","detailedDesc":"Ensure your software is always online, secure, and fast for users worldwide. We set up automated deployment pipelines, Docker containerization, custom domain DNS, SSL certificates, zero-downtime redeploys, and 24/7 keep-alive uptime monitoring.","features":["Zero-downtime automated GitHub CI/CD build pipelines","Docker containerization for portable consistent environments","Custom domain DNS configuration with automated SSL certificates","24/7 automated keep-alive pings & uptime alert notifications","Server resource auto-scaling & load balancer configuration","Security firewall, CORS lockdown & rate-limiting guards"],"useCases":["Deploying full-stack Node.js + React apps to Render & Vercel","Setting up AWS EC2, S3, CloudFront and RDS environments","Configuring Cloudflare DNS, DDoS protection & CDN caching","Migrating web applications from expensive hosts to optimized VPS"],"technologies":["Docker","Render","Vercel","AWS","Cloudflare","GitHub Actions","Linux"],"linkedDemoId":"ai-automation","pricingStarting":"₹14,999"}];
+    window.DEVCRAFT_DEMOS_DATA = [{"id":"cravex","title":"CraveX","subtitle":"Food Delivery Mobile Experience","category":"MOBILE APPS","categoryKey":"mobile","badge":"Mobile App • React Native / Android","image":"/assets/images/project-mobile.svg","shortDesc":"A lightning-fast food ordering mobile app with real-time GPS courier tracking, interactive dish customization, and UPI one-tap payment.","metrics":[{"label":"Avg Order Time","value":"42s"},{"label":"Courier Latency","value":"\u003c50ms"},{"label":"Rating","value":"4.9 ★"}],"technologies":["React Native","Kotlin","Node.js","Socket.IO","Google Maps API","Razorpay"],"features":["Interactive restaurant & dish catalog with category filtering","Real-time cart management with instant bill calculations","Simulated live driver GPS location tracker with delivery milestones","Custom spice level, portion sizing, and add-on modifiers","Instant push notification simulation for order status transitions"],"caseStudy":{"client":"CraveX Logistics Corp","timeline":"6 Weeks","problem":"The client had an outdated hybrid app experiencing 4.2-second screen lag, frequent checkout drop-offs (38%), and poor GPS accuracy that frustrated hungry customers and couriers.","solution":"DevCraft re-architected CraveX into a native-performance React Native application paired with a lightweight Node.js/Socket.IO microservice for sub-50ms courier coordinate streaming. We implemented offline cart persistence and a 2-step frictionless checkout.","architecture":["React Native + Hermes JS engine for instant 60fps renders","Redis Geo-spatial indexing for courier proximity calculations","WebSockets stream for battery-efficient live GPS location polling","Stripe & Razorpay multi-tender payment fallback gateway"],"results":["64% increase in completed checkout conversions in first 30 days","App launch time dropped from 4.2s to 0.7s (83% speedup)","4.9/5 App Store rating across 12,000+ active monthly foodies"]},"demoType":"food-delivery","linkedServiceId":"android-app"},{"id":"fitcore","title":"FitCore","subtitle":"Gym & Fitness Management Platform","category":"BUSINESS SOFTWARE","categoryKey":"business","badge":"SaaS Platform • Mobile & Web","image":"/assets/images/project-dashboard.svg","shortDesc":"Complete gym operations SaaS featuring dual Member & Admin portals, automated recurring billing, trainer booking, and QR attendance.","metrics":[{"label":"Member Retention","value":"+34%"},{"label":"Check-in Speed","value":"0.4s"},{"label":"Active Gyms","value":"45+"}],"technologies":["Next.js","TypeScript","PostgreSQL","TailwindCSS","Stripe Billing","QR Code SDK"],"features":["Dual-portal switch: Interactive Member view vs Administrator management view","Live membership tier subscriber management with instant status toggles","Dynamic trainer session booking schedule with calendar slots","Live automated revenue & active member analytics dashboard","QR Code contactless check-in validation simulator"],"caseStudy":{"client":"FitCore Global Franchises","timeline":"8 Weeks","problem":"Franchise owners were managing membership renewals and trainer bookings across fragmented WhatsApp chats and paper registers, losing ₹3.8L monthly in uncollected renewal dues.","solution":"DevCraft engineered an all-in-one web & mobile SaaS featuring automated Stripe recurring subscriptions, dynamic trainer availability calendars, and instant QR check-in gates.","architecture":["Next.js 14 server components for instant dashboard data loading","PostgreSQL with Prisma ORM for relational membership schemas","Automated cron workers sending WhatsApp renewal links via Twilio","Role-based access control (Admin, Trainer, Member)"],"results":["Zero lost renewal fees with 99.4% automated subscription collection","Trainer scheduling conflicts eliminated 100%","Expanded from 3 locations to 45+ fitness hubs nationwide"]},"demoType":"gym-management","linkedServiceId":"custom-web-portals"},{"id":"edunova","title":"EduNova","subtitle":"Interactive Learning Management System","category":"WEB APPS","categoryKey":"web-apps","badge":"LMS Platform • Web Application","image":"/assets/images/project-web.svg","shortDesc":"A modern education platform with modular course video players, interactive knowledge-check quizzes, live progress tracking, and instant certificates.","metrics":[{"label":"Course Completion","value":"78%"},{"label":"Video CDN Speed","value":"99.9%"},{"label":"Students","value":"25k+"}],"technologies":["React 18","Node.js","Video.js","MongoDB","AWS S3 / CloudFront","PDFKit"],"features":["Interactive multi-module course curriculum with collapsible lesson hierarchy","Video lesson player mockup with playback scrub and note-taking mode","Interactive 3-question knowledge quiz with instant grading and explanations","Live percentage course progress meter with dynamic lesson checkmarks","Instant certificate of completion generator modal"],"caseStudy":{"client":"EduNova EdTech Academy","timeline":"7 Weeks","problem":"Traditional video hosting was slow, expensive, and lacked student engagement. Average course completion rates were under 14% due to passive unmonitored watching.","solution":"DevCraft built an engaging, gamified LMS featuring micro-lesson bookmarking, in-video checkpoint quizzes, dynamic progress tracking, and automated branded PDF certification upon 100% completion.","architecture":["React frontend with optimistic UI state caching","HLS adaptive video bitrate streaming via AWS CloudFront CDN","MongoDB document storage for flexible quiz schemas and answers","Automated PDFKit certificate rendering engine"],"results":["Course completion rates surged from 14% to 78%","Video streaming costs slashed by 48% via adaptive HLS streaming","Over 25,000 certified graduates in the first academic year"]},"demoType":"lms-learning","linkedServiceId":"web-app-dev"},{"id":"estatex","title":"EstateX","subtitle":"Modern Real Estate Platform","category":"WEBSITES","categoryKey":"websites","badge":"Real Estate • Web & Mobile","image":"/assets/images/project-ecommerce.svg","shortDesc":"Luxury real estate discovery portal featuring interactive price/location filters, high-resolution photo galleries, and instant private tour scheduling.","metrics":[{"label":"Property Inquiries","value":"3.2x"},{"label":"Search Speed","value":"24ms"},{"label":"Listing Views","value":"180k/mo"}],"technologies":["Next.js","TailwindCSS","Leaflet Maps","PostgreSQL","Cloudinary","SendGrid"],"features":["Dynamic property filter engine (Type, Price range, Bedrooms, Location)","Rich interactive property showcase cards with photo previews and feature badges","Interactive property detail modal with floor plan tabs and specifications","Working \"Schedule a Private Tour\" booking form with instant date selection","Mortgage monthly installment estimation calculator"],"caseStudy":{"client":"EstateX Luxury Realty","timeline":"5 Weeks","problem":"The agency relied on static PDF brochures and slow WordPress pages that took 5.6s to load, causing 60% of high-net-worth buyers to abandon searches.","solution":"DevCraft engineered a bespoke Next.js real estate application with sub-second image loading via Cloudinary, instant multi-parameter filtering, and an integrated tour booking engine.","architecture":["Next.js Incremental Static Regeneration (ISR) for instant search indexing","PostgreSQL with Full-Text Search indexing on property amenities","Cloudinary responsive WebP image optimization pipeline","Automated tour calendar syncing directly into agents Google Calendars"],"results":["320% surge in verified buyer tour requests within 60 days","Page load time dropped to 0.6 seconds (90% faster)","Closed ₹18 Cr in luxury property sales attributed to the platform"]},"demoType":"real-estate","linkedServiceId":"website-dev"},{"id":"jarvis-ai","title":"Jarvis AI","subtitle":"Intelligent Multi-Agent Workspace","category":"AI","categoryKey":"ai","badge":"AI & Machine Learning • Full-Stack","image":"/assets/images/project-ai.svg","shortDesc":"Enterprise AI assistant workspace with multi-persona switching (Architect, Coder, Analyst), real-time simulated token generation, and syntax-highlighted code output.","metrics":[{"label":"Response Latency","value":"120ms"},{"label":"Code Accuracy","value":"98.6%"},{"label":"Tasks Handled","value":"500k+"}],"technologies":["OpenAI GPT-4 API","LangChain","Node.js","React","Prism.js","Vector DB"],"features":["Interactive multi-turn conversation with real-time responsive chat simulation","Persona switcher: Full-Stack Architect, Senior Code Reviewer, or Data Analyst","Pre-loaded prompt suggestions for instant one-click querying","Simulated typing effect with live token count and latency metrics","One-click code snippet copier with syntax styling"],"caseStudy":{"client":"Apex Global Software Labs","timeline":"6 Weeks","problem":"A software firm was losing 12 hours per developer weekly on boilerplate code writing, API documentation parsing, and manual unit test generation.","solution":"DevCraft built a secure, private enterprise AI workspace integrated with OpenAI models, featuring customized system personas, internal codebase context ingestion, and strict token limits.","architecture":["Node.js streaming proxy with Server-Sent Events (SSE) for low latency","Pinecone vector database for company documentation semantic retrieval","Client-side Prism.js code syntax highlighting with copy-to-clipboard","Enterprise JWT authorization with department-level usage quotas"],"results":["Saved 11.5 hours per developer weekly on documentation and test creation","Unit test coverage improved across company repositories by 42%","Zero API key leaks with centralized enterprise rate-limiting proxy"]},"demoType":"ai-workspace","linkedServiceId":"ai-integration"},{"id":"business-website","title":"Nexus Corp Presence","subtitle":"Modern Agency & Corporate Studio","category":"WEBSITES","categoryKey":"websites","badge":"Corporate Website • High Conversion","image":"/assets/images/project-web.svg","shortDesc":"A high-converting corporate website engineered with smooth 3D micro-animations, interactive ROI calculator, and dynamic client presentation decks.","metrics":[{"label":"Page Speed Score","value":"99/100"},{"label":"Lead Conversion","value":"8.4%"},{"label":"Global Bounce","value":"\u003c22%"}],"technologies":["Vite","HTML5/SCSS","Vanilla JS","Three.js","Tailwind","GSAP"],"features":["Interactive live theme previewer (Dark Slate, Cyber Blue, Executive Gold)","Interactive Business ROI & Cost Savings Calculator with dynamic sliders","Interactive service grid preview with instant modal details","Client case study spotlight accordion with real metrics","One-click interactive project cost estimate generator"],"caseStudy":{"client":"Nexus Global Consulting Group","timeline":"4 Weeks","problem":"Nexus had a 7-year-old WordPress website with poor mobile responsiveness, 4.8-second load times, and an unimpressive design that failed to reflect their enterprise status.","solution":"DevCraft designed a bespoke, ultra-fast corporate experience with sleek dark styling, interactive financial ROI calculators, and instant inquiry workflows.","architecture":["Vite build optimization with zero runtime bloat (sub-40KB initial bundle)","CSS custom properties engine for real-time brand theme switching","Interactive client-side ROI calculator with SVG chart renders","Automated webhook sync with HubSpot and Salesforce CRM"],"results":["Google Lighthouse scores achieved 99 Performance and 100 SEO","Enterprise lead inquiry rate jumped by 170% in Q1","Average user session duration doubled from 1m 12s to 3m 45s"]},"demoType":"agency-showcase","linkedServiceId":"landing-pages"},{"id":"novacart","title":"NovaCart E-Commerce","subtitle":"Complete Digital Commerce Store","category":"WEB APPS","categoryKey":"web-apps","badge":"E-Commerce • Full-Stack Store","image":"/assets/images/project-ecommerce.svg","shortDesc":"Modern e-commerce platform with reactive product filtering, slide-over cart drawer, instant promo code validation, and a simulated 3-step checkout.","metrics":[{"label":"Checkout Abandonment","value":"-42%"},{"label":"Cart Speed","value":"18ms"},{"label":"Catalog Items","value":"10k+"}],"technologies":["React","Node.js","Express","Stripe","Redis Caching","TailwindCSS"],"features":["Interactive product catalog with category tags (Hardware, Wearables, Audio)","Quick-view product detail modal with specs, ratings, and stock counter","Slide-over cart drawer with quantity increments, removals, and subtotal","Cryptographically secure server-validated promo code & discount engine","Simulated 3-step checkout with instant order confirmation and tracking number"],"caseStudy":{"client":"Nova Trends E-Commerce","timeline":"7 Weeks","problem":"Nova Trends was losing customers on Shopify due to bloated multi-page checkout flows and slow international currency transitions.","solution":"DevCraft engineered a bespoke headless e-commerce store with an instant slide-out cart drawer, single-page express checkout, and sub-second catalog search.","architecture":["React frontend with Redux Toolkit for zero-latency cart updates","Express.js backend with Redis caching for 18ms product catalog responses","Stripe Payment Intents with automatic local currency detection","Automated webhook workers syncing warehouse inventory in real-time"],"results":["Checkout abandonment plummeted from 68% to 26%","Average order value (AOV) grew by 28% through dynamic cart upsells","Successfully handled 15,000 simultaneous shoppers on Black Friday"]},"demoType":"ecommerce-store","linkedServiceId":"ecommerce-dev"},{"id":"timeslot-pro","title":"TimeSlot Pro","subtitle":"Appointment & Booking System","category":"BUSINESS SOFTWARE","categoryKey":"business","badge":"Booking Engine • Web & Mobile","image":"/assets/images/project-api.svg","shortDesc":"Automated appointment scheduling suite with timezone detection, real-time date/slot availability picker, and calendar invitation sync.","metrics":[{"label":"No-Show Rate","value":"\u003c2%"},{"label":"Booking Time","value":"35s"},{"label":"Sync Latency","value":"Instant"}],"technologies":["Next.js","TypeScript","Google Calendar API","Twilio SMS","Tailwind","Prisma"],"features":["Step 1: Interactive service selection (Tech Consultation, Architecture Review, Code Audit)","Step 2: Interactive live calendar date selector with weekend exclusion","Step 3: Dynamic time slot grid with morning, afternoon, and evening slots","Step 4: Contact details entry with automated confirmation modal and simulated calendar invitation","Simulated SMS & Email confirmation trigger"],"caseStudy":{"client":"CareFirst Healthcare & Wellness","timeline":"5 Weeks","problem":"Receptionists spent 4 hours every day manually exchanging emails to book consultations, resulting in a 22% no-show rate and double-booking errors.","solution":"DevCraft built TimeSlot Pro: a frictionless 4-step scheduling engine with automated Google Calendar slot synchronization and automated WhatsApp/SMS reminders.","architecture":["Next.js app router with optimistic server actions for zero slot clashes","Google Calendar & Outlook Calendar bi-directional OAuth2 sync","Twilio automated SMS and WhatsApp reminder notifications 2 hours before slots","Custom buffer-time and cancellation window rule enforcement engine"],"results":["No-show rate dropped from 22% to an unprecedented 1.8%","Saved clinic staff 25+ hours of weekly manual phone coordination","Over 8,000 appointments booked completely on autopilot"]},"demoType":"appointment-booking","linkedServiceId":"custom-web-portals"},{"id":"nexus-admin","title":"Nexus Admin Dashboard","subtitle":"Enterprise Analytics & Operations","category":"DASHBOARDS","categoryKey":"dashboards","badge":"Enterprise Dashboard • Full Operations","image":"/assets/images/project-dashboard.svg","shortDesc":"Mission-control admin dashboard featuring live metrics, interactive SVG revenue charts, user access management, and simulated system health gauges.","metrics":[{"label":"Data Ingestion","value":"50k/sec"},{"label":"Query Latency","value":"12ms"},{"label":"Uptime","value":"99.99%"}],"technologies":["React","TypeScript","Node.js","PostgreSQL","ApexCharts","Docker"],"features":["Timeframe filter toggle: Daily, Weekly, and Monthly live metric recalculation","Interactive SVG revenue & conversion performance charts with hover tooltips","Live user management table with status toggles (Active, Suspended, Pending)","Real-time server telemetry: CPU load, RAM allocation, and API latency indicators","Instant search and filter across mock transactions and orders"],"caseStudy":{"client":"VentureScale B2B Platform","timeline":"6 Weeks","problem":"Operations executives had to query 4 different database tables and wait 15 minutes for spreadsheet exports to review daily sales and user churn.","solution":"DevCraft created Nexus Admin: a unified single-pane-of-glass operations cockpit with pre-aggregated SQL materialized views and sub-second chart rendering.","architecture":["React with modular dashboard card widgets and virtualized scrolling","Node.js caching layer on top of PostgreSQL materialized views","WebSocket connection for real-time new subscriber alerts and status changes","Role-based granular permissions (SuperAdmin, Support Lead, Billing Admin)"],"results":["Decision-making latency dropped from 15 minutes to real-time (\u003c1 second)","Support team resolution speed increased by 3.5x with instant user status toggles","Zero downtime across 18 consecutive months of production monitoring"]},"demoType":"admin-dashboard","linkedServiceId":"admin-dashboards"},{"id":"flowcraft-ai","title":"FlowCraft AI","subtitle":"Workflow & Prompt Automation Suite","category":"AUTOMATION","categoryKey":"automation","badge":"AI Automation • Workflow Engine","image":"/assets/images/project-api.svg","shortDesc":"Visual workflow automation platform connecting webhook triggers, LLM processing nodes, and multi-channel actions with step-by-step execution simulation.","metrics":[{"label":"Workflows Executed","value":"1.2M+"},{"label":"Time Saved","value":"450 hrs"},{"label":"Error Rate","value":"\u003c0.01%"}],"technologies":["Node.js","React Flow","OpenAI API","BullMQ","Redis","Docker"],"features":["Interactive 4-step workflow pipeline: Webhook Trigger -> Filter -> AI LLM -> Notification","Working \"Run Workflow Simulation\" button with realistic step-by-step green glowing execution","Live node inspector displaying JSON payload inputs and outputs at each stage","Configurable AI prompt node parameters (Model, Temperature, Task)","Execution log terminal with real timestamps and status confirmation"],"caseStudy":{"client":"Optima Data Solutions","timeline":"6 Weeks","problem":"Customer inquiries received via contact forms took an average of 4.5 hours to be categorized, summarized, and routed to the proper account executive.","solution":"DevCraft engineered FlowCraft AI: an autonomous workflow engine that receives webhooks, summarizes intent via GPT-4, scores lead value, and notifies the right Slack channel in 1.4 seconds.","architecture":["React Flow node-based visual orchestration interface","BullMQ with Redis for distributed background job queuing and retries","OpenAI function-calling API for structured JSON extraction","Webhook dispatchers for Slack, WhatsApp, HubSpot, and email"],"results":["Lead response time plummeted from 4.5 hours to 1.4 seconds","Sales meeting booking rate increased by 54% due to instant contact","Saved over 450 engineering hours previously spent writing custom webhook glue"]},"demoType":"workflow-automation","linkedServiceId":"ai-automation"}];
+    window.DEVCRAFT_PRODUCTS_DATA = [{"id":"joya-ai","name":"Joya AI — Full Source Code","type":"app","category":"Android Apps","platform":"Android (Kotlin / Studio)","badge":"50% OFF • Full Source Code Included","originalPrice":1999,"shortDesc":"Complete Android Studio source code for Joya AI autonomous voice assistant with wake word \"Wake up Joya\", offline speech recognition, and WhatsApp automation.","detailedDesc":"Customer gets the complete Joya Android source code after successful purchase. Joya AI transforms your Android smartphone into a responsive voice-commanded intelligence station. Powered by an on-device lightweight voice neural engine, Joya responds instantaneously to the wake phrase \"Wake up Joya\", executes multi-step app tasks (sending WhatsApp messages, making calls, setting alarms, taking voice memos), and operates seamlessly in the background without draining your battery.","features":["Full Android Studio Kotlin project source code with complete build files","Custom responsive wake word detection (\"Wake up Joya\")","Hands-free app automation: WhatsApp, Phone Dialer, Music, Maps","On-device offline voice synthesis & fast sub-100ms speech intent recognition","Continuous background service with smart battery-saver sleeping states","Context-aware conversational intelligence & memory store","Zero analytics telemetry leakage — 100% private and customer-owned code"],"wakeWord":"Wake up Joya","version":"v2.4.0","requirements":"Android Studio Hedgehog+, Android SDK 26+ (Oreo or higher), Kotlin 1.9+","changelog":[{"version":"v2.4.0","date":"2026-08-15","notes":"Enhanced offline wake-word acoustic model; battery drain reduced by 35%."},{"version":"v2.3.0","date":"2026-06-20","notes":"Added direct WhatsApp message dictation and quick call triggers."},{"version":"v2.0.0","date":"2026-03-10","notes":"Major rewrite with Neural TTS audio synthesizer and modular skill engine."}],"fileDetails":{"filename":"joya-ai-source-code-v2.4.0.zip","originalName":"joya-ai-source-code-v2.4.0.zip","size":"12.4 MB","releaseDate":"2026-08-15","isFree":false,"hasDownload":true,"hasSourceCode":true},"technologies":["Kotlin","Android NDK","Porcupine Wake Word","TensorFlow Lite","Room DB","Coroutines"],"image":"/assets/images/project-ai.svg","screenshots":["/assets/images/project-ai.svg","/assets/images/project-mobile.svg"],"rating":"4.98 ★ (3,200+ Android users)","isAptitude":false,"discountPercent":50,"discountAmount":1000,"finalPrice":999},{"id":"jarvis-ai","name":"Jarvis AI — Full Source Code","type":"app","category":"PC Software","platform":"Windows / PC (Electron / Python)","badge":"50% OFF • Full Source Code Included","originalPrice":3199,"shortDesc":"Complete PC desktop project source code for Jarvis AI autonomous desktop intelligence agent with voice listening, terminal automation, and local LLM bridge.","detailedDesc":"Customer gets the complete Jarvis PC source code after successful purchase. Take total command of your desktop computing environment. Jarvis AI integrates directly into your operating system to index your workspace files, launch apps, write and execute shell scripts, scrape dynamic web data, and query local LLMs (via Ollama or cloud models) without leaving your active workflow.","features":["Full PC project source code: Electron desktop frontend + Python automation core","Always-on desktop voice listener & global hotkey activation (Ctrl+Space)","File System Sentinel: Instant semantic search, duplicate cleaner, file tagger","Automated browser workflow executor for data scraping & form filling","Seamless local LLM bridge (Ollama / Llama-3) and OpenAI / Claude fallback","System telemetry monitoring: CPU/GPU temps, RAM usage, process killer","Custom automation macro recorder & Python/Node.js script runner with full build instructions"],"version":"v3.1.2","requirements":"Windows 10/11 64-bit, macOS 12+, or Ubuntu 20.04+, Node.js 18+, Python 3.10+","changelog":[{"version":"v3.1.2","date":"2026-08-20","notes":"Direct Ollama local model bridge; native Windows 11 Fluent dark glass UI."},{"version":"v3.0.0","date":"2026-05-12","notes":"Architectural overhaul: Multi-threaded voice agent and desktop vision preview."},{"version":"v2.5.0","date":"2026-01-18","notes":"Added automated browser scraping and macro recording engine."}],"fileDetails":{"filename":"jarvis-ai-source-code-v3.1.2.zip","originalName":"jarvis-ai-source-code-v3.1.2.zip","size":"18.6 MB","releaseDate":"2026-08-20","isFree":false,"hasDownload":true,"hasSourceCode":true},"technologies":["Electron","Node.js","Python","Ollama","PyAutoGUI","Prism.js"],"image":"/assets/images/project-dashboard.svg","screenshots":["/assets/images/project-dashboard.svg","/assets/images/project-ai.svg"],"rating":"4.99 ★ (1,850+ PC power users)","isAptitude":false,"discountPercent":50,"discountAmount":1600,"finalPrice":1599},{"id":"cravex-app","name":"CraveX Food Delivery Mobile App Suite","type":"app","category":"Android Apps","platform":"Android & iOS","badge":"50% OFF • Production App","originalPrice":50000,"shortDesc":"Complete food delivery app solution including Customer App, Restaurant Portal, and Driver GPS Tracking with live UPI payment.","detailedDesc":"Deploy your own UberEats / Zomato style food delivery platform in weeks. Includes production-ready React Native apps for iOS & Android, real-time Socket.IO courier tracking, driver dispatch algorithms, and admin revenue dashboard.","features":["Customer iOS & Android mobile apps (React Native)","Live sub-50ms GPS courier coordinate tracking on Google Maps","Restaurant kitchen order management tablet dashboard","UPI, Razorpay, Cash-on-Delivery payment integration","Push notification alerts for order milestones","Full source code ownership & Play Store upload assistance"],"version":"v4.2.0","fileDetails":{"filename":"cravex-mobile-suite-v4.2.0.zip","size":"64.8 MB","releaseDate":"2026-07-10","isFree":false,"hasDownload":true},"technologies":["React Native","Node.js","Socket.IO","Google Maps API","Razorpay","MongoDB"],"image":"/assets/images/project-mobile.svg","rating":"4.9 ★ (120+ launches)","isAptitude":false,"discountPercent":50,"discountAmount":25000,"finalPrice":25000},{"id":"titanfit-companion","name":"Titan Fitness Android Companion & Tracker","type":"app","category":"Android Apps","platform":"Android","badge":"50% OFF • Fitness Tracker","originalPrice":40000,"shortDesc":"Progressive fitness companion app with automated workout logging, macro analytics, step tracking, and offline syncing.","detailedDesc":"Engineered for personal trainers and gym enthusiasts. Features custom workout split builders, rest timers with audio cues, body measurement charts, and sensor-based pedometer integration.","features":["Custom workout split routines and exercise movement library","Rest timer with audio chimes and background notifications","Macro & calorie intake calculation with food barcode scanner","Offline-first Room database sync with Google Fit / Health Connect","Progress photo timeline with biometric privacy protection","Export training logs to CSV, Excel, and PDF formats"],"version":"v2.1.0","fileDetails":{"filename":"titanfit-companion-v2.1.0.apk","size":"36.4 MB","releaseDate":"2026-06-15","isFree":false,"hasDownload":true},"technologies":["Android / Kotlin","Jetpack Compose","Health Connect","Room DB","MPAndroidChart"],"image":"/assets/images/project-mobile.svg","rating":"4.91 ★ (850+ users)","isAptitude":false,"discountPercent":50,"discountAmount":20000,"finalPrice":20000},{"id":"pulseflow-desktop","name":"PulseFlow SaaS Operations & Telemetry Desktop","type":"app","category":"PC Software","platform":"Windows / PC (Desktop)","badge":"50% OFF • Operations Monitor","originalPrice":45000,"shortDesc":"High-throughput system telemetry and cloud operations desktop dashboard with dark glassmorphic UI, CPU/RAM telemetry, and alert triggers.","detailedDesc":"Real-time infrastructure monitor for DevOps engineers and system administrators. Monitors cloud server metrics, Docker container states, Redis cache latencies, and triggers desktop system tray alerts on CPU spikes.","features":["Real-time system tray icon with live CPU/RAM utilization mini-gauges","Direct SSH/WebSocket telemetry pipe to cloud server nodes","Docker container inspector: logs streaming, restart, stop, memory limits","Configurable alert thresholds with audio alarms and webhook dispatch","Zero-footprint lightweight Electron / Rust native bridge","Encrypted credential store for server SSH keys and tokens"],"version":"v2.8.0","fileDetails":{"filename":"pulseflow-desktop-setup-v2.8.0.exe","size":"72.1 MB","releaseDate":"2026-07-28","isFree":false,"hasDownload":true},"technologies":["Electron","TypeScript","Node.js","Chart.js","SSH2","WebSockets"],"image":"/assets/images/project-dashboard.svg","rating":"4.94 ★ (340+ DevOps teams)","isAptitude":false,"discountPercent":50,"discountAmount":22500,"finalPrice":22500},{"id":"flowcraft-automation","name":"FlowCraft Visual Workflow Automation Suite","type":"app","category":"PC Software","platform":"Windows & Web","badge":"50% OFF • Workflow Engine","originalPrice":50000,"shortDesc":"Visual node-based automation engine connecting webhooks, AI models, database updates, and multi-channel notification bots.","detailedDesc":"Automate repetitive workflows without writing complex glue code. Drag and drop trigger nodes, configure AI text transformations, transform JSON payloads, and dispatch notifications across WhatsApp, Slack, and email.","features":["Visual node-based canvas for multi-step workflow composition","Live execution simulator with node-by-node payload inspection","Pre-built integrations: WhatsApp, Slack, Gmail, Google Sheets, Stripe","AI processing nodes for text extraction, classification, and summarization","Distributed background job queuing with BullMQ and Redis","Comprehensive error retry policies and execution failure alerts"],"version":"v3.0.4","fileDetails":{"filename":"flowcraft-automation-suite-v3.0.4.zip","size":"88.3 MB","releaseDate":"2026-08-05","isFree":false,"hasDownload":true},"technologies":["Node.js","React Flow","OpenAI API","BullMQ","Redis","Docker"],"image":"/assets/images/project-api.svg","rating":"4.96 ★ (70+ enterprise pipelines)","isAptitude":false,"discountPercent":50,"discountAmount":25000,"finalPrice":25000},{"id":"neuralcraft-ai","name":"NeuralCraft Autonomous AI Workflow Engine","type":"app","category":"AI Products","platform":"Web & API","badge":"50% OFF • Autonomous AI","originalPrice":80000,"shortDesc":"Full-stack AI prompt-to-app generator with real-time streaming, AST code synthesis, and interactive sandbox preview.","detailedDesc":"Build and deploy full software components with natural language prompts. Features multi-agent collaboration, AST-verified code modifications, and immediate sandbox hot-reloading.","features":["Multi-model fallback architecture: Claude 3.5 Sonnet, GPT-4o, DeepSeek","Syntax tree (AST) code validation preventing hallucinated syntax errors","Integrated WebAssembly sandbox for live in-browser preview","Automated Git commit integration and branch deployment","Token consumption metering with granular cost controls","REST API and WebSockets for programmatic agent invocation"],"version":"v1.9.0","fileDetails":{"filename":"neuralcraft-ai-core-v1.9.0.zip","size":"52.0 MB","releaseDate":"2026-07-15","isFree":false,"hasDownload":true},"technologies":["React","Node.js","Express","OpenAI API","Tailwind CSS","WebSockets"],"image":"/assets/images/project-ai.svg","rating":"4.97 ★ (450+ developers)","isAptitude":false,"discountPercent":50,"discountAmount":40000,"finalPrice":40000},{"id":"ai-bot-package","name":"Conversational AI Chatbot & Agent System","type":"app","category":"AI Products","platform":"Web & WhatsApp","badge":"50% OFF • 24/7 Smart Bot","originalPrice":40000,"shortDesc":"Context-aware conversational AI assistant trained on your custom documentation, website FAQs, and product catalogs.","detailedDesc":"Never miss an inquiry again. Deploy an intelligent conversational agent that resolves customer queries 24/7, captures qualified leads, and smoothly escalates to human agents via WhatsApp or web embed.","features":["Trained on your private documents, FAQs, and product manuals","Multi-channel: Website embed widget, WhatsApp, and Telegram","Automated lead qualification and CRM contact creation","Smooth human agent handover when sentiment requires","Multi-lingual support across Hindi, English, and 50+ languages","Conversation drop-off analytics and satisfaction scoring"],"version":"v3.2.0","fileDetails":{"filename":"devcraft-chatbot-agent-v3.2.0.zip","size":"28.6 MB","releaseDate":"2026-08-01","isFree":false,"hasDownload":true},"technologies":["OpenAI / Claude","Node.js","WebSockets","WhatsApp Cloud API","Redis","React"],"image":"/assets/images/project-ai.svg","rating":"4.89 ★ (80+ bots live)","isAptitude":false,"discountPercent":50,"discountAmount":20000,"finalPrice":20000},{"id":"timeslot-booking","name":"TimeSlot Pro Automated Scheduling Suite","type":"app","category":"Utilities","platform":"Web & Mobile","badge":"50% OFF • Booking Engine","originalPrice":40000,"shortDesc":"Universal appointment booking engine with real-time timezone conversion, calendar invitation sync, and SMS/WhatsApp reminders.","detailedDesc":"Eliminate double-booking errors and manual coordination. Customers choose services, select available dates, pick time slots, and pay deposits upfront, with automated Google/Outlook Calendar synchronization.","features":["Live real-time time slot availability engine with buffer-time rules","Google Calendar and Outlook Calendar bi-directional OAuth sync","Automated WhatsApp and SMS reminder notifications before appointments","Upfront deposit collection via UPI and card gateway","Customer self-serve reschedule and cancellation portal","Staff appointment allocation and daily timetable view"],"version":"v2.4.1","fileDetails":{"filename":"timeslot-pro-v2.4.1.zip","size":"34.5 MB","releaseDate":"2026-07-22","isFree":false,"hasDownload":true},"technologies":["Next.js","TypeScript","Google Calendar API","Twilio","PostgreSQL","TailwindCSS"],"image":"/assets/images/project-api.svg","rating":"4.89 ★ (300+ clinics/studios)","isAptitude":false,"discountPercent":50,"discountAmount":20000,"finalPrice":20000},{"id":"nexus-admin-suite","name":"Nexus Admin Operations & Analytics Cockpit","type":"app","category":"Utilities","platform":"Web Application","badge":"50% OFF • Operations Cockpit","originalPrice":40000,"shortDesc":"Comprehensive operations control panel with real-time SVG financial charts, user roster management, and live server telemetry.","detailedDesc":"Gain total transparency over your business operations. Includes interactive time-series charts, user permission controls, instant table search and export, and live server CPU/RAM health monitoring.","features":["Interactive Canvas & SVG revenue charts with time-range filtering","Sortable, filterable client and user roster table with status toggles","One-click data export to Excel, CSV, and formatted PDF reports","Granular role-based permissions (SuperAdmin, Manager, Support)","Live server telemetry: CPU usage, memory allocation, response latency","Modern glassmorphic dark theme engineered for high operational focus"],"version":"v2.0.0","fileDetails":{"filename":"nexus-admin-cockpit-v2.0.0.zip","size":"42.1 MB","releaseDate":"2026-07-30","isFree":false,"hasDownload":true},"technologies":["React","TypeScript","Node.js","PostgreSQL","ApexCharts","Docker"],"image":"/assets/images/project-dashboard.svg","rating":"4.94 ★ (150+ dashboards)","isAptitude":false,"discountPercent":50,"discountAmount":20000,"finalPrice":20000},{"id":"aptitude-mastery","name":"Developer Aptitude & Problem Solving Mastery","type":"aptitude","category":"Aptitude","platform":"Web Course & Portal","badge":"30% OFF • High Placement Rate","originalPrice":5000,"shortDesc":"Comprehensive aptitude program covering quantitative reasoning, logical deduction, algorithmic pattern matching, and FAANG placement tests.","detailedDesc":"Master the technical aptitude screening rounds required by top tech companies, product startups, and IT enterprises. Designed by senior engineers to build crystal-clear problem decomposition, rapid mental math shortcuts, and speed under time pressure.","features":["50+ Curated Quantitative & Logical Aptitude modules","Data Interpretation, Number Theory, Probability & Permutations","Coding Aptitude: Time-complexity analysis & dry-run drills","20 Full-length timed mock tests with detailed video solutions","Direct WhatsApp doubt clearing with mentor support","Certificate of Completion & verified skill badge"],"version":"2026 Edition","fileDetails":{"filename":"aptitude-mastery-syllabus-bundle.pdf","size":"18.4 MB","releaseDate":"2026-08-01","isFree":false,"hasDownload":true},"technologies":["Quantitative Aptitude","Logical Reasoning","Data Interpretation","Coding Logic","Speed Math"],"image":"/assets/images/project-api.svg","rating":"4.95 ★ (1,400+ students)","isAptitude":true,"discountPercent":30,"discountAmount":1500,"finalPrice":3500},{"id":"aptitude-quant-logical","name":"Technical Quantitative & Logical Assessment Pack","type":"aptitude","category":"Aptitude","platform":"Web Course & Portal","badge":"30% OFF • Interview Ready","originalPrice":3000,"shortDesc":"Targeted test series focusing on high-frequency questions asked in corporate tech screening and IT hiring challenges.","detailedDesc":"Sharpen your quantitative and logical instincts with 1,500+ practice problems, step-by-step mathematical proofs, and automated score benchmarking against thousands of tech job aspirants.","features":["1,500+ High-frequency aptitude practice questions","Comprehensive coverage of Puzzles, Seating Arrangements, & Syllogisms","Speed-building techniques for Profit & Loss, Percentages, and Work-Time","Live leaderboard & percentile ranking system","Downloadable PDF formula sheets & shortcut cheat-sheets","Lifetime access with quarterly question bank updates"],"version":"2026 Edition","fileDetails":{"filename":"quant-logical-question-bank.pdf","size":"14.2 MB","releaseDate":"2026-07-15","isFree":false,"hasDownload":true},"technologies":["Mental Math","Logical Deduction","Syllogisms","Puzzles","Time-Speed-Distance"],"image":"/assets/images/project-web.svg","rating":"4.9 ★ (890+ students)","isAptitude":true,"discountPercent":30,"discountAmount":900,"finalPrice":2100},{"id":"aptitude-placement-bootcamp","name":"Campus Placement & Company Coding Aptitude Accelerator","type":"aptitude","category":"Aptitude","platform":"Web Bootcamp","badge":"30% OFF • All-In-One Campus Hub","originalPrice":7000,"shortDesc":"Intensive 8-week bootcamp combining technical aptitude, verbal reasoning, core CS fundamentals, and live mock interview rounds.","detailedDesc":"The ultimate campus recruitment accelerator. From initial online aptitude screenings to technical rounds and HR interviews, this program provides end-to-end preparation for engineering college students and fresh graduates.","features":["Complete Quantitative, Logical & Verbal Aptitude curriculum","CS Fundamentals: OS, DBMS, Computer Networks & OOPs aptitude tests","1-on-1 Personalized resume review & portfolio audit","2 Live simulated mock interview sessions with real feedback","Company-specific test pattern drills (TCS, Infosys, Amazon, Wipro, etc.)","Dedicated placement drive alerts & referral network"],"version":"2026 Edition","fileDetails":{"filename":"campus-placement-accelerator-curriculum.pdf","size":"24.6 MB","releaseDate":"2026-08-10","isFree":false,"hasDownload":true},"technologies":["Campus Placement","Core CS","Verbal Reasoning","Mock Interviews","Aptitude Drills"],"image":"/assets/images/project-dashboard.svg","rating":"4.98 ★ (2,100+ graduates)","isAptitude":true,"discountPercent":30,"discountAmount":2100,"finalPrice":4900},{"id":"aptitude-cs-fundamentals","name":"Core CS Fundamentals & Algorithmic Aptitude Pack","type":"aptitude","category":"Aptitude","platform":"Web Course & Portal","badge":"30% OFF • Core CS","originalPrice":4500,"shortDesc":"Master operating systems, database management, computer networks, and data structure trivia frequently tested in written assessments.","detailedDesc":"Bridge the gap between theoretical computer science and recruitment test questions. Learn how to solve tricky recursion questions, SQL query outputs, memory allocation puzzles, and networking protocol questions in seconds.","features":["Operating Systems: Process synchronization, Deadlocks & Memory paging","DBMS: Normalization, ACID transactions & Indexing aptitude","Computer Networks: OSI model, TCP/IP, Subnetting & Socket trivia","Data Structures & Algorithms dry-run prediction puzzles","Interactive flashcards & timed micro-quizzes","Curated repository of previous year interview questions"],"version":"2026 Edition","fileDetails":{"filename":"core-cs-fundamentals-notes.pdf","size":"21.0 MB","releaseDate":"2026-07-20","isFree":false,"hasDownload":true},"technologies":["Operating Systems","DBMS","Computer Networks","DSA Logic","SQL Puzzles"],"image":"/assets/images/project-ai.svg","rating":"4.88 ★ (750+ students)","isAptitude":true,"discountPercent":30,"discountAmount":1350,"finalPrice":3150},{"id":"aptitude-mock-simulator","name":"Full-Stack Mock Aptitude & Technical Simulator","type":"aptitude","category":"Aptitude","platform":"Web Simulator Platform","badge":"30% OFF • Test Simulator","originalPrice":2500,"shortDesc":"Realistic simulation platform replicating the exact UI, timer constraints, and adaptive difficulty of corporate hiring portals.","detailedDesc":"Experience the pressure of real hiring assessments before the actual interview day. Our simulator mimics the testing environments of AMCAT, CoCubes, eLitmus, and top product hiring platforms with instant analytics and weak-area heatmaps.","features":["10 Full-length adaptive mock exams with strict countdown timers","Negative marking simulation & sectional time limit enforcement","Comprehensive performance analytics & weak-topic diagnostic report","Percentile ranking benchmarked against 15,000+ test-takers","Video solutions explaining alternate shortcuts for each question","Retake capability with randomized question variants"],"version":"2026 Edition","fileDetails":{"filename":"mock-simulator-portal-access.pdf","size":"12.8 MB","releaseDate":"2026-08-05","isFree":false,"hasDownload":true},"technologies":["Exam Simulator","Timed Pressure Drills","Analytics Heatmap","AMCAT Pattern","CoCubes Pattern"],"image":"/assets/images/project-ecommerce.svg","rating":"4.92 ★ (1,150+ students)","isAptitude":true,"discountPercent":30,"discountAmount":750,"finalPrice":1750},{"id":"fitcore-saas","name":"FitCore Gym & Member Management SaaS","type":"app","category":"Other Products","platform":"Web & Mobile SaaS","badge":"50% OFF • Turnkey SaaS","originalPrice":60000,"shortDesc":"Turnkey gym management platform with automated recurring membership billing, trainer booking calendar, and QR check-in gates.","detailedDesc":"Stop losing recurring revenue to uncollected dues. FitCore automates member subscriptions, provides a dedicated member portal for workout scheduling, and gives franchise owners multi-branch revenue telemetry.","features":["Dual-portal system: Member Web/Mobile app + Admin Dashboard","Automated recurring subscription billing via Razorpay / Stripe","Contactless QR code gym check-in scanner simulator","Trainer private session scheduling & calendar sync","Automated WhatsApp renewal reminders via Twilio/Gupshup","Multi-branch membership analytics & staff payroll"],"version":"v3.5.0","fileDetails":{"filename":"fitcore-saas-distribution-v3.5.0.zip","size":"58.0 MB","releaseDate":"2026-07-12","isFree":false,"hasDownload":true},"technologies":["Next.js","PostgreSQL","TailwindCSS","Stripe Billing","QR Code SDK","Docker"],"image":"/assets/images/project-dashboard.svg","rating":"4.95 ★ (85+ gyms)","isAptitude":false,"discountPercent":50,"discountAmount":30000,"finalPrice":30000},{"id":"edunova-lms","name":"EduNova Interactive LMS & Video Academy","type":"app","category":"Other Products","platform":"Web Academy Platform","badge":"50% OFF • Complete LMS","originalPrice":70000,"shortDesc":"Full-featured online course academy with adaptive video streaming, interactive checkpoint quizzes, and automated certificate generator.","detailedDesc":"Launch your own branded digital academy. Features DRM-protected video playback, student discussion forums, in-video knowledge tests, progress tracking, and instant PDF certificate generation upon course completion.","features":["Modular curriculum builder with drag-and-drop lesson organization","Adaptive HLS video player with speed control and bookmarking","Interactive quiz engine with instant auto-grading and answer reviews","Dynamic student progress percentage meter and milestone badges","Automated branded PDF certificate generator","Student community discussion board and teacher messaging"],"version":"v4.0.1","fileDetails":{"filename":"edunova-lms-package-v4.0.1.zip","size":"76.4 MB","releaseDate":"2026-07-18","isFree":false,"hasDownload":true},"technologies":["React 18","Node.js","Video.js","MongoDB","AWS S3","PDFKit"],"image":"/assets/images/project-web.svg","rating":"4.9 ★ (200+ courses hosted)","isAptitude":false,"discountPercent":50,"discountAmount":35000,"finalPrice":35000},{"id":"estatex-portal","name":"EstateX Luxury Real Estate & MLS Platform","type":"app","category":"Other Products","platform":"Web Platform","badge":"50% OFF • High Conversion","originalPrice":80000,"shortDesc":"High-end real estate portal with interactive map search, multi-factor filtering, HD photo galleries, and automated tour bookings.","detailedDesc":"Engineered specifically for real estate developers, property agencies, and brokerage networks. Features sub-second amenity filtering, virtual tour integrations, lead capture modals, and automated calendar sync for private site visits.","features":["Interactive property search with dynamic price, bed, and location sliders","Interactive Leaflet / Google Maps property pins with cluster zoom","Automated \"Schedule a Private Tour\" booking engine with calendar sync","Built-in monthly mortgage and home loan EMI calculator","Agent lead routing dashboard with instant WhatsApp inquiry pings","SEO-optimized property listing pages with rich schema markup"],"version":"v2.2.0","fileDetails":{"filename":"estatex-portal-v2.2.0.zip","size":"54.2 MB","releaseDate":"2026-06-25","isFree":false,"hasDownload":true},"technologies":["Next.js","TailwindCSS","Leaflet Maps","PostgreSQL","Cloudinary","SendGrid"],"image":"/assets/images/project-ecommerce.svg","rating":"4.9 ★ (40+ portals live)","isAptitude":false,"discountPercent":50,"discountAmount":40000,"finalPrice":40000},{"id":"novacart-store","name":"NovaCart Full-Stack E-Commerce Platform","type":"app","category":"Other Products","platform":"Web Store Suite","badge":"50% OFF • E-Commerce Suite","originalPrice":50000,"shortDesc":"Headless digital commerce store with slide-over cart drawer, instant cryptographic coupon engine, and 3-step checkout.","detailedDesc":"Ditch slow, bloated marketplace plugins. NovaCart delivers sub-20ms catalog queries, instant faceted filtering, secure HMAC-SHA256 coupon validation, UPI and card payments, and automated invoice PDF generation.","features":["Faceted product catalog filtering by category, price, and attributes","Slide-over cart drawer with live subtotal and quantity increments","Cryptographically secure server-validated promo code & coupon engine","Single-page express checkout with address auto-complete","Admin product inventory manager with low-stock alerts","Automated customer email order receipt & shipment tracking number"],"version":"v3.1.0","fileDetails":{"filename":"novacart-ecommerce-v3.1.0.zip","size":"61.9 MB","releaseDate":"2026-07-05","isFree":false,"hasDownload":true},"technologies":["React","Node.js","Express","Redis","MongoDB / Postgres","TailwindCSS"],"image":"/assets/images/project-ecommerce.svg","rating":"4.92 ★ (180+ stores)","isAptitude":false,"discountPercent":50,"discountAmount":25000,"finalPrice":25000}];
+  </script>
+
+  <!-- External CDNs for Three.js WebGL (Safe fallback handled in three-scene.js) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <!-- DevCraft Core Scripts -->
+  <script src="/js/api.js"></script>
+  <script src="/js/devcraft-auth.js"></script>
+  <script src="/js/devcraft-demos.js"></script>
+  <script src="/js/devcraft-shop.js"></script>
+  <script src="/js/three-scene.js"></script>
+  <script src="/js/main.js"></script>
+  <script src="/js/form.js"></script>
+  
+</body>
+</html>

@@ -99,4 +99,76 @@ const getClients = async (req, res, next) => {
   }
 };
 
-module.exports = { login, logout, getMe, getClients };
+const getAdminReferrals = async (req, res, next) => {
+  try {
+    const referrals = await dbService.Referral.find({});
+    const totalReferrals = referrals.length;
+    const converted = referrals.filter(r => r.status === 'converted').length;
+    const totalRewards = referrals.reduce((sum, r) => sum + (Number(r.rewardAmount) || 0), 0);
+
+    res.status(200).json({
+      success: true,
+      count: referrals.length,
+      stats: { totalReferrals, converted, totalRewards },
+      referrals
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const getAdminSettings = async (req, res, next) => {
+  try {
+    const settings = await dbService.SiteSetting.get();
+    res.status(200).json({
+      success: true,
+      settings
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const updateAdminSettings = async (req, res, next) => {
+  try {
+    const { referralRewardPercent, minPayout } = req.body;
+    const updates = {};
+    if (referralRewardPercent !== undefined) updates.referralRewardPercent = Number(referralRewardPercent);
+    if (minPayout !== undefined) updates.minPayout = Number(minPayout);
+
+    const updated = await dbService.SiteSetting.update(updates);
+    logger.info(`[Admin] Site settings updated: ${JSON.stringify(updates)}`);
+
+    res.status(200).json({
+      success: true,
+      message: 'Site settings updated successfully.',
+      settings: updated
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const getAdminActivityLogs = async (req, res, next) => {
+  try {
+    const logs = await dbService.ActivityLog.find({});
+    res.status(200).json({
+      success: true,
+      count: logs.length,
+      logs
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = {
+  login,
+  logout,
+  getMe,
+  getClients,
+  getAdminReferrals,
+  getAdminSettings,
+  updateAdminSettings,
+  getAdminActivityLogs
+};

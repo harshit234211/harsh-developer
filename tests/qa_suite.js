@@ -873,6 +873,125 @@ async function runQaSuite() {
       'STEP 67: Tranz Gateway Webhook (/api/payments/webhook/tranz) Ingests & Confirms Idempotently'
     );
 
+    // 68. Test Centralized Production Domain (https://kiromage.shop)
+    const envConfig = require('../backend/config/env');
+    assert(
+      envConfig.publicSiteUrl === 'https://kiromage.shop',
+      'STEP 68: Centralized Domain Verified as https://kiromage.shop in Backend Config'
+    );
+
+    // 69. Test Referral Code Registration & Attribution
+    const referrerEmail = `referrer_${Date.now()}@example.com`;
+    const regReferrerRes = await request('POST', '/api/users/register', {
+      name: 'Referrer Pro',
+      email: referrerEmail,
+      phone: '+91 9988776655',
+      password: 'Password123!',
+      confirmPassword: 'Password123!',
+      termsAgreed: true
+    });
+    const refUserToken = regReferrerRes.data.token;
+    const referrerCode = regReferrerRes.data.user.referralCode;
+
+    // Self-referral attempt check (rejected with 400)
+    const selfRefRes = await request('POST', '/api/users/register', {
+      name: 'Self Hacker',
+      email: referrerEmail,
+      phone: '+91 9988776656',
+      password: 'Password123!',
+      confirmPassword: 'Password123!',
+      referralCode: referrerCode,
+      termsAgreed: true
+    });
+
+    // Valid referred registration
+    const refereeEmail = `referee_${Date.now()}@example.com`;
+    const regRefereeRes = await request('POST', '/api/users/register', {
+      name: 'Referred Client',
+      email: refereeEmail,
+      phone: '+91 9988776657',
+      password: 'Password123!',
+      confirmPassword: 'Password123!',
+      referralCode: referrerCode,
+      termsAgreed: true
+    });
+    const refereeUserToken = regRefereeRes.data.token;
+
+    assert(
+      regReferrerRes.statusCode === 201 &&
+      referrerCode &&
+      selfRefRes.statusCode >= 400 &&
+      regRefereeRes.statusCode === 201 &&
+      regRefereeRes.data.user.referredBy === referrerCode,
+      'STEP 69: Referral Registration Links Referrer Code and Enforces Validation Rules'
+    );
+
+    // 70. Test Referral Conversion on Paid Order & User Referral Stats
+    const refOrderRes = await request('POST', '/api/orders/checkout', {
+      productId: 'joya-ai',
+      clientName: 'Referred Client',
+      clientEmail: refereeEmail,
+      clientPhone: '+91 9988776657'
+    }, { 'Authorization': `Bearer ${refereeUserToken}` });
+    const refOrderId = refOrderRes.data.order.orderId;
+
+    await request('POST', '/api/payments/admin/verify-manual', {
+      orderId: refOrderId,
+      adminNotes: 'Referral test conversion'
+    }, { 'Authorization': `Bearer ${adminToken}` });
+
+    const refStatsRes = await request('GET', '/api/users/referrals', null, {
+      'Authorization': `Bearer ${refUserToken}`
+    });
+    assert(
+      refStatsRes.statusCode === 200 &&
+      refStatsRes.data.stats.totalReferrals >= 1 &&
+      refStatsRes.data.stats.successfulReferrals >= 1 &&
+      refStatsRes.data.stats.totalRewards > 0,
+      'STEP 70: Referral Conversion on Paid Order Authoritatively Credits Commission to Referrer'
+    );
+
+    // 71. Test All 8 Dedicated Service Sub-Routes Return HTTP 200 OK
+    const subServiceSlugs = [
+      'android-development',
+      'web-development',
+      'software-development',
+      'ai-solutions',
+      'automation',
+      'api-integration',
+      'ui-ux',
+      'maintenance'
+    ];
+    let allSubServicesOk = true;
+    for (const slug of subServiceSlugs) {
+      const res = await request('GET', `/services/${slug}`);
+      if (res.statusCode !== 200) allSubServicesOk = false;
+    }
+    assert(
+      allSubServicesOk,
+      'STEP 71: All 8 Dedicated Service Sub-Routes (/services/:slug) Return HTTP 200 OK'
+    );
+
+    // 72. Test FAQ Route and SEO Sitemap & Robots Assets Return HTTP 200 OK
+    const faqRes = await request('GET', '/faq');
+    const sitemapRes = await request('GET', '/sitemap.xml');
+    const robotsRes = await request('GET', '/robots.txt');
+    assert(
+      faqRes.statusCode === 200 &&
+      sitemapRes.statusCode === 200 &&
+      robotsRes.statusCode === 200,
+      'STEP 72: FAQ Route (/faq), Sitemap (/sitemap.xml), and Robots (/robots.txt) Return HTTP 200 OK'
+    );
+
+    // 73. Test 404 Route Handling
+    const nonExistentRes = await request('GET', '/non-existent-page-devcraft-xyz');
+    assert(
+      nonExistentRes.statusCode === 404 &&
+      typeof nonExistentRes.data === 'string' &&
+      nonExistentRes.data.includes('404'),
+      'STEP 73: Unmatched Routes Return Custom 404 HTML Page with HTTP 404 Status'
+    );
+
 
   } catch (err) {
     console.error('Fatal test runner error:', err);

@@ -13,7 +13,7 @@ const config = {
   adminEmail: process.env.ADMIN_EMAIL || 'shakyaharshit683@gmail.com',
   adminPassword: process.env.ADMIN_PASSWORD || 'harsshit9696',
   corsOrigin: process.env.CORS_ORIGIN || '*',
-  publicSiteUrl: process.env.PUBLIC_SITE_URL || 'https://harsh-developer.onrender.com',
+  publicSiteUrl: process.env.PUBLIC_SITE_URL || 'https://kiromage.shop',
   tranzUpi: {
     apiKey: process.env.TRANZ_UPI_API_KEY || '',
     merchantId: process.env.TRANZ_UPI_MERCHANT_ID || 'DEVCRAFT_MERCHANT',

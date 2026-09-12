@@ -1,3 +1,4 @@
+const fs = require('fs');
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
@@ -143,7 +144,7 @@ app.use('/api', orderRoutes);
 app.use('/admin', express.static(path.join(__dirname, '../admin')));
 
 // Static files for Public Frontend
-app.use(express.static(path.join(__dirname, '../frontend')));
+app.use(express.static(path.join(__dirname, '../frontend'), { redirect: false }));
 
 // Handle direct HTML page routes
 app.get('/products', (req, res) => {
@@ -250,16 +251,64 @@ app.get('/settings', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/pages/profile.html'));
 });
 
-app.get('/my-projects', (req, res) => {
+app.get('/sitemap.xml', (req, res) => {
+  res.type('application/xml').sendFile(path.join(__dirname, '../frontend/sitemap.xml'));
+});
+
+app.get('/robots.txt', (req, res) => {
+  res.type('text/plain').sendFile(path.join(__dirname, '../frontend/robots.txt'));
+});
+
+app.get('/faq', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/pages/faq.html'));
+});
+
+// Dynamic Service Sub-pages
+app.get('/services/:slug', (req, res, next) => {
+  const slug = req.params.slug;
+  const directPath = path.join(__dirname, `../frontend/pages/services/${slug}.html`);
+  if (fs.existsSync(directPath)) {
+    return res.sendFile(directPath);
+  }
+  const altPath = path.join(__dirname, `../frontend/services/${slug}.html`);
+  if (fs.existsSync(altPath)) {
+    return res.sendFile(altPath);
+  }
+  const rootPath = path.join(__dirname, `../frontend/pages/${slug}.html`);
+  if (fs.existsSync(rootPath)) {
+    return res.sendFile(rootPath);
+  }
+  next();
+});
+
+// Dashboard sub-routes & direct tabs
+app.get('/dashboard/profile', (req, res) => {
+  res.redirect('/profile');
+});
+
+app.get('/dashboard/settings', (req, res) => {
+  res.redirect('/profile');
+});
+
+app.get(['/dashboard/purchases', '/dashboard/orders', '/dashboard/downloads', '/dashboard/projects', '/dashboard/referrals'], (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/pages/dashboard.html'));
 });
 
-app.get('/saved-demos', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/pages/dashboard.html'));
+// Order & Payment direct routes
+app.get(['/order/:id', '/payment/:id'], (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/pages/cart.html'));
 });
 
-// Catch-all 404 for APIs
-app.use(notFound);
+// Catch-all 404 for APIs and Frontend
+app.use((req, res) => {
+  if (req.originalUrl.startsWith('/api')) {
+    return res.status(404).json({
+      success: false,
+      message: `API endpoint not found: ${req.method} ${req.originalUrl}`
+    });
+  }
+  res.status(404).sendFile(path.join(__dirname, '../frontend/pages/404.html'));
+});
 
 // Global Error Handler
 app.use(errorHandler);
@@ -282,7 +331,7 @@ const startServer = async () => {
   });
 
   // 24/7 Production Keep-Alive Ping (prevents Render Free Tier idle sleep)
-  const renderUrl = process.env.RENDER_EXTERNAL_URL || 'https://harsh-developer.onrender.com';
+  const renderUrl = process.env.RENDER_EXTERNAL_URL || config.publicSiteUrl || 'https://kiromage.shop';
   if (process.env.NODE_ENV === 'production' || process.env.RENDER) {
     const https = require('https');
     const KEEP_ALIVE_INTERVAL = 13 * 60 * 1000; // every 13 minutes
