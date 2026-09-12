@@ -3,9 +3,10 @@
  */
 
 const API_BASE = '/api';
-let authToken = localStorage.getItem('adminToken') || sessionStorage.getItem('adminToken');
+let authToken = localStorage.getItem('adminToken') || sessionStorage.getItem('adminToken') || localStorage.getItem('admin_token');
 let currentEnquiries = [];
 let currentProjects = [];
+let currentProducts = [];
 
 document.addEventListener('DOMContentLoaded', async () => {
   if (!authToken) {
@@ -20,6 +21,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   await loadProjects();
   await loadClients();
   await loadCoupons();
+  await loadProductsCMS();
+  await loadDiscountRules();
+  await loadSoftwareFiles();
+  await loadOrdersRoster();
+  await loadDownloadsAudit();
 });
 
 // Auth Guard
@@ -734,3 +740,298 @@ function copyRevealedCode() {
     prompt('Copy your coupon code:', code);
   });
 }
+
+// ==========================================
+// PRODUCTS CMS & PRICING
+// ==========================================
+async function loadProductsCMS() {
+  const tbody = document.getElementById('products-table-body');
+  if (!tbody) return;
+
+  try {
+    const res = await fetch(`${API_BASE}/products/admin/all`, {
+      headers: { 'Authorization': `Bearer ${authToken}` }
+    });
+    if (!res.ok) throw new Error('Failed to load products');
+    const data = await res.json();
+    currentProducts = data.products || [];
+
+    if (currentProducts.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--text-muted);">No products registered yet.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = currentProducts.map(p => {
+      const isAptitude = p.type === 'aptitude' || p.category === 'Aptitude';
+      const discount = isAptitude ? 30 : 50;
+      const orig = Number(p.originalPrice) || 10000;
+      const finalPrice = Math.round(orig * (1 - discount / 100));
+
+      return `
+        <tr>
+          <td>
+            <strong>${escapeHtml(p.name)}</strong>
+            <div style="font-size: 0.78rem; color: var(--text-muted);">${escapeHtml(p.id)}</div>
+          </td>
+          <td>${escapeHtml(p.category || 'N/A')}</td>
+          <td><span class="status-pill status-in-progress">${escapeHtml(p.platform || 'Cross-Platform')}</span></td>
+          <td><del>₹${orig.toLocaleString('en-IN')}</del></td>
+          <td>
+            <strong style="color: var(--cyan);">₹${finalPrice.toLocaleString('en-IN')}</strong>
+            <span style="font-size: 0.75rem; color: #10b981; margin-left: 4px;">(${discount}% OFF)</span>
+          </td>
+          <td>
+            <span class="status-pill ${p.active !== false ? 'status-completed' : 'status-new'}">
+              ${p.active !== false ? 'Active' : 'Inactive'}
+            </span>
+          </td>
+          <td>
+            <button onclick="toggleProductActive('${p.id}', ${p.active === false})" class="action-btn" style="padding: 4px 8px; font-size: 0.75rem;">
+              ${p.active !== false ? 'Deactivate' : 'Activate'}
+            </button>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  } catch (err) {
+    tbody.innerHTML = `<tr><td colspan="7" style="color: #f87171; text-align: center;">${escapeHtml(err.message)}</td></tr>`;
+  }
+}
+
+async function toggleProductActive(productId, makeActive) {
+  try {
+    const res = await fetch(`${API_BASE}/products/admin/${productId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authToken}`
+      },
+      body: JSON.stringify({ active: makeActive })
+    });
+    if (!res.ok) throw new Error('Failed to update product state');
+    await loadProductsCMS();
+  } catch (err) {
+    alert(`Error: ${err.message}`);
+  }
+}
+
+// Global Discount Rules
+async function loadDiscountRules() {
+  const appInput = document.getElementById('rule-app-discount');
+  const aptInput = document.getElementById('rule-aptitude-discount');
+  if (!appInput || !aptInput) return;
+
+  try {
+    const res = await fetch(`${API_BASE}/products/admin/discounts/rules`, {
+      headers: { 'Authorization': `Bearer ${authToken}` }
+    });
+    if (!res.ok) return;
+    const data = await res.json();
+    if (data.discountRules) {
+      appInput.value = data.discountRules.appDefaultDiscount || 50;
+      aptInput.value = data.discountRules.aptitudeDefaultDiscount || 30;
+    }
+  } catch (_) {}
+}
+
+async function handleUpdateDiscountRules(e) {
+  e.preventDefault();
+  const appDiscount = Number(document.getElementById('rule-app-discount').value);
+  const aptitudeDiscount = Number(document.getElementById('rule-aptitude-discount').value);
+  const fb = document.getElementById('discount-rules-feedback');
+  if (fb) fb.innerHTML = '<span style="color: var(--cyan);">Updating rules...</span>';
+
+  try {
+    const res = await fetch(`${API_BASE}/products/admin/discounts/rules`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authToken}`
+      },
+      body: JSON.stringify({
+        appDefaultDiscount: appDiscount,
+        aptitudeDefaultDiscount: aptitudeDiscount
+      })
+    });
+    const data = await res.json();
+    if (res.ok && data.success) {
+      if (fb) fb.innerHTML = '<span style="color: #10b981;">✓ Discount rules updated successfully!</span>';
+      setTimeout(() => { if (fb) fb.innerHTML = ''; }, 3000);
+      await loadProductsCMS();
+    } else {
+      if (fb) fb.innerHTML = `<span style="color: #f87171;">${data.message || 'Error updating rules'}</span>`;
+    }
+  } catch (err) {
+    if (fb) fb.innerHTML = `<span style="color: #f87171;">${err.message}</span>`;
+  }
+}
+
+// ==========================================
+// SOFTWARE UPLOADS MANAGER
+// ==========================================
+async function loadSoftwareFiles() {
+  const tbody = document.getElementById('files-table-body');
+  if (!tbody) return;
+
+  try {
+    const res = await fetch(`${API_BASE}/downloads/history/all`, {
+      headers: { 'Authorization': `Bearer ${authToken}` }
+    });
+    if (!res.ok) return;
+    const data = await res.json();
+    const files = data.files || [];
+
+    if (files.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">No distribution packages uploaded yet.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = files.map(f => `
+      <tr>
+        <td><strong style="color: var(--cyan);">${escapeHtml(f.productId)}</strong></td>
+        <td>${escapeHtml(f.originalName || f.filename)}</td>
+        <td>${escapeHtml(f.fileSize || 'N/A')}</td>
+        <td><span class="status-pill status-completed">${escapeHtml(f.version || 'v1.0.0')}</span></td>
+        <td>${new Date(f.uploadedAt).toLocaleDateString()}</td>
+        <td>
+          <a href="/api/downloads/${f.productId}" target="_blank" class="action-btn" style="padding: 4px 10px; font-size: 0.75rem;">
+            ⬇️ Test Download
+          </a>
+        </td>
+      </tr>
+    `).join('');
+  } catch (err) {
+    tbody.innerHTML = `<tr><td colspan="6" style="color: #f87171; text-align: center;">${escapeHtml(err.message)}</td></tr>`;
+  }
+}
+
+async function handleUploadPackage(e) {
+  e.preventDefault();
+  const productId = document.getElementById('upload-product-id').value;
+  const version = document.getElementById('upload-version').value;
+  const fileInput = document.getElementById('upload-file-input');
+  const fb = document.getElementById('upload-feedback');
+  const submitBtn = document.getElementById('upload-submit-btn');
+
+  if (!fileInput.files || fileInput.files.length === 0) {
+    alert('Please select a package binary file to upload.');
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append('packageFile', fileInput.files[0]);
+  formData.append('productId', productId);
+  formData.append('version', version);
+
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Uploading Package...';
+  }
+  if (fb) fb.innerHTML = '<span style="color: var(--cyan);">Uploading distribution package to secure repository...</span>';
+
+  try {
+    const res = await fetch(`${API_BASE}/downloads/admin/upload`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${authToken}` },
+      body: formData
+    });
+
+    const data = await res.json();
+    if (res.ok && data.success) {
+      if (fb) fb.innerHTML = '<span style="color: #10b981;">✓ Package uploaded successfully and linked to customer downloads!</span>';
+      fileInput.value = '';
+      await loadSoftwareFiles();
+    } else {
+      if (fb) fb.innerHTML = `<span style="color: #f87171;">${data.message || 'Upload failed.'}</span>`;
+    }
+  } catch (err) {
+    if (fb) fb.innerHTML = `<span style="color: #f87171;">Error: ${err.message}</span>`;
+  } finally {
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Upload Binary Package 🚀';
+    }
+  }
+}
+
+// ==========================================
+// ORDERS ROSTER
+// ==========================================
+async function loadOrdersRoster() {
+  const tbody = document.getElementById('orders-table-body');
+  if (!tbody) return;
+
+  try {
+    const res = await fetch(`${API_BASE}/admin/orders`, {
+      headers: { 'Authorization': `Bearer ${authToken}` }
+    });
+    if (!res.ok) return;
+    const data = await res.json();
+    const orders = data.orders || [];
+
+    if (orders.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: var(--text-muted);">No client orders confirmed yet.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = orders.map(o => `
+      <tr>
+        <td><strong style="font-family: 'JetBrains Mono', monospace; color: var(--cyan);">${escapeHtml(o.orderId)}</strong></td>
+        <td>
+          <strong>${escapeHtml(o.clientName)}</strong>
+          <div style="font-size: 0.78rem; color: var(--text-muted);">${escapeHtml(o.clientEmail)}</div>
+          ${o.clientPhone ? `<div style="font-size: 0.75rem; color: #94a3b8;">${escapeHtml(o.clientPhone)}</div>` : ''}
+        </td>
+        <td>
+          <div style="font-weight: 600;">${escapeHtml(o.productName || o.productId)}</div>
+          ${o.items && o.items.length > 1 ? `<div style="font-size: 0.75rem; color: var(--text-muted);">${o.items.length} items bundle</div>` : ''}
+        </td>
+        <td><del>₹${(o.originalPrice || 0).toLocaleString('en-IN')}</del></td>
+        <td>
+          <span style="color: #10b981;">-${o.productDiscountPercent || 50}%</span>
+          ${o.couponCodeMask ? `<div style="font-size: 0.75rem; color: #a855f7;">Coupon (${escapeHtml(o.couponCodeMask)}) -${o.couponDiscountPercent}%</div>` : ''}
+        </td>
+        <td><strong style="color: var(--cyan); font-size: 1.05rem;">₹${(o.finalAmount || 0).toLocaleString('en-IN')}</strong></td>
+        <td><span class="status-pill status-completed">${escapeHtml(o.status || 'Confirmed')}</span></td>
+        <td style="font-size: 0.78rem; color: var(--text-muted);">${new Date(o.createdAt).toLocaleDateString()}</td>
+      </tr>
+    `).join('');
+  } catch (err) {
+    tbody.innerHTML = `<tr><td colspan="8" style="color: #f87171; text-align: center;">${escapeHtml(err.message)}</td></tr>`;
+  }
+}
+
+// ==========================================
+// DOWNLOADS AUDIT LOG
+// ==========================================
+async function loadDownloadsAudit() {
+  const tbody = document.getElementById('downloads-table-body');
+  if (!tbody) return;
+
+  try {
+    const res = await fetch(`${API_BASE}/downloads/history/all`, {
+      headers: { 'Authorization': `Bearer ${authToken}` }
+    });
+    if (!res.ok) return;
+    const data = await res.json();
+    const downloads = data.downloads || [];
+
+    if (downloads.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">No package downloads recorded yet.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = downloads.slice(-50).reverse().map(d => `
+      <tr>
+        <td style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;">${d._id ? d._id.slice(0, 8) : 'LOG'}...</td>
+        <td><strong style="color: var(--cyan);">${escapeHtml(d.productId)}</strong></td>
+        <td>${escapeHtml(d.filename || 'N/A')}</td>
+        <td style="font-family: 'JetBrains Mono', monospace; font-size: 0.82rem;">${escapeHtml(d.ip || '127.0.0.1')}</td>
+        <td style="font-size: 0.8rem; color: var(--text-muted);">${new Date(d.downloadedAt).toLocaleString()}</td>
+      </tr>
+    `).join('');
+  } catch (err) {
+    tbody.innerHTML = `<tr><td colspan="5" style="color: #f87171; text-align: center;">${escapeHtml(err.message)}</td></tr>`;
+  }
+}
+

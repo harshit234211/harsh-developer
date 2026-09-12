@@ -4,11 +4,11 @@
   
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About DevCraft Studio | DEVCRAFT Studio</title>
-  <meta name="description" content="Learn about DevCraft’s software engineering philosophy, lead architect Harshit, and our production standards." />
+  <title>Shopping Cart & Secure Checkout | DEVCRAFT Studio</title>
+  <meta name="description" content="Review your selected DevCraft products and services, apply cryptographic coupons, and complete your order." />
   <meta name="keywords" content="DevCraft, Software Development Studio, Mobile Apps, Web Applications, React Native, Next.js, Node.js, AI Solutions, Android Developer, Cloud Deployment" />
-  <meta property="og:title" content="About DevCraft Studio | DEVCRAFT Studio" />
-  <meta property="og:description" content="Learn about DevCraft’s software engineering philosophy, lead architect Harshit, and our production standards." />
+  <meta property="og:title" content="Shopping Cart & Secure Checkout | DEVCRAFT Studio" />
+  <meta property="og:description" content="Review your selected DevCraft products and services, apply cryptographic coupons, and complete your order." />
   <meta property="og:image" content="/assets/images/project-ai.svg" />
   <link rel="icon" type="image/svg+xml" href="/assets/images/avatar-harshit.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -34,14 +34,14 @@
       </a>
 
       <ul class="nav-links">
-        <li><a href="/" class="nav-link ">Home</a></li>
+        <li><a href="/" class="nav-link active">Home</a></li>
         <li><a href="/products" class="nav-link ">Products <span class="nav-pill-badge">50% OFF</span></a></li>
         <li><a href="/joya" class="nav-link ">Joya AI <span class="nav-pill-voice">Voice</span></a></li>
         <li><a href="/jarvis" class="nav-link ">Jarvis AI <span class="nav-pill-pc">PC</span></a></li>
         <li><a href="/aptitude" class="nav-link ">Aptitude <span class="nav-pill-aptitude">30% OFF</span></a></li>
         <li><a href="/services" class="nav-link ">Services</a></li>
         <li><a href="/portfolio" class="nav-link ">Portfolio</a></li>
-        <li><a href="/about" class="nav-link active">About</a></li>
+        <li><a href="/about" class="nav-link ">About</a></li>
         <li><a href="/contact" class="nav-link ">Contact</a></li>
       </ul>
 
@@ -130,14 +130,14 @@
       <button class="mobile-drawer-close" id="mobile-drawer-close" aria-label="Close menu">&times;</button>
     </div>
     <div class="mobile-drawer-links">
-      <a href="/" class="mobile-nav-link ">Home <span>🏠</span></a>
+      <a href="/" class="mobile-nav-link active">Home <span>🏠</span></a>
       <a href="/products" class="mobile-nav-link ">Products (50% OFF) <span>📦</span></a>
       <a href="/joya" class="mobile-nav-link ">Joya AI Voice Assistant <span>🎙️</span></a>
       <a href="/jarvis" class="mobile-nav-link ">Jarvis AI PC Assistant <span>💻</span></a>
       <a href="/aptitude" class="mobile-nav-link ">Aptitude Courses (30% OFF) <span>🎓</span></a>
       <a href="/services" class="mobile-nav-link ">Developer Services <span>⚡</span></a>
       <a href="/portfolio" class="mobile-nav-link ">Portfolio &amp; Simulators <span>🚀</span></a>
-      <a href="/about" class="mobile-nav-link active">About DevCraft <span>🏢</span></a>
+      <a href="/about" class="mobile-nav-link ">About DevCraft <span>🏢</span></a>
       <a href="/contact" class="mobile-nav-link ">Contact Studio <span>📩</span></a>
       <a href="/cart" class="mobile-nav-link">Shopping Cart (<span id="mobile-cart-count">0</span>) <span>🛒</span></a>
 
@@ -179,388 +179,27 @@
   </div>
 
 
-  <main style="padding-top: 100px;">
-    
-  <section class="section" id="about">
+  <main class="cart-page-wrap">
     <div class="container">
-      <div class="about-grid-layout">
-        <div class="about-text-col">
-          <div class="section-badge">Studio Story & Ethos</div>
-          <h2 class="section-title">Ideas → Code → <span class="text-gradient">Real Solutions</span></h2>
-          <p class="service-desc">
-            DevCraft was founded by lead software engineer Harshit with a single mission: to eliminate the friction, delays, and bloat that plague modern software development.
-          </p>
-          <p class="service-desc">
-            We operate as an elite engineering strike team. Rather than handing your project to junior developers or layers of non-technical account managers, every line of code at DevCraft is designed, built, and reviewed by experienced software architects.
-          </p>
-          <p class="service-desc">
-            From our core engineering hub, we serve clients worldwide across startups, retail brands, healthcare companies, and high-growth platforms.
-          </p>
+      <div class="section-header" style="margin-bottom: 30px;">
+        <h1 style="font-size: 2.2rem; font-weight: 800;">Shopping Cart &amp; <span class="text-gradient">Checkout</span></h1>
+        <p style="color: var(--text-secondary);">Verify items, apply valid private coupons, and confirm your direct booking.</p>
+      </div>
 
-          <div class="about-pillars-row">
-            <div class="about-pillar-item">
-              <strong>Direct Engineering Access</strong>
-              <small>Speak directly with the architects building your product.</small>
-            </div>
-            <div class="about-pillar-item">
-              <strong>Transparent Git Delivery</strong>
-              <small>Commit logs, PR reviews, and live preview staging at every step.</small>
-            </div>
-          </div>
-
-          <div style="margin-top: 24px;">
-            <a href="#contact" class="btn btn-primary">Work With DevCraft</a>
+      <div class="cart-grid-layout">
+        <!-- Cart Items List Container -->
+        <div class="cart-items-panel" id="cart-items-container">
+          <div style="text-align: center; padding: 40px; color: var(--text-muted);">
+            Loading cart contents...
           </div>
         </div>
 
-        <div class="about-card-col">
-          <div class="about-profile-card">
-            <div class="profile-avatar-wrap">
-              <img src="/assets/images/avatar-harshit.svg" alt="Harshit - Lead Software Architect" />
-            </div>
-            <h3 class="profile-name">Harshit</h3>
-            <div class="profile-role text-gradient">Lead Software Architect & Founder</div>
-            <p class="profile-bio">
-              Full-stack engineer passionate about high-concurrency architectures, 3D WebGL interfaces, native Android systems, and autonomous AI pipelines.
-            </p>
-
-            <div class="profile-skills-pills">
-              <span class="tech-tag">React / Next.js</span>
-              <span class="tech-tag">Node.js</span>
-              <span class="tech-tag">Kotlin / Android</span>
-              <span class="tech-tag">PostgreSQL</span>
-              <span class="tech-tag">Docker / DevOps</span>
-              <span class="tech-tag">OpenAI LLMs</span>
-            </div>
-
-            <div class="profile-social-links">
-              <a href="https://wa.me/918791984082" target="_blank" rel="noopener noreferrer" class="channel-btn whatsapp">WhatsApp</a>
-              <a href="tel:+917017022966" class="channel-btn call">Call</a>
-              <a href="https://www.instagram.com/kiro_mage/" target="_blank" rel="noopener noreferrer" class="channel-btn instagram">Instagram</a>
-            </div>
-          </div>
+        <!-- Order Summary & Checkout Panel -->
+        <div class="cart-summary-panel" id="cart-summary-box">
+          <!-- Rendered dynamically by devcraftShop.renderCartPage() -->
         </div>
       </div>
     </div>
-  </section>
-  
-    
-  <section class="section" id="why-devcraft">
-    <div class="container">
-      <div class="section-header text-center">
-        <div class="section-badge">The DevCraft Difference</div>
-        <h2 class="section-title">Why Ambitious Teams <span class="text-gradient">Choose DevCraft</span></h2>
-        <p class="section-desc">
-          We combine the velocity of a boutique dev lab with the engineering standards of an enterprise tech consultancy.
-        </p>
-      </div>
-
-      <div class="why-grid">
-        
-          <div class="why-card">
-            <div class="why-icon">💎</div>
-            <h3 class="service-title">Production-Grade Code</h3>
-            <p class="service-desc">Zero shortcuts. We write clean, strongly typed TypeScript and modular code architectures designed to survive heavy scale and team growth.</p>
-          </div>
-        
-          <div class="why-card">
-            <div class="why-icon">⚡</div>
-            <h3 class="service-title">Rapid Agile Sprints</h3>
-            <p class="service-desc">Bi-weekly working releases with interactive staging URLs. You test real features constantly, keeping surprises to absolute zero.</p>
-          </div>
-        
-          <div class="why-card">
-            <div class="why-icon">🌐</div>
-            <h3 class="service-title">Full-Stack Mastery</h3>
-            <p class="service-desc">Seamless end-to-end execution across React Native mobile apps, Next.js web applications, high-concurrency Node.js APIs, and AI models.</p>
-          </div>
-        
-          <div class="why-card">
-            <div class="why-icon">🚀</div>
-            <h3 class="service-title">Sub-Second Performance</h3>
-            <p class="service-desc">Obsessive optimization: Redis caching, relational database indexing, and adaptive CDNs yielding sub-50ms latency and 99/100 Lighthouse scores.</p>
-          </div>
-        
-          <div class="why-card">
-            <div class="why-icon">🔒</div>
-            <h3 class="service-title">100% IP & Code Ownership</h3>
-            <p class="service-desc">You own everything we build. Full copyright transfer, clean Git repositories, complete documentation, and zero proprietary lock-in.</p>
-          </div>
-        
-          <div class="why-card">
-            <div class="why-icon">⏰</div>
-            <h3 class="service-title">24/7 DevOps & Uptime</h3>
-            <p class="service-desc">Continuous cloud uptime monitoring, self-healing Docker containers, automated SSL renewals, and rapid developer response SLAs.</p>
-          </div>
-        
-      </div>
-    </div>
-  </section>
-  
-    
-  <section class="section" id="process" style="background: rgba(255, 255, 255, 0.01);">
-    <div class="container">
-      <div class="section-header text-center">
-        <div class="section-badge">Predictable Execution</div>
-        <h2 class="section-title">Our 6-Step <span class="text-gradient">Engineering Lifecycle</span></h2>
-        <p class="section-desc">
-          A disciplined, transparent software delivery framework that takes your project from napkin sketch to rock-solid production reality.
-        </p>
-      </div>
-
-      <div class="process-grid">
-        
-          <div class="process-card">
-            <div class="process-num">01</div>
-            <h3 class="service-title">Discovery & Scope</h3>
-            <p class="service-desc">We dissect your business goals, user journeys, functional constraints, and technical feasibility to produce a fixed timeline and milestone roadmap.</p>
-          </div>
-        
-          <div class="process-card">
-            <div class="process-num">02</div>
-            <h3 class="service-title">Architecture & UI/UX</h3>
-            <p class="service-desc">We design database schemas, REST/WebSocket API contracts, and high-fidelity interactive component wireframes before writing code.</p>
-          </div>
-        
-          <div class="process-card">
-            <div class="process-num">03</div>
-            <h3 class="service-title">Agile Full-Stack Sprints</h3>
-            <p class="service-desc">Development in 1-to-2 week sprints with CI/CD continuous deployment to password-protected staging preview environments.</p>
-          </div>
-        
-          <div class="process-card">
-            <div class="process-num">04</div>
-            <h3 class="service-title">Rigorous QA & Security</h3>
-            <p class="service-desc">Comprehensive testing: unit suites, responsive cross-device validation, OWASP security audits, and load/stress testing.</p>
-          </div>
-        
-          <div class="process-card">
-            <div class="process-num">05</div>
-            <h3 class="service-title">Cloud Production Launch</h3>
-            <p class="service-desc">Zero-downtime deployment to Render, AWS, or Vercel, paired with automated SSL certificates, CDN caching, and domain DNS routing.</p>
-          </div>
-        
-          <div class="process-card">
-            <div class="process-num">06</div>
-            <h3 class="service-title">Continuous Scale & Support</h3>
-            <p class="service-desc">Post-launch 24/7 health pings, database telemetry optimization, regular backups, and seamless feature iteration.</p>
-          </div>
-        
-      </div>
-    </div>
-  </section>
-  
-    
-  <section class="section" id="technologies">
-    <div class="container">
-      <div class="section-header text-center">
-        <div class="section-badge">Production Tooling</div>
-        <h2 class="section-title">Modern <span class="text-gradient">Technology Stack</span></h2>
-        <p class="section-desc">
-          We deliberately choose proven, future-proof technologies that offer exceptional performance, active ecosystem support, and zero technical debt.
-        </p>
-      </div>
-
-      <div class="tech-category-grid">
-        
-          <div class="tech-cat-card">
-            <h3 class="tech-cat-title">Frontend & UI</h3>
-            <div class="tech-items-wrap">
-              <span class="tech-badge-item">React 18</span><span class="tech-badge-item">Next.js 14</span><span class="tech-badge-item">TypeScript</span><span class="tech-badge-item">TailwindCSS</span><span class="tech-badge-item">Three.js WebGL</span><span class="tech-badge-item">Vite</span><span class="tech-badge-item">HTML5/SCSS</span><span class="tech-badge-item">Framer Motion</span>
-            </div>
-          </div>
-        
-          <div class="tech-cat-card">
-            <h3 class="tech-cat-title">Mobile Applications</h3>
-            <div class="tech-items-wrap">
-              <span class="tech-badge-item">React Native</span><span class="tech-badge-item">Android SDK</span><span class="tech-badge-item">Kotlin</span><span class="tech-badge-item">Flutter</span><span class="tech-badge-item">Jetpack Compose</span><span class="tech-badge-item">Expo</span><span class="tech-badge-item">Room DB</span><span class="tech-badge-item">iOS Swift Bridge</span>
-            </div>
-          </div>
-        
-          <div class="tech-cat-card">
-            <h3 class="tech-cat-title">Backend & Real-Time APIs</h3>
-            <div class="tech-items-wrap">
-              <span class="tech-badge-item">Node.js</span><span class="tech-badge-item">Express.js</span><span class="tech-badge-item">Python FastAPI</span><span class="tech-badge-item">Socket.IO</span><span class="tech-badge-item">GraphQL</span><span class="tech-badge-item">BullMQ Workers</span><span class="tech-badge-item">RESTful Services</span><span class="tech-badge-item">JWT/OAuth2</span>
-            </div>
-          </div>
-        
-          <div class="tech-cat-card">
-            <h3 class="tech-cat-title">Databases & Storage</h3>
-            <div class="tech-items-wrap">
-              <span class="tech-badge-item">PostgreSQL</span><span class="tech-badge-item">MongoDB</span><span class="tech-badge-item">Redis In-Memory</span><span class="tech-badge-item">Prisma ORM</span><span class="tech-badge-item">Pinecone Vector DB</span><span class="tech-badge-item">AWS S3</span><span class="tech-badge-item">SQLite/Room</span>
-            </div>
-          </div>
-        
-          <div class="tech-cat-card">
-            <h3 class="tech-cat-title">Cloud & DevOps Infrastructure</h3>
-            <div class="tech-items-wrap">
-              <span class="tech-badge-item">Docker Containers</span><span class="tech-badge-item">Render Cloud</span><span class="tech-badge-item">AWS (EC2, S3, CloudFront)</span><span class="tech-badge-item">Vercel</span><span class="tech-badge-item">Cloudflare CDN</span><span class="tech-badge-item">GitHub Actions CI/CD</span><span class="tech-badge-item">Linux / NGINX</span>
-            </div>
-          </div>
-        
-          <div class="tech-cat-card">
-            <h3 class="tech-cat-title">AI, LLMs & Automation</h3>
-            <div class="tech-items-wrap">
-              <span class="tech-badge-item">OpenAI GPT-4 API</span><span class="tech-badge-item">LangChain Agents</span><span class="tech-badge-item">Vector Embeddings</span><span class="tech-badge-item">Anthropic Claude</span><span class="tech-badge-item">Puppeteer Scraping</span><span class="tech-badge-item">Twilio Webhooks</span><span class="tech-badge-item">Stripe Payments</span>
-            </div>
-          </div>
-        
-      </div>
-    </div>
-  </section>
-  
-    
-  <section class="section" id="contact">
-    <div class="container">
-      <div class="contact-grid">
-        <!-- Contact Info Column -->
-        <div class="contact-info-col">
-          <div class="section-badge">Let's Build Together</div>
-          <h2 class="section-title">Start Your <span class="text-gradient">DevCraft Project</span></h2>
-          <p class="service-desc">
-            Tell us what you want to build. We will review your requirements, prepare a comprehensive technical architecture proposal, and respond within 24 hours.
-          </p>
-
-          <div class="contact-methods-list">
-            <a href="https://wa.me/918791984082?text=Hi%20DevCraft,%20I'd%20like%20to%20discuss%20a%20project." target="_blank" rel="noopener noreferrer" class="contact-method-card">
-              <div class="method-icon wa-icon">💬</div>
-              <div>
-                <strong>Chat Directly on WhatsApp</strong>
-                <small>+91 8791984082 • Typically replies in 15 minutes</small>
-              </div>
-            </a>
-
-            <a href="tel:+917017022966" class="contact-method-card">
-              <div class="method-icon call-icon">📞</div>
-              <div>
-                <strong>Direct Studio Call</strong>
-                <small>+91 7017022966 • Available 09:00 - 21:00 IST</small>
-              </div>
-            </a>
-
-            <a href="mailto:shakyaharshit683@gmail.com" class="contact-method-card">
-              <div class="method-icon mail-icon">✉️</div>
-              <div>
-                <strong>Direct Email Address</strong>
-                <small>shakyaharshit683@gmail.com • Strict NDA compliant</small>
-              </div>
-            </a>
-          </div>
-
-          <div class="contact-trust-points">
-            <div>✓ Strict Non-Disclosure Agreement (NDA) on request</div>
-            <div>✓ Detailed scope & fixed-cost quotation guarantee</div>
-            <div>✓ Direct communication with Senior Software Architect</div>
-          </div>
-        </div>
-
-        <!-- Working Inquiry Form -->
-        <div class="contact-form-card">
-          <h3 class="form-title">Send Project Inquiry</h3>
-          <p class="form-subtitle">Fill in the specifications below to initiate your sprint.</p>
-
-          <form id="project-inquiry-form" onsubmit="submitInquiry(event)">
-            <div class="form-row">
-              <div class="form-group">
-                <label class="input-label" for="client-name">Your Full Name *</label>
-                <input type="text" id="client-name" name="name" class="form-control" placeholder="e.g. Rahul Sharma" required />
-              </div>
-              <div class="form-group">
-                <label class="input-label" for="client-email">Work Email *</label>
-                <input type="email" id="client-email" name="email" class="form-control" placeholder="rahul@company.com" required />
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label class="input-label" for="client-phone">Phone / WhatsApp *</label>
-                <input type="tel" id="client-phone" name="phone" class="form-control" placeholder="+91 98765 43210" required />
-              </div>
-              <div class="form-group">
-                <label class="input-label" for="project-service">Primary Service Required *</label>
-                <select id="project-service" name="service" class="form-control" required>
-                  <option value="" disabled selected>Select a Service</option>
-                  
-                    <option value="Android App Development">Android App Development</option>
-                  
-                    <option value="Mobile App Development">Mobile App Development</option>
-                  
-                    <option value="Website Development">Website Development</option>
-                  
-                    <option value="Web App Development">Web App Development</option>
-                  
-                    <option value="Full-Stack Development">Full-Stack Development</option>
-                  
-                    <option value="Custom Software Development">Custom Software Development</option>
-                  
-                    <option value="SaaS Development">SaaS Development</option>
-                  
-                    <option value="AI Application Development">AI Application Development</option>
-                  
-                    <option value="AI Chatbot Development">AI Chatbot Development</option>
-                  
-                    <option value="AI Assistant Development">AI Assistant Development</option>
-                  
-                    <option value="Business Automation">Business Automation</option>
-                  
-                    <option value="API Development & Integration">API Development & Integration</option>
-                  
-                    <option value="Admin Dashboard Development">Admin Dashboard Development</option>
-                  
-                    <option value="E-commerce Development">E-commerce Development</option>
-                  
-                    <option value="Booking System Development">Booking System Development</option>
-                  
-                    <option value="Management Software">Management Software</option>
-                  
-                    <option value="UI/UX Development">UI/UX Development</option>
-                  
-                    <option value="Bug Fixing & Project Improvements">Bug Fixing & Project Improvements</option>
-                  
-                    <option value="Database Integration">Database Integration</option>
-                  
-                    <option value="Cloud / Deployment Support">Cloud / Deployment Support</option>
-                  
-                </select>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label class="input-label" for="project-budget">Estimated Budget Range *</label>
-                <select id="project-budget" name="budget" class="form-control" required>
-                  <option value="Under ₹25,000">Under ₹25,000 (MVP / Starter)</option>
-                  <option value="₹25,000 - ₹60,000" selected>₹25,000 - ₹60,000 (Standard Sprints)</option>
-                  <option value="₹60,000 - ₹1,50,000">₹60,000 - ₹1,50,000 (Full-Stack Platform)</option>
-                  <option value="₹1,50,000+">₹1,50,000+ (Enterprise Custom / AI)</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label class="input-label" for="project-timeline">Target Timeline</label>
-                <select id="project-timeline" name="timeline" class="form-control">
-                  <option value="Immediate Sprint (1-2 Weeks)">Immediate Sprint (1-2 Weeks)</option>
-                  <option value="Standard Window (3-4 Weeks)" selected>Standard Window (3-4 Weeks)</option>
-                  <option value="Quarterly Roadmap (1-2 Months)">Quarterly Roadmap (1-2 Months)</option>
-                  <option value="Flexible Schedule">Flexible Schedule</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="input-label" for="project-details">Project Summary & Technical Requirements *</label>
-              <textarea id="project-details" name="message" class="form-control" rows="4" placeholder="Briefly describe what you'd like to build, your target audience, existing stack, or any specific demo you want similar to..." required></textarea>
-            </div>
-
-            <button type="submit" id="submit-inquiry-btn" class="btn btn-primary btn-block">
-              <span>Send Project Inquiry Now →</span>
-            </button>
-            <div id="form-feedback-msg" class="form-feedback"></div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </section>
-  
   </main>
 
   
@@ -748,7 +387,7 @@
           Thank you for reaching out to <strong>DEVCRAFT</strong>. Our lead software architect will review your project requirements and connect with you via email and WhatsApp within 24 hours.
         </p>
         <div style="background: rgba(255,255,255,0.04); border-radius: 10px; padding: 12px; margin: 20px 0; font-family: var(--font-mono); font-size: 0.85rem;" id="inquiry-ref-box">
-          Inquiry Ref: DC-INQ-185033
+          Inquiry Ref: DC-INQ-727165
         </div>
         <button class="btn btn-primary btn-block" onclick="devcraftDemos.hideModal('inquiry-success-modal')">
           Back to DevCraft Studio
@@ -828,5 +467,11 @@
   <script src="/js/main.js"></script>
   <script src="/js/form.js"></script>
   
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      devcraftShop.renderCartPage();
+    });
+  </script>
 </body>
 </html>

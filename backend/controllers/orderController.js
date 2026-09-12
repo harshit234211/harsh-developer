@@ -1,5 +1,5 @@
 const dbService = require('../utils/dbAdapter');
-const { calculateAuthoritativePrice, findProductById, DEVCRAFT_PRODUCTS } = require('../utils/pricingEngine');
+const { calculateAuthoritativePrice, calculateAuthoritativeCart, findProductById, DEVCRAFT_PRODUCTS } = require('../utils/pricingEngine');
 const logger = require('../utils/logger');
 
 /**
@@ -8,13 +8,13 @@ const logger = require('../utils/logger');
 const getAllProducts = async (req, res, next) => {
   try {
     const { category, type } = req.query;
-    let products = [...DEVCRAFT_PRODUCTS];
+    let products = await dbService.Product.find({ active: true });
 
     if (type) {
-      products = products.filter(p => p.type === type.toLowerCase());
+      products = products.filter(p => p.type && p.type.toLowerCase() === type.toLowerCase());
     }
     if (category && category !== 'All') {
-      products = products.filter(p => p.category.toLowerCase() === category.toLowerCase());
+      products = products.filter(p => p.category && p.category.toLowerCase() === category.toLowerCase());
     }
 
     res.status(200).json({
@@ -33,7 +33,7 @@ const getAllProducts = async (req, res, next) => {
 const getProductById = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const product = findProductById(id);
+    const product = await dbService.Product.findById(id);
 
     if (!product) {
       return res.status(404).json({
@@ -52,7 +52,7 @@ const getProductById = async (req, res, next) => {
 };
 
 /**
- * 3. Server-authoritative calculation of product + coupon
+ * 3. Server-authoritative calculation of single product + coupon
  */
 const calculateOrder = async (req, res, next) => {
   try {
@@ -92,18 +92,53 @@ const calculateOrder = async (req, res, next) => {
 };
 
 /**
- * 4. Checkout / Order placement with authoritative server calculation
+ * 4. Server-authoritative calculation for multiple cart items + coupon
+ */
+const calculateCartOrder = async (req, res, next) => {
+  try {
+    const { items, cartItems, couponCode, email } = req.body;
+    const effectiveItems = items || cartItems;
+
+    if (!effectiveItems || !Array.isArray(effectiveItems) || effectiveItems.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: 'Cart items array is required.'
+      });
+    }
+
+    const clientEmail = (req.user && req.user.email) || (email ? email.toString().toLowerCase().trim() : null);
+    const result = await calculateAuthoritativeCart(effectiveItems, couponCode, clientEmail, req);
+
+    if (!result.success) {
+      const status = result.locked ? 429 : 400;
+      return res.status(status).json(result);
+    }
+
+    if (couponCode && result.summary && result.summary.couponError) {
+      return res.status(400).json({
+        success: false,
+        message: result.summary.couponError,
+        summary: result.summary,
+        items: result.items
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      items: result.items,
+      summary: result.summary
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+/**
+ * 5. Checkout / Order placement (Supports single product and multi-item cart)
  */
 const checkoutOrder = async (req, res, next) => {
   try {
-    const { productId, couponCode, clientName, clientEmail, clientPhone, notes } = req.body;
-
-    if (!productId) {
-      return res.status(400).json({
-        success: false,
-        message: 'Product ID is required for checkout.'
-      });
-    }
+    const { productId, cartItems, couponCode, clientName, clientEmail, clientPhone, notes } = req.body;
 
     const effectiveEmail = (req.user && req.user.email) || (clientEmail ? clientEmail.toString().toLowerCase().trim() : '');
     const effectiveName = (req.user && req.user.name) || (clientName ? clientName.toString().trim() : 'Guest Client');
@@ -124,57 +159,114 @@ const checkoutOrder = async (req, res, next) => {
       });
     }
 
-    // Run authoritative calculation
-    const calcResult = await calculateAuthoritativePrice(productId, couponCode, effectiveEmail, req);
-    if (!calcResult.success) {
-      const status = calcResult.locked ? 429 : 400;
-      return res.status(status).json(calcResult);
+    const orderId = 'DC-ORD-' + Math.floor(100000 + Math.random() * 900000);
+    let orderRecordData = null;
+    let couponDoc = null;
+    let couponDiscountAmount = 0;
+    let couponDiscountPercent = 0;
+
+    // Check if cartItems was provided
+    if (cartItems && Array.isArray(cartItems) && cartItems.length > 0) {
+      const cartCalc = await calculateAuthoritativeCart(cartItems, couponCode, effectiveEmail, req);
+      if (!cartCalc.success) {
+        const status = cartCalc.locked ? 429 : 400;
+        return res.status(status).json(cartCalc);
+      }
+
+      const { summary, items, _couponDoc } = cartCalc;
+      couponDoc = _couponDoc;
+      couponDiscountAmount = summary.couponDiscountAmount;
+      couponDiscountPercent = summary.couponDiscountPercent;
+
+      orderRecordData = {
+        orderId,
+        productId: items.length === 1 ? items[0].productId : 'cart-multi',
+        productName: items.length === 1 ? items[0].productName : `DevCraft Bundle (${items.length} Products)`,
+        productType: items.length === 1 ? items[0].productType : 'bundle',
+        items,
+        originalPrice: summary.totalOriginalPrice,
+        productDiscountPercent: Math.round((summary.totalProductDiscount / summary.totalOriginalPrice) * 100),
+        productDiscountAmount: summary.totalProductDiscount,
+        discountedPrice: summary.subtotalDiscounted,
+        couponCodeMask: summary.couponCodeMask,
+        couponDiscountPercent: summary.couponDiscountPercent,
+        couponDiscountAmount: summary.couponDiscountAmount,
+        finalAmount: summary.finalAmount,
+        userId,
+        clientName: effectiveName,
+        clientEmail: effectiveEmail,
+        clientPhone: effectivePhone,
+        notes: notes || '',
+        status: 'Confirmed'
+      };
+    } else if (productId) {
+      // Single product checkout
+      const calcResult = await calculateAuthoritativePrice(productId, couponCode, effectiveEmail, req);
+      if (!calcResult.success) {
+        const status = calcResult.locked ? 429 : 400;
+        return res.status(status).json(calcResult);
+      }
+
+      const { calculation, product, _couponDoc } = calcResult;
+      couponDoc = _couponDoc;
+      couponDiscountAmount = calculation.couponDiscountAmount;
+      couponDiscountPercent = calculation.couponDiscountPercent;
+
+      orderRecordData = {
+        orderId,
+        productId: product.id,
+        productName: product.name,
+        productType: product.type,
+        items: [{
+          productId: product.id,
+          productName: product.name,
+          quantity: 1,
+          finalPrice: calculation.finalAmount
+        }],
+        originalPrice: calculation.originalPrice,
+        productDiscountPercent: calculation.productDiscountPercent,
+        productDiscountAmount: calculation.productDiscountAmount,
+        discountedPrice: calculation.discountedPrice,
+        couponCodeMask: calculation.couponCodeMask,
+        couponDiscountPercent: calculation.couponDiscountPercent,
+        couponDiscountAmount: calculation.couponDiscountAmount,
+        finalAmount: calculation.finalAmount,
+        userId,
+        clientName: effectiveName,
+        clientEmail: effectiveEmail,
+        clientPhone: effectivePhone,
+        notes: notes || '',
+        status: 'Confirmed'
+      };
+    } else {
+      return res.status(400).json({
+        success: false,
+        message: 'Please provide a productId or cartItems for checkout.'
+      });
     }
 
-    const { calculation, product, _couponDoc } = calcResult;
-    const orderId = 'DC-ORD-' + Math.floor(100000 + Math.random() * 900000);
-
     // Save order
-    const order = await dbService.Order.create({
-      orderId,
-      productId: product.id,
-      productName: product.name,
-      productType: product.type,
-      originalPrice: calculation.originalPrice,
-      productDiscountPercent: calculation.productDiscountPercent,
-      productDiscountAmount: calculation.productDiscountAmount,
-      discountedPrice: calculation.discountedPrice,
-      couponCodeMask: calculation.couponCodeMask,
-      couponDiscountPercent: calculation.couponDiscountPercent,
-      couponDiscountAmount: calculation.couponDiscountAmount,
-      finalAmount: calculation.finalAmount,
-      userId,
-      clientName: effectiveName,
-      clientEmail: effectiveEmail,
-      clientPhone: effectivePhone,
-      notes: notes || '',
-      status: 'Confirmed'
-    });
+    const order = await dbService.Order.create(orderRecordData);
 
     // If coupon was applied, record audit redemption and increment counter
-    if (_couponDoc && calculation.couponApplied) {
-      const updatedCount = _couponDoc.used_count + 1;
-      await dbService.Coupon.findByIdAndUpdate(_couponDoc._id, {
+    if (couponDoc && couponDiscountAmount > 0) {
+      const updatedCount = (couponDoc.used_count || 0) + 1;
+      await dbService.Coupon.findByIdAndUpdate(couponDoc._id, {
         used_count: updatedCount,
-        active: _couponDoc.max_uses && updatedCount >= _couponDoc.max_uses && _couponDoc.max_uses === 1 ? false : _couponDoc.active
+        active: couponDoc.max_uses && updatedCount >= couponDoc.max_uses && couponDoc.max_uses === 1 ? false : couponDoc.active
       });
 
       await dbService.CouponUsage.create({
-        coupon_id: _couponDoc._id,
-        code_mask: _couponDoc.code_mask,
-        discount_percentage: calculation.couponDiscountPercent,
+        coupon_id: couponDoc._id,
+        code_mask: couponDoc.code_mask,
+        discount_percentage: couponDiscountPercent,
         user_id: userId,
         user_email: effectiveEmail,
         order_id: orderId,
-        original_amount: calculation.discountedPrice,
-        discount_amount: calculation.couponDiscountAmount,
-        final_amount: calculation.finalAmount,
-        notes: `Redeemed for ${product.name}`
+        original_amount: orderRecordData.discountedPrice,
+        discount_amount: couponDiscountAmount,
+        final_amount: orderRecordData.finalAmount,
+        notes: `Redeemed for order ${orderId}`
       });
     }
 
@@ -188,6 +280,7 @@ const checkoutOrder = async (req, res, next) => {
         orderId: order.orderId,
         productName: order.productName,
         productType: order.productType,
+        items: order.items,
         originalPrice: order.originalPrice,
         productDiscountPercent: order.productDiscountPercent,
         discountedPrice: order.discountedPrice,
@@ -205,7 +298,7 @@ const checkoutOrder = async (req, res, next) => {
 };
 
 /**
- * 5. Get user orders (protected)
+ * 6. Get user orders (protected)
  */
 const getMyOrders = async (req, res, next) => {
   try {
@@ -231,7 +324,23 @@ const getMyOrders = async (req, res, next) => {
 };
 
 /**
- * 6. Record share event (Requirement 8)
+ * 7. Admin: Get all orders
+ */
+const getAdminOrders = async (req, res, next) => {
+  try {
+    const orders = await dbService.Order.find({});
+    res.status(200).json({
+      success: true,
+      count: orders.length,
+      orders
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+/**
+ * 8. Record share event (Requirement 8)
  */
 const trackShareEvent = async (req, res, next) => {
   try {
@@ -271,7 +380,7 @@ const trackShareEvent = async (req, res, next) => {
 };
 
 /**
- * 7. Get real share analytics (no fake numbers)
+ * 9. Get real share analytics (no fake numbers)
  */
 const getShareAnalytics = async (req, res, next) => {
   try {
@@ -301,8 +410,10 @@ module.exports = {
   getAllProducts,
   getProductById,
   calculateOrder,
+  calculateCartOrder,
   checkoutOrder,
   getMyOrders,
+  getAdminOrders,
   trackShareEvent,
   getShareAnalytics
 };

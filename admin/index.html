@@ -40,9 +40,25 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
             <span>Registered Clients</span>
           </div>
+          <div class="admin-nav-item" data-section="products-cms">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+            <span>Products &amp; Pricing</span>
+          </div>
+          <div class="admin-nav-item" data-section="software-uploads">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+            <span>Software &amp; APKs</span>
+          </div>
+          <div class="admin-nav-item" data-section="orders-roster">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+            <span>Orders Roster</span>
+          </div>
           <div class="admin-nav-item" data-section="coupons">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v2z"></path><line x1="9" y1="12" x2="15" y2="12"></line></svg>
             <span>Coupons Manager</span>
+          </div>
+          <div class="admin-nav-item" data-section="downloads-audit">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17"></path></svg>
+            <span>Downloads Log</span>
           </div>
         </nav>
       </div>
@@ -308,6 +324,169 @@
             </thead>
             <tbody id="coupons-table-body">
               <!-- Rendered by /admin/js/admin.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Products & Pricing CMS Section -->
+      <div id="section-products-cms" class="admin-section">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+          <div>
+            <h2 style="font-size: 1.4rem; font-weight: 700;">Products &amp; Pricing Management</h2>
+            <p style="color: var(--text-muted); font-size: 0.88rem;">Maintain app catalog, pricing rules, and instant store discounts.</p>
+          </div>
+          <button onclick="openAddProductModal()" class="action-btn" style="background: var(--cyan); color: #000; font-weight: 700; padding: 10px 18px;">
+            + Add New Product
+          </button>
+        </div>
+
+        <!-- Global Discount Rules Card -->
+        <div class="stat-card" style="margin-bottom: 24px; display: block;">
+          <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 8px;">⚙️ Global Catalog Discount Rules</h3>
+          <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 16px;">
+            Configure baseline automatic promotional discounts across the entire store.
+          </p>
+          <form id="discount-rules-form" onsubmit="handleUpdateDiscountRules(event)" style="display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-end;">
+            <div>
+              <label class="form-label">App Products Discount (%)</label>
+              <input type="number" id="rule-app-discount" class="search-input" min="0" max="99" style="width: 140px;" value="50" required />
+            </div>
+            <div>
+              <label class="form-label">Aptitude Courses Discount (%)</label>
+              <input type="number" id="rule-aptitude-discount" class="search-input" min="0" max="99" style="width: 140px;" value="30" required />
+            </div>
+            <button type="submit" class="action-btn" style="background: #10b981; color: #000; font-weight: 700; padding: 10px 18px;">
+              💾 Update Discount Rules
+            </button>
+            <span id="discount-rules-feedback" style="font-size: 0.85rem; padding-bottom: 8px;"></span>
+          </form>
+        </div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Platform</th>
+                <th>Original Price</th>
+                <th>Discount &amp; Final</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="products-table-body">
+              <!-- Loaded by admin.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Software & APK Uploads Section -->
+      <div id="section-software-uploads" class="admin-section">
+        <div style="margin-bottom: 20px;">
+          <h2 style="font-size: 1.4rem; font-weight: 700;">Software Package &amp; APK Uploader</h2>
+          <p style="color: var(--text-muted); font-size: 0.88rem;">Upload real APK, EXE, and ZIP binaries connected to customer download endpoints.</p>
+        </div>
+
+        <!-- Package Upload Box -->
+        <div class="stat-card" style="margin-bottom: 24px; display: block;">
+          <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 12px;">⬆️ Upload Distribution Package</h3>
+          <form id="upload-package-form" onsubmit="handleUploadPackage(event)" enctype="multipart/form-data" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; align-items: flex-end;">
+            <div>
+              <label class="form-label">Target Product *</label>
+              <select id="upload-product-id" class="filter-select" style="width: 100%;" required>
+                <option value="joya-ai">Joya AI (Android APK)</option>
+                <option value="jarvis-ai">Jarvis AI (PC Installer EXE)</option>
+                <option value="cravex">CraveX Food Suite (ZIP)</option>
+                <option value="aptitude-syllabus">Aptitude Syllabus (PDF)</option>
+              </select>
+            </div>
+            <div>
+              <label class="form-label">Version String (e.g. v2.4.0) *</label>
+              <input type="text" id="upload-version" class="search-input" style="width: 100%;" placeholder="v2.4.0" required />
+            </div>
+            <div>
+              <label class="form-label">Package Binary (APK / EXE / ZIP) *</label>
+              <input type="file" id="upload-file-input" class="search-input" style="width: 100%; padding: 7px;" required />
+            </div>
+            <div>
+              <button type="submit" id="upload-submit-btn" class="action-btn" style="background: var(--cyan); color: #000; font-weight: 700; padding: 10px 20px; width: 100%; justify-content: center;">
+                Upload Binary Package 🚀
+              </button>
+            </div>
+          </form>
+          <div id="upload-feedback" style="margin-top: 12px; font-size: 0.88rem;"></div>
+        </div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Product ID</th>
+                <th>Binary Filename</th>
+                <th>Size</th>
+                <th>Version</th>
+                <th>Uploaded Date</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="files-table-body">
+              <!-- Loaded by admin.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Orders Roster Section -->
+      <div id="section-orders-roster" class="admin-section">
+        <div style="margin-bottom: 20px;">
+          <h2 style="font-size: 1.4rem; font-weight: 700;">Client Orders &amp; Checkout Roster</h2>
+          <p style="color: var(--text-muted); font-size: 0.88rem;">Live audit of confirmed orders, applied cryptographic coupons, and customer payments.</p>
+        </div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Client Name &amp; Contact</th>
+                <th>Product / Items</th>
+                <th>Original</th>
+                <th>Discount / Coupon</th>
+                <th>Paid Amount</th>
+                <th>Status</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody id="orders-table-body">
+              <!-- Loaded by admin.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Downloads Audit Log Section -->
+      <div id="section-downloads-audit" class="admin-section">
+        <div style="margin-bottom: 20px;">
+          <h2 style="font-size: 1.4rem; font-weight: 700;">Secure Package Downloads Log</h2>
+          <p style="color: var(--text-muted); font-size: 0.88rem;">Real-time audit record of downloaded APKs, PC installers, and deliverables.</p>
+        </div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Log ID</th>
+                <th>Product ID</th>
+                <th>Filename</th>
+                <th>Client IP</th>
+                <th>Timestamp</th>
+              </tr>
+            </thead>
+            <tbody id="downloads-table-body">
+              <!-- Loaded by admin.js -->
             </tbody>
           </table>
         </div>

@@ -33,7 +33,7 @@ function renderHeroSection() {
 
         <div class="hero-tagline-lead">DEVCRAFT STUDIO • IDEAS → CODE → REAL SOLUTIONS</div>
         <h1 class="hero-headline">
-          Engineering <span class="text-gradient">Scalable Software</span> & High-Impact Digital Products
+          Build Your Idea. <span class="text-gradient">Launch Your Solution.</span>
         </h1>
 
         <p class="hero-bio">
@@ -48,17 +48,17 @@ function renderHeroSection() {
           <span class="pill-tag">🛍️ Custom E-Commerce</span>
           <span class="pill-tag">📊 Enterprise Dashboards</span>
           <span class="pill-tag">☁️ Cloud DevOps & APIs</span>
-          <span class="pill-tag">🚀 Website Redesigns</span>
+          <span class="pill-tag">🎓 Aptitude & Placement Hub</span>
         </div>
 
         <!-- Primary CTAs -->
         <div class="hero-cta-group">
-          <a href="#demos" class="btn btn-primary">
-            <span>Explore 10 Live Demos</span>
+          <a href="/products" class="btn btn-primary">
+            <span>Explore Products (50% OFF)</span>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
           </a>
-          <a href="#contact" class="btn btn-emerald">Start a Project</a>
-          <a href="#services" class="btn btn-outline">All 20 Services</a>
+          <a href="/contact" class="btn btn-emerald">Build My App</a>
+          <a href="/portfolio" class="btn btn-outline">View Portfolio &amp; Demos</a>
         </div>
 
         <!-- Trust Stats -->
@@ -110,6 +110,151 @@ function renderHeroSection() {
       </div>
     </div>
   </header>
+  `;
+}
+
+// Section 2.5: Flagship Autonomous AI Agents (Joya AI & Jarvis AI)
+function renderFlagshipsSection() {
+  return `
+  <section class="section" id="flagships" style="background: rgba(11, 17, 32, 0.4); border-top: 1px solid var(--border-glass); border-bottom: 1px solid var(--border-glass);">
+    <div class="container">
+      <div class="section-header text-center" style="margin-bottom: 40px;">
+        <div class="section-badge" style="background: rgba(168, 85, 247, 0.15); border-color: rgba(168, 85, 247, 0.3); color: #d8b4fe;">Flagship Autonomous AI Agents</div>
+        <h2 class="section-title">Autonomous AI Systems Built by <span class="text-gradient">DevCraft</span></h2>
+        <p class="section-desc">Production-ready voice and desktop AI software. On-device offline acoustic processing, custom wake words, desktop automation, and direct installer packages.</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 28px;">
+        <!-- Card 1: Joya AI -->
+        <div class="glass-card" style="padding: 30px; border-radius: 20px; border: 1px solid rgba(168, 85, 247, 0.3); display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+              <span class="flagship-hero-badge">🎙️ Android Voice Assistant</span>
+              <span class="pill-tag" style="background: rgba(0, 240, 255, 0.15); color: var(--cyan); font-weight: 700;">50% OFF</span>
+            </div>
+
+            <h3 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 8px;">Joya AI</h3>
+            <p style="color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; margin-bottom: 16px;">
+              Autonomous personal voice assistant for Android. Responds to the custom wake phrase <span class="wake-word-highlight">"Wake up Joya"</span>, automates WhatsApp messaging, places hands-free calls, and manages background tasks with zero cloud latency.
+            </p>
+
+            <!-- Interactive Voice Waveform Simulator -->
+            <div class="voice-wave-simulator">
+              <div style="font-size: 0.78rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; letter-spacing: 0.5px;">Neural Acoustic Voice Engine</div>
+              <div class="voice-bars-wrap">
+                <span class="voice-bar"></span>
+                <span class="voice-bar"></span>
+                <span class="voice-bar"></span>
+                <span class="voice-bar"></span>
+                <span class="voice-bar"></span>
+                <span class="voice-bar"></span>
+                <span class="voice-bar"></span>
+                <span class="voice-bar"></span>
+              </div>
+              <button type="button" class="btn btn-xs btn-outline" onclick="devcraftShop.simulateJoyaWakeWord()">
+                Test Wake Word ("Wake up Joya") 🎙️
+              </button>
+              <div id="joya-voice-status" style="margin-top: 10px; font-size: 0.82rem; min-height: 20px;"></div>
+            </div>
+
+            <ul class="product-features-list" style="margin-top: 18px;">
+              <li><span class="check-icon">✓</span> Responsive wake word detection ("Wake up Joya")</li>
+              <li><span class="check-icon">✓</span> WhatsApp &amp; Phone Dialer hands-free automation</li>
+              <li><span class="check-icon">✓</span> 100% On-device privacy &amp; offline voice synthesis</li>
+            </ul>
+          </div>
+
+          <div style="margin-top: 24px; border-top: 1px solid var(--border-glass); padding-top: 18px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <div>
+                <del style="color: var(--text-muted); font-size: 0.9rem;">₹2,000</del>
+                <span style="color: #10b981; font-size: 0.8rem; font-weight: 700; margin-left: 6px;">50% OFF</span>
+                <div style="font-size: 1.4rem; font-weight: 800; color: var(--cyan);">₹1,000</div>
+              </div>
+              <span style="font-size: 0.78rem; color: var(--text-muted);">APK v2.4.0 • 48.2 MB</span>
+            </div>
+
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <button class="btn btn-primary btn-sm" onclick="devcraftShop.downloadProduct('joya-ai')">
+                Download APK ⬇️
+              </button>
+              <button class="btn btn-emerald btn-sm" onclick="devcraftShop.openCheckoutModal('joya-ai')">
+                Buy License
+              </button>
+              <button class="btn btn-outline btn-sm" onclick="devcraftShop.addToCart('joya-ai')">
+                + Cart 🛒
+              </button>
+              <a href="/joya" class="btn btn-ghost btn-sm">Full Specs →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Jarvis AI -->
+        <div class="glass-card" style="padding: 30px; border-radius: 20px; border: 1px solid rgba(59, 130, 246, 0.3); display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+              <span class="flagship-hero-badge" style="background: rgba(59, 130, 246, 0.15); color: #93c5fd; border-color: rgba(59, 130, 246, 0.4);">💻 Desktop Intelligence Agent</span>
+              <span class="pill-tag" style="background: rgba(0, 240, 255, 0.15); color: var(--cyan); font-weight: 700;">50% OFF</span>
+            </div>
+
+            <h3 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 8px;">Jarvis AI</h3>
+            <p style="color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; margin-bottom: 16px;">
+              Autonomous desktop assistant for PC (Windows/Mac/Linux). Executes terminal scripts, automates web browser workflows, indexes workspace files, and connects to local LLMs (Ollama).
+            </p>
+
+            <!-- Interactive Terminal Sandbox Mockup -->
+            <div class="terminal-mockup">
+              <div class="terminal-mockup-header">
+                <span class="term-dot red"></span>
+                <span class="term-dot yellow"></span>
+                <span class="term-dot green"></span>
+                <span style="font-size: 0.75rem; color: var(--text-muted); margin-left: 6px;">jarvis-core — bash</span>
+              </div>
+              <div class="terminal-mockup-body" id="jarvis-terminal-output">
+                <div class="cmd-line">[Ready] Jarvis PC Agent v3.1.2 online...</div>
+                <div class="out-line">Hotkeys enabled: Ctrl+Space listener active.</div>
+              </div>
+              <div style="padding: 8px 12px; background: #0b1120; border-top: 1px solid rgba(255, 255, 255, 0.06); display: flex; gap: 6px;">
+                <button type="button" class="btn btn-xs btn-ghost" onclick="devcraftShop.simulateJarvisCommand('index')">Index</button>
+                <button type="button" class="btn btn-xs btn-ghost" onclick="devcraftShop.simulateJarvisCommand('scrape')">Scraper</button>
+                <button type="button" class="btn btn-xs btn-ghost" onclick="devcraftShop.simulateJarvisCommand('diag')">Diagnostics</button>
+              </div>
+            </div>
+
+            <ul class="product-features-list" style="margin-top: 18px;">
+              <li><span class="check-icon">✓</span> Voice &amp; Hotkey desktop command center</li>
+              <li><span class="check-icon">✓</span> Local LLM bridge (Ollama / Llama-3) &amp; script executor</li>
+              <li><span class="check-icon">✓</span> Automated web scraper and file organization sentinel</li>
+            </ul>
+          </div>
+
+          <div style="margin-top: 24px; border-top: 1px solid var(--border-glass); padding-top: 18px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <div>
+                <del style="color: var(--text-muted); font-size: 0.9rem;">₹4,000</del>
+                <span style="color: #10b981; font-size: 0.8rem; font-weight: 700; margin-left: 6px;">50% OFF</span>
+                <div style="font-size: 1.4rem; font-weight: 800; color: var(--cyan);">₹2,000</div>
+              </div>
+              <span style="font-size: 0.78rem; color: var(--text-muted);">EXE v3.1.2 • 118.5 MB</span>
+            </div>
+
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <button class="btn btn-primary btn-sm" onclick="devcraftShop.downloadProduct('jarvis-ai')">
+                Download PC App ⬇️
+              </button>
+              <button class="btn btn-emerald btn-sm" onclick="devcraftShop.openCheckoutModal('jarvis-ai')">
+                Buy License
+              </button>
+              <button class="btn btn-outline btn-sm" onclick="devcraftShop.addToCart('jarvis-ai')">
+                + Cart 🛒
+              </button>
+              <a href="/jarvis" class="btn btn-ghost btn-sm">Full Specs →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
   `;
 }
 
@@ -1153,6 +1298,7 @@ function buildIndexHtml() {
 
   <main>
     ${renderHeroSection()}
+    ${renderFlagshipsSection()}
     ${renderServicesSection()}
     ${renderAptitudeSection()}
     ${renderFeaturedDemosSection()}
@@ -1411,14 +1557,796 @@ function buildAdminLoginPage() {
   console.log('✓ Generated frontend/pages/admin-login.html');
 }
 
+// ==========================================
+// 4. DEDICATED PRODUCTS CATALOG PAGE
+// ==========================================
+function buildProductsPage() {
+  const categories = ['All', 'Android Apps', 'PC Software', 'AI Products', 'Utilities', 'Aptitude', 'Other Products'];
+
+  const productCardsHtml = DEVCRAFT_PRODUCTS.map(p => {
+    const isAptitude = p.type === 'aptitude' || p.category === 'Aptitude';
+    const discountPercent = isAptitude ? 30 : 50;
+    const originalPrice = Number(p.originalPrice) || 10000;
+    const finalPrice = Math.round(originalPrice * (1 - discountPercent / 100));
+
+    let detailsLink = '/products';
+    if (p.id === 'joya-ai') detailsLink = '/joya';
+    else if (p.id === 'jarvis-ai') detailsLink = '/jarvis';
+    else if (isAptitude) detailsLink = '/aptitude';
+
+    return `
+    <div class="product-shop-card" data-category="${p.category || 'Other'}" data-name="${(p.name || '').toLowerCase()}" data-price="${finalPrice}">
+      <div class="product-card-top">
+        <div class="product-card-meta">
+          <span class="product-category-chip">${p.category}</span>
+          <span class="product-discount-chip ${isAptitude ? 'chip-aptitude' : 'chip-app'}">
+            ${discountPercent}% OFF
+          </span>
+        </div>
+        ${p.platform ? `<span class="product-platform-tag">${p.platform}</span>` : ''}
+      </div>
+
+      <div class="product-card-info">
+        <h3 class="product-card-title">${p.name}</h3>
+        <p class="product-card-desc">${p.shortDesc}</p>
+        
+        <ul class="product-card-features">
+          ${(p.features || []).slice(0, 3).map(f => `<li><span class="check-icon">✓</span> ${f}</li>`).join('')}
+        </ul>
+
+        <div class="product-tech-stack">
+          ${(p.technologies || []).slice(0, 4).map(t => `<span class="tech-mini-tag">${t}</span>`).join('')}
+        </div>
+      </div>
+
+      <div class="product-card-pricing-footer">
+        <div class="product-price-block">
+          <div class="product-price-orig">
+            <span>Original:</span>
+            <del>₹${originalPrice.toLocaleString('en-IN')}</del>
+          </div>
+          <div class="product-price-final">
+            <span class="price-val text-gradient">₹${finalPrice.toLocaleString('en-IN')}</span>
+            <span class="price-save-badge">Save ${discountPercent}%</span>
+          </div>
+        </div>
+
+        <div class="product-card-btn-grid">
+          ${p.fileDetails && p.fileDetails.hasDownload ? `
+          <button type="button" class="btn btn-primary btn-sm" onclick="devcraftShop.downloadProduct('${p.id}')" title="Direct download verified package">
+            ⬇️ Download
+          </button>
+          ` : ''}
+          <button type="button" class="btn btn-emerald btn-sm" onclick="devcraftShop.openCheckoutModal('${p.id}')">
+            ⚡ Buy Now
+          </button>
+          <button type="button" class="btn btn-outline btn-sm" onclick="devcraftShop.addToCart('${p.id}')">
+            + Cart 🛒
+          </button>
+          <a href="${detailsLink}" class="btn btn-ghost btn-sm">
+            View Page →
+          </a>
+          <button type="button" class="btn btn-ghost btn-sm" onclick="devcraftShop.openShareModal('${p.id}')" title="Share with friends">
+            🔗
+          </button>
+        </div>
+      </div>
+    </div>
+    `;
+  }).join('');
+
+  const html = `<!DOCTYPE html>
+<html lang="en" data-theme="futuristic-dev">
+<head>
+  ${commonHead('All App Products & Courses (50% & 30% OFF)', 'Browse DevCraft’s complete marketplace of Android Apps, PC Software, AI Agents, Utilities, and Aptitude courses with automatic 50% & 30% discounts.')}
+</head>
+<body>
+  ${navbar('products')}
+
+  <main style="padding: 120px 0 80px;">
+    <div class="container">
+      <div class="section-header text-center">
+        <div class="section-badge">Full Production Marketplace • Direct Downloads</div>
+        <h1 class="section-title">DevCraft <span class="text-gradient">Products &amp; Software</span></h1>
+        <p class="section-desc">
+          High-performance Android APKs, PC desktop applications, autonomous AI agents, and campus placement courses. All app products feature an automatic <strong>50% discount</strong> and all aptitude courses feature a <strong>30% discount</strong>.
+        </p>
+      </div>
+
+      <!-- Search & Filters Toolbar -->
+      <div class="catalog-toolbar" style="margin-bottom: 30px; display: flex; flex-wrap: wrap; gap: 14px; justify-content: space-between; align-items: center;">
+        <div class="category-filters-wrap" style="display: flex; gap: 8px; flex-wrap: wrap;">
+          ${categories.map(c => `
+            <button class="filter-chip-btn ${c === 'All' ? 'active' : ''}" onclick="filterProductsCategory('${c}', this)">
+              ${c}
+            </button>
+          `).join('')}
+        </div>
+
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <input type="text" id="catalog-search-input" class="form-control" style="width: 240px; padding: 8px 14px; font-size: 0.85rem;" placeholder="Search products..." oninput="filterProductsSearch(this.value)" />
+          <select id="catalog-sort-select" class="form-control" style="width: 170px; padding: 8px 14px; font-size: 0.85rem;" onchange="sortProducts(this.value)">
+            <option value="featured">Featured First</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Products Grid -->
+      <div class="products-grid" id="products-grid-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 24px;">
+        ${productCardsHtml}
+      </div>
+    </div>
+  </main>
+
+  ${floatingActions()}
+  ${footer()}
+  ${renderModalsMarkup()}
+  ${renderClientDataScripts()}
+
+  <script>
+    let activeCat = 'All';
+    let searchQuery = '';
+
+    function filterProductsCategory(category, btn) {
+      activeCat = category;
+      document.querySelectorAll('.filter-chip-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      applyProductFilters();
+    }
+
+    function filterProductsSearch(q) {
+      searchQuery = (q || '').trim().toLowerCase();
+      applyProductFilters();
+    }
+
+    function applyProductFilters() {
+      const cards = document.querySelectorAll('.product-shop-card');
+      cards.forEach(card => {
+        const cat = card.getAttribute('data-category') || '';
+        const name = card.getAttribute('data-name') || '';
+
+        const catMatches = activeCat === 'All' || cat.toLowerCase().includes(activeCat.toLowerCase());
+        const searchMatches = !searchQuery || name.includes(searchQuery) || cat.toLowerCase().includes(searchQuery);
+
+        card.style.display = (catMatches && searchMatches) ? 'flex' : 'none';
+      });
+    }
+
+    function sortProducts(val) {
+      const grid = document.getElementById('products-grid-container');
+      const cards = Array.from(grid.querySelectorAll('.product-shop-card'));
+
+      if (val === 'price-low') {
+        cards.sort((a, b) => Number(a.getAttribute('data-price')) - Number(b.getAttribute('data-price')));
+      } else if (val === 'price-high') {
+        cards.sort((a, b) => Number(b.getAttribute('data-price')) - Number(a.getAttribute('data-price')));
+      }
+
+      cards.forEach(c => grid.appendChild(c));
+    }
+  </script>
+</body>
+</html>`;
+
+  fs.writeFileSync(path.join(PAGES, 'products.html'), html, 'utf8');
+  fs.writeFileSync(path.join(FRONTEND, 'products.html'), html, 'utf8');
+  console.log('✓ Generated frontend/pages/products.html and frontend/products.html');
+}
+
+// ==========================================
+// 5. JOYA AI DEDICATED FLAGSHIP PAGE
+// ==========================================
+function buildJoyaPage() {
+  const joya = DEVCRAFT_PRODUCTS.find(p => p.id === 'joya-ai') || {};
+
+  const html = `<!DOCTYPE html>
+<html lang="en" data-theme="futuristic-dev">
+<head>
+  ${commonHead('Joya AI — Autonomous Voice & Personal Mobile Assistant (Android APK)', 'Joya AI is an autonomous on-device personal voice assistant for Android with custom wake word "Wake up Joya", WhatsApp automation, and offline neural synthesis.')}
+</head>
+<body>
+  ${navbar('joya')}
+
+  <main style="padding: 120px 0 80px;">
+    <div class="container">
+      <!-- Hero Section -->
+      <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: center; margin-bottom: 60px;">
+        <div>
+          <div class="flagship-hero-badge">🎙️ Android Native APK • 50% Promotional Offer</div>
+          <h1 style="font-size: 2.8rem; font-weight: 800; line-height: 1.2; margin-bottom: 16px;">
+            Joya AI — <span class="text-gradient">Voice-First Intelligence</span> for Android
+          </h1>
+          <p style="color: var(--text-secondary); font-size: 1.1rem; line-height: 1.7; margin-bottom: 24px;">
+            Say <span class="wake-word-highlight">"Wake up Joya"</span> to awaken a completely private, on-device mobile assistant. Joya dictates WhatsApp messages, initiates phone calls, creates voice memos, and schedules alarms without sending your speech to any remote cloud.
+          </p>
+
+          <!-- Interactive Voice Waveform Simulator -->
+          <div class="voice-wave-simulator" style="margin-bottom: 28px; text-align: left;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 0.8rem; font-weight: 700; color: var(--cyan); text-transform: uppercase;">Acoustic Wake Word Engine: "Wake up Joya"</span>
+              <span class="status-pill-online"><span class="status-dot"></span> Sentinel Active</span>
+            </div>
+            <div class="voice-bars-wrap" style="justify-content: flex-start;">
+              <span class="voice-bar"></span>
+              <span class="voice-bar"></span>
+              <span class="voice-bar"></span>
+              <span class="voice-bar"></span>
+              <span class="voice-bar"></span>
+              <span class="voice-bar"></span>
+              <span class="voice-bar"></span>
+              <span class="voice-bar"></span>
+              <span class="voice-bar"></span>
+              <span class="voice-bar"></span>
+            </div>
+            <div style="display: flex; gap: 12px; align-items: center;">
+              <button type="button" class="btn btn-sm btn-outline" onclick="devcraftShop.simulateJoyaWakeWord()">
+                Simulate Wake Word ("Wake up Joya") 🎙️
+              </button>
+              <div id="joya-voice-status" style="font-size: 0.85rem;"></div>
+            </div>
+          </div>
+
+          <!-- Pricing & Direct CTAs -->
+          <div style="background: var(--bg-card); border: 1px solid var(--border-glass); border-radius: 16px; padding: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px;">
+            <div>
+              <div style="font-size: 0.8rem; color: var(--text-muted);">Special Promotional Discount:</div>
+              <div style="display: flex; align-items: baseline; gap: 10px;">
+                <del style="color: var(--text-muted); font-size: 1.1rem;">₹2,000</del>
+                <span style="background: rgba(16, 185, 129, 0.15); color: #10b981; font-weight: 800; padding: 2px 8px; border-radius: 6px; font-size: 0.85rem;">50% OFF</span>
+                <span class="text-gradient" style="font-size: 2rem; font-weight: 800;">₹1,000</span>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <button class="btn btn-primary" onclick="devcraftShop.downloadProduct('joya-ai')">
+                Download APK ⬇️
+              </button>
+              <button class="btn btn-emerald" onclick="devcraftShop.openCheckoutModal('joya-ai')">
+                Buy Lifetime License
+              </button>
+              <button class="btn btn-outline" onclick="devcraftShop.addToCart('joya-ai')">
+                + Cart 🛒
+              </button>
+              <button class="btn btn-ghost" onclick="devcraftShop.openShareModal('joya-ai')">
+                🔗 Share
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side: Package & Technical Specs -->
+        <div class="glass-card" style="padding: 30px; border-radius: 20px; border: 1px solid rgba(168, 85, 247, 0.3);">
+          <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 20px; color: #ffffff;">Package Technical Specifications</h3>
+          
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-glass); padding-bottom: 10px;">
+              <span style="color: var(--text-secondary);">Target Platform:</span>
+              <strong>Android 8.0+ (Oreo, Pie, 10, 11, 12, 13, 14, 15)</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-glass); padding-bottom: 10px;">
+              <span style="color: var(--text-secondary);">Package Artifact:</span>
+              <strong style="font-family: var(--font-mono); color: var(--cyan);">joya-ai-v2.4.0.apk</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-glass); padding-bottom: 10px;">
+              <span style="color: var(--text-secondary);">Binary Size:</span>
+              <strong>48.2 MB (ARM64 &amp; x86_64)</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-glass); padding-bottom: 10px;">
+              <span style="color: var(--text-secondary);">Acoustic Wake Engine:</span>
+              <strong>Porcupine Micro-Wake + TensorFlow Lite</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-glass); padding-bottom: 10px;">
+              <span style="color: var(--text-secondary);">Cloud Dependency:</span>
+              <strong style="color: #10b981;">0% (100% Offline Capable)</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-glass); padding-bottom: 10px;">
+              <span style="color: var(--text-secondary);">Battery Impact:</span>
+              <strong>&lt; 1.8% per 24 Hours (Smart Sleep States)</strong>
+            </div>
+          </div>
+
+          <div style="margin-top: 24px;">
+            <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 10px;">Architecture Frameworks:</h4>
+            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+              ${(joya.technologies || ['Kotlin', 'Android NDK', 'Porcupine', 'TensorFlow Lite', 'Room DB']).map(t => `<span class="tech-tag">${t}</span>`).join('')}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Features Deep Dive -->
+      <div style="margin-bottom: 60px;">
+        <h2 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 24px; text-align: center;">Everything Included with <span class="text-gradient">Joya AI</span></h2>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+          <div class="glass-card" style="padding: 24px; border-radius: 16px;">
+            <div style="font-size: 2rem; margin-bottom: 12px;">🎙️</div>
+            <h4 style="font-weight: 700; margin-bottom: 8px;">Responsive Wake Word</h4>
+            <p style="color: var(--text-secondary); font-size: 0.88rem;">Trained specifically for the exact phrase "Wake up Joya" with high noise rejection and false-positive protection.</p>
+          </div>
+          <div class="glass-card" style="padding: 24px; border-radius: 16px;">
+            <div style="font-size: 2rem; margin-bottom: 12px;">💬</div>
+            <h4 style="font-weight: 700; margin-bottom: 8px;">WhatsApp Automation</h4>
+            <p style="color: var(--text-secondary); font-size: 0.88rem;">Dictate and send WhatsApp messages hands-free while driving, working, or cooking without touching the screen.</p>
+          </div>
+          <div class="glass-card" style="padding: 24px; border-radius: 16px;">
+            <div style="font-size: 2rem; margin-bottom: 12px;">🔒</div>
+            <h4 style="font-weight: 700; margin-bottom: 8px;">100% On-Device Privacy</h4>
+            <p style="color: var(--text-secondary); font-size: 0.88rem;">Audio stays on your phone. No voice snippets, transcripts, or personal data ever leaves your device.</p>
+          </div>
+          <div class="glass-card" style="padding: 24px; border-radius: 16px;">
+            <div style="font-size: 2rem; margin-bottom: 12px;">⚡</div>
+            <h4 style="font-weight: 700; margin-bottom: 8px;">Sub-100ms Reaction</h4>
+            <p style="color: var(--text-secondary); font-size: 0.88rem;">Hardware accelerated NDK neural pipelines provide instant voice responses with zero roundtrip cloud lag.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Version Changelog -->
+      <div class="glass-card" style="padding: 30px; border-radius: 20px;">
+        <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 18px;">Changelog &amp; Release History</h3>
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          ${(joya.changelog || [
+            { version: 'v2.4.0', date: '2026-08-15', notes: 'Enhanced offline wake-word acoustic model; battery drain reduced by 35%.' },
+            { version: 'v2.3.0', date: '2026-06-20', notes: 'Added direct WhatsApp message dictation and quick call triggers.' }
+          ]).map(c => `
+            <div style="border-left: 2px solid var(--cyan); padding-left: 14px;">
+              <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 4px;">
+                <strong style="color: var(--cyan); font-family: var(--font-mono);">${c.version}</strong>
+                <span style="font-size: 0.78rem; color: var(--text-muted);">${c.date}</span>
+              </div>
+              <p style="color: var(--text-secondary); font-size: 0.88rem; margin: 0;">${c.notes}</p>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+  </main>
+
+  ${floatingActions()}
+  ${footer()}
+  ${renderModalsMarkup()}
+  ${renderClientDataScripts()}
+</body>
+</html>`;
+
+  fs.writeFileSync(path.join(PAGES, 'joya.html'), html, 'utf8');
+  fs.writeFileSync(path.join(FRONTEND, 'joya.html'), html, 'utf8');
+  console.log('✓ Generated frontend/pages/joya.html and frontend/joya.html');
+}
+
+// ==========================================
+// 6. JARVIS AI DEDICATED FLAGSHIP PAGE
+// ==========================================
+function buildJarvisPage() {
+  const jarvis = DEVCRAFT_PRODUCTS.find(p => p.id === 'jarvis-ai') || {};
+
+  const html = `<!DOCTYPE html>
+<html lang="en" data-theme="futuristic-dev">
+<head>
+  ${commonHead('Jarvis AI — Desktop Intelligence & Workflow Automation Agent (PC / Mac / Linux)', 'Jarvis AI is an autonomous desktop computing assistant for PC with terminal command execution, active workspace file indexing, web scraping, and local LLM bridge.')}
+</head>
+<body>
+  ${navbar('jarvis')}
+
+  <main style="padding: 120px 0 80px;">
+    <div class="container">
+      <!-- Hero Section -->
+      <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: center; margin-bottom: 60px;">
+        <div>
+          <div class="flagship-hero-badge" style="background: rgba(59, 130, 246, 0.15); color: #93c5fd; border-color: rgba(59, 130, 246, 0.4);">
+            💻 PC Desktop Intelligence • 50% Promotional Offer
+          </div>
+          <h1 style="font-size: 2.8rem; font-weight: 800; line-height: 1.2; margin-bottom: 16px;">
+            Jarvis AI — <span class="text-gradient">Desktop Automation</span> Agent
+          </h1>
+          <p style="color: var(--text-secondary); font-size: 1.1rem; line-height: 1.7; margin-bottom: 24px;">
+            Take commanding control of your PC workflow. Activated via global hotkey <span class="wake-word-highlight">Ctrl + Space</span>, Jarvis indexes your hard drive, writes and tests shell scripts, automates browser data scraping, and bridges local LLMs (Ollama) into your editor.
+          </p>
+
+          <!-- Interactive Terminal Sandbox Mockup -->
+          <div class="terminal-mockup" style="margin-bottom: 28px;">
+            <div class="terminal-mockup-header">
+              <span class="term-dot red"></span>
+              <span class="term-dot yellow"></span>
+              <span class="term-dot green"></span>
+              <span style="font-size: 0.75rem; color: var(--text-muted); margin-left: 6px;">jarvis-core — desktop agent terminal</span>
+            </div>
+            <div class="terminal-mockup-body" id="jarvis-terminal-output" style="max-height: 180px; overflow-y: auto;">
+              <div class="cmd-line">[Ready] Jarvis PC Agent v3.1.2 online...</div>
+              <div class="out-line">Global Hotkey Ctrl+Space registered. Listening on local IPC bridge.</div>
+            </div>
+            <div style="padding: 8px 14px; background: #0b1120; border-top: 1px solid rgba(255, 255, 255, 0.06); display: flex; gap: 8px; flex-wrap: wrap;">
+              <button type="button" class="btn btn-xs btn-ghost" onclick="devcraftShop.simulateJarvisCommand('index')">Index Files</button>
+              <button type="button" class="btn btn-xs btn-ghost" onclick="devcraftShop.simulateJarvisCommand('scrape')">Web Scraper</button>
+              <button type="button" class="btn btn-xs btn-ghost" onclick="devcraftShop.simulateJarvisCommand('diag')">Diagnostics</button>
+            </div>
+          </div>
+
+          <!-- Pricing & Direct CTAs -->
+          <div style="background: var(--bg-card); border: 1px solid var(--border-glass); border-radius: 16px; padding: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px;">
+            <div>
+              <div style="font-size: 0.8rem; color: var(--text-muted);">Special Promotional Discount:</div>
+              <div style="display: flex; align-items: baseline; gap: 10px;">
+                <del style="color: var(--text-muted); font-size: 1.1rem;">₹4,000</del>
+                <span style="background: rgba(16, 185, 129, 0.15); color: #10b981; font-weight: 800; padding: 2px 8px; border-radius: 6px; font-size: 0.85rem;">50% OFF</span>
+                <span class="text-gradient" style="font-size: 2rem; font-weight: 800;">₹2,000</span>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <button class="btn btn-primary" onclick="devcraftShop.downloadProduct('jarvis-ai')">
+                Download PC App ⬇️
+              </button>
+              <button class="btn btn-emerald" onclick="devcraftShop.openCheckoutModal('jarvis-ai')">
+                Buy Lifetime License
+              </button>
+              <button class="btn btn-outline" onclick="devcraftShop.addToCart('jarvis-ai')">
+                + Cart 🛒
+              </button>
+              <button class="btn btn-ghost" onclick="devcraftShop.openShareModal('jarvis-ai')">
+                🔗 Share
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side: Specs & Features -->
+        <div class="glass-card" style="padding: 30px; border-radius: 20px; border: 1px solid rgba(59, 130, 246, 0.3);">
+          <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 20px; color: #ffffff;">Desktop Environment Specifications</h3>
+          
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-glass); padding-bottom: 10px;">
+              <span style="color: var(--text-secondary);">Operating Systems:</span>
+              <strong>Windows 10/11 64-bit, macOS 12+, Ubuntu</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-glass); padding-bottom: 10px;">
+              <span style="color: var(--text-secondary);">PC Installer Artifact:</span>
+              <strong style="font-family: var(--font-mono); color: var(--cyan);">jarvis-ai-desktop-v3.1.2.exe</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-glass); padding-bottom: 10px;">
+              <span style="color: var(--text-secondary);">Package Size:</span>
+              <strong>118.5 MB (Full Standalone Bundle)</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-glass); padding-bottom: 10px;">
+              <span style="color: var(--text-secondary);">Local LLM Integration:</span>
+              <strong style="color: #10b981;">Ollama (Llama-3, Mistral, Phi-3)</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-glass); padding-bottom: 10px;">
+              <span style="color: var(--text-secondary);">Recommended RAM:</span>
+              <strong>8 GB (4 GB Minimum)</strong>
+            </div>
+          </div>
+
+          <div style="margin-top: 24px;">
+            <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 10px;">Core Engineering Stack:</h4>
+            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+              ${(jarvis.technologies || ['Electron', 'Node.js', 'Python', 'Ollama', 'PyAutoGUI']).map(t => `<span class="tech-tag">${t}</span>`).join('')}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Version Changelog -->
+      <div class="glass-card" style="padding: 30px; border-radius: 20px;">
+        <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 18px;">Changelog &amp; Release History</h3>
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          ${(jarvis.changelog || [
+            { version: 'v3.1.2', date: '2026-08-20', notes: 'Direct Ollama local model bridge; native Windows 11 Fluent dark glass UI.' },
+            { version: 'v3.0.0', date: '2026-05-12', notes: 'Architectural overhaul: Multi-threaded voice agent and desktop vision preview.' }
+          ]).map(c => `
+            <div style="border-left: 2px solid var(--cyan); padding-left: 14px;">
+              <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 4px;">
+                <strong style="color: var(--cyan); font-family: var(--font-mono);">${c.version}</strong>
+                <span style="font-size: 0.78rem; color: var(--text-muted);">${c.date}</span>
+              </div>
+              <p style="color: var(--text-secondary); font-size: 0.88rem; margin: 0;">${c.notes}</p>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+  </main>
+
+  ${floatingActions()}
+  ${footer()}
+  ${renderModalsMarkup()}
+  ${renderClientDataScripts()}
+</body>
+</html>`;
+
+  fs.writeFileSync(path.join(PAGES, 'jarvis.html'), html, 'utf8');
+  fs.writeFileSync(path.join(FRONTEND, 'jarvis.html'), html, 'utf8');
+  console.log('✓ Generated frontend/pages/jarvis.html and frontend/jarvis.html');
+}
+
+// ==========================================
+// 7. APTITUDE DEDICATED PAGE (30% DISCOUNT)
+// ==========================================
+function buildAptitudePage() {
+  const aptitudeProducts = DEVCRAFT_PRODUCTS.filter(p => p.type === 'aptitude' || p.category === 'Aptitude');
+
+  const html = `<!DOCTYPE html>
+<html lang="en" data-theme="futuristic-dev">
+<head>
+  ${commonHead('Campus Placement & Aptitude Hub (30% OFF)', 'Crack technical interviews, quantitative aptitude, and logical puzzle rounds for TCS NQT, Infosys, Wipro, and Amazon with structured courses.')}
+</head>
+<body>
+  ${navbar('aptitude')}
+
+  <main style="padding: 120px 0 80px;">
+    <div class="container">
+      <div class="section-header text-center">
+        <div class="section-badge" style="background: rgba(16, 185, 129, 0.15); color: #34d399; border-color: rgba(16, 185, 129, 0.4);">
+          🎓 All Aptitude Courses • Flat 30% OFF
+        </div>
+        <h1 class="section-title">Campus Placement &amp; <span class="text-gradient">Aptitude Hub</span></h1>
+        <p class="section-desc">
+          Engineered specifically for engineering graduates and software developers. Master cognitive aptitude, quantitative problem solving, and logical coding puzzles.
+        </p>
+
+        <div style="margin-top: 16px;">
+          <button class="btn btn-outline" onclick="devcraftShop.downloadProduct('aptitude-syllabus')">
+            Download Comprehensive Syllabus (PDF) 📄
+          </button>
+        </div>
+      </div>
+
+      <!-- Courses Grid with 30% Discount -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 24px; margin-top: 40px;">
+        ${aptitudeProducts.map(p => {
+          const originalPrice = Number(p.originalPrice) || 5000;
+          const finalPrice = Math.round(originalPrice * 0.70);
+
+          return `
+          <div class="product-shop-card" style="border-color: rgba(16, 185, 129, 0.3);">
+            <div class="product-card-top">
+              <span class="product-category-chip" style="background: rgba(16, 185, 129, 0.15); color: #34d399;">${p.category}</span>
+              <span class="product-discount-chip chip-aptitude">30% OFF</span>
+            </div>
+
+            <div class="product-card-info">
+              <h3 class="product-card-title">${p.name}</h3>
+              <p class="product-card-desc">${p.shortDesc}</p>
+
+              <ul class="product-card-features">
+                ${(p.features || []).map(f => `<li><span class="check-icon" style="color: #10b981;">✓</span> ${f}</li>`).join('')}
+              </ul>
+            </div>
+
+            <div class="product-card-pricing-footer">
+              <div class="product-price-block">
+                <div class="product-price-orig">
+                  <span>Original:</span>
+                  <del>₹${originalPrice.toLocaleString('en-IN')}</del>
+                </div>
+                <div class="product-price-final">
+                  <span class="price-val" style="color: #34d399;">₹${finalPrice.toLocaleString('en-IN')}</span>
+                  <span class="price-save-badge">Save 30%</span>
+                </div>
+              </div>
+
+              <div class="product-card-btn-grid">
+                <button type="button" class="btn btn-emerald btn-sm" onclick="devcraftShop.openCheckoutModal('${p.id}')">
+                  Enroll Now 🎓
+                </button>
+                <button type="button" class="btn btn-outline btn-sm" onclick="devcraftShop.addToCart('${p.id}')">
+                  + Cart 🛒
+                </button>
+                <button type="button" class="btn btn-ghost btn-sm" onclick="devcraftShop.openShareModal('${p.id}')">
+                  🔗 Share
+                </button>
+              </div>
+            </div>
+          </div>
+          `;
+        }).join('')}
+      </div>
+    </div>
+  </main>
+
+  ${floatingActions()}
+  ${footer()}
+  ${renderModalsMarkup()}
+  ${renderClientDataScripts()}
+</body>
+</html>`;
+
+  fs.writeFileSync(path.join(PAGES, 'aptitude.html'), html, 'utf8');
+  fs.writeFileSync(path.join(FRONTEND, 'aptitude.html'), html, 'utf8');
+  console.log('✓ Generated frontend/pages/aptitude.html and frontend/aptitude.html');
+}
+
+// ==========================================
+// 8. PORTFOLIO & INTERACTIVE SIMULATORS PAGE
+// ==========================================
+function buildPortfolioPage() {
+  const html = `<!DOCTYPE html>
+<html lang="en" data-theme="futuristic-dev">
+<head>
+  ${commonHead('Interactive Portfolio & Live Simulators', 'Explore 10+ interactive application demos engineered by DevCraft across Mobile, Web, AI, and Dashboards.')}
+</head>
+<body>
+  ${navbar('portfolio')}
+
+  <main style="padding-top: 100px;">
+    ${renderFeaturedDemosSection()}
+    ${renderDemoLabSection()}
+    ${renderCaseStudiesSection()}
+    ${renderContactSection()}
+  </main>
+
+  ${floatingActions()}
+  ${footer()}
+  ${renderModalsMarkup()}
+  ${renderClientDataScripts()}
+</body>
+</html>`;
+
+  fs.writeFileSync(path.join(PAGES, 'portfolio.html'), html, 'utf8');
+  fs.writeFileSync(path.join(FRONTEND, 'portfolio.html'), html, 'utf8');
+  console.log('✓ Generated frontend/pages/portfolio.html and frontend/portfolio.html');
+}
+
+// ==========================================
+// 9. CART & CHECKOUT PAGE
+// ==========================================
+function buildCartPage() {
+  const html = `<!DOCTYPE html>
+<html lang="en" data-theme="futuristic-dev">
+<head>
+  ${commonHead('Shopping Cart & Secure Checkout', 'Review your selected DevCraft products and services, apply cryptographic coupons, and complete your order.')}
+</head>
+<body>
+  ${navbar()}
+
+  <main class="cart-page-wrap">
+    <div class="container">
+      <div class="section-header" style="margin-bottom: 30px;">
+        <h1 style="font-size: 2.2rem; font-weight: 800;">Shopping Cart &amp; <span class="text-gradient">Checkout</span></h1>
+        <p style="color: var(--text-secondary);">Verify items, apply valid private coupons, and confirm your direct booking.</p>
+      </div>
+
+      <div class="cart-grid-layout">
+        <!-- Cart Items List Container -->
+        <div class="cart-items-panel" id="cart-items-container">
+          <div style="text-align: center; padding: 40px; color: var(--text-muted);">
+            Loading cart contents...
+          </div>
+        </div>
+
+        <!-- Order Summary & Checkout Panel -->
+        <div class="cart-summary-panel" id="cart-summary-box">
+          <!-- Rendered dynamically by devcraftShop.renderCartPage() -->
+        </div>
+      </div>
+    </div>
+  </main>
+
+  ${floatingActions()}
+  ${footer()}
+  ${renderModalsMarkup()}
+  ${renderClientDataScripts()}
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      devcraftShop.renderCartPage();
+    });
+  </script>
+</body>
+</html>`;
+
+  fs.writeFileSync(path.join(PAGES, 'cart.html'), html, 'utf8');
+  fs.writeFileSync(path.join(FRONTEND, 'cart.html'), html, 'utf8');
+  console.log('✓ Generated frontend/pages/cart.html and frontend/cart.html');
+}
+
+// ==========================================
+// 10. LEGAL & POLICY PAGES (PRIVACY, TERMS, REFUND, LICENSE)
+// ==========================================
+function buildLegalPages() {
+  const legalPages = [
+    {
+      file: 'privacy.html',
+      title: 'Privacy Policy',
+      content: `
+        <h2>Privacy Policy</h2>
+        <p><strong>Last Updated: August 2026</strong></p>
+        <p>At DevCraft Studio, accessible from harsh-developer.onrender.com, privacy and cryptographic security are paramount. This policy outlines how user credentials, order histories, and telemetry are processed.</p>
+        <h3>1. Authentication &amp; Password Security</h3>
+        <p>Passwords are never stored in plaintext. They are salted and hashed using standard bcrypt algorithms. User tokens use signed HMAC-SHA256 JWTs.</p>
+        <h3>2. Coupon Code Verification</h3>
+        <p>Promotional coupon codes are verified strictly server-side using secure SHA-256 HMAC digest validation. Codes are never stored or exposed in client bundles.</p>
+        <h3>3. Data Telemetry &amp; Offline AI</h3>
+        <p>Our flagship AI software (Joya AI and Jarvis AI) utilizes on-device neural inferencing. Voice acoustic processing and local desktop commands remain 100% on your machine.</p>
+      `
+    },
+    {
+      file: 'terms.html',
+      title: 'Terms of Service',
+      content: `
+        <h2>Terms of Service</h2>
+        <p><strong>Last Updated: August 2026</strong></p>
+        <p>Welcome to DevCraft Studio. By purchasing our software products, downloading packages, or contracting our development services, you agree to these terms.</p>
+        <h3>1. Development Sprints &amp; Deliverables</h3>
+        <p>All custom client work is executed under agreed milestones. 100% intellectual property ownership of bespoke source code is transferred upon final sprint settlement.</p>
+        <h3>2. Software Distribution</h3>
+        <p>Purchased binaries (APKs, EXEs, and ZIP packages) include a personal or enterprise non-transferable license as specified during checkout.</p>
+      `
+    },
+    {
+      file: 'refund.html',
+      title: 'Refund & Cancellation Policy',
+      content: `
+        <h2>Refund &amp; Cancellation Policy</h2>
+        <p><strong>Last Updated: August 2026</strong></p>
+        <h3>1. Custom Engineering Sprints</h3>
+        <p>Milestone payments for custom development are protected. In the unlikely event that sprint criteria cannot be met, unworked milestone funds will be refunded within 7 business days.</p>
+        <h3>2. Digital Software Downloads &amp; Courses</h3>
+        <p>Because software downloads (APKs, EXEs) provide immediate access, refunds are evaluated on technical grounds within 7 days if the software does not function according to documented specifications.</p>
+      `
+    },
+    {
+      file: 'license.html',
+      title: 'Software Licensing & IP Ownership',
+      content: `
+        <h2>Software Licensing &amp; IP Ownership</h2>
+        <p><strong>Last Updated: August 2026</strong></p>
+        <p>DevCraft Studio grants clients full commercial ownership of bespoke custom code developed under contract. Our commercial off-the-shelf software packages are licensed under perpetual commercial licenses.</p>
+      `
+    }
+  ];
+
+  legalPages.forEach(p => {
+    const html = `<!DOCTYPE html>
+<html lang="en" data-theme="futuristic-dev">
+<head>
+  ${commonHead(p.title, 'Official policy and legal documentation for DevCraft Studio.')}
+</head>
+<body>
+  ${navbar()}
+
+  <main style="padding: 120px 0 80px;">
+    <div class="container" style="max-width: 800px;">
+      <div class="glass-card" style="padding: 40px; border-radius: 20px; line-height: 1.8;">
+        ${p.content}
+        <div style="margin-top: 30px; border-top: 1px solid var(--border-glass); padding-top: 18px;">
+          <a href="/" class="btn btn-outline btn-sm">← Back to DevCraft Home</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  ${floatingActions()}
+  ${footer()}
+  ${renderModalsMarkup()}
+  ${renderClientDataScripts()}
+</body>
+</html>`;
+
+    fs.writeFileSync(path.join(PAGES, p.file), html, 'utf8');
+    fs.writeFileSync(path.join(FRONTEND, p.file), html, 'utf8');
+    console.log(`✓ Generated ${p.file}`);
+  });
+}
+
 // Master execution
 function buildAll() {
   console.log('🚀 Starting DEVCRAFT Master Site Generation...');
   buildIndexHtml();
+  buildProductsPage();
+  buildJoyaPage();
+  buildJarvisPage();
+  buildAptitudePage();
+  buildPortfolioPage();
   buildServicesPage();
   buildProjectsPage();
   buildAboutPage();
   buildContactPage();
+  buildCartPage();
+  buildLegalPages();
   buildClientPortalPage();
   buildAdminLoginPage();
   console.log('🎉 All DevCraft HTML pages generated successfully!');
@@ -1429,4 +2357,5 @@ if (require.main === module) {
 }
 
 module.exports = { buildAll };
+
 

@@ -25,7 +25,11 @@ let localDb = {
   coupons: [],
   couponUsages: [],
   orders: [],
-  shareEvents: []
+  shareEvents: [],
+  products: [],
+  productFiles: [],
+  discountRules: { appDefaultDiscount: 50, aptitudeDefaultDiscount: 30 },
+  downloads: []
 };
 
 const loadLocalDb = () => {
@@ -41,6 +45,10 @@ const loadLocalDb = () => {
       if (!localDb.couponUsages) localDb.couponUsages = [];
       if (!localDb.orders) localDb.orders = [];
       if (!localDb.shareEvents) localDb.shareEvents = [];
+      if (!localDb.products) localDb.products = [];
+      if (!localDb.productFiles) localDb.productFiles = [];
+      if (!localDb.discountRules) localDb.discountRules = { appDefaultDiscount: 50, aptitudeDefaultDiscount: 30 };
+      if (!localDb.downloads) localDb.downloads = [];
     } else {
       saveLocalDb();
     }
@@ -55,6 +63,86 @@ const saveLocalDb = () => {
     fs.writeFileSync(DB_FILE, JSON.stringify(localDb, null, 2), 'utf8');
   } catch (err) {
     logger.error('Failed to write local DB file', err);
+  }
+};
+
+const ensureProductsSeeded = () => {
+  loadLocalDb();
+  if (!localDb.products || localDb.products.length === 0) {
+    try {
+      const { DEVCRAFT_PRODUCTS } = require('../../scripts/data_products');
+      localDb.products = DEVCRAFT_PRODUCTS.map(p => ({
+        _id: crypto.randomUUID(),
+        ...p,
+        active: true,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      }));
+      saveLocalDb();
+    } catch (e) {
+      logger.error('Error seeding products:', e);
+    }
+  }
+};
+
+const ensureProductFilesSeeded = () => {
+  loadLocalDb();
+  if (!localDb.productFiles || localDb.productFiles.length === 0) {
+    localDb.productFiles = [
+      {
+        _id: crypto.randomUUID(),
+        productId: 'joya-ai',
+        filename: 'joya-ai-v2.4.0.apk',
+        originalName: 'joya-ai-v2.4.0.apk',
+        fileSize: '48.2 MB',
+        mimeType: 'application/vnd.android.package-archive',
+        version: 'v2.4.0',
+        platform: 'Android',
+        changelog: 'Enhanced offline wake-word acoustic model; battery drain reduced by 35%.',
+        filePath: 'uploads/products/joya-ai-v2.4.0.apk',
+        uploadedAt: new Date().toISOString()
+      },
+      {
+        _id: crypto.randomUUID(),
+        productId: 'jarvis-ai',
+        filename: 'jarvis-ai-desktop-v3.1.2.exe',
+        originalName: 'jarvis-ai-desktop-v3.1.2.exe',
+        fileSize: '118.5 MB',
+        mimeType: 'application/octet-stream',
+        version: 'v3.1.2',
+        platform: 'Windows / PC',
+        changelog: 'Direct Ollama local model bridge; native Windows 11 Fluent dark glass UI.',
+        filePath: 'uploads/products/jarvis-ai-desktop-v3.1.2.exe',
+        uploadedAt: new Date().toISOString()
+      },
+      {
+        _id: crypto.randomUUID(),
+        productId: 'cravex-app',
+        filename: 'cravex-mobile-suite-v4.2.0.zip',
+        originalName: 'cravex-mobile-suite-v4.2.0.zip',
+        fileSize: '64.8 MB',
+        mimeType: 'application/zip',
+        version: 'v4.2.0',
+        platform: 'Android & iOS',
+        changelog: 'Production ready React Native suite with GPS delivery tracking.',
+        filePath: 'uploads/products/cravex-mobile-suite-v4.2.0.zip',
+        uploadedAt: new Date().toISOString()
+      },
+      {
+        _id: crypto.randomUUID(),
+        productId: 'aptitude-mastery',
+        filename: 'aptitude-mastery-syllabus-bundle.pdf',
+        originalName: 'aptitude-mastery-syllabus-bundle.pdf',
+        fileSize: '18.4 MB',
+        mimeType: 'application/pdf',
+        version: '2026 Edition',
+        platform: 'Web Course & Portal',
+        changelog: '50+ Quantitative & Logical Reasoning modules with video solutions.',
+        filePath: 'uploads/products/aptitude-mastery-syllabus-bundle.pdf',
+        uploadedAt: new Date().toISOString()
+      }
+    ];
+    saveLocalDb();
   }
 };
 
@@ -882,6 +970,7 @@ const dbService = {
         couponDiscountPercent: Number(data.couponDiscountPercent || 0),
         couponDiscountAmount: Number(data.couponDiscountAmount || 0),
         finalAmount: Number(data.finalAmount),
+        items: Array.isArray(data.items) ? data.items : [],
         userId: data.userId || null,
         clientName: data.clientName || 'Guest Client',
         clientEmail: data.clientEmail ? data.clientEmail.toLowerCase().trim() : '',
@@ -906,7 +995,7 @@ const dbService = {
         list = list.filter(o => o.clientEmail && o.clientEmail.toLowerCase() === em);
       }
       if (filter.productId) {
-        list = list.filter(o => o.productId === filter.productId);
+        list = list.filter(o => o.productId === filter.productId || (o.items && o.items.some(i => i.productId === filter.productId)));
       }
       return list.reverse();
     },
@@ -924,6 +1013,177 @@ const dbService = {
         return true;
       }).length;
     }
+  },
+
+  Product: {
+    find: async (filter = {}) => {
+      ensureProductsSeeded();
+      let list = [...localDb.products];
+      if (filter.category && filter.category !== 'All') {
+        list = list.filter(p => p.category && p.category.toLowerCase() === filter.category.toLowerCase());
+      }
+      if (filter.type) {
+        list = list.filter(p => p.type && p.type.toLowerCase() === filter.type.toLowerCase());
+      }
+      if (filter.active !== undefined) {
+        list = list.filter(p => p.active === filter.active);
+      }
+      return list;
+    },
+    findById: async (id) => {
+      ensureProductsSeeded();
+      const p = localDb.products.find(item => item._id === id || item.id === id);
+      return p ? { ...p } : null;
+    },
+    findOne: async (query = {}) => {
+      ensureProductsSeeded();
+      const p = localDb.products.find(item => {
+        if (query.id && item.id !== query.id) return false;
+        if (query._id && item._id !== query._id) return false;
+        if (query.name && item.name !== query.name) return false;
+        return true;
+      });
+      return p ? { ...p } : null;
+    },
+    create: async (data) => {
+      ensureProductsSeeded();
+      const newProd = {
+        _id: crypto.randomUUID(),
+        id: data.id || ('prod-' + Date.now()),
+        name: data.name,
+        type: data.type || 'app',
+        category: data.category || 'Other Products',
+        platform: data.platform || 'Cross-Platform',
+        badge: data.badge || 'New Product',
+        originalPrice: Number(data.originalPrice) || 5000,
+        discountPercent: data.discountPercent !== undefined ? Number(data.discountPercent) : null,
+        shortDesc: data.shortDesc || '',
+        detailedDesc: data.detailedDesc || '',
+        features: Array.isArray(data.features) ? data.features : [],
+        technologies: Array.isArray(data.technologies) ? data.technologies : [],
+        version: data.version || 'v1.0.0',
+        requirements: data.requirements || '',
+        changelog: Array.isArray(data.changelog) ? data.changelog : [],
+        fileDetails: data.fileDetails || null,
+        image: data.image || '/assets/images/project-ai.svg',
+        active: data.active !== undefined ? data.active : true,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+      localDb.products.push(newProd);
+      saveLocalDb();
+      return newProd;
+    },
+    findByIdAndUpdate: async (id, updateData) => {
+      ensureProductsSeeded();
+      const idx = localDb.products.findIndex(p => p._id === id || p.id === id);
+      if (idx === -1) return null;
+      localDb.products[idx] = {
+        ...localDb.products[idx],
+        ...updateData,
+        updatedAt: new Date().toISOString()
+      };
+      saveLocalDb();
+      return localDb.products[idx];
+    },
+    findByIdAndDelete: async (id) => {
+      ensureProductsSeeded();
+      const idx = localDb.products.findIndex(p => p._id === id || p.id === id);
+      if (idx === -1) return null;
+      const removed = localDb.products.splice(idx, 1)[0];
+      saveLocalDb();
+      return removed;
+    },
+    countDocuments: async (filter = {}) => {
+      ensureProductsSeeded();
+      return localDb.products.length;
+    }
+  },
+
+  ProductFile: {
+    find: async (filter = {}) => {
+      ensureProductFilesSeeded();
+      let list = [...(localDb.productFiles || [])];
+      if (filter.productId) list = list.filter(f => f.productId === filter.productId);
+      return list;
+    },
+    findOne: async (query = {}) => {
+      ensureProductFilesSeeded();
+      return (localDb.productFiles || []).find(f => {
+        if (query.productId && f.productId !== query.productId) return false;
+        if (query._id && f._id !== query._id) return false;
+        return true;
+      }) || null;
+    },
+    create: async (data) => {
+      ensureProductFilesSeeded();
+      const newFile = {
+        _id: crypto.randomUUID(),
+        productId: data.productId,
+        filename: data.filename,
+        originalName: data.originalName || data.filename,
+        fileSize: data.fileSize || '0 KB',
+        mimeType: data.mimeType || 'application/octet-stream',
+        version: data.version || 'v1.0.0',
+        platform: data.platform || 'Cross-Platform',
+        changelog: data.changelog || '',
+        filePath: data.filePath || '',
+        uploadedAt: new Date().toISOString()
+      };
+      localDb.productFiles.push(newFile);
+      saveLocalDb();
+      return newFile;
+    }
+  },
+
+  Download: {
+    create: async (data) => {
+      loadLocalDb();
+      if (!localDb.downloads) localDb.downloads = [];
+      const rec = {
+        _id: crypto.randomUUID(),
+        productId: data.productId,
+        productName: data.productName || data.productId,
+        userId: data.userId || null,
+        clientEmail: data.clientEmail || 'Guest',
+        ip: data.ip || '127.0.0.1',
+        version: data.version || 'v1.0.0',
+        timestamp: new Date().toISOString()
+      };
+      localDb.downloads.push(rec);
+      saveLocalDb();
+      return rec;
+    },
+    find: async (filter = {}) => {
+      loadLocalDb();
+      let list = [...(localDb.downloads || [])];
+      if (filter.userId) list = list.filter(d => d.userId === filter.userId);
+      if (filter.productId) list = list.filter(d => d.productId === filter.productId);
+      return list.reverse();
+    },
+    countDocuments: async (filter = {}) => {
+      loadLocalDb();
+      return (localDb.downloads || []).length;
+    }
+  },
+
+  getDiscountRules: () => {
+    loadLocalDb();
+    if (!localDb.discountRules) {
+      localDb.discountRules = { appDefaultDiscount: 50, aptitudeDefaultDiscount: 30 };
+      saveLocalDb();
+    }
+    return localDb.discountRules;
+  },
+
+  updateDiscountRules: (rules) => {
+    loadLocalDb();
+    localDb.discountRules = {
+      ...localDb.discountRules,
+      ...rules
+    };
+    saveLocalDb();
+    return localDb.discountRules;
   },
 
   ShareEvent: {

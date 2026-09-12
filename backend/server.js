@@ -19,6 +19,8 @@ const userRoutes = require('./routes/userRoutes');
 const couponRoutes = require('./routes/couponRoutes');
 const adminCouponRoutes = require('./routes/adminCouponRoutes');
 const orderRoutes = require('./routes/orderRoutes');
+const productRoutes = require('./routes/productRoutes');
+const downloadRoutes = require('./routes/downloadRoutes');
 
 // DevCraft Catalog Datasets
 const DEVCRAFT_SERVICES = require('../scripts/data_services');
@@ -131,6 +133,8 @@ app.use('/api/projects', projectRoutes);
 app.use('/api/contact', enquiryRoutes);
 app.use('/api/enquiries', enquiryRoutes);
 app.use('/api/coupons', couponRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/downloads', downloadRoutes);
 app.use('/api', orderRoutes);
 
 // Static files for Admin Portal
@@ -140,6 +144,50 @@ app.use('/admin', express.static(path.join(__dirname, '../admin')));
 app.use(express.static(path.join(__dirname, '../frontend')));
 
 // Handle direct HTML page routes
+app.get('/products', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/pages/products.html'));
+});
+
+app.get('/joya', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/pages/joya.html'));
+});
+
+app.get('/jarvis', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/pages/jarvis.html'));
+});
+
+app.get('/aptitude', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/pages/aptitude.html'));
+});
+
+app.get('/portfolio', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/pages/portfolio.html'));
+});
+
+app.get('/cart', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/pages/cart.html'));
+});
+
+app.get('/checkout', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/pages/cart.html'));
+});
+
+app.get('/privacy', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/pages/privacy.html'));
+});
+
+app.get('/terms', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/pages/terms.html'));
+});
+
+app.get('/refund', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/pages/refund.html'));
+});
+
+app.get('/license', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/pages/license.html'));
+});
+
 app.get('/services', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/pages/services.html'));
 });

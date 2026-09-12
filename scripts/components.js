@@ -30,20 +30,36 @@ const navbar = (active = 'home') => `
       </a>
 
       <ul class="nav-links">
-        <li><a href="#services" class="nav-link ${active === 'services' ? 'active' : ''}">Services (50% OFF)</a></li>
-        <li><a href="#aptitude" class="nav-link">Aptitude (30% OFF)</a></li>
-        <li><a href="#demos" class="nav-link ${active === 'demos' ? 'active' : ''}">Demos</a></li>
-        <li><a href="#why-devcraft" class="nav-link">Why Us</a></li>
-        <li><a href="#process" class="nav-link">Process</a></li>
-        <li><a href="#technologies" class="nav-link">Tech</a></li>
-        <li><a href="#case-studies" class="nav-link">Case Studies</a></li>
-        <li><a href="#pricing" class="nav-link">Pricing</a></li>
-        <li><a href="#about" class="nav-link">About</a></li>
-        <li><a href="#contact" class="nav-link ${active === 'contact' ? 'active' : ''}">Contact</a></li>
-        <li class="auth-group-logged-in" style="display: none;"><a href="/dashboard" class="nav-link">Dashboard</a></li>
+        <li><a href="/" class="nav-link ${active === 'home' ? 'active' : ''}">Home</a></li>
+        <li><a href="/products" class="nav-link ${active === 'products' ? 'active' : ''}">Products <span class="nav-pill-badge">50% OFF</span></a></li>
+        <li><a href="/joya" class="nav-link ${active === 'joya' ? 'active' : ''}">Joya AI <span class="nav-pill-voice">Voice</span></a></li>
+        <li><a href="/jarvis" class="nav-link ${active === 'jarvis' ? 'active' : ''}">Jarvis AI <span class="nav-pill-pc">PC</span></a></li>
+        <li><a href="/aptitude" class="nav-link ${active === 'aptitude' ? 'active' : ''}">Aptitude <span class="nav-pill-aptitude">30% OFF</span></a></li>
+        <li><a href="/services" class="nav-link ${active === 'services' ? 'active' : ''}">Services</a></li>
+        <li><a href="/portfolio" class="nav-link ${active === 'portfolio' ? 'active' : ''}">Portfolio</a></li>
+        <li><a href="/about" class="nav-link ${active === 'about' ? 'active' : ''}">About</a></li>
+        <li><a href="/contact" class="nav-link ${active === 'contact' ? 'active' : ''}">Contact</a></li>
       </ul>
 
       <div class="nav-actions">
+        <!-- Search Trigger Button -->
+        <button class="nav-action-btn" id="nav-search-btn" onclick="devcraftShop && devcraftShop.openSearchModal ? devcraftShop.openSearchModal() : window.location.href='/products'" aria-label="Search catalog" title="Search Apps & Services">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+
+        <!-- Cart Trigger Button with Live Counter Badge -->
+        <a href="/cart" class="nav-action-btn nav-cart-btn" id="nav-cart-btn" aria-label="View Cart" title="Shopping Cart">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <span class="nav-cart-badge" id="nav-cart-badge">0</span>
+        </a>
+
         <!-- 3-Theme Selector -->
         <div class="theme-selector-dropdown" id="theme-selector">
           <button class="theme-btn" id="theme-toggle-btn" aria-label="Select UI Theme" title="Switch UI Theme">
@@ -79,13 +95,12 @@ const navbar = (active = 'home') => `
         <!-- Logged Out Auth Buttons -->
         <div class="auth-group-logged-out" style="display: flex; gap: 8px; align-items: center;">
           <a href="/login" class="btn btn-ghost btn-sm">Sign In</a>
-          <a href="/register" class="btn btn-outline btn-sm">Register</a>
-          <a href="#contact" class="btn btn-primary btn-sm btn-start-project-nav">Start Project</a>
+          <a href="/register" class="btn btn-primary btn-sm">Register</a>
         </div>
 
         <!-- Logged In Auth Buttons -->
         <div class="auth-group-logged-in" style="display: none; align-items: center; gap: 8px;">
-          <a href="/dashboard" class="user-nav-chip" title="My Dashboard">
+          <a href="/profile" class="user-nav-chip" title="My Profile">
             <span class="user-avatar-initials nav-user-initials">U</span>
             <span class="user-chip-name nav-user-name">Client</span>
           </a>
@@ -111,31 +126,31 @@ const navbar = (active = 'home') => `
       <button class="mobile-drawer-close" id="mobile-drawer-close" aria-label="Close menu">&times;</button>
     </div>
     <div class="mobile-drawer-links">
-      <a href="#services" class="mobile-nav-link">20 Development Services (50% OFF) <span>→</span></a>
-      <a href="#aptitude" class="mobile-nav-link">Aptitude &amp; Placement Hub (30% OFF) <span>→</span></a>
-      <a href="#demos" class="mobile-nav-link">10 Interactive Demos <span>→</span></a>
-      <a href="#why-devcraft" class="mobile-nav-link">Why DevCraft <span>→</span></a>
-      <a href="#process" class="mobile-nav-link">6-Step Agile Process <span>→</span></a>
-      <a href="#technologies" class="mobile-nav-link">Technologies & Stack <span>→</span></a>
-      <a href="#case-studies" class="mobile-nav-link">Case Studies & Metrics <span>→</span></a>
-      <a href="#pricing" class="mobile-nav-link">Pricing & Calculator <span>→</span></a>
-      <a href="#about" class="mobile-nav-link">About DevCraft Studio <span>→</span></a>
-      <a href="#contact" class="mobile-nav-link">Project Inquiry Form <span>→</span></a>
+      <a href="/" class="mobile-nav-link ${active === 'home' ? 'active' : ''}">Home <span>🏠</span></a>
+      <a href="/products" class="mobile-nav-link ${active === 'products' ? 'active' : ''}">Products (50% OFF) <span>📦</span></a>
+      <a href="/joya" class="mobile-nav-link ${active === 'joya' ? 'active' : ''}">Joya AI Voice Assistant <span>🎙️</span></a>
+      <a href="/jarvis" class="mobile-nav-link ${active === 'jarvis' ? 'active' : ''}">Jarvis AI PC Assistant <span>💻</span></a>
+      <a href="/aptitude" class="mobile-nav-link ${active === 'aptitude' ? 'active' : ''}">Aptitude Courses (30% OFF) <span>🎓</span></a>
+      <a href="/services" class="mobile-nav-link ${active === 'services' ? 'active' : ''}">Developer Services <span>⚡</span></a>
+      <a href="/portfolio" class="mobile-nav-link ${active === 'portfolio' ? 'active' : ''}">Portfolio &amp; Simulators <span>🚀</span></a>
+      <a href="/about" class="mobile-nav-link ${active === 'about' ? 'active' : ''}">About DevCraft <span>🏢</span></a>
+      <a href="/contact" class="mobile-nav-link ${active === 'contact' ? 'active' : ''}">Contact Studio <span>📩</span></a>
+      <a href="/cart" class="mobile-nav-link">Shopping Cart (<span id="mobile-cart-count">0</span>) <span>🛒</span></a>
 
       <!-- Mobile Auth Logged Out -->
-      <div class="auth-group-logged-out" style="display: flex; flex-direction: column; gap: 8px; margin: 8px 0;">
-        <a href="/login" class="mobile-nav-link" style="color: var(--accent);">Sign In <span>🔑</span></a>
-        <a href="/register" class="mobile-nav-link" style="color: var(--emerald);">Create Client Account <span>👤</span></a>
+      <div class="auth-group-logged-out" style="display: flex; flex-direction: column; gap: 8px; margin: 10px 0;">
+        <a href="/login" class="btn btn-outline" style="justify-content: center; width: 100%;">Sign In 🔑</a>
+        <a href="/register" class="btn btn-primary" style="justify-content: center; width: 100%;">Create Client Account 👤</a>
       </div>
 
       <!-- Mobile Auth Logged In -->
-      <div class="auth-group-logged-in" style="display: none; flex-direction: column; gap: 8px; margin: 8px 0;">
-        <a href="/dashboard" class="mobile-nav-link" style="color: var(--accent);">Client Workspace Dashboard <span>📊</span></a>
-        <a href="/profile" class="mobile-nav-link">Profile &amp; Security Settings <span>⚙️</span></a>
+      <div class="auth-group-logged-in" style="display: none; flex-direction: column; gap: 8px; margin: 10px 0;">
+        <a href="/dashboard" class="mobile-nav-link" style="color: var(--accent);">Client Dashboard <span>📊</span></a>
+        <a href="/profile" class="mobile-nav-link">Profile &amp; Settings <span>⚙️</span></a>
         <a href="javascript:void(0)" onclick="DevCraftAuth.logout()" class="mobile-nav-link" style="color: #ef4444;">Sign Out <span>🚪</span></a>
       </div>
 
-      <a href="/admin-login" class="mobile-nav-link" style="color: var(--warning);">Studio Admin Login <span>🔒</span></a>
+      <a href="/admin-login" class="mobile-nav-link" style="color: var(--warning); font-size: 0.85rem;">Studio Admin Login <span>🔒</span></a>
     </div>
 
     <!-- Mobile Theme Switcher -->
@@ -149,7 +164,7 @@ const navbar = (active = 'home') => `
     </div>
 
     <div style="margin-top: 18px; display: flex; flex-direction: column; gap: 10px;">
-      <a href="#contact" class="btn btn-primary" style="width: 100%; justify-content: center;">Start a Project Now</a>
+      <a href="/contact" class="btn btn-primary" style="width: 100%; justify-content: center;">Start a Project Now</a>
       <a href="https://wa.me/918791984082?text=Hi%20DevCraft,%20I'm%20interested%20in%20discussing%20a%20project." target="_blank" rel="noopener noreferrer" class="btn btn-emerald" style="width: 100%; justify-content: center;">
         WhatsApp Studio Lead
       </a>
@@ -211,38 +226,40 @@ const footer = () => `
       </div>
 
       <div>
-        <div class="footer-col-title">Core Services</div>
+        <div class="footer-col-title">Flagship Products</div>
         <div class="footer-links">
-          <a href="#services" onclick="filterServicesCategory('Mobile Apps')" class="footer-link">Android & Mobile Apps</a>
-          <a href="#services" onclick="filterServicesCategory('Web Apps')" class="footer-link">Full-Stack Web Apps</a>
-          <a href="#services" onclick="filterServicesCategory('AI & ML')" class="footer-link">AI Integration & Chatbots</a>
-          <a href="#services" onclick="filterServicesCategory('Dashboards')" class="footer-link">Admin Dashboards</a>
-          <a href="#services" onclick="filterServicesCategory('Websites')" class="footer-link">High-Speed E-Commerce</a>
-          <a href="#services" onclick="filterServicesCategory('Automation')" class="footer-link">Cloud DevOps & Automation</a>
+          <a href="/joya" class="footer-link">Joya AI — Voice Assistant (50% OFF)</a>
+          <a href="/jarvis" class="footer-link">Jarvis AI — PC Agent (50% OFF)</a>
+          <a href="/products" class="footer-link">All App &amp; Software Products</a>
+          <a href="/aptitude" class="footer-link">Aptitude Mastery Hub (30% OFF)</a>
+          <a href="/portfolio" class="footer-link">10+ Interactive Simulators</a>
+          <a href="/cart" class="footer-link">Shopping Cart &amp; Checkout</a>
         </div>
       </div>
 
       <div>
-        <div class="footer-col-title">Interactive Demos</div>
+        <div class="footer-col-title">Engineering Services</div>
         <div class="footer-links">
-          <a href="#demos" onclick="devcraftDemos.openDemoModal('cravex')" class="footer-link">CraveX Food Delivery</a>
-          <a href="#demos" onclick="devcraftDemos.openDemoModal('fitcore')" class="footer-link">FitCore Gym SaaS</a>
-          <a href="#demos" onclick="devcraftDemos.openDemoModal('edunova')" class="footer-link">EduNova LMS</a>
-          <a href="#demos" onclick="devcraftDemos.openDemoModal('estatex')" class="footer-link">EstateX Luxury Realty</a>
-          <a href="#demos" onclick="devcraftDemos.openDemoModal('jarvis-ai')" class="footer-link">Jarvis AI Workspace</a>
-          <a href="#demos" onclick="devcraftDemos.openDemoModal('novacart')" class="footer-link">NovaCart Digital Store</a>
+          <a href="/services#android" class="footer-link">Android App Development</a>
+          <a href="/services#web" class="footer-link">Full-Stack Web Applications</a>
+          <a href="/services#ai" class="footer-link">AI Integration &amp; Automation</a>
+          <a href="/services#software" class="footer-link">Custom Desktop Software</a>
+          <a href="/services#cloud" class="footer-link">Cloud DevOps &amp; APIs</a>
+          <a href="/contact" class="footer-link">Request Custom Project</a>
         </div>
       </div>
 
       <div>
-        <div class="footer-col-title">Direct Studio Hub</div>
+        <div class="footer-col-title">Studio &amp; Legal</div>
         <div class="footer-links">
-          <a href="https://wa.me/918791984082?text=Hi%20DevCraft,%20I'd%20like%20to%20hire%20your%20team%20for%20a%20project." target="_blank" rel="noopener noreferrer" class="footer-link">WhatsApp Studio</a>
+          <a href="/about" class="footer-link">About DevCraft Studio</a>
           <a href="https://www.instagram.com/kiro_mage/" target="_blank" rel="noopener noreferrer" class="footer-link">Instagram (@kiro_mage)</a>
-          <a href="https://t.me/harshuuu1123" target="_blank" rel="noopener noreferrer" class="footer-link">Telegram Channel</a>
-          <a href="/client-portal" class="footer-link" style="color: var(--accent); font-weight: 600;">Client Portal 👤</a>
+          <a href="https://t.me/harshuuu1123" target="_blank" rel="noopener noreferrer" class="footer-link">Telegram (@harshuuu1123)</a>
+          <a href="/privacy" class="footer-link">Privacy Policy</a>
+          <a href="/terms" class="footer-link">Terms of Service</a>
+          <a href="/refund" class="footer-link">Refund &amp; Cancellation Policy</a>
+          <a href="/license" class="footer-link">Software Licensing &amp; IP</a>
           <a href="/admin-login" class="footer-link" style="color: var(--warning); font-weight: 600;">Studio Admin Login 🔒</a>
-          <a href="#faq" class="footer-link">Frequently Asked Questions</a>
         </div>
       </div>
     </div>
@@ -252,6 +269,32 @@ const footer = () => `
       <div class="footer-badges-bottom">
         <span class="status-pill-online"><span class="status-dot"></span> All Systems Operational</span>
         <span>Node.js • Next.js • React Native • MongoDB</span>
+      </div>
+    </div>
+
+    <!-- Search Modal Component -->
+    <div id="devcraft-search-modal" class="search-modal-overlay" style="display: none;">
+      <div class="search-modal-box">
+        <div class="search-modal-header">
+          <div class="search-input-wrapper">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="devcraft-search-input" placeholder="Search apps, AI tools, services, aptitude courses..." autocomplete="off" />
+          </div>
+          <button class="search-close-btn" onclick="devcraftShop.closeSearchModal()">&times;</button>
+        </div>
+        <div class="search-quick-tags">
+          <span class="search-tag" onclick="devcraftShop.applySearchTag('Joya AI')">Joya AI</span>
+          <span class="search-tag" onclick="devcraftShop.applySearchTag('Jarvis AI')">Jarvis AI</span>
+          <span class="search-tag" onclick="devcraftShop.applySearchTag('Android')">Android Apps</span>
+          <span class="search-tag" onclick="devcraftShop.applySearchTag('Aptitude')">Aptitude</span>
+          <span class="search-tag" onclick="devcraftShop.applySearchTag('React')">React / Web</span>
+        </div>
+        <div id="devcraft-search-results" class="search-results-container">
+          <div class="search-empty-state">Type a keyword to discover DevCraft apps, services, and courses.</div>
+        </div>
       </div>
     </div>
   </footer>

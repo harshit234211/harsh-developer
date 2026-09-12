@@ -598,8 +598,535 @@ window.devcraftShop = (function() {
       </div>
     `;
 
-    modal.classList.add('active');
+  // ==========================================
+  // 4. SHOPPING CART ENGINE
+  // ==========================================
+  function getCart() {
+    try {
+      const stored = localStorage.getItem('devcraft_cart');
+      return stored ? JSON.parse(stored) : [];
+    } catch (_) {
+      return [];
+    }
   }
+
+  function saveCart(cart) {
+    try {
+      localStorage.setItem('devcraft_cart', JSON.stringify(cart));
+      updateCartBadges();
+    } catch (_) {}
+  }
+
+  function addToCart(productId, quantity = 1) {
+    const p = getProduct(productId);
+    if (!p) return;
+
+    let cart = getCart();
+    const existingIndex = cart.findIndex(item => item.productId === productId);
+
+    if (existingIndex > -1) {
+      cart[existingIndex].quantity = (cart[existingIndex].quantity || 1) + quantity;
+    } else {
+      cart.push({ productId, quantity: Math.max(1, quantity) });
+    }
+
+    saveCart(cart);
+    showToast(`Added "${p.name.split('—')[0].trim()}" to Cart! 🛒`);
+
+    // If on cart page, refresh view
+    if (document.getElementById('cart-items-container')) {
+      renderCartPage();
+    }
+  }
+
+  function removeFromCart(productId) {
+    let cart = getCart();
+    cart = cart.filter(item => item.productId !== productId);
+    saveCart(cart);
+    showToast('Item removed from cart.');
+    if (document.getElementById('cart-items-container')) {
+      renderCartPage();
+    }
+  }
+
+  function updateQuantity(productId, delta) {
+    let cart = getCart();
+    const item = cart.find(i => i.productId === productId);
+    if (item) {
+      item.quantity = Math.max(1, (item.quantity || 1) + delta);
+      saveCart(cart);
+      if (document.getElementById('cart-items-container')) {
+        renderCartPage();
+      }
+    }
+  }
+
+  function clearCart() {
+    saveCart([]);
+    if (document.getElementById('cart-items-container')) {
+      renderCartPage();
+    }
+  }
+
+  function updateCartBadges() {
+    const cart = getCart();
+    const totalCount = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+
+    const desktopBadge = document.getElementById('nav-cart-badge');
+    if (desktopBadge) {
+      desktopBadge.textContent = totalCount;
+      desktopBadge.style.display = totalCount > 0 ? 'flex' : 'none';
+    }
+
+    const mobileBadge = document.getElementById('mobile-cart-count');
+    if (mobileBadge) {
+      mobileBadge.textContent = totalCount;
+    }
+  }
+
+  async function renderCartPage() {
+    const container = document.getElementById('cart-items-container');
+    const summaryBox = document.getElementById('cart-summary-box');
+    if (!container) return;
+
+    const cart = getCart();
+    if (cart.length === 0) {
+      container.innerHTML = `
+        <div class="cart-empty-state" style="text-align: center; padding: 60px 20px;">
+          <div style="font-size: 3.5rem; margin-bottom: 14px;">🛒</div>
+          <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 8px;">Your Cart is Empty</h3>
+          <p style="color: var(--text-secondary); margin-bottom: 24px;">Explore our catalog of Android Apps, PC Software, and Aptitude courses.</p>
+          <a href="/products" class="btn btn-primary">Browse All Products (50% OFF) →</a>
+        </div>
+      `;
+      if (summaryBox) {
+        summaryBox.style.display = 'none';
+      }
+      return;
+    }
+
+    if (summaryBox) summaryBox.style.display = 'block';
+
+    // Fetch authoritative cart calculation from backend
+    try {
+      const token = localStorage.getItem('devcraft_user_token');
+      const headers = { 'Content-Type': 'application/json' };
+      if (token) headers['Authorization'] = `Bearer ${token}`;
+
+      const res = await fetch('/api/cart/calculate', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({
+          cartItems: cart,
+          couponCode: appliedCouponCode || null
+        })
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || 'Cart calculation error.');
+      }
+
+      cachedCalculation = data.summary;
+
+      // Render table
+      let tableHtml = `
+        <div class="table-responsive">
+          <table class="cart-table">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Price & Discount</th>
+                <th>Qty</th>
+                <th>Total</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+      `;
+
+      data.items.forEach(item => {
+        tableHtml += `
+          <tr>
+            <td>
+              <div class="cart-item-name">${escapeHtml(item.productName)}</div>
+              <div class="cart-item-cat">${escapeHtml(item.productCategory || 'DevCraft Product')} • <span class="text-cyan">${item.productDiscountPercent}% OFF</span></div>
+            </td>
+            <td>
+              <div><del style="color: var(--text-muted); font-size: 0.85rem;">${formatCurrency(item.originalPrice)}</del></div>
+              <strong style="color: #ffffff;">${formatCurrency(item.discountedPrice)}</strong>
+            </td>
+            <td>
+              <div class="cart-qty-ctrl">
+                <button class="cart-qty-btn" onclick="devcraftShop.updateQuantity('${item.productId}', -1)">-</button>
+                <span class="cart-qty-num">${item.quantity}</span>
+                <button class="cart-qty-btn" onclick="devcraftShop.updateQuantity('${item.productId}', 1)">+</button>
+              </div>
+            </td>
+            <td>
+              <strong style="color: var(--cyan);">${formatCurrency(item.finalTotal)}</strong>
+            </td>
+            <td>
+              <button class="cart-remove-link" onclick="devcraftShop.removeFromCart('${item.productId}')">Remove</button>
+            </td>
+          </tr>
+        `;
+      });
+
+      tableHtml += `
+            </tbody>
+          </table>
+        </div>
+      `;
+
+      container.innerHTML = tableHtml;
+
+      // Render Summary
+      if (summaryBox) {
+        const s = data.summary;
+        summaryBox.innerHTML = `
+          <h3>Order Summary</h3>
+          <div class="cart-sum-line">
+            <span>Total Original Value:</span>
+            <del>${formatCurrency(s.totalOriginalPrice)}</del>
+          </div>
+          <div class="cart-sum-line" style="color: #10b981;">
+            <span>Catalog Discounts Applied:</span>
+            <strong>- ${formatCurrency(s.totalProductDiscount)}</strong>
+          </div>
+          <div class="cart-sum-line">
+            <span>Subtotal (After Catalog Off):</span>
+            <strong>${formatCurrency(s.subtotalDiscounted)}</strong>
+          </div>
+          ${s.couponCodeMask ? `
+          <div class="cart-sum-line" style="color: #a855f7;">
+            <span>Coupon (${s.couponCodeMask}) ${s.couponDiscountPercent}% OFF:</span>
+            <strong>- ${formatCurrency(s.couponDiscountAmount)}</strong>
+          </div>
+          ` : ''}
+          <div class="cart-sum-total cart-sum-line">
+            <span>Payable Amount:</span>
+            <span class="text-gradient" style="font-size: 1.4rem;">${formatCurrency(s.finalAmount)}</span>
+          </div>
+
+          <!-- Coupon Input Form -->
+          <div style="margin-top: 20px;">
+            <label style="font-size: 0.82rem; color: var(--text-secondary); display: block; margin-bottom: 6px;">Have a Private Coupon?</label>
+            <div class="coupon-input-wrap">
+              <input type="text" id="cart-coupon-input" class="coupon-input" placeholder="e.g. DEV-XXXX-XXXX-XXXX" value="${appliedCouponCode}" />
+              <button type="button" class="btn btn-outline" id="cart-coupon-btn" onclick="devcraftShop.applyCartCoupon()">Apply</button>
+            </div>
+            <div id="cart-coupon-feedback" style="margin-top: 8px; font-size: 0.82rem;"></div>
+          </div>
+
+          <!-- Client Details & Checkout Form -->
+          <form id="cart-checkout-form" onsubmit="devcraftShop.submitCartCheckout(event)" style="margin-top: 24px;">
+            <div class="form-group" style="margin-bottom: 12px;">
+              <label class="input-label" style="font-size: 0.82rem;">Your Name *</label>
+              <input type="text" id="cart-client-name" class="form-control" placeholder="Full Name" required />
+            </div>
+            <div class="form-group" style="margin-bottom: 12px;">
+              <label class="input-label" style="font-size: 0.82rem;">Your Email *</label>
+              <input type="email" id="cart-client-email" class="form-control" placeholder="name@example.com" required />
+            </div>
+            <div class="form-group" style="margin-bottom: 12px;">
+              <label class="input-label" style="font-size: 0.82rem;">Phone / WhatsApp</label>
+              <input type="tel" id="cart-client-phone" class="form-control" placeholder="+91 9876543210" />
+            </div>
+            <div class="form-group" style="margin-bottom: 18px;">
+              <label class="input-label" style="font-size: 0.82rem;">Special Instructions / Requirements</label>
+              <textarea id="cart-client-notes" class="form-control" rows="2" placeholder="Customization details or questions..."></textarea>
+            </div>
+            <button type="submit" id="cart-submit-btn" class="btn btn-primary btn-block" style="width: 100%; justify-content: center; font-weight: 700;">
+              Confirm &amp; Place Order (${formatCurrency(s.finalAmount)}) →
+            </button>
+          </form>
+        `;
+
+        // Pre-fill user details if logged in
+        if (window.DevCraftAuth && DevCraftAuth.isAuthenticated()) {
+          const u = DevCraftAuth.getUser() || {};
+          const nameInput = document.getElementById('cart-client-name');
+          const emailInput = document.getElementById('cart-client-email');
+          const phoneInput = document.getElementById('cart-client-phone');
+          if (nameInput && u.name) nameInput.value = u.name;
+          if (emailInput && u.email) emailInput.value = u.email;
+          if (phoneInput && u.phone) phoneInput.value = u.phone;
+        }
+      }
+    } catch (err) {
+      container.innerHTML = `<div class="coupon-feedback-box error" style="display:block;">${escapeHtml(err.message)}</div>`;
+    }
+  }
+
+  async function applyCartCoupon() {
+    const input = document.getElementById('cart-coupon-input');
+    const feedback = document.getElementById('cart-coupon-feedback');
+    if (!input || !input.value.trim()) {
+      if (feedback) feedback.innerHTML = '<span style="color: #ef4444;">Please enter coupon code.</span>';
+      return;
+    }
+    appliedCouponCode = input.value.trim();
+    if (feedback) feedback.innerHTML = '<span style="color: var(--cyan);">Verifying coupon with cryptographic ledger...</span>';
+    await renderCartPage();
+  }
+
+  async function submitCartCheckout(e) {
+    e.preventDefault();
+    const clientName = document.getElementById('cart-client-name').value.trim();
+    const clientEmail = document.getElementById('cart-client-email').value.trim();
+    const clientPhone = document.getElementById('cart-client-phone').value.trim();
+    const notes = document.getElementById('cart-client-notes').value.trim();
+    const submitBtn = document.getElementById('cart-submit-btn');
+
+    if (!clientName || !clientEmail) {
+      alert('Please provide your name and email address.');
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Processing Secure Checkout...';
+
+    try {
+      const headers = { 'Content-Type': 'application/json' };
+      const token = localStorage.getItem('devcraft_user_token');
+      if (token) headers['Authorization'] = `Bearer ${token}`;
+
+      const res = await fetch('/api/orders/checkout', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({
+          cartItems: getCart(),
+          couponCode: appliedCouponCode || null,
+          clientName,
+          clientEmail,
+          clientPhone,
+          notes
+        })
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || 'Checkout failed.');
+      }
+
+      // Clear Cart
+      clearCart();
+
+      // Show Order Success Modal
+      showOrderSuccess(data.order);
+    } catch (err) {
+      alert(`Checkout failed: ${err.message}`);
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Retry Order Placement →';
+    }
+  }
+
+  // ==========================================
+  // 5. SEARCH SYSTEM
+  // ==========================================
+  function openSearchModal() {
+    const modal = document.getElementById('devcraft-search-modal');
+    if (modal) {
+      modal.style.display = 'flex';
+      setTimeout(() => {
+        modal.classList.add('active');
+        const input = document.getElementById('devcraft-search-input');
+        if (input) {
+          input.value = '';
+          input.focus();
+        }
+      }, 50);
+      renderSearchResults('');
+    }
+  }
+
+  function closeSearchModal() {
+    const modal = document.getElementById('devcraft-search-modal');
+    if (modal) {
+      modal.classList.remove('active');
+      setTimeout(() => { modal.style.display = 'none'; }, 200);
+    }
+  }
+
+  function applySearchTag(tag) {
+    const input = document.getElementById('devcraft-search-input');
+    if (input) {
+      input.value = tag;
+      renderSearchResults(tag);
+    }
+  }
+
+  function renderSearchResults(query) {
+    const resultsContainer = document.getElementById('devcraft-search-results');
+    if (!resultsContainer) return;
+
+    const q = (query || '').trim().toLowerCase();
+    const products = window.DEVCRAFT_PRODUCTS_DATA || [];
+    const services = window.DEVCRAFT_SERVICES_DATA || [];
+
+    if (!q) {
+      resultsContainer.innerHTML = '<div class="search-empty-state">Type a keyword to discover DevCraft apps, services, and courses.</div>';
+      return;
+    }
+
+    const matchedProducts = products.filter(p => 
+      p.name.toLowerCase().includes(q) ||
+      (p.category && p.category.toLowerCase().includes(q)) ||
+      (p.shortDesc && p.shortDesc.toLowerCase().includes(q))
+    );
+
+    const matchedServices = services.filter(s =>
+      s.title.toLowerCase().includes(q) ||
+      (s.category && s.category.toLowerCase().includes(q)) ||
+      (s.shortDesc && s.shortDesc.toLowerCase().includes(q))
+    );
+
+    if (matchedProducts.length === 0 && matchedServices.length === 0) {
+      resultsContainer.innerHTML = `<div class="search-empty-state">No matching software or services found for "${escapeHtml(query)}".</div>`;
+      return;
+    }
+
+    let html = '';
+
+    if (matchedProducts.length > 0) {
+      html += `<div style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin: 10px 6px 6px;">Products & Apps (${matchedProducts.length})</div>`;
+      matchedProducts.forEach(p => {
+        const isAptitude = p.type === 'aptitude' || p.category === 'Aptitude';
+        const discountPercent = isAptitude ? 30 : 50;
+        const orig = Number(p.originalPrice) || 10000;
+        const final = Math.round(orig * (1 - discountPercent / 100));
+
+        let pageLink = '/products';
+        if (p.id === 'joya-ai') pageLink = '/joya';
+        else if (p.id === 'jarvis-ai') pageLink = '/jarvis';
+        else if (isAptitude) pageLink = '/aptitude';
+
+        html += `
+          <a href="${pageLink}" class="search-result-row">
+            <div>
+              <div class="search-result-title">${escapeHtml(p.name)}</div>
+              <div class="search-result-meta">${escapeHtml(p.category)} • <span style="color: var(--cyan);">${discountPercent}% OFF</span></div>
+            </div>
+            <div class="search-result-price">
+              <del>${formatCurrency(orig)}</del>
+              <strong>${formatCurrency(final)}</strong>
+            </div>
+          </a>
+        `;
+      });
+    }
+
+    if (matchedServices.length > 0) {
+      html += `<div style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin: 14px 6px 6px;">Services (${matchedServices.length})</div>`;
+      matchedServices.forEach(s => {
+        html += `
+          <a href="/services" class="search-result-row">
+            <div>
+              <div class="search-result-title">${escapeHtml(s.title)}</div>
+              <div class="search-result-meta">${escapeHtml(s.category)} • Full-Cycle Delivery</div>
+            </div>
+            <div class="search-result-price">
+              <span style="color: var(--emerald); font-weight: 600; font-size: 0.85rem;">${escapeHtml(s.timeline || 'Sprint')}</span>
+            </div>
+          </a>
+        `;
+      });
+    }
+
+    resultsContainer.innerHTML = html;
+  }
+
+  // ==========================================
+  // 6. JOYA & JARVIS SIMULATORS & DOWNLOADS
+  // ==========================================
+  function simulateJoyaWakeWord() {
+    const bars = document.querySelectorAll('.voice-bar');
+    bars.forEach(b => b.classList.add('active'));
+
+    const statusEl = document.getElementById('joya-voice-status');
+    if (statusEl) {
+      statusEl.innerHTML = '<span style="color: var(--cyan);">🎙️ Wake word detected: "Wake up Joya"! Joya is listening...</span>';
+    }
+
+    // Web Speech synthesis if available
+    try {
+      if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance("Hello Harshit! Joya is online and ready for your command.");
+        utterance.rate = 1.0;
+        utterance.pitch = 1.1;
+        window.speechSynthesis.speak(utterance);
+      }
+    } catch (_) {}
+
+    setTimeout(() => {
+      bars.forEach(b => b.classList.remove('active'));
+      if (statusEl) {
+        statusEl.innerHTML = '<span style="color: #10b981;">✓ Command executed: Assistant standing by in background.</span>';
+      }
+    }, 3500);
+  }
+
+  function simulateJarvisCommand(cmdName) {
+    const terminal = document.getElementById('jarvis-terminal-output');
+    if (!terminal) return;
+
+    const timestamp = new Date().toLocaleTimeString();
+    let outputLines = '';
+
+    if (cmdName === 'index') {
+      outputLines = `
+<div class="cmd-line">[${timestamp}] jarvis --index-workspace</div>
+<div class="out-line">Scanning active project filesystem...</div>
+<div class="out-line">Indexed 248 source modules (.js, .json, .html, .css)</div>
+<div class="highlight-line">✓ Semantic index updated in 38ms. Memory footprint: 14.2MB</div>`;
+    } else if (cmdName === 'scrape') {
+      outputLines = `
+<div class="cmd-line">[${timestamp}] jarvis --run-workflow dynamic-web-scraper</div>
+<div class="out-line">Launching headless browser sandbox...</div>
+<div class="out-line">Target: API telemetry endpoints</div>
+<div class="highlight-line">✓ Extracted 1,420 records. CSV bundle created in /downloads</div>`;
+    } else {
+      outputLines = `
+<div class="cmd-line">[${timestamp}] jarvis --diagnostics</div>
+<div class="out-line">CPU Usage: 4.2% | RAM: 340MB | Latency: 12ms</div>
+<div class="highlight-line">✓ All background daemons running smoothly.</div>`;
+    }
+
+    terminal.innerHTML += outputLines;
+    terminal.scrollTop = terminal.scrollHeight;
+  }
+
+  function downloadProduct(productId) {
+    showToast('Starting secure direct download...');
+    window.location.href = `/api/downloads/${encodeURIComponent(productId)}`;
+  }
+
+  // Keyboard shortcut listener for Ctrl+K
+  document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      openSearchModal();
+    }
+    if (e.key === 'Escape') {
+      closeSearchModal();
+    }
+  });
+
+  // Search input typing listener
+  document.addEventListener('DOMContentLoaded', () => {
+    updateCartBadges();
+    const searchInput = document.getElementById('devcraft-search-input');
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        renderSearchResults(e.target.value);
+      });
+    }
+
+    if (document.getElementById('cart-items-container')) {
+      renderCartPage();
+    }
+  });
 
   function hideModal(modalId) {
     const modal = document.getElementById(modalId);
@@ -627,6 +1154,26 @@ window.devcraftShop = (function() {
     trackShare,
     showToast,
     hideModal,
-    formatCurrency
+    formatCurrency,
+    // Cart
+    getCart,
+    addToCart,
+    removeFromCart,
+    updateQuantity,
+    clearCart,
+    updateCartBadges,
+    renderCartPage,
+    applyCartCoupon,
+    submitCartCheckout,
+    // Search
+    openSearchModal,
+    closeSearchModal,
+    applySearchTag,
+    renderSearchResults,
+    // Flagships & Downloads
+    simulateJoyaWakeWord,
+    simulateJarvisCommand,
+    downloadProduct
   };
 })();
+

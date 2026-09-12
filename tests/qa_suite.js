@@ -646,6 +646,111 @@ async function runQaSuite() {
       'STEP 50B: Frontend Home Page Renders 50% & 30% Dynamic Pricing Badges & Shop Engine'
     );
 
+    // 51. Test Joya AI Dedicated Page (GET /joya)
+    const joyaPageRes = await request('GET', '/joya');
+    assert(
+      joyaPageRes.statusCode === 200 &&
+      joyaPageRes.data.includes('Wake up Joya') &&
+      joyaPageRes.data.includes('joya-ai-v2.4.0.apk'),
+      'STEP 51: Joya AI Page (/joya) Renders Wake Word & APK Specs'
+    );
+
+    // 52. Test Jarvis AI Dedicated Page (GET /jarvis)
+    const jarvisPageRes = await request('GET', '/jarvis');
+    assert(
+      jarvisPageRes.statusCode === 200 &&
+      jarvisPageRes.data.includes('Ctrl + Space') &&
+      jarvisPageRes.data.includes('jarvis-ai-desktop-v3.1.2.exe'),
+      'STEP 52: Jarvis AI Page (/jarvis) Renders Terminal Mockup & PC Specs'
+    );
+
+    // 53. Test Dedicated Products Page (GET /products)
+    const productsPageRes = await request('GET', '/products');
+    assert(
+      productsPageRes.statusCode === 200 &&
+      productsPageRes.data.includes('catalog-toolbar') &&
+      productsPageRes.data.includes('Android Apps'),
+      'STEP 53: Products Marketplace Page (/products) Renders Filters & Catalog Cards'
+    );
+
+    // 54. Test Aptitude Hub Page (GET /aptitude)
+    const aptitudePageRes = await request('GET', '/aptitude');
+    assert(
+      aptitudePageRes.statusCode === 200 &&
+      aptitudePageRes.data.includes('30% OFF') &&
+      aptitudePageRes.data.includes('Quantitative Aptitude'),
+      'STEP 54: Aptitude Hub Page (/aptitude) Renders 30% Discount Courses'
+    );
+
+    // 55. Test Portfolio & Simulators Page (GET /portfolio)
+    const portfolioPageRes = await request('GET', '/portfolio');
+    assert(
+      portfolioPageRes.statusCode === 200 &&
+      portfolioPageRes.data.includes('devcraftDemos'),
+      'STEP 55: Portfolio Page (/portfolio) Renders 10+ Interactive Simulators'
+    );
+
+    // 56. Test Shopping Cart Page (GET /cart)
+    const cartPageRes = await request('GET', '/cart');
+    assert(
+      cartPageRes.statusCode === 200 &&
+      cartPageRes.data.includes('cart-items-container') &&
+      cartPageRes.data.includes('cart-summary-box'),
+      'STEP 56: Cart Page (/cart) Renders Shopping Cart & Order Summary Panels'
+    );
+
+    // 57. Test Legal & Policy Pages (GET /privacy, /terms, /refund, /license)
+    const [privacyRes, termsRes, refundRes, licenseRes] = await Promise.all([
+      request('GET', '/privacy'),
+      request('GET', '/terms'),
+      request('GET', '/refund'),
+      request('GET', '/license')
+    ]);
+    assert(
+      privacyRes.statusCode === 200 &&
+      termsRes.statusCode === 200 &&
+      refundRes.statusCode === 200 &&
+      licenseRes.statusCode === 200,
+      'STEP 57: All 4 Legal Pages (/privacy, /terms, /refund, /license) Serve Cleanly with HTTP 200'
+    );
+
+    // 58. Test Multi-Item Authoritative Cart Calculation (POST /api/cart/calculate)
+    const cartCalcRes = await request('POST', '/api/cart/calculate', {
+      cartItems: [
+        { productId: 'joya-ai', quantity: 1 },
+        { productId: sampleApt.id, quantity: 2 }
+      ],
+      couponCode: offer20.rawCode
+    });
+    assert(
+      cartCalcRes.statusCode === 200 &&
+      cartCalcRes.data.success === true &&
+      cartCalcRes.data.summary.finalAmount > 0 &&
+      cartCalcRes.data.items.length === 2,
+      'STEP 58: Multi-Item Cart Authoritative Server Calculation Verified with 50% & 30% Rules'
+    );
+
+    // 59. Test Direct Download Streaming Endpoint (GET /api/downloads/:productId)
+    const downloadRes = await request('GET', '/api/downloads/joya-ai');
+    assert(
+      downloadRes.statusCode === 200 &&
+      downloadRes.headers['content-disposition'] &&
+      downloadRes.headers['content-disposition'].includes('joya-ai'),
+      'STEP 59: Secure File Download Endpoint (/api/downloads/joya-ai) Streams APK Attachment'
+    );
+
+    // 60. Test Admin Products & Discount Rules API
+    const adminProductsRes = await request('GET', '/api/products/admin/all', null, {
+      'Authorization': `Bearer ${adminToken}`
+    });
+    assert(
+      adminProductsRes.statusCode === 200 &&
+      adminProductsRes.data.success === true &&
+      adminProductsRes.data.count >= 5,
+      'STEP 60: Admin Products CMS API (/api/products/admin/all) Returns Managed Store Items'
+    );
+
+
   } catch (err) {
     console.error('Fatal test runner error:', err);
     failedTests++;

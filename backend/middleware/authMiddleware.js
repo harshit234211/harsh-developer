@@ -1,4 +1,4 @@
-﻿const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 const config = require('../config/env');
 const dbService = require('../utils/dbAdapter');
 
@@ -37,4 +37,10 @@ const protect = async (req, res, next) => {
   }
 };
 
-module.exports = { protect };
+const { optionalUserAuth } = require('./userAuthMiddleware');
+
+module.exports = {
+  protect,
+  protectAdmin: protect,
+  optionalUserAuth
+};

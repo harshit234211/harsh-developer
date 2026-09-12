@@ -4,11 +4,11 @@
   
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About DevCraft Studio | DEVCRAFT Studio</title>
-  <meta name="description" content="Learn about DevCraft’s software engineering philosophy, lead architect Harshit, and our production standards." />
+  <title>Interactive Portfolio & Live Simulators | DEVCRAFT Studio</title>
+  <meta name="description" content="Explore 10+ interactive application demos engineered by DevCraft across Mobile, Web, AI, and Dashboards." />
   <meta name="keywords" content="DevCraft, Software Development Studio, Mobile Apps, Web Applications, React Native, Next.js, Node.js, AI Solutions, Android Developer, Cloud Deployment" />
-  <meta property="og:title" content="About DevCraft Studio | DEVCRAFT Studio" />
-  <meta property="og:description" content="Learn about DevCraft’s software engineering philosophy, lead architect Harshit, and our production standards." />
+  <meta property="og:title" content="Interactive Portfolio & Live Simulators | DEVCRAFT Studio" />
+  <meta property="og:description" content="Explore 10+ interactive application demos engineered by DevCraft across Mobile, Web, AI, and Dashboards." />
   <meta property="og:image" content="/assets/images/project-ai.svg" />
   <link rel="icon" type="image/svg+xml" href="/assets/images/avatar-harshit.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -40,8 +40,8 @@
         <li><a href="/jarvis" class="nav-link ">Jarvis AI <span class="nav-pill-pc">PC</span></a></li>
         <li><a href="/aptitude" class="nav-link ">Aptitude <span class="nav-pill-aptitude">30% OFF</span></a></li>
         <li><a href="/services" class="nav-link ">Services</a></li>
-        <li><a href="/portfolio" class="nav-link ">Portfolio</a></li>
-        <li><a href="/about" class="nav-link active">About</a></li>
+        <li><a href="/portfolio" class="nav-link active">Portfolio</a></li>
+        <li><a href="/about" class="nav-link ">About</a></li>
         <li><a href="/contact" class="nav-link ">Contact</a></li>
       </ul>
 
@@ -136,8 +136,8 @@
       <a href="/jarvis" class="mobile-nav-link ">Jarvis AI PC Assistant <span>💻</span></a>
       <a href="/aptitude" class="mobile-nav-link ">Aptitude Courses (30% OFF) <span>🎓</span></a>
       <a href="/services" class="mobile-nav-link ">Developer Services <span>⚡</span></a>
-      <a href="/portfolio" class="mobile-nav-link ">Portfolio &amp; Simulators <span>🚀</span></a>
-      <a href="/about" class="mobile-nav-link active">About DevCraft <span>🏢</span></a>
+      <a href="/portfolio" class="mobile-nav-link active">Portfolio &amp; Simulators <span>🚀</span></a>
+      <a href="/about" class="mobile-nav-link ">About DevCraft <span>🏢</span></a>
       <a href="/contact" class="mobile-nav-link ">Contact Studio <span>📩</span></a>
       <a href="/cart" class="mobile-nav-link">Shopping Cart (<span id="mobile-cart-count">0</span>) <span>🛒</span></a>
 
@@ -181,116 +181,765 @@
 
   <main style="padding-top: 100px;">
     
-  <section class="section" id="about">
+  <section class="section" id="demos">
     <div class="container">
-      <div class="about-grid-layout">
-        <div class="about-text-col">
-          <div class="section-badge">Studio Story & Ethos</div>
-          <h2 class="section-title">Ideas → Code → <span class="text-gradient">Real Solutions</span></h2>
-          <p class="service-desc">
-            DevCraft was founded by lead software engineer Harshit with a single mission: to eliminate the friction, delays, and bloat that plague modern software development.
-          </p>
-          <p class="service-desc">
-            We operate as an elite engineering strike team. Rather than handing your project to junior developers or layers of non-technical account managers, every line of code at DevCraft is designed, built, and reviewed by experienced software architects.
-          </p>
-          <p class="service-desc">
-            From our core engineering hub, we serve clients worldwide across startups, retail brands, healthcare companies, and high-growth platforms.
-          </p>
+      <div class="section-header text-center">
+        <div class="section-badge">Live Interactive Showcase</div>
+        <h2 class="section-title">10 Production <span class="text-gradient">Demo Applications</span></h2>
+        <p class="section-desc">
+          Every demo below is a fully functional simulated software application. Click "View Demo" to interact live, test features, and inspect real case studies.
+        </p>
+      </div>
 
-          <div class="about-pillars-row">
-            <div class="about-pillar-item">
-              <strong>Direct Engineering Access</strong>
-              <small>Speak directly with the architects building your product.</small>
+      <!-- Portfolio Dynamic Filter Bar -->
+      <div class="filter-bar" id="portfolio-filter-bar">
+        
+          <button class="filter-pill active" onclick="filterDemosCategory('ALL')">ALL</button>
+        
+          <button class="filter-pill " onclick="filterDemosCategory('MOBILE APPS')">MOBILE APPS</button>
+        
+          <button class="filter-pill " onclick="filterDemosCategory('WEB APPS')">WEB APPS</button>
+        
+          <button class="filter-pill " onclick="filterDemosCategory('WEBSITES')">WEBSITES</button>
+        
+          <button class="filter-pill " onclick="filterDemosCategory('AI')">AI</button>
+        
+          <button class="filter-pill " onclick="filterDemosCategory('DASHBOARDS')">DASHBOARDS</button>
+        
+          <button class="filter-pill " onclick="filterDemosCategory('BUSINESS SOFTWARE')">BUSINESS SOFTWARE</button>
+        
+          <button class="filter-pill " onclick="filterDemosCategory('AUTOMATION')">AUTOMATION</button>
+        
+      </div>
+
+      <!-- 10 Demo Cards Grid -->
+      <div class="demos-catalog-grid" id="demos-catalog-grid">
+        
+          <div class="demo-card" data-category="MOBILE APPS">
+            <div class="demo-media-wrap">
+              <span class="demo-badge-pill">Mobile App • React Native / Android</span>
+              <img src="/assets/images/project-mobile.svg" alt="CraveX Preview" loading="lazy" />
             </div>
-            <div class="about-pillar-item">
-              <strong>Transparent Git Delivery</strong>
-              <small>Commit logs, PR reviews, and live preview staging at every step.</small>
+
+            <div class="demo-card-body">
+              <h3 class="demo-title">CraveX</h3>
+              <div class="demo-subtitle">Food Delivery Mobile Experience</div>
+              <p class="demo-desc">A lightning-fast food ordering mobile app with real-time GPS courier tracking, interactive dish customization, and UPI one-tap payment.</p>
+
+              <!-- Metrics Strip -->
+              <div class="demo-metrics-strip">
+                
+                  <div>
+                    <div class="demo-metric-val text-gradient">42s</div>
+                    <div class="demo-metric-lbl">Avg Order Time</div>
+                  </div>
+                
+                  <div>
+                    <div class="demo-metric-val text-gradient"><50ms</div>
+                    <div class="demo-metric-lbl">Courier Latency</div>
+                  </div>
+                
+                  <div>
+                    <div class="demo-metric-val text-gradient">4.9 ★</div>
+                    <div class="demo-metric-lbl">Rating</div>
+                  </div>
+                
+              </div>
+
+              <!-- Tech Tags -->
+              <div class="service-tech-pills" style="margin-bottom: 16px;">
+                <span class="tech-tag">React Native</span><span class="tech-tag">Kotlin</span><span class="tech-tag">Node.js</span><span class="tech-tag">Socket.IO</span>
+              </div>
+
+              <!-- Actions -->
+              <div class="demo-card-actions">
+                <div class="demo-btn-group-row">
+                  <button class="btn btn-primary btn-sm" onclick="devcraftDemos.openDemoModal('cravex')">
+                    <span>⚡ View Live Demo</span>
+                  </button>
+                  <button class="btn btn-outline btn-sm" onclick="devcraftDemos.openCaseStudyModal('cravex')">
+                    <span>📖 Case Study</span>
+                  </button>
+                </div>
+                <div style="display: flex; gap: 8px; margin-top: 8px; align-items: center;">
+                  <button class="btn btn-ghost btn-xs text-muted" style="flex-grow: 1; text-align: left;" onclick="devcraftDemos.startProjectFor('CraveX')">
+                    Start Similar Project →
+                  </button>
+                  <button type="button" class="btn-share-icon" title="Share Demo" onclick="devcraftShop.openShareModal('cravex')">
+                    🔗 Share
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
+        
+          <div class="demo-card" data-category="BUSINESS SOFTWARE">
+            <div class="demo-media-wrap">
+              <span class="demo-badge-pill">SaaS Platform • Mobile & Web</span>
+              <img src="/assets/images/project-dashboard.svg" alt="FitCore Preview" loading="lazy" />
+            </div>
 
-          <div style="margin-top: 24px;">
-            <a href="#contact" class="btn btn-primary">Work With DevCraft</a>
+            <div class="demo-card-body">
+              <h3 class="demo-title">FitCore</h3>
+              <div class="demo-subtitle">Gym & Fitness Management Platform</div>
+              <p class="demo-desc">Complete gym operations SaaS featuring dual Member & Admin portals, automated recurring billing, trainer booking, and QR attendance.</p>
+
+              <!-- Metrics Strip -->
+              <div class="demo-metrics-strip">
+                
+                  <div>
+                    <div class="demo-metric-val text-gradient">+34%</div>
+                    <div class="demo-metric-lbl">Member Retention</div>
+                  </div>
+                
+                  <div>
+                    <div class="demo-metric-val text-gradient">0.4s</div>
+                    <div class="demo-metric-lbl">Check-in Speed</div>
+                  </div>
+                
+                  <div>
+                    <div class="demo-metric-val text-gradient">45+</div>
+                    <div class="demo-metric-lbl">Active Gyms</div>
+                  </div>
+                
+              </div>
+
+              <!-- Tech Tags -->
+              <div class="service-tech-pills" style="margin-bottom: 16px;">
+                <span class="tech-tag">Next.js</span><span class="tech-tag">TypeScript</span><span class="tech-tag">PostgreSQL</span><span class="tech-tag">TailwindCSS</span>
+              </div>
+
+              <!-- Actions -->
+              <div class="demo-card-actions">
+                <div class="demo-btn-group-row">
+                  <button class="btn btn-primary btn-sm" onclick="devcraftDemos.openDemoModal('fitcore')">
+                    <span>⚡ View Live Demo</span>
+                  </button>
+                  <button class="btn btn-outline btn-sm" onclick="devcraftDemos.openCaseStudyModal('fitcore')">
+                    <span>📖 Case Study</span>
+                  </button>
+                </div>
+                <div style="display: flex; gap: 8px; margin-top: 8px; align-items: center;">
+                  <button class="btn btn-ghost btn-xs text-muted" style="flex-grow: 1; text-align: left;" onclick="devcraftDemos.startProjectFor('FitCore')">
+                    Start Similar Project →
+                  </button>
+                  <button type="button" class="btn-share-icon" title="Share Demo" onclick="devcraftShop.openShareModal('fitcore')">
+                    🔗 Share
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-
-        <div class="about-card-col">
-          <div class="about-profile-card">
-            <div class="profile-avatar-wrap">
-              <img src="/assets/images/avatar-harshit.svg" alt="Harshit - Lead Software Architect" />
-            </div>
-            <h3 class="profile-name">Harshit</h3>
-            <div class="profile-role text-gradient">Lead Software Architect & Founder</div>
-            <p class="profile-bio">
-              Full-stack engineer passionate about high-concurrency architectures, 3D WebGL interfaces, native Android systems, and autonomous AI pipelines.
-            </p>
-
-            <div class="profile-skills-pills">
-              <span class="tech-tag">React / Next.js</span>
-              <span class="tech-tag">Node.js</span>
-              <span class="tech-tag">Kotlin / Android</span>
-              <span class="tech-tag">PostgreSQL</span>
-              <span class="tech-tag">Docker / DevOps</span>
-              <span class="tech-tag">OpenAI LLMs</span>
+        
+          <div class="demo-card" data-category="WEB APPS">
+            <div class="demo-media-wrap">
+              <span class="demo-badge-pill">LMS Platform • Web Application</span>
+              <img src="/assets/images/project-web.svg" alt="EduNova Preview" loading="lazy" />
             </div>
 
-            <div class="profile-social-links">
-              <a href="https://wa.me/918791984082" target="_blank" rel="noopener noreferrer" class="channel-btn whatsapp">WhatsApp</a>
-              <a href="tel:+917017022966" class="channel-btn call">Call</a>
-              <a href="https://www.instagram.com/kiro_mage/" target="_blank" rel="noopener noreferrer" class="channel-btn instagram">Instagram</a>
+            <div class="demo-card-body">
+              <h3 class="demo-title">EduNova</h3>
+              <div class="demo-subtitle">Interactive Learning Management System</div>
+              <p class="demo-desc">A modern education platform with modular course video players, interactive knowledge-check quizzes, live progress tracking, and instant certificates.</p>
+
+              <!-- Metrics Strip -->
+              <div class="demo-metrics-strip">
+                
+                  <div>
+                    <div class="demo-metric-val text-gradient">78%</div>
+                    <div class="demo-metric-lbl">Course Completion</div>
+                  </div>
+                
+                  <div>
+                    <div class="demo-metric-val text-gradient">99.9%</div>
+                    <div class="demo-metric-lbl">Video CDN Speed</div>
+                  </div>
+                
+                  <div>
+                    <div class="demo-metric-val text-gradient">25k+</div>
+                    <div class="demo-metric-lbl">Students</div>
+                  </div>
+                
+              </div>
+
+              <!-- Tech Tags -->
+              <div class="service-tech-pills" style="margin-bottom: 16px;">
+                <span class="tech-tag">React 18</span><span class="tech-tag">Node.js</span><span class="tech-tag">Video.js</span><span class="tech-tag">MongoDB</span>
+              </div>
+
+              <!-- Actions -->
+              <div class="demo-card-actions">
+                <div class="demo-btn-group-row">
+                  <button class="btn btn-primary btn-sm" onclick="devcraftDemos.openDemoModal('edunova')">
+                    <span>⚡ View Live Demo</span>
+                  </button>
+                  <button class="btn btn-outline btn-sm" onclick="devcraftDemos.openCaseStudyModal('edunova')">
+                    <span>📖 Case Study</span>
+                  </button>
+                </div>
+                <div style="display: flex; gap: 8px; margin-top: 8px; align-items: center;">
+                  <button class="btn btn-ghost btn-xs text-muted" style="flex-grow: 1; text-align: left;" onclick="devcraftDemos.startProjectFor('EduNova')">
+                    Start Similar Project →
+                  </button>
+                  <button type="button" class="btn-share-icon" title="Share Demo" onclick="devcraftShop.openShareModal('edunova')">
+                    🔗 Share
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        
+          <div class="demo-card" data-category="WEBSITES">
+            <div class="demo-media-wrap">
+              <span class="demo-badge-pill">Real Estate • Web & Mobile</span>
+              <img src="/assets/images/project-ecommerce.svg" alt="EstateX Preview" loading="lazy" />
+            </div>
+
+            <div class="demo-card-body">
+              <h3 class="demo-title">EstateX</h3>
+              <div class="demo-subtitle">Modern Real Estate Platform</div>
+              <p class="demo-desc">Luxury real estate discovery portal featuring interactive price/location filters, high-resolution photo galleries, and instant private tour scheduling.</p>
+
+              <!-- Metrics Strip -->
+              <div class="demo-metrics-strip">
+                
+                  <div>
+                    <div class="demo-metric-val text-gradient">3.2x</div>
+                    <div class="demo-metric-lbl">Property Inquiries</div>
+                  </div>
+                
+                  <div>
+                    <div class="demo-metric-val text-gradient">24ms</div>
+                    <div class="demo-metric-lbl">Search Speed</div>
+                  </div>
+                
+                  <div>
+                    <div class="demo-metric-val text-gradient">180k/mo</div>
+                    <div class="demo-metric-lbl">Listing Views</div>
+                  </div>
+                
+              </div>
+
+              <!-- Tech Tags -->
+              <div class="service-tech-pills" style="margin-bottom: 16px;">
+                <span class="tech-tag">Next.js</span><span class="tech-tag">TailwindCSS</span><span class="tech-tag">Leaflet Maps</span><span class="tech-tag">PostgreSQL</span>
+              </div>
+
+              <!-- Actions -->
+              <div class="demo-card-actions">
+                <div class="demo-btn-group-row">
+                  <button class="btn btn-primary btn-sm" onclick="devcraftDemos.openDemoModal('estatex')">
+                    <span>⚡ View Live Demo</span>
+                  </button>
+                  <button class="btn btn-outline btn-sm" onclick="devcraftDemos.openCaseStudyModal('estatex')">
+                    <span>📖 Case Study</span>
+                  </button>
+                </div>
+                <div style="display: flex; gap: 8px; margin-top: 8px; align-items: center;">
+                  <button class="btn btn-ghost btn-xs text-muted" style="flex-grow: 1; text-align: left;" onclick="devcraftDemos.startProjectFor('EstateX')">
+                    Start Similar Project →
+                  </button>
+                  <button type="button" class="btn-share-icon" title="Share Demo" onclick="devcraftShop.openShareModal('estatex')">
+                    🔗 Share
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+          <div class="demo-card" data-category="AI">
+            <div class="demo-media-wrap">
+              <span class="demo-badge-pill">AI & Machine Learning • Full-Stack</span>
+              <img src="/assets/images/project-ai.svg" alt="Jarvis AI Preview" loading="lazy" />
+            </div>
+
+            <div class="demo-card-body">
+              <h3 class="demo-title">Jarvis AI</h3>
+              <div class="demo-subtitle">Intelligent Multi-Agent Workspace</div>
+              <p class="demo-desc">Enterprise AI assistant workspace with multi-persona switching (Architect, Coder, Analyst), real-time simulated token generation, and syntax-highlighted code output.</p>
+
+              <!-- Metrics Strip -->
+              <div class="demo-metrics-strip">
+                
+                  <div>
+                    <div class="demo-metric-val text-gradient">120ms</div>
+                    <div class="demo-metric-lbl">Response Latency</div>
+                  </div>
+                
+                  <div>
+                    <div class="demo-metric-val text-gradient">98.6%</div>
+                    <div class="demo-metric-lbl">Code Accuracy</div>
+                  </div>
+                
+                  <div>
+                    <div class="demo-metric-val text-gradient">500k+</div>
+                    <div class="demo-metric-lbl">Tasks Handled</div>
+                  </div>
+                
+              </div>
+
+              <!-- Tech Tags -->
+              <div class="service-tech-pills" style="margin-bottom: 16px;">
+                <span class="tech-tag">OpenAI GPT-4 API</span><span class="tech-tag">LangChain</span><span class="tech-tag">Node.js</span><span class="tech-tag">React</span>
+              </div>
+
+              <!-- Actions -->
+              <div class="demo-card-actions">
+                <div class="demo-btn-group-row">
+                  <button class="btn btn-primary btn-sm" onclick="devcraftDemos.openDemoModal('jarvis-ai')">
+                    <span>⚡ View Live Demo</span>
+                  </button>
+                  <button class="btn btn-outline btn-sm" onclick="devcraftDemos.openCaseStudyModal('jarvis-ai')">
+                    <span>📖 Case Study</span>
+                  </button>
+                </div>
+                <div style="display: flex; gap: 8px; margin-top: 8px; align-items: center;">
+                  <button class="btn btn-ghost btn-xs text-muted" style="flex-grow: 1; text-align: left;" onclick="devcraftDemos.startProjectFor('Jarvis AI')">
+                    Start Similar Project →
+                  </button>
+                  <button type="button" class="btn-share-icon" title="Share Demo" onclick="devcraftShop.openShareModal('jarvis-ai')">
+                    🔗 Share
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+          <div class="demo-card" data-category="WEBSITES">
+            <div class="demo-media-wrap">
+              <span class="demo-badge-pill">Corporate Website • High Conversion</span>
+              <img src="/assets/images/project-web.svg" alt="Nexus Corp Presence Preview" loading="lazy" />
+            </div>
+
+            <div class="demo-card-body">
+              <h3 class="demo-title">Nexus Corp Presence</h3>
+              <div class="demo-subtitle">Modern Agency & Corporate Studio</div>
+              <p class="demo-desc">A high-converting corporate website engineered with smooth 3D micro-animations, interactive ROI calculator, and dynamic client presentation decks.</p>
+
+              <!-- Metrics Strip -->
+              <div class="demo-metrics-strip">
+                
+                  <div>
+                    <div class="demo-metric-val text-gradient">99/100</div>
+                    <div class="demo-metric-lbl">Page Speed Score</div>
+                  </div>
+                
+                  <div>
+                    <div class="demo-metric-val text-gradient">8.4%</div>
+                    <div class="demo-metric-lbl">Lead Conversion</div>
+                  </div>
+                
+                  <div>
+                    <div class="demo-metric-val text-gradient"><22%</div>
+                    <div class="demo-metric-lbl">Global Bounce</div>
+                  </div>
+                
+              </div>
+
+              <!-- Tech Tags -->
+              <div class="service-tech-pills" style="margin-bottom: 16px;">
+                <span class="tech-tag">Vite</span><span class="tech-tag">HTML5/SCSS</span><span class="tech-tag">Vanilla JS</span><span class="tech-tag">Three.js</span>
+              </div>
+
+              <!-- Actions -->
+              <div class="demo-card-actions">
+                <div class="demo-btn-group-row">
+                  <button class="btn btn-primary btn-sm" onclick="devcraftDemos.openDemoModal('business-website')">
+                    <span>⚡ View Live Demo</span>
+                  </button>
+                  <button class="btn btn-outline btn-sm" onclick="devcraftDemos.openCaseStudyModal('business-website')">
+                    <span>📖 Case Study</span>
+                  </button>
+                </div>
+                <div style="display: flex; gap: 8px; margin-top: 8px; align-items: center;">
+                  <button class="btn btn-ghost btn-xs text-muted" style="flex-grow: 1; text-align: left;" onclick="devcraftDemos.startProjectFor('Nexus Corp Presence')">
+                    Start Similar Project →
+                  </button>
+                  <button type="button" class="btn-share-icon" title="Share Demo" onclick="devcraftShop.openShareModal('business-website')">
+                    🔗 Share
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+          <div class="demo-card" data-category="WEB APPS">
+            <div class="demo-media-wrap">
+              <span class="demo-badge-pill">E-Commerce • Full-Stack Store</span>
+              <img src="/assets/images/project-ecommerce.svg" alt="NovaCart E-Commerce Preview" loading="lazy" />
+            </div>
+
+            <div class="demo-card-body">
+              <h3 class="demo-title">NovaCart E-Commerce</h3>
+              <div class="demo-subtitle">Complete Digital Commerce Store</div>
+              <p class="demo-desc">Modern e-commerce platform with reactive product filtering, slide-over cart drawer, instant promo code validation, and a simulated 3-step checkout.</p>
+
+              <!-- Metrics Strip -->
+              <div class="demo-metrics-strip">
+                
+                  <div>
+                    <div class="demo-metric-val text-gradient">-42%</div>
+                    <div class="demo-metric-lbl">Checkout Abandonment</div>
+                  </div>
+                
+                  <div>
+                    <div class="demo-metric-val text-gradient">18ms</div>
+                    <div class="demo-metric-lbl">Cart Speed</div>
+                  </div>
+                
+                  <div>
+                    <div class="demo-metric-val text-gradient">10k+</div>
+                    <div class="demo-metric-lbl">Catalog Items</div>
+                  </div>
+                
+              </div>
+
+              <!-- Tech Tags -->
+              <div class="service-tech-pills" style="margin-bottom: 16px;">
+                <span class="tech-tag">React</span><span class="tech-tag">Node.js</span><span class="tech-tag">Express</span><span class="tech-tag">Stripe</span>
+              </div>
+
+              <!-- Actions -->
+              <div class="demo-card-actions">
+                <div class="demo-btn-group-row">
+                  <button class="btn btn-primary btn-sm" onclick="devcraftDemos.openDemoModal('novacart')">
+                    <span>⚡ View Live Demo</span>
+                  </button>
+                  <button class="btn btn-outline btn-sm" onclick="devcraftDemos.openCaseStudyModal('novacart')">
+                    <span>📖 Case Study</span>
+                  </button>
+                </div>
+                <div style="display: flex; gap: 8px; margin-top: 8px; align-items: center;">
+                  <button class="btn btn-ghost btn-xs text-muted" style="flex-grow: 1; text-align: left;" onclick="devcraftDemos.startProjectFor('NovaCart E-Commerce')">
+                    Start Similar Project →
+                  </button>
+                  <button type="button" class="btn-share-icon" title="Share Demo" onclick="devcraftShop.openShareModal('novacart')">
+                    🔗 Share
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+          <div class="demo-card" data-category="BUSINESS SOFTWARE">
+            <div class="demo-media-wrap">
+              <span class="demo-badge-pill">Booking Engine • Web & Mobile</span>
+              <img src="/assets/images/project-api.svg" alt="TimeSlot Pro Preview" loading="lazy" />
+            </div>
+
+            <div class="demo-card-body">
+              <h3 class="demo-title">TimeSlot Pro</h3>
+              <div class="demo-subtitle">Appointment & Booking System</div>
+              <p class="demo-desc">Automated appointment scheduling suite with timezone detection, real-time date/slot availability picker, and calendar invitation sync.</p>
+
+              <!-- Metrics Strip -->
+              <div class="demo-metrics-strip">
+                
+                  <div>
+                    <div class="demo-metric-val text-gradient"><2%</div>
+                    <div class="demo-metric-lbl">No-Show Rate</div>
+                  </div>
+                
+                  <div>
+                    <div class="demo-metric-val text-gradient">35s</div>
+                    <div class="demo-metric-lbl">Booking Time</div>
+                  </div>
+                
+                  <div>
+                    <div class="demo-metric-val text-gradient">Instant</div>
+                    <div class="demo-metric-lbl">Sync Latency</div>
+                  </div>
+                
+              </div>
+
+              <!-- Tech Tags -->
+              <div class="service-tech-pills" style="margin-bottom: 16px;">
+                <span class="tech-tag">Next.js</span><span class="tech-tag">TypeScript</span><span class="tech-tag">Google Calendar API</span><span class="tech-tag">Twilio SMS</span>
+              </div>
+
+              <!-- Actions -->
+              <div class="demo-card-actions">
+                <div class="demo-btn-group-row">
+                  <button class="btn btn-primary btn-sm" onclick="devcraftDemos.openDemoModal('timeslot-pro')">
+                    <span>⚡ View Live Demo</span>
+                  </button>
+                  <button class="btn btn-outline btn-sm" onclick="devcraftDemos.openCaseStudyModal('timeslot-pro')">
+                    <span>📖 Case Study</span>
+                  </button>
+                </div>
+                <div style="display: flex; gap: 8px; margin-top: 8px; align-items: center;">
+                  <button class="btn btn-ghost btn-xs text-muted" style="flex-grow: 1; text-align: left;" onclick="devcraftDemos.startProjectFor('TimeSlot Pro')">
+                    Start Similar Project →
+                  </button>
+                  <button type="button" class="btn-share-icon" title="Share Demo" onclick="devcraftShop.openShareModal('timeslot-pro')">
+                    🔗 Share
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+          <div class="demo-card" data-category="DASHBOARDS">
+            <div class="demo-media-wrap">
+              <span class="demo-badge-pill">Enterprise Dashboard • Full Operations</span>
+              <img src="/assets/images/project-dashboard.svg" alt="Nexus Admin Dashboard Preview" loading="lazy" />
+            </div>
+
+            <div class="demo-card-body">
+              <h3 class="demo-title">Nexus Admin Dashboard</h3>
+              <div class="demo-subtitle">Enterprise Analytics & Operations</div>
+              <p class="demo-desc">Mission-control admin dashboard featuring live metrics, interactive SVG revenue charts, user access management, and simulated system health gauges.</p>
+
+              <!-- Metrics Strip -->
+              <div class="demo-metrics-strip">
+                
+                  <div>
+                    <div class="demo-metric-val text-gradient">50k/sec</div>
+                    <div class="demo-metric-lbl">Data Ingestion</div>
+                  </div>
+                
+                  <div>
+                    <div class="demo-metric-val text-gradient">12ms</div>
+                    <div class="demo-metric-lbl">Query Latency</div>
+                  </div>
+                
+                  <div>
+                    <div class="demo-metric-val text-gradient">99.99%</div>
+                    <div class="demo-metric-lbl">Uptime</div>
+                  </div>
+                
+              </div>
+
+              <!-- Tech Tags -->
+              <div class="service-tech-pills" style="margin-bottom: 16px;">
+                <span class="tech-tag">React</span><span class="tech-tag">TypeScript</span><span class="tech-tag">Node.js</span><span class="tech-tag">PostgreSQL</span>
+              </div>
+
+              <!-- Actions -->
+              <div class="demo-card-actions">
+                <div class="demo-btn-group-row">
+                  <button class="btn btn-primary btn-sm" onclick="devcraftDemos.openDemoModal('nexus-admin')">
+                    <span>⚡ View Live Demo</span>
+                  </button>
+                  <button class="btn btn-outline btn-sm" onclick="devcraftDemos.openCaseStudyModal('nexus-admin')">
+                    <span>📖 Case Study</span>
+                  </button>
+                </div>
+                <div style="display: flex; gap: 8px; margin-top: 8px; align-items: center;">
+                  <button class="btn btn-ghost btn-xs text-muted" style="flex-grow: 1; text-align: left;" onclick="devcraftDemos.startProjectFor('Nexus Admin Dashboard')">
+                    Start Similar Project →
+                  </button>
+                  <button type="button" class="btn-share-icon" title="Share Demo" onclick="devcraftShop.openShareModal('nexus-admin')">
+                    🔗 Share
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+          <div class="demo-card" data-category="AUTOMATION">
+            <div class="demo-media-wrap">
+              <span class="demo-badge-pill">AI Automation • Workflow Engine</span>
+              <img src="/assets/images/project-api.svg" alt="FlowCraft AI Preview" loading="lazy" />
+            </div>
+
+            <div class="demo-card-body">
+              <h3 class="demo-title">FlowCraft AI</h3>
+              <div class="demo-subtitle">Workflow & Prompt Automation Suite</div>
+              <p class="demo-desc">Visual workflow automation platform connecting webhook triggers, LLM processing nodes, and multi-channel actions with step-by-step execution simulation.</p>
+
+              <!-- Metrics Strip -->
+              <div class="demo-metrics-strip">
+                
+                  <div>
+                    <div class="demo-metric-val text-gradient">1.2M+</div>
+                    <div class="demo-metric-lbl">Workflows Executed</div>
+                  </div>
+                
+                  <div>
+                    <div class="demo-metric-val text-gradient">450 hrs</div>
+                    <div class="demo-metric-lbl">Time Saved</div>
+                  </div>
+                
+                  <div>
+                    <div class="demo-metric-val text-gradient"><0.01%</div>
+                    <div class="demo-metric-lbl">Error Rate</div>
+                  </div>
+                
+              </div>
+
+              <!-- Tech Tags -->
+              <div class="service-tech-pills" style="margin-bottom: 16px;">
+                <span class="tech-tag">Node.js</span><span class="tech-tag">React Flow</span><span class="tech-tag">OpenAI API</span><span class="tech-tag">BullMQ</span>
+              </div>
+
+              <!-- Actions -->
+              <div class="demo-card-actions">
+                <div class="demo-btn-group-row">
+                  <button class="btn btn-primary btn-sm" onclick="devcraftDemos.openDemoModal('flowcraft-ai')">
+                    <span>⚡ View Live Demo</span>
+                  </button>
+                  <button class="btn btn-outline btn-sm" onclick="devcraftDemos.openCaseStudyModal('flowcraft-ai')">
+                    <span>📖 Case Study</span>
+                  </button>
+                </div>
+                <div style="display: flex; gap: 8px; margin-top: 8px; align-items: center;">
+                  <button class="btn btn-ghost btn-xs text-muted" style="flex-grow: 1; text-align: left;" onclick="devcraftDemos.startProjectFor('FlowCraft AI')">
+                    Start Similar Project →
+                  </button>
+                  <button type="button" class="btn-share-icon" title="Share Demo" onclick="devcraftShop.openShareModal('flowcraft-ai')">
+                    🔗 Share
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        
       </div>
     </div>
   </section>
   
     
-  <section class="section" id="why-devcraft">
+  <section class="section" id="demo-lab" style="background: rgba(255, 255, 255, 0.01);">
     <div class="container">
       <div class="section-header text-center">
-        <div class="section-badge">The DevCraft Difference</div>
-        <h2 class="section-title">Why Ambitious Teams <span class="text-gradient">Choose DevCraft</span></h2>
+        <div class="section-badge">Direct Application Launchpad</div>
+        <h2 class="section-title">Interactive <span class="text-gradient">Demo Lab</span></h2>
         <p class="section-desc">
-          We combine the velocity of a boutique dev lab with the engineering standards of an enterprise tech consultancy.
+          Instant one-click access to all 10 interactive application simulators. Experience genuine user flows, real-time data calculations, and simulated state changes.
         </p>
       </div>
 
-      <div class="why-grid">
+      <div class="demo-lab-tiles-grid">
         
-          <div class="why-card">
-            <div class="why-icon">💎</div>
-            <h3 class="service-title">Production-Grade Code</h3>
-            <p class="service-desc">Zero shortcuts. We write clean, strongly typed TypeScript and modular code architectures designed to survive heavy scale and team growth.</p>
+          <div class="demo-lab-tile" onclick="devcraftDemos.openDemoModal('cravex')">
+            <div class="tile-header">
+              <span class="tile-number">01</span>
+              <span class="status-pill-online"><span class="status-dot"></span> Interactive</span>
+            </div>
+            <h4 class="tile-title">CraveX</h4>
+            <div class="tile-sub">Food Delivery Mobile Experience</div>
+            <div class="tile-action">
+              <span>Launch Simulator</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </div>
           </div>
         
-          <div class="why-card">
-            <div class="why-icon">⚡</div>
-            <h3 class="service-title">Rapid Agile Sprints</h3>
-            <p class="service-desc">Bi-weekly working releases with interactive staging URLs. You test real features constantly, keeping surprises to absolute zero.</p>
+          <div class="demo-lab-tile" onclick="devcraftDemos.openDemoModal('fitcore')">
+            <div class="tile-header">
+              <span class="tile-number">02</span>
+              <span class="status-pill-online"><span class="status-dot"></span> Interactive</span>
+            </div>
+            <h4 class="tile-title">FitCore</h4>
+            <div class="tile-sub">Gym & Fitness Management Platform</div>
+            <div class="tile-action">
+              <span>Launch Simulator</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </div>
           </div>
         
-          <div class="why-card">
-            <div class="why-icon">🌐</div>
-            <h3 class="service-title">Full-Stack Mastery</h3>
-            <p class="service-desc">Seamless end-to-end execution across React Native mobile apps, Next.js web applications, high-concurrency Node.js APIs, and AI models.</p>
+          <div class="demo-lab-tile" onclick="devcraftDemos.openDemoModal('edunova')">
+            <div class="tile-header">
+              <span class="tile-number">03</span>
+              <span class="status-pill-online"><span class="status-dot"></span> Interactive</span>
+            </div>
+            <h4 class="tile-title">EduNova</h4>
+            <div class="tile-sub">Interactive Learning Management System</div>
+            <div class="tile-action">
+              <span>Launch Simulator</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </div>
           </div>
         
-          <div class="why-card">
-            <div class="why-icon">🚀</div>
-            <h3 class="service-title">Sub-Second Performance</h3>
-            <p class="service-desc">Obsessive optimization: Redis caching, relational database indexing, and adaptive CDNs yielding sub-50ms latency and 99/100 Lighthouse scores.</p>
+          <div class="demo-lab-tile" onclick="devcraftDemos.openDemoModal('estatex')">
+            <div class="tile-header">
+              <span class="tile-number">04</span>
+              <span class="status-pill-online"><span class="status-dot"></span> Interactive</span>
+            </div>
+            <h4 class="tile-title">EstateX</h4>
+            <div class="tile-sub">Modern Real Estate Platform</div>
+            <div class="tile-action">
+              <span>Launch Simulator</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </div>
           </div>
         
-          <div class="why-card">
-            <div class="why-icon">🔒</div>
-            <h3 class="service-title">100% IP & Code Ownership</h3>
-            <p class="service-desc">You own everything we build. Full copyright transfer, clean Git repositories, complete documentation, and zero proprietary lock-in.</p>
+          <div class="demo-lab-tile" onclick="devcraftDemos.openDemoModal('jarvis-ai')">
+            <div class="tile-header">
+              <span class="tile-number">05</span>
+              <span class="status-pill-online"><span class="status-dot"></span> Interactive</span>
+            </div>
+            <h4 class="tile-title">Jarvis AI</h4>
+            <div class="tile-sub">Intelligent Multi-Agent Workspace</div>
+            <div class="tile-action">
+              <span>Launch Simulator</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </div>
           </div>
         
-          <div class="why-card">
-            <div class="why-icon">⏰</div>
-            <h3 class="service-title">24/7 DevOps & Uptime</h3>
-            <p class="service-desc">Continuous cloud uptime monitoring, self-healing Docker containers, automated SSL renewals, and rapid developer response SLAs.</p>
+          <div class="demo-lab-tile" onclick="devcraftDemos.openDemoModal('business-website')">
+            <div class="tile-header">
+              <span class="tile-number">06</span>
+              <span class="status-pill-online"><span class="status-dot"></span> Interactive</span>
+            </div>
+            <h4 class="tile-title">Nexus Corp Presence</h4>
+            <div class="tile-sub">Modern Agency & Corporate Studio</div>
+            <div class="tile-action">
+              <span>Launch Simulator</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </div>
+          </div>
+        
+          <div class="demo-lab-tile" onclick="devcraftDemos.openDemoModal('novacart')">
+            <div class="tile-header">
+              <span class="tile-number">07</span>
+              <span class="status-pill-online"><span class="status-dot"></span> Interactive</span>
+            </div>
+            <h4 class="tile-title">NovaCart E-Commerce</h4>
+            <div class="tile-sub">Complete Digital Commerce Store</div>
+            <div class="tile-action">
+              <span>Launch Simulator</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </div>
+          </div>
+        
+          <div class="demo-lab-tile" onclick="devcraftDemos.openDemoModal('timeslot-pro')">
+            <div class="tile-header">
+              <span class="tile-number">08</span>
+              <span class="status-pill-online"><span class="status-dot"></span> Interactive</span>
+            </div>
+            <h4 class="tile-title">TimeSlot Pro</h4>
+            <div class="tile-sub">Appointment & Booking System</div>
+            <div class="tile-action">
+              <span>Launch Simulator</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </div>
+          </div>
+        
+          <div class="demo-lab-tile" onclick="devcraftDemos.openDemoModal('nexus-admin')">
+            <div class="tile-header">
+              <span class="tile-number">09</span>
+              <span class="status-pill-online"><span class="status-dot"></span> Interactive</span>
+            </div>
+            <h4 class="tile-title">Nexus Admin Dashboard</h4>
+            <div class="tile-sub">Enterprise Analytics & Operations</div>
+            <div class="tile-action">
+              <span>Launch Simulator</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </div>
+          </div>
+        
+          <div class="demo-lab-tile" onclick="devcraftDemos.openDemoModal('flowcraft-ai')">
+            <div class="tile-header">
+              <span class="tile-number">010</span>
+              <span class="status-pill-online"><span class="status-dot"></span> Interactive</span>
+            </div>
+            <h4 class="tile-title">FlowCraft AI</h4>
+            <div class="tile-sub">Workflow & Prompt Automation Suite</div>
+            <div class="tile-action">
+              <span>Launch Simulator</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </div>
           </div>
         
       </div>
@@ -298,110 +947,72 @@
   </section>
   
     
-  <section class="section" id="process" style="background: rgba(255, 255, 255, 0.01);">
+  <section class="section" id="case-studies" style="background: rgba(255, 255, 255, 0.01);">
     <div class="container">
       <div class="section-header text-center">
-        <div class="section-badge">Predictable Execution</div>
-        <h2 class="section-title">Our 6-Step <span class="text-gradient">Engineering Lifecycle</span></h2>
+        <div class="section-badge">Demonstrated Impact</div>
+        <h2 class="section-title">Case Studies & <span class="text-gradient">Proven Outcomes</span></h2>
         <p class="section-desc">
-          A disciplined, transparent software delivery framework that takes your project from napkin sketch to rock-solid production reality.
+          See how DevCraft transforms business challenges into high-performing, revenue-generating software systems.
         </p>
       </div>
 
-      <div class="process-grid">
+      <div class="case-studies-spotlight-grid">
         
-          <div class="process-card">
-            <div class="process-num">01</div>
-            <h3 class="service-title">Discovery & Scope</h3>
-            <p class="service-desc">We dissect your business goals, user journeys, functional constraints, and technical feasibility to produce a fixed timeline and milestone roadmap.</p>
-          </div>
-        
-          <div class="process-card">
-            <div class="process-num">02</div>
-            <h3 class="service-title">Architecture & UI/UX</h3>
-            <p class="service-desc">We design database schemas, REST/WebSocket API contracts, and high-fidelity interactive component wireframes before writing code.</p>
-          </div>
-        
-          <div class="process-card">
-            <div class="process-num">03</div>
-            <h3 class="service-title">Agile Full-Stack Sprints</h3>
-            <p class="service-desc">Development in 1-to-2 week sprints with CI/CD continuous deployment to password-protected staging preview environments.</p>
-          </div>
-        
-          <div class="process-card">
-            <div class="process-num">04</div>
-            <h3 class="service-title">Rigorous QA & Security</h3>
-            <p class="service-desc">Comprehensive testing: unit suites, responsive cross-device validation, OWASP security audits, and load/stress testing.</p>
-          </div>
-        
-          <div class="process-card">
-            <div class="process-num">05</div>
-            <h3 class="service-title">Cloud Production Launch</h3>
-            <p class="service-desc">Zero-downtime deployment to Render, AWS, or Vercel, paired with automated SSL certificates, CDN caching, and domain DNS routing.</p>
-          </div>
-        
-          <div class="process-card">
-            <div class="process-num">06</div>
-            <h3 class="service-title">Continuous Scale & Support</h3>
-            <p class="service-desc">Post-launch 24/7 health pings, database telemetry optimization, regular backups, and seamless feature iteration.</p>
-          </div>
-        
-      </div>
-    </div>
-  </section>
-  
-    
-  <section class="section" id="technologies">
-    <div class="container">
-      <div class="section-header text-center">
-        <div class="section-badge">Production Tooling</div>
-        <h2 class="section-title">Modern <span class="text-gradient">Technology Stack</span></h2>
-        <p class="section-desc">
-          We deliberately choose proven, future-proof technologies that offer exceptional performance, active ecosystem support, and zero technical debt.
-        </p>
-      </div>
-
-      <div class="tech-category-grid">
-        
-          <div class="tech-cat-card">
-            <h3 class="tech-cat-title">Frontend & UI</h3>
-            <div class="tech-items-wrap">
-              <span class="tech-badge-item">React 18</span><span class="tech-badge-item">Next.js 14</span><span class="tech-badge-item">TypeScript</span><span class="tech-badge-item">TailwindCSS</span><span class="tech-badge-item">Three.js WebGL</span><span class="tech-badge-item">Vite</span><span class="tech-badge-item">HTML5/SCSS</span><span class="tech-badge-item">Framer Motion</span>
+          <div class="cs-spotlight-card">
+            <div class="cs-spot-header">
+              <span class="badge-subtle">CraveX Logistics Corp</span>
+              <h3 class="service-title" style="margin-top: 8px;">Native Android & React Native Delivery Platform</h3>
+            </div>
+            <p class="service-desc">Engineered sub-50ms live courier GPS tracking that transformed food delivery conversions and eliminated drop-offs.</p>
+            <div class="cs-spot-metrics">
+              <span class="cs-pill">83% Faster App Launch</span><span class="cs-pill">64% Conversion Surge</span><span class="cs-pill">4.9 ★ Rating</span>
+            </div>
+            <div class="cs-spot-actions">
+              <button class="btn btn-outline btn-sm" onclick="devcraftDemos.openCaseStudyModal('cravex')">
+                Read Detailed Case Study →
+              </button>
+              <button class="btn btn-primary btn-sm" onclick="devcraftDemos.openDemoModal('cravex')">
+                Launch Live Demo
+              </button>
             </div>
           </div>
         
-          <div class="tech-cat-card">
-            <h3 class="tech-cat-title">Mobile Applications</h3>
-            <div class="tech-items-wrap">
-              <span class="tech-badge-item">React Native</span><span class="tech-badge-item">Android SDK</span><span class="tech-badge-item">Kotlin</span><span class="tech-badge-item">Flutter</span><span class="tech-badge-item">Jetpack Compose</span><span class="tech-badge-item">Expo</span><span class="tech-badge-item">Room DB</span><span class="tech-badge-item">iOS Swift Bridge</span>
+          <div class="cs-spotlight-card">
+            <div class="cs-spot-header">
+              <span class="badge-subtle">FitCore Franchises</span>
+              <h3 class="service-title" style="margin-top: 8px;">Gym & Fitness Operations SaaS</h3>
+            </div>
+            <p class="service-desc">Replaced paper registers and WhatsApp renewals with automated Stripe subscription billing and contactless QR turnstile passes.</p>
+            <div class="cs-spot-metrics">
+              <span class="cs-pill">₹3.8L Saved Monthly</span><span class="cs-pill">0.4s Check-in Speed</span><span class="cs-pill">45+ Gym Locations</span>
+            </div>
+            <div class="cs-spot-actions">
+              <button class="btn btn-outline btn-sm" onclick="devcraftDemos.openCaseStudyModal('fitcore')">
+                Read Detailed Case Study →
+              </button>
+              <button class="btn btn-primary btn-sm" onclick="devcraftDemos.openDemoModal('fitcore')">
+                Launch Live Demo
+              </button>
             </div>
           </div>
         
-          <div class="tech-cat-card">
-            <h3 class="tech-cat-title">Backend & Real-Time APIs</h3>
-            <div class="tech-items-wrap">
-              <span class="tech-badge-item">Node.js</span><span class="tech-badge-item">Express.js</span><span class="tech-badge-item">Python FastAPI</span><span class="tech-badge-item">Socket.IO</span><span class="tech-badge-item">GraphQL</span><span class="tech-badge-item">BullMQ Workers</span><span class="tech-badge-item">RESTful Services</span><span class="tech-badge-item">JWT/OAuth2</span>
+          <div class="cs-spotlight-card">
+            <div class="cs-spot-header">
+              <span class="badge-subtle">Apex Software Labs</span>
+              <h3 class="service-title" style="margin-top: 8px;">Enterprise AI Assistant Workspace</h3>
             </div>
-          </div>
-        
-          <div class="tech-cat-card">
-            <h3 class="tech-cat-title">Databases & Storage</h3>
-            <div class="tech-items-wrap">
-              <span class="tech-badge-item">PostgreSQL</span><span class="tech-badge-item">MongoDB</span><span class="tech-badge-item">Redis In-Memory</span><span class="tech-badge-item">Prisma ORM</span><span class="tech-badge-item">Pinecone Vector DB</span><span class="tech-badge-item">AWS S3</span><span class="tech-badge-item">SQLite/Room</span>
+            <p class="service-desc">Built secure private multi-agent engineering assistant integrated with OpenAI models and corporate vector search.</p>
+            <div class="cs-spot-metrics">
+              <span class="cs-pill">11.5 hrs Saved/Dev</span><span class="cs-pill">42% Higher Test Coverage</span><span class="cs-pill">500k+ Inferences</span>
             </div>
-          </div>
-        
-          <div class="tech-cat-card">
-            <h3 class="tech-cat-title">Cloud & DevOps Infrastructure</h3>
-            <div class="tech-items-wrap">
-              <span class="tech-badge-item">Docker Containers</span><span class="tech-badge-item">Render Cloud</span><span class="tech-badge-item">AWS (EC2, S3, CloudFront)</span><span class="tech-badge-item">Vercel</span><span class="tech-badge-item">Cloudflare CDN</span><span class="tech-badge-item">GitHub Actions CI/CD</span><span class="tech-badge-item">Linux / NGINX</span>
-            </div>
-          </div>
-        
-          <div class="tech-cat-card">
-            <h3 class="tech-cat-title">AI, LLMs & Automation</h3>
-            <div class="tech-items-wrap">
-              <span class="tech-badge-item">OpenAI GPT-4 API</span><span class="tech-badge-item">LangChain Agents</span><span class="tech-badge-item">Vector Embeddings</span><span class="tech-badge-item">Anthropic Claude</span><span class="tech-badge-item">Puppeteer Scraping</span><span class="tech-badge-item">Twilio Webhooks</span><span class="tech-badge-item">Stripe Payments</span>
+            <div class="cs-spot-actions">
+              <button class="btn btn-outline btn-sm" onclick="devcraftDemos.openCaseStudyModal('jarvis-ai')">
+                Read Detailed Case Study →
+              </button>
+              <button class="btn btn-primary btn-sm" onclick="devcraftDemos.openDemoModal('jarvis-ai')">
+                Launch Live Demo
+              </button>
             </div>
           </div>
         
@@ -748,7 +1359,7 @@
           Thank you for reaching out to <strong>DEVCRAFT</strong>. Our lead software architect will review your project requirements and connect with you via email and WhatsApp within 24 hours.
         </p>
         <div style="background: rgba(255,255,255,0.04); border-radius: 10px; padding: 12px; margin: 20px 0; font-family: var(--font-mono); font-size: 0.85rem;" id="inquiry-ref-box">
-          Inquiry Ref: DC-INQ-185033
+          Inquiry Ref: DC-INQ-881181
         </div>
         <button class="btn btn-primary btn-block" onclick="devcraftDemos.hideModal('inquiry-success-modal')">
           Back to DevCraft Studio
