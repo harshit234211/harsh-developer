@@ -12,7 +12,7 @@ services:
       - key: ADMIN_EMAIL
         value: shakyaharshit683@gmail.com
       - key: ADMIN_PASSWORD
-        value: harsshit9696
+        value: harshit9090
       - key: JWT_SECRET
         generateValue: true
       - key: DEVELOPER_EMAIL

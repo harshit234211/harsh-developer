@@ -114,13 +114,13 @@ MONGODB_URI=
 
 # Admin Login Credentials
 ADMIN_EMAIL=shakyaharshit683@gmail.com
-ADMIN_PASSWORD=harsshit9696
+ADMIN_PASSWORD=harshit9090
 JWT_SECRET=harsh_developer_jwt_secret_token_secure_key_2026_production
 JWT_EXPIRES_IN=7d
 
 # Developer Contact Information
 DEVELOPER_EMAIL=shakyaharshit683@gmail.com
-DEVELOPER_WHATSAPP=+918791984082
+DEVELOPER_WHATSAPP=+918630976928
 DEVELOPER_PHONE=+917017022966
 DEVELOPER_INSTAGRAM=https://www.instagram.com/kiro_mage/
 DEVELOPER_TELEGRAM=https://t.me/harshuuu1123

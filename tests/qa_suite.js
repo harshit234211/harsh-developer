@@ -113,7 +113,7 @@ async function runQaSuite() {
     // 6. Test Admin Login (Real Valid Credentials)
     const loginRes = await request('POST', '/api/admin/login', {
       email: 'shakyaharshit683@gmail.com',
-      password: 'harsshit9696'
+      password: 'harshit9090'
     });
     assert(loginRes.statusCode === 200 && loginRes.data.token, 'STEP 6: Admin Login Succeeded with JWT Issued');
     adminToken = loginRes.data.token;

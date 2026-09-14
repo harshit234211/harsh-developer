@@ -11,7 +11,7 @@ const config = {
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '7d',
   couponPepper: process.env.COUPON_SECRET_PEPPER || 'devcraft_secure_coupon_pepper_hash_salt_2026_x89a',
   adminEmail: process.env.ADMIN_EMAIL || 'shakyaharshit683@gmail.com',
-  adminPassword: process.env.ADMIN_PASSWORD || 'harsshit9696',
+  adminPassword: process.env.ADMIN_PASSWORD || 'harshit9090',
   corsOrigin: process.env.CORS_ORIGIN || '*',
   publicSiteUrl: process.env.PUBLIC_SITE_URL || 'https://kiromage.shop',
   tranzUpi: {
@@ -19,7 +19,7 @@ const config = {
     merchantId: process.env.TRANZ_UPI_MERCHANT_ID || 'DEVCRAFT_MERCHANT',
     secret: process.env.TRANZ_UPI_SECRET || '',
     baseUrl: process.env.TRANZ_UPI_BASE_URL || 'https://tranzupi.com',
-    merchantVpa: process.env.TRANZ_UPI_VPA || 'devcraft@upi'
+    merchantVpa: process.env.TRANZ_UPI_VPA || '8630976928@upi'
   },
   developer: {
     name: 'Harshit',
@@ -27,7 +27,7 @@ const config = {
     tagline: 'Ideas → Code → Real Solutions',
     role: 'Lead Software Architect',
     email: process.env.DEVELOPER_EMAIL || 'shakyaharshit683@gmail.com',
-    whatsapp: process.env.DEVELOPER_WHATSAPP || '+918791984082',
+    whatsapp: process.env.DEVELOPER_WHATSAPP || '+918630976928',
     phone: process.env.DEVELOPER_PHONE || '+917017022966',
     instagram: process.env.DEVELOPER_INSTAGRAM || 'https://www.instagram.com/kiro_mage/',
     telegram: process.env.DEVELOPER_TELEGRAM || 'https://t.me/harshuuu1123',
