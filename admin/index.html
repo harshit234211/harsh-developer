@@ -136,6 +136,54 @@
       <div id="section-overview" class="admin-section active">
         <div class="stats-grid">
           <div class="stat-card">
+            <div class="stat-icon icon-green">💰</div>
+            <div class="stat-info">
+              <span class="stat-val" id="stat-total-revenue">₹0</span>
+              <span class="stat-label">Total Revenue</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon icon-blue">📦</div>
+            <div class="stat-info">
+              <span class="stat-val" id="stat-products-sold">0</span>
+              <span class="stat-label">Products Sold</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon icon-purple">🛒</div>
+            <div class="stat-info">
+              <span class="stat-val" id="stat-total-orders">0</span>
+              <span class="stat-label">Total Orders</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon icon-green">✅</div>
+            <div class="stat-info">
+              <span class="stat-val" id="stat-paid-orders">0</span>
+              <span class="stat-label">Successful Purchases</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon icon-yellow">⏳</div>
+            <div class="stat-info">
+              <span class="stat-val" id="stat-pending-orders">0</span>
+              <span class="stat-label">Pending Orders</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon icon-purple">👤</div>
+            <div class="stat-info">
+              <span class="stat-val" id="stat-total-clients">0</span>
+              <span class="stat-label">Registered Users</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
             <div class="stat-icon icon-blue">📋</div>
             <div class="stat-info">
               <span class="stat-val" id="stat-total-enquiries">0</span>
@@ -150,37 +198,30 @@
               <span class="stat-label">New Enquiries</span>
             </div>
           </div>
+        </div>
 
-          <div class="stat-card">
-            <div class="stat-icon icon-purple">🔄</div>
-            <div class="stat-info">
-              <span class="stat-val" id="stat-in-progress">0</span>
-              <span class="stat-label">In Progress</span>
-            </div>
+        <!-- Recent Orders Overview Table -->
+        <div style="background: var(--admin-card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-top: 24px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <h3 style="font-size: 1.15rem; font-weight: 700;">Recent Client Orders &amp; Purchases</h3>
+            <button onclick="document.querySelector('.admin-nav-item[data-section=orders-roster]').click()" class="action-btn" style="padding: 6px 14px; font-size: 0.82rem;">View Full Orders Roster →</button>
           </div>
-
-          <div class="stat-card">
-            <div class="stat-icon icon-green">✅</div>
-            <div class="stat-info">
-              <span class="stat-val" id="stat-completed">0</span>
-              <span class="stat-label">Completed</span>
-            </div>
-          </div>
-
-          <div class="stat-card">
-            <div class="stat-icon icon-blue">🚀</div>
-            <div class="stat-info">
-              <span class="stat-val" id="stat-total-projects">0</span>
-              <span class="stat-label">Total Projects</span>
-            </div>
-          </div>
-
-          <div class="stat-card">
-            <div class="stat-icon icon-purple">👤</div>
-            <div class="stat-info">
-              <span class="stat-val" id="stat-total-clients">0</span>
-              <span class="stat-label">Registered Clients</span>
-            </div>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Customer</th>
+                  <th>Product</th>
+                  <th>Amount</th>
+                  <th>Payment Status</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody id="overview-recent-orders-body">
+                <tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 18px;">Loading orders...</td></tr>
+              </tbody>
+            </table>
           </div>
         </div>
 

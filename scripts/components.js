@@ -135,8 +135,6 @@ const navbar = (active = 'home') => `
         <a href="/profile" class="mobile-nav-link">Profile &amp; Settings <span>⚙️</span></a>
         <a href="javascript:void(0)" onclick="DevCraftAuth.logout()" class="mobile-nav-link" style="color: #ef4444;">Sign Out <span>🚪</span></a>
       </div>
-
-      <a href="/admin-login" class="mobile-nav-link" style="color: var(--warning); font-size: 0.85rem;">Studio Admin Login <span>🔒</span></a>
     </div>
 
     <!-- Mobile Theme Switcher -->
@@ -245,7 +243,6 @@ const footer = () => `
           <a href="/terms" class="footer-link">Terms of Service</a>
           <a href="/refund" class="footer-link">Refund &amp; Cancellation Policy</a>
           <a href="/license" class="footer-link">Software Licensing &amp; IP</a>
-          <a href="/admin-login" class="footer-link" style="color: var(--warning); font-weight: 600;">Studio Admin Login 🔒</a>
         </div>
       </div>
     </div>

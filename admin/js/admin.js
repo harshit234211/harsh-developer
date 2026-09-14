@@ -92,18 +92,63 @@ async function loadStats() {
     if (!res.ok) return;
     const { data } = await res.json();
 
-    document.getElementById('stat-total-enquiries').textContent = data.totalEnquiries || 0;
-    document.getElementById('stat-new-enquiries').textContent = data.newEnquiries || 0;
-    document.getElementById('stat-in-progress').textContent = data.inProgress || 0;
-    document.getElementById('stat-completed').textContent = data.completed || 0;
-    document.getElementById('stat-total-projects').textContent = data.totalProjects || 0;
+    if (document.getElementById('stat-total-revenue')) {
+      document.getElementById('stat-total-revenue').textContent = '₹' + Number(data.totalRevenue || 0).toLocaleString('en-IN');
+    }
+    if (document.getElementById('stat-products-sold')) {
+      document.getElementById('stat-products-sold').textContent = data.productsSold || 0;
+    }
+    if (document.getElementById('stat-total-orders')) {
+      document.getElementById('stat-total-orders').textContent = data.totalOrders || 0;
+    }
+    if (document.getElementById('stat-paid-orders')) {
+      document.getElementById('stat-paid-orders').textContent = data.successfulPurchases || 0;
+    }
+    if (document.getElementById('stat-pending-orders')) {
+      document.getElementById('stat-pending-orders').textContent = data.pendingOrders || 0;
+    }
     if (document.getElementById('stat-total-clients')) {
-      document.getElementById('stat-total-clients').textContent = data.totalClients || 0;
+      document.getElementById('stat-total-clients').textContent = data.totalUsers || data.totalClients || 0;
+    }
+    if (document.getElementById('stat-total-enquiries')) {
+      document.getElementById('stat-total-enquiries').textContent = data.totalEnquiries || 0;
+    }
+    if (document.getElementById('stat-new-enquiries')) {
+      document.getElementById('stat-new-enquiries').textContent = data.newEnquiries || 0;
+    }
+
+    // Render Recent Orders on Overview
+    const recentTbody = document.getElementById('overview-recent-orders-body');
+    if (recentTbody && data.recentOrders) {
+      if (data.recentOrders.length === 0) {
+        recentTbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 18px;">No orders recorded in database yet.</td></tr>';
+      } else {
+        recentTbody.innerHTML = data.recentOrders.map(o => {
+          const isPaid = o.status === 'paid' || o.paymentStatus === 'paid';
+          const badgeClass = isPaid ? 'status-pill-online' : 'status-pill-pending';
+          const badgeText = isPaid ? 'Paid' : (o.status || 'Pending');
+          return `
+            <tr>
+              <td><code style="color: var(--cyan); font-weight: 700;">${escapeHtml(o.orderId)}</code></td>
+              <td>${escapeHtml(o.clientName || 'Customer')}<br><small style="color: var(--text-muted);">${escapeHtml(o.clientEmail || '')}</small></td>
+              <td><strong>${escapeHtml(o.productName || 'Software License')}</strong></td>
+              <td style="font-weight: 700; color: #10b981;">₹${Number(o.finalAmount || 0).toLocaleString('en-IN')}</td>
+              <td><span class="${badgeClass}"><span class="status-dot"></span> ${badgeText}</span></td>
+              <td style="color: var(--text-muted); font-size: 0.8rem;">${new Date(o.createdAt).toLocaleDateString()}</td>
+            </tr>
+          `;
+        }).join('');
+      }
     }
   } catch (err) {
     console.error('Error loading stats', err);
   }
 }
+
+// Auto-poll stats every 30s
+setInterval(() => {
+  if (authToken) loadStats();
+}, 30000);
 
 // Clients Management
 async function loadClients() {

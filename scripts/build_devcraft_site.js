@@ -1342,7 +1342,7 @@ function renderClientDataScripts() {
 // ==========================================
 function buildIndexHtml() {
   const html = `<!DOCTYPE html>
-<html lang="en" data-theme="devcraft-light">
+<html lang="en" data-theme="devcraft-dark">
 <head>
   ${commonHead('DEVCRAFT Studio', 'Ideas → Code → Real Solutions. High-performance software engineering studio offering Android & mobile apps, full-stack web applications, AI automation, and cloud systems.')}
 </head>
@@ -1384,7 +1384,7 @@ function buildIndexHtml() {
 // ==========================================
 function buildServicesPage() {
   const html = `<!DOCTYPE html>
-<html lang="en" data-theme="devcraft-light">
+<html lang="en" data-theme="devcraft-dark">
 <head>
   ${commonHead('All 20 Development Services & Aptitude Hub', 'Explore DevCraft’s comprehensive catalog of 20 software development services (50% OFF) and Campus Aptitude & Placement Prep courses (30% OFF).')}
 </head>
@@ -1411,7 +1411,7 @@ function buildServicesPage() {
 
 function buildProjectsPage() {
   const html = `<!DOCTYPE html>
-<html lang="en" data-theme="devcraft-light">
+<html lang="en" data-theme="devcraft-dark">
 <head>
   ${commonHead('Interactive Demos & Portfolio', 'Explore 10 interactive application demos engineered by DevCraft across Mobile, Web, AI, and Dashboards.')}
 </head>
@@ -1438,7 +1438,7 @@ function buildProjectsPage() {
 
 function buildAboutPage() {
   const html = `<!DOCTYPE html>
-<html lang="en" data-theme="devcraft-light">
+<html lang="en" data-theme="devcraft-dark">
 <head>
   ${commonHead('About DevCraft Studio', 'Learn about DevCraft’s software engineering philosophy, lead architect Harshit, and our production standards.')}
 </head>
@@ -1466,7 +1466,7 @@ function buildAboutPage() {
 
 function buildContactPage() {
   const html = `<!DOCTYPE html>
-<html lang="en" data-theme="devcraft-light">
+<html lang="en" data-theme="devcraft-dark">
 <head>
   ${commonHead('Contact & Project Inquiry', 'Start your software project with DevCraft. Request a quote or schedule a technical scoping call.')}
 </head>
@@ -1491,7 +1491,7 @@ function buildContactPage() {
 
 function buildClientPortalPage() {
   const html = `<!DOCTYPE html>
-<html lang="en" data-theme="devcraft-light">
+<html lang="en" data-theme="devcraft-dark">
 <head>
   ${commonHead('Client Portal Login', 'Access your live DevCraft sprint milestones, staging links, invoices, and project roadmap.')}
 </head>
@@ -1539,7 +1539,7 @@ function buildClientPortalPage() {
 
 function buildAdminLoginPage() {
   const html = `<!DOCTYPE html>
-<html lang="en" data-theme="devcraft-light">
+<html lang="en" data-theme="devcraft-dark">
 <head>
   ${commonHead('Studio Admin Portal', 'DevCraft Internal Operations Cockpit & Inquiry Manager')}
 </head>
@@ -1689,7 +1689,7 @@ function buildProductsPage() {
   }).join('');
 
   const html = `<!DOCTYPE html>
-<html lang="en" data-theme="devcraft-light">
+<html lang="en" data-theme="devcraft-dark">
 <head>
   ${commonHead('All App Products & Courses (50% & 30% OFF)', 'Browse DevCraft’s complete marketplace of Android Apps, PC Software, AI Agents, Utilities, and Aptitude courses with automatic 50% & 30% discounts.')}
 </head>
@@ -1795,7 +1795,7 @@ function buildJoyaPage() {
   const joya = DEVCRAFT_PRODUCTS.find(p => p.id === 'joya-ai') || {};
 
   const html = `<!DOCTYPE html>
-<html lang="en" data-theme="devcraft-light">
+<html lang="en" data-theme="devcraft-dark">
 <head>
   ${commonHead('Joya AI — Full Source Code (Android Studio / Kotlin)', 'Customer gets the complete Joya Android source code after successful purchase. Joya AI is an autonomous on-device personal voice assistant for Android with custom wake word "Wake up Joya", WhatsApp automation, and offline neural synthesis.')}
 </head>
@@ -2027,7 +2027,7 @@ function buildJarvisPage() {
   const jarvis = DEVCRAFT_PRODUCTS.find(p => p.id === 'jarvis-ai') || {};
 
   const html = `<!DOCTYPE html>
-<html lang="en" data-theme="devcraft-light">
+<html lang="en" data-theme="devcraft-dark">
 <head>
   ${commonHead('Jarvis AI — Full Source Code & Desktop Automation Agent', 'Jarvis AI is an autonomous desktop computing assistant for PC with terminal command execution, active workspace file indexing, web scraping, and local LLM bridge. Full source code included.')}
 </head>
@@ -2223,7 +2223,7 @@ function buildAptitudePage() {
   const aptitudeProducts = DEVCRAFT_PRODUCTS.filter(p => p.type === 'aptitude' || p.category === 'Aptitude');
 
   const html = `<!DOCTYPE html>
-<html lang="en" data-theme="devcraft-light">
+<html lang="en" data-theme="devcraft-dark">
 <head>
   ${commonHead('Campus Placement & Aptitude Hub (30% OFF)', 'Crack technical interviews, quantitative aptitude, and logical puzzle rounds for TCS NQT, Infosys, Wipro, and Amazon with structured courses.')}
 </head>
@@ -2318,7 +2318,7 @@ function buildAptitudePage() {
 // ==========================================
 function buildPortfolioPage() {
   const html = `<!DOCTYPE html>
-<html lang="en" data-theme="devcraft-light">
+<html lang="en" data-theme="devcraft-dark">
 <head>
   ${commonHead('Interactive Portfolio & Live Simulators', 'Explore 10+ interactive application demos engineered by DevCraft across Mobile, Web, AI, and Dashboards.')}
 </head>
@@ -2349,7 +2349,7 @@ function buildPortfolioPage() {
 // ==========================================
 function buildCartPage() {
   const html = `<!DOCTYPE html>
-<html lang="en" data-theme="devcraft-light">
+<html lang="en" data-theme="devcraft-dark">
 <head>
   ${commonHead('Shopping Cart & Secure Checkout', 'Review your selected DevCraft products and services, apply cryptographic coupons, and complete your order.')}
 </head>
@@ -2455,7 +2455,7 @@ function buildLegalPages() {
 
   legalPages.forEach(p => {
     const html = `<!DOCTYPE html>
-<html lang="en" data-theme="devcraft-light">
+<html lang="en" data-theme="devcraft-dark">
 <head>
   ${commonHead(p.title, 'Official policy and legal documentation for DevCraft Studio.')}
 </head>
@@ -2488,7 +2488,7 @@ function buildLegalPages() {
 
 function buildFaqPage() {
   const html = `<!DOCTYPE html>
-<html lang="en" data-theme="devcraft-light">
+<html lang="en" data-theme="devcraft-dark">
 <head>
   ${commonHead('Frequently Asked Questions (FAQ) & Knowledge Base', 'Comprehensive questions and answers regarding DevCraft software development sprints, source code ownership, Joya & Jarvis AI, Tranz UPI payments, and referral commissions.', '/faq')}
 </head>
@@ -2514,7 +2514,7 @@ function buildFaqPage() {
 
 function build404Page() {
   const html = `<!DOCTYPE html>
-<html lang="en" data-theme="devcraft-light">
+<html lang="en" data-theme="devcraft-dark">
 <head>
   ${commonHead('404 - Page Not Found', 'The requested page or resource could not be found on DevCraft Studio.', '/404')}
 </head>
@@ -2752,7 +2752,7 @@ function buildServiceSubPages() {
 
   subServices.forEach(srv => {
     const html = `<!DOCTYPE html>
-<html lang="en" data-theme="devcraft-light">
+<html lang="en" data-theme="devcraft-dark">
 <head>
   ${commonHead(`${srv.name} Services`, srv.subtitle, `/services/${srv.slug}`)}
 </head>

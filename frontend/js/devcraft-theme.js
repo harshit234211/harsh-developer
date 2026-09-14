@@ -9,17 +9,17 @@
   var STORAGE_KEY = 'devcraft_theme';
 
   function getSystemPreference() {
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return 'devcraft-dark';
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+      return 'devcraft-light';
     }
-    return 'devcraft-light';
+    return 'devcraft-dark';
   }
 
   function getSavedTheme() {
     try {
-      return localStorage.getItem(STORAGE_KEY) || 'system';
+      return localStorage.getItem(STORAGE_KEY) || 'devcraft-dark';
     } catch (_) {
-      return 'system';
+      return 'devcraft-dark';
     }
   }
 
@@ -27,10 +27,10 @@
     if (preference === 'system') {
       return getSystemPreference();
     }
-    if (preference === 'dark' || preference === 'devcraft-dark') {
-      return 'devcraft-dark';
+    if (preference === 'light' || preference === 'devcraft-light') {
+      return 'devcraft-light';
     }
-    return 'devcraft-light';
+    return 'devcraft-dark';
   }
 
   function applyTheme(preference) {

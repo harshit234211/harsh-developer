@@ -172,14 +172,35 @@ const deleteEnquiry = async (req, res, next) => {
 const getStats = async (req, res, next) => {
   try {
     const totalEnquiries = await dbService.Enquiry.countDocuments();
-    const newEnquiries = await dbService.Enquiry.countDocuments({ status: 'New' });
-    const inProgress = await dbService.Enquiry.countDocuments({ status: 'In Progress' });
-    const completed = await dbService.Enquiry.countDocuments({ status: 'Completed' });
-    const contacted = await dbService.Enquiry.countDocuments({ status: 'Contacted' });
-    const cancelled = await dbService.Enquiry.countDocuments({ status: 'Cancelled' });
+    const newEnquiries = await dbService.Enquiry.countDocuments({ status: { $in: ['New', 'NEW'] } });
+    const inProgress = await dbService.Enquiry.countDocuments({ status: { $in: ['In Progress', 'IN_PROGRESS'] } });
+    const completed = await dbService.Enquiry.countDocuments({ status: { $in: ['Completed', 'COMPLETED'] } });
+    const contacted = await dbService.Enquiry.countDocuments({ status: { $in: ['Contacted', 'REVIEWING'] } });
+    const cancelled = await dbService.Enquiry.countDocuments({ status: { $in: ['Cancelled', 'CANCELLED'] } });
     const totalProjects = await dbService.Project.countDocuments();
-
     const totalClients = await dbService.User.countDocuments();
+    const totalProducts = await dbService.Product.countDocuments();
+
+    const allOrders = await dbService.Order.find({});
+    const totalOrders = allOrders.length;
+    const paidOrders = allOrders.filter(o => o.status === 'paid' || o.paymentStatus === 'paid');
+    const successfulPurchases = paidOrders.length;
+    const pendingOrders = allOrders.filter(o => o.status === 'pending' || o.status === 'payment_processing' || o.paymentStatus === 'pending').length;
+    const failedCancelledOrders = allOrders.filter(o => o.status === 'failed' || o.status === 'cancelled' || o.paymentStatus === 'failed').length;
+    const totalRevenue = paidOrders.reduce((sum, o) => sum + (Number(o.finalAmount) || 0), 0);
+
+    let productsSold = 0;
+    paidOrders.forEach(o => {
+      if (o.items && Array.isArray(o.items) && o.items.length > 0) {
+        productsSold += o.items.reduce((s, i) => s + (Number(i.quantity) || 1), 0);
+      } else {
+        productsSold += 1;
+      }
+    });
+
+    const recentOrders = allOrders.slice(0, 10);
+    const allUsers = await dbService.User.find({});
+    const recentUsers = allUsers.slice(0, 10);
 
     res.status(200).json({
       success: true,
@@ -192,6 +213,16 @@ const getStats = async (req, res, next) => {
         cancelled,
         totalProjects,
         totalClients,
+        totalUsers: totalClients,
+        totalProducts,
+        totalOrders,
+        successfulPurchases,
+        pendingOrders,
+        failedCancelledOrders,
+        totalRevenue,
+        productsSold,
+        recentOrders,
+        recentUsers,
         dbEngine: dbService.getEngine()
       }
     });
