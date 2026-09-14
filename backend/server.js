@@ -23,6 +23,9 @@ const orderRoutes = require('./routes/orderRoutes');
 const productRoutes = require('./routes/productRoutes');
 const downloadRoutes = require('./routes/downloadRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
+const analyticsRoutes = require('./routes/analyticsRoutes');
+const feedbackRoutes = require('./routes/feedbackRoutes');
+const notificationRoutes = require('./routes/notificationRoutes');
 
 // DevCraft Catalog Datasets
 const DEVCRAFT_SERVICES = require('../scripts/data_services');
@@ -138,6 +141,10 @@ app.use('/api/coupons', couponRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/downloads', downloadRoutes);
 app.use('/api/payments', paymentRoutes);
+app.use('/api/analytics', analyticsRoutes);
+app.use('/api/feedback', feedbackRoutes);
+app.use('/api/admin/notifications', notificationRoutes);
+app.use('/api/admin/feedback', feedbackRoutes);
 app.use('/api', orderRoutes);
 
 // Static files for Admin Portal
@@ -249,6 +256,16 @@ app.get('/profile', (req, res) => {
 
 app.get('/settings', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/pages/profile.html'));
+});
+
+// Vanity Client Routes
+app.get(['/my-purchases', '/my-projects', '/saved-products', '/feedback'], (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/pages/dashboard.html'));
+});
+
+app.get('/logout', (req, res) => {
+  res.clearCookie('devcraft_session');
+  res.redirect('/login');
 });
 
 app.get('/sitemap.xml', (req, res) => {

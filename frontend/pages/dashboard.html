@@ -11,8 +11,9 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/css/style.css" />
   <link rel="stylesheet" href="/css/responsive.css" />
+  <script src="/js/devcraft-theme.js"></script>
 </head>
-<body data-theme="futuristic-dev">
+<body data-theme="devcraft-light">
 
   <!-- Navigation -->
   <nav class="navbar" id="navbar">
@@ -29,13 +30,23 @@
       </a>
 
       <ul class="nav-links">
+        <li><a href="/" class="nav-link">Home</a></li>
+        <li><a href="/products" class="nav-link">Products</a></li>
         <li><a href="/services" class="nav-link">Services</a></li>
-        <li><a href="/projects" class="nav-link">Demos</a></li>
         <li><a href="/dashboard" class="nav-link active">Dashboard</a></li>
         <li><a href="/profile" class="nav-link">My Profile</a></li>
       </ul>
 
       <div class="nav-actions">
+        <!-- Theme Toggle Button -->
+        <button class="nav-action-btn devcraft-theme-toggle" id="dash-theme-toggle" aria-label="Toggle Dark/Light Mode" title="Toggle Dark/Light Mode">
+          <span class="theme-toggle-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </span>
+        </button>
+
         <a href="/profile" class="user-nav-chip">
           <span class="user-avatar-initials" id="dash-nav-initials">U</span>
           <span class="user-chip-name" id="dash-nav-name">Client</span>
@@ -108,6 +119,7 @@
         <button class="dash-tab-btn" data-tab="requests" onclick="switchDashTab('requests', this)">📋 Project Requests</button>
         <button class="dash-tab-btn" data-tab="demos" onclick="switchDashTab('demos', this)">⭐ Saved Demos</button>
         <button class="dash-tab-btn" data-tab="coupons" onclick="switchDashTab('coupons', this)">🎟️ Coupons</button>
+        <button class="dash-tab-btn" data-tab="feedback" onclick="switchDashTab('feedback', this)">💡 Ideas &amp; Feedback</button>
         <button class="dash-tab-btn" data-tab="activity" onclick="switchDashTab('activity', this)">🕒 Activity</button>
       </div>
 
@@ -350,6 +362,93 @@
         </div>
       </div>
 
+      <!-- TAB 5: Ideas, Roadmap & Feedback -->
+      <div id="dash-pane-feedback" class="dash-tab-pane">
+        <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 24px; margin-bottom: 24px;">
+          <!-- Feedback Submission Form -->
+          <div style="background: rgba(13, 17, 23, 0.7); border: 1px solid var(--border-glass); border-radius: 16px; padding: 24px;">
+            <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">💡 Submit an Idea or Bug Report</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">
+              Direct line to the DevCraft engineering roadmap. Propose a new feature, app concept, or report an issue.
+            </p>
+
+            <form id="feedback-form" onsubmit="handleFeedbackSubmit(event)">
+              <div style="margin-bottom: 14px;">
+                <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px;">Category</label>
+                <select id="fb-category" class="search-input" style="width: 100%;">
+                  <option value="feature_request">Feature Request 🚀</option>
+                  <option value="product_suggestion">New Product Idea 💡</option>
+                  <option value="bug_report">Bug Report 🐛</option>
+                  <option value="service_request">Custom Service Scope ⚡</option>
+                  <option value="feedback">General Feedback 📝</option>
+                </select>
+              </div>
+
+              <div style="margin-bottom: 14px;">
+                <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px;">Priority</label>
+                <select id="fb-priority" class="search-input" style="width: 100%;">
+                  <option value="Low">Low</option>
+                  <option value="Medium" selected>Medium</option>
+                  <option value="High">High</option>
+                  <option value="Urgent">Urgent</option>
+                </select>
+              </div>
+
+              <div style="margin-bottom: 14px;">
+                <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px;">Title</label>
+                <input type="text" id="fb-title" class="search-input" style="width: 100%;" placeholder="e.g. Add offline mode to Joya AI" required />
+              </div>
+
+              <div style="margin-bottom: 18px;">
+                <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px;">Description & Details</label>
+                <textarea id="fb-desc" class="search-input" rows="4" style="width: 100%; resize: vertical;" placeholder="Describe what you want to achieve or provide steps to reproduce..." required></textarea>
+              </div>
+
+              <div id="fb-message" style="margin-bottom: 12px; font-size: 0.85rem;"></div>
+
+              <button type="submit" id="fb-submit-btn" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                🚀 Send to Engineering Roadmap
+              </button>
+            </form>
+          </div>
+
+          <!-- My Submissions & Roadmap Status -->
+          <div style="background: rgba(13, 17, 23, 0.7); border: 1px solid var(--border-glass); border-radius: 16px; padding: 24px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <div>
+                <h3 style="font-size: 1.2rem; font-weight: 700;">My Submissions &amp; Status</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">Track real engineering status of your requests.</p>
+              </div>
+              <button onclick="loadMyFeedback(DevCraftAuth.getToken())" class="btn btn-xs btn-outline">🔄 Refresh</button>
+            </div>
+
+            <div id="feedback-loading" style="text-align: center; padding: 30px; color: var(--text-muted);">
+              Loading roadmap requests...
+            </div>
+
+            <div id="feedback-empty" style="display: none; text-align: center; padding: 40px 20px; border: 1px dashed var(--border-glass); border-radius: 12px;">
+              <p style="color: var(--text-secondary); margin-bottom: 8px;">You haven't submitted any feature ideas or bug reports yet.</p>
+              <small style="color: var(--text-muted);">Use the form on the left to submit directly to Harshit!</small>
+            </div>
+
+            <div class="table-container" id="feedback-table-wrap" style="display: none; max-height: 420px; overflow-y: auto;">
+              <table class="devcraft-table">
+                <thead>
+                  <tr>
+                    <th>Title &amp; Category</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Studio Notes</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+                <tbody id="feedback-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </main>
 
@@ -376,6 +475,7 @@
         'projects': 'requests',
         'demos': 'demos',
         'coupons': 'coupons',
+        'feedback': 'feedback',
         'activity': 'activity'
       };
 
@@ -440,6 +540,9 @@
 
         // Fetch User's Redeemed Coupons
         await loadMyCoupons(token);
+
+        // Fetch User's Submitted Ideas & Feedback
+        await loadMyFeedback(token);
 
         // Render Saved Demos
         renderSavedDemos(user.savedDemos || []);
@@ -759,6 +862,88 @@
           </div>
         </li>
       `;
+    }
+
+    async function loadMyFeedback(token) {
+      const loadingEl = document.getElementById('feedback-loading');
+      const emptyEl = document.getElementById('feedback-empty');
+      const tableWrap = document.getElementById('feedback-table-wrap');
+      const tbody = document.getElementById('feedback-table-body');
+
+      try {
+        const res = await fetch('/api/feedback/my-requests', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await res.json();
+        const list = data.requests || [];
+
+        if (loadingEl) loadingEl.style.display = 'none';
+
+        if (list.length === 0) {
+          if (emptyEl) emptyEl.style.display = 'block';
+          if (tableWrap) tableWrap.style.display = 'none';
+          return;
+        }
+
+        if (emptyEl) emptyEl.style.display = 'none';
+        if (tableWrap) tableWrap.style.display = 'block';
+
+        tbody.innerHTML = list.map(item => `
+          <tr>
+            <td>
+              <strong>${item.title}</strong>
+              <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: capitalize;">${item.category.replace('_', ' ')}</div>
+            </td>
+            <td><strong style="color: ${item.priority === 'Urgent' || item.priority === 'High' ? '#ef4444' : 'var(--text-main)'};">${item.priority}</strong></td>
+            <td><span class="status-pill status-completed">${item.status}</span></td>
+            <td style="font-size: 0.8rem; color: var(--cyan);">${item.adminNotes || 'Under review'}</td>
+            <td style="font-size: 0.78rem; color: var(--text-muted);">${new Date(item.createdAt).toLocaleDateString()}</td>
+          </tr>
+        `).join('');
+      } catch (err) {
+        if (loadingEl) loadingEl.textContent = 'Unable to load feedback requests.';
+      }
+    }
+
+    async function handleFeedbackSubmit(e) {
+      e.preventDefault();
+      const token = DevCraftAuth.getToken();
+      const category = document.getElementById('fb-category').value;
+      const priority = document.getElementById('fb-priority').value;
+      const title = document.getElementById('fb-title').value.trim();
+      const description = document.getElementById('fb-desc').value.trim();
+      const msgEl = document.getElementById('fb-message');
+      const submitBtn = document.getElementById('fb-submit-btn');
+
+      if (!title || !description) return;
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting to Roadmap...';
+      msgEl.innerHTML = '<span style="color: var(--accent);">Transmitting request to DevCraft engineering team...</span>';
+
+      try {
+        const res = await fetch('/api/feedback', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+          },
+          body: JSON.stringify({ category, priority, title, description })
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+          msgEl.innerHTML = '<span style="color: var(--emerald);">✓ Your idea has been sent directly to the engineering team!</span>';
+          document.getElementById('feedback-form').reset();
+          if (token) await loadMyFeedback(token);
+        } else {
+          msgEl.innerHTML = `<span style="color: #ef4444;">${data.message || 'Submission failed'}</span>`;
+        }
+      } catch (err) {
+        msgEl.innerHTML = `<span style="color: #ef4444;">Error: ${err.message}</span>`;
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = '🚀 Send to Engineering Roadmap';
+      }
     }
   </script>
 </body>

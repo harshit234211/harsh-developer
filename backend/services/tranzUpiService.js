@@ -474,11 +474,37 @@ class TranzUpiService {
             });
 
             logger.success(`[Referral Reward] Successfully attributed ₹${rewardAmount} (${rewardPercent}%) to referrer ${refRecord.referrerCode} for order ${order.orderId} by ${buyerUser.email}`);
+
+            // Dispatch referral conversion notification
+            try {
+              await dbService.Notification.create({
+                type: 'referral_conversion',
+                title: `Referral Converted: ₹${rewardAmount} earned`,
+                message: `Referrer ${refRecord.referrerCode} earned ₹${rewardAmount} commission on order ${order.orderId} from ${buyerUser.email}`,
+                link: '#referrals',
+                metadata: { orderId: order.orderId, referrerCode: refRecord.referrerCode, rewardAmount },
+                read: false
+              });
+            } catch (_) {}
           }
         }
       }
     } catch (refErr) {
       logger.warn(`[Referral Conversion Warning] ${refErr.message}`);
+    }
+
+    // Trigger Admin In-App Notification for Payment Success
+    try {
+      await dbService.Notification.create({
+        type: 'payment_success',
+        title: `Payment Received: ₹${order.finalAmount} for ${order.productName}`,
+        message: `Order ${order.orderId} verified successfully via UPI. Buyer: ${order.clientEmail || 'Client'}. Amount: ₹${order.finalAmount}`,
+        link: '#orders',
+        metadata: { orderId: order.orderId, amount: order.finalAmount, utr: paymentDetails.utr || order.utr },
+        read: false
+      });
+    } catch (notifErr) {
+      logger.warn(`Could not dispatch payment notification: ${notifErr.message}`);
     }
 
     return updatedOrder;

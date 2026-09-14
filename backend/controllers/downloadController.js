@@ -364,6 +364,18 @@ const downloadProductFile = async (req, res, next) => {
 
     logger.info(`[Download Served] "${downloadFilename}" for product "${product.name}" to ${verifiedEmail} (Order: ${verifiedOrderId || 'FREE'})`);
 
+    // Trigger Admin In-App Notification for Download Access
+    try {
+      await dbService.Notification.create({
+        type: 'download_accessed',
+        title: `Download Accessed: ${product.name}`,
+        message: `${verifiedEmail} downloaded package "${downloadFilename}" (Order: ${verifiedOrderId || 'Direct/Admin'})`,
+        link: '#downloads',
+        metadata: { productId: product.id, orderId: verifiedOrderId, email: verifiedEmail },
+        read: false
+      });
+    } catch (_) {}
+
     // Stream download safely with disposition attachment
     res.setHeader('Content-Disposition', `attachment; filename="${downloadFilename}"`);
     res.setHeader('Content-Type', 'application/octet-stream');

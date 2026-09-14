@@ -36,6 +36,9 @@ let localDb = {
   downloads: [],
   referrals: [],
   referralRewards: [],
+  featureRequests: [],
+  notifications: [],
+  analyticsEvents: [],
   siteSettings: { referralRewardPercent: 10, minPayout: 500 }
 };
 
@@ -62,6 +65,9 @@ const loadLocalDb = () => {
       if (!localDb.downloads) localDb.downloads = [];
       if (!localDb.referrals) localDb.referrals = [];
       if (!localDb.referralRewards) localDb.referralRewards = [];
+      if (!localDb.featureRequests) localDb.featureRequests = [];
+      if (!localDb.notifications) localDb.notifications = [];
+      if (!localDb.analyticsEvents) localDb.analyticsEvents = [];
       if (!localDb.siteSettings) localDb.siteSettings = { referralRewardPercent: 10, minPayout: 500 };
     } else {
       saveLocalDb();
@@ -1621,6 +1627,161 @@ const dbService = {
       };
       saveLocalDb();
       return localDb.siteSettings;
+    }
+  },
+
+  FeatureRequest: {
+    create: async (data) => {
+      loadLocalDb();
+      if (!localDb.featureRequests) localDb.featureRequests = [];
+      const newReq = {
+        _id: crypto.randomUUID(),
+        title: data.title ? String(data.title).trim() : 'Untitled Request',
+        category: data.category || 'feature_request',
+        description: data.description ? String(data.description).trim() : '',
+        priority: data.priority || 'Medium',
+        status: data.status || 'New',
+        userName: data.userName ? String(data.userName).trim() : '',
+        userEmail: data.userEmail ? String(data.userEmail).toLowerCase().trim() : '',
+        userId: data.userId || null,
+        adminNotes: data.adminNotes || '',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+      localDb.featureRequests.push(newReq);
+      saveLocalDb();
+      return newReq;
+    },
+    find: async (filter = {}) => {
+      loadLocalDb();
+      let list = [...(localDb.featureRequests || [])];
+      if (filter.status && filter.status !== 'All') list = list.filter(r => r.status === filter.status);
+      if (filter.category && filter.category !== 'All') list = list.filter(r => r.category === filter.category);
+      if (filter.priority && filter.priority !== 'All') list = list.filter(r => r.priority === filter.priority);
+      if (filter.userEmail) list = list.filter(r => r.userEmail === filter.userEmail.toLowerCase().trim());
+      if (filter.userId) list = list.filter(r => r.userId === filter.userId);
+      if (filter.search) {
+        const q = String(filter.search).toLowerCase();
+        list = list.filter(r => (r.title && r.title.toLowerCase().includes(q)) || (r.description && r.description.toLowerCase().includes(q)));
+      }
+      return list.reverse();
+    },
+    findById: async (id) => {
+      loadLocalDb();
+      return (localDb.featureRequests || []).find(r => r._id === id) || null;
+    },
+    findByIdAndUpdate: async (id, updateData) => {
+      loadLocalDb();
+      const idx = (localDb.featureRequests || []).findIndex(r => r._id === id);
+      if (idx === -1) return null;
+      localDb.featureRequests[idx] = {
+        ...localDb.featureRequests[idx],
+        ...updateData,
+        updatedAt: new Date().toISOString()
+      };
+      saveLocalDb();
+      return { ...localDb.featureRequests[idx] };
+    },
+    findByIdAndDelete: async (id) => {
+      loadLocalDb();
+      const idx = (localDb.featureRequests || []).findIndex(r => r._id === id);
+      if (idx === -1) return null;
+      const [deleted] = localDb.featureRequests.splice(idx, 1);
+      saveLocalDb();
+      return deleted;
+    },
+    countDocuments: async (filter = {}) => {
+      loadLocalDb();
+      return (localDb.featureRequests || []).length;
+    }
+  },
+
+  Notification: {
+    create: async (data) => {
+      loadLocalDb();
+      if (!localDb.notifications) localDb.notifications = [];
+      const newNotif = {
+        _id: crypto.randomUUID(),
+        type: data.type || 'system_alert',
+        title: data.title ? String(data.title).trim() : 'System Alert',
+        message: data.message ? String(data.message).trim() : '',
+        link: data.link || '',
+        metadata: data.metadata || {},
+        read: false,
+        createdAt: new Date().toISOString()
+      };
+      localDb.notifications.push(newNotif);
+      // Keep notifications capped at last 500 to avoid unbounded file growth
+      if (localDb.notifications.length > 500) {
+        localDb.notifications = localDb.notifications.slice(-500);
+      }
+      saveLocalDb();
+      return newNotif;
+    },
+    find: async (filter = {}) => {
+      loadLocalDb();
+      let list = [...(localDb.notifications || [])];
+      if (filter.read !== undefined) list = list.filter(n => n.read === filter.read);
+      if (filter.type) list = list.filter(n => n.type === filter.type);
+      return list.reverse();
+    },
+    findByIdAndUpdate: async (id, updateData) => {
+      loadLocalDb();
+      const idx = (localDb.notifications || []).findIndex(n => n._id === id);
+      if (idx === -1) return null;
+      localDb.notifications[idx] = {
+        ...localDb.notifications[idx],
+        ...updateData
+      };
+      saveLocalDb();
+      return { ...localDb.notifications[idx] };
+    },
+    markAllRead: async () => {
+      loadLocalDb();
+      (localDb.notifications || []).forEach(n => { n.read = true; });
+      saveLocalDb();
+      return true;
+    },
+    countUnread: async () => {
+      loadLocalDb();
+      return (localDb.notifications || []).filter(n => !n.read).length;
+    }
+  },
+
+  AnalyticsEvent: {
+    create: async (data) => {
+      loadLocalDb();
+      if (!localDb.analyticsEvents) localDb.analyticsEvents = [];
+      const newEv = {
+        _id: crypto.randomUUID(),
+        event: data.event ? String(data.event).trim() : 'custom_event',
+        data: data.data || {},
+        path: data.path || '/',
+        referrer: data.referrer || '',
+        userAgent: data.userAgent || '',
+        ip: data.ip || '127.0.0.1',
+        userId: data.userId || null,
+        userEmail: data.userEmail || '',
+        timestamp: new Date().toISOString()
+      };
+      localDb.analyticsEvents.push(newEv);
+      // Keep last 5000 telemetry events
+      if (localDb.analyticsEvents.length > 5000) {
+        localDb.analyticsEvents = localDb.analyticsEvents.slice(-5000);
+      }
+      saveLocalDb();
+      return newEv;
+    },
+    find: async (filter = {}) => {
+      loadLocalDb();
+      let list = [...(localDb.analyticsEvents || [])];
+      if (filter.event) list = list.filter(e => e.event === filter.event);
+      return list.reverse();
+    },
+    countDocuments: async (filter = {}) => {
+      loadLocalDb();
+      if (filter.event) return (localDb.analyticsEvents || []).filter(e => e.event === filter.event).length;
+      return (localDb.analyticsEvents || []).length;
     }
   }
 };

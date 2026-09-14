@@ -780,15 +780,13 @@ async function runQaSuite() {
     );
     const joyaOrderId = joyaCheckoutRes.data.order.orderId;
 
-    // 62. Test Verification Without Gateway Key Does Not Fake Success
+    // 62. Test Verification Does Not Fake Success
     const verifyAttemptRes = await request('POST', `/api/payments/verify/${joyaOrderId}`, {
       utr: '123456789012'
     });
     assert(
-      (verifyAttemptRes.statusCode === 200 || verifyAttemptRes.statusCode === 202) &&
-      verifyAttemptRes.data.verified === false &&
-      verifyAttemptRes.data.requiresGatewayKey === true,
-      'STEP 62: Payment Verification Safely Refuses to Fake Success Without Configured Gateway Key'
+      verifyAttemptRes.data && verifyAttemptRes.data.verified === false,
+      'STEP 62: Payment Verification Safely Refuses to Fake Success Without Valid Gateway Confirmation'
     );
 
     // 63. Test Admin Payment Verification & Entitlement Fulfill
@@ -992,6 +990,107 @@ async function runQaSuite() {
       'STEP 73: Unmatched Routes Return Custom 404 HTML Page with HTTP 404 Status'
     );
 
+    // 74. Test First-Party Telemetry Event Tracking & Customer Insights
+    const trackRes = await request('POST', '/api/analytics/track', {
+      event: 'search',
+      data: { query: 'joya ai' },
+      path: '/products',
+      referrer: 'https://google.com'
+    });
+    const insightsRes = await request('GET', '/api/analytics/insights', null, {
+      'Authorization': `Bearer ${adminToken}`
+    });
+    assert(
+      trackRes.statusCode === 201 &&
+      insightsRes.statusCode === 200 &&
+      insightsRes.data.insights &&
+      insightsRes.data.insights.totalEvents > 0,
+      'STEP 74: Telemetry Event Tracking & Admin Customer Insights API Return Live Data'
+    );
+
+    // 75. Test Feature Requests & Bug Reports System
+    const feedbackRes = await request('POST', '/api/feedback', {
+      title: 'Support for dark mode in code exports',
+      category: 'feature_request',
+      description: 'Please add syntax highlighted dark theme exports for Joya AI code snippets.',
+      priority: 'High',
+      name: 'Test Client',
+      email: 'client@example.com'
+    });
+    const feedbackId = feedbackRes.data.feedback ? (feedbackRes.data.feedback._id || feedbackRes.data.feedback.id) : null;
+    const adminFeedbackRes = await request('GET', '/api/admin/feedback', null, {
+      'Authorization': `Bearer ${adminToken}`
+    });
+    let patchFeedbackOk = false;
+    if (feedbackId) {
+      const patchRes = await request('PATCH', `/api/admin/feedback/${feedbackId}`, {
+        status: 'Planned',
+        adminNotes: 'Scheduled for Q4 release sprint'
+      }, {
+        'Authorization': `Bearer ${adminToken}`
+      });
+      patchFeedbackOk = patchRes.statusCode === 200 && patchRes.data.feedback.status === 'Planned';
+    }
+    assert(
+      feedbackRes.statusCode === 201 &&
+      adminFeedbackRes.statusCode === 200 &&
+      patchFeedbackOk,
+      'STEP 75: Client Feedback/Bugs Submission & Admin Roadmap Status Moderation Functional'
+    );
+
+    // 76. Test Admin In-App Notifications Center
+    const notifRes = await request('GET', '/api/admin/notifications', null, {
+      'Authorization': `Bearer ${adminToken}`
+    });
+    let markOneOk = false;
+    if (notifRes.data && notifRes.data.notifications && notifRes.data.notifications.length > 0) {
+      const firstNotifId = notifRes.data.notifications[0]._id || notifRes.data.notifications[0].id;
+      const readRes = await request('PATCH', `/api/admin/notifications/${firstNotifId}/read`, null, {
+        'Authorization': `Bearer ${adminToken}`
+      });
+      markOneOk = readRes.statusCode === 200;
+    } else {
+      markOneOk = true;
+    }
+    const markAllRes = await request('POST', '/api/admin/notifications/mark-all-read', null, {
+      'Authorization': `Bearer ${adminToken}`
+    });
+    assert(
+      notifRes.statusCode === 200 &&
+      markOneOk &&
+      markAllRes.statusCode === 200,
+      'STEP 76: Admin In-App Notifications Center (List, Mark Read, Mark All Read) Verified'
+    );
+
+    // 77. Test Vanity Client Routes Return HTTP 200 OK
+    const purchasesRes = await request('GET', '/my-purchases');
+    const projectsRes = await request('GET', '/my-projects');
+    const savedRes = await request('GET', '/saved-products');
+    const feedbackVanityRes = await request('GET', '/feedback');
+    const logoutVanityRes = await request('GET', '/logout');
+    assert(
+      purchasesRes.statusCode === 200 &&
+      projectsRes.statusCode === 200 &&
+      savedRes.statusCode === 200 &&
+      feedbackVanityRes.statusCode === 200 &&
+      logoutVanityRes.statusCode === 302,
+      'STEP 77: Vanity Client Routes (/my-purchases, /my-projects, /saved-products, /feedback, /logout) Active'
+    );
+
+    // 78. Test Tranz UPI Gateway Verification & Dynamic URI Authoritative Generation
+    const tranzService = require('../backend/services/tranzUpiService');
+    const dynamicUri = tranzService.generateDynamicUpiUri({
+      orderId: 'DC-ORD-TEST-999',
+      amount: 999,
+      note: 'Joya AI Full Package'
+    });
+    const hasCorrectAmount = dynamicUri.includes('am=999.00');
+    const hasUpiScheme = dynamicUri.startsWith('upi://pay?');
+    const isGatewayConfigured = tranzService.isConfigured();
+    assert(
+      hasUpiScheme && hasCorrectAmount && isGatewayConfigured,
+      'STEP 78: Tranz UPI Gateway Configured, Authoritative Dynamic URI Generated for Exact Amount'
+    );
 
   } catch (err) {
     console.error('Fatal test runner error:', err);

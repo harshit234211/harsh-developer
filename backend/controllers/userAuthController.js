@@ -119,6 +119,20 @@ const register = async (req, res, next) => {
       logger.info(`[Referral Recorded] User ${user.email} registered using referral code ${referrerUser.referralCode} from ${referrerUser.email}`);
     }
 
+    // Trigger Admin In-App Notification for New Client Registration
+    try {
+      await dbService.Notification.create({
+        type: 'new_user',
+        title: `New Client Registered: ${user.name}`,
+        message: `${user.name} (${user.email}) registered an account.${user.company ? ' Company: ' + user.company : ''}${user.referredBy ? ' (Referred by ' + user.referredBy + ')' : ''}`,
+        link: '#users',
+        metadata: { userId: user._id, email: user.email, referralCode: user.referralCode },
+        read: false
+      });
+    } catch (notifErr) {
+      logger.warn(`Could not dispatch new user notification: ${notifErr.message}`);
+    }
+
     const token = generateToken(user._id, false);
     setSessionCookie(res, token, false);
 

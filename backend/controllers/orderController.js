@@ -273,6 +273,20 @@ const checkoutOrder = async (req, res, next) => {
 
     logger.success(`Order created: ${order.orderId} for ${order.productName} by ${order.clientEmail}. Final: ₹${order.finalAmount}`);
 
+    // Trigger Admin In-App Notification for New Order
+    try {
+      await dbService.Notification.create({
+        type: 'new_order',
+        title: `New Order: ₹${order.finalAmount} - ${order.productName}`,
+        message: `Order ${order.orderId} placed by ${order.clientEmail} for ${order.productName}. Amount: ₹${order.finalAmount}`,
+        link: '#orders',
+        metadata: { orderId: order.orderId, amount: order.finalAmount, email: order.clientEmail },
+        read: false
+      });
+    } catch (notifErr) {
+      logger.warn(`Could not dispatch order notification: ${notifErr.message}`);
+    }
+
     // Generate dynamic UPI payment intent
     const paymentIntent = await tranzUpiService.createPaymentIntent(order);
 

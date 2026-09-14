@@ -65,6 +65,97 @@
   --radius-full: 9999px;
 }
 
+[data-theme="devcraft-dark"],
+[data-theme="dark"] {
+  --theme-id: 'devcraft-dark';
+  --bg-primary: #0b0f17;
+  --bg-secondary: #111827;
+  --bg-card: #141e30;
+  --bg-card-hover: #1b2842;
+  --bg-input: #111827;
+  --bg-surface: #1e293b;
+  --bg-surface-alt: #2d3748;
+
+  --accent: #3b82f6;
+  --accent-secondary: #6366f1;
+  --accent-hover: #60a5fa;
+  --accent-dim: rgba(59, 130, 246, 0.12);
+  --accent-glow: 0 4px 14px rgba(59, 130, 246, 0.25);
+  --gradient-brand: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  --card-border: #1e293b;
+  --card-border-hover: #334155;
+
+  --cyan: #38bdf8;
+  --cyan-dim: rgba(56, 189, 248, 0.12);
+  --cyan-glow: 0 4px 12px rgba(56, 189, 248, 0.2);
+
+  --violet: #818cf8;
+  --violet-glow: 0 4px 12px rgba(129, 140, 248, 0.2);
+
+  --emerald: #10b981;
+  --emerald-glow: 0 2px 8px rgba(16, 185, 129, 0.2);
+
+  --amber: #f59e0b;
+  --rose: #ef4444;
+  --warning: #f59e0b;
+
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+
+  --border-glass: #1e293b;
+  --border-glow: #3b82f6;
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.45), 0 2px 4px -2px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.55), 0 4px 6px -4px rgba(0, 0, 0, 0.35);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.65), 0 8px 10px -6px rgba(0, 0, 0, 0.35);
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-card-hover: 0 12px 28px -4px rgba(0, 0, 0, 0.55), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+}
+
+html[data-theme="devcraft-dark"],
+html[data-theme="dark"],
+body[data-theme="devcraft-dark"],
+body[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+html[data-theme="devcraft-dark"] body,
+html[data-theme="dark"] body,
+body[data-theme="devcraft-dark"],
+body[data-theme="dark"] {
+  background-color: var(--bg-primary);
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.08) 0%, transparent 65%),
+    radial-gradient(circle at 90% 40%, rgba(99, 102, 241, 0.05) 0%, transparent 50%);
+  color: var(--text-primary);
+}
+
+/* Theme Toggle Button Styling */
+.devcraft-theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--bg-surface);
+  border: 1px solid var(--card-border);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  padding: 0;
+  outline: none;
+}
+
+.devcraft-theme-toggle:hover {
+  background: var(--bg-surface-alt);
+  color: var(--text-primary);
+  border-color: var(--accent);
+}
+
+
 
 /* Reset & Base Setup */
 *, *::before, *::after {

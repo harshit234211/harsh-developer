@@ -20,6 +20,7 @@ const commonHead = (title, desc, canonicalPath = '') => `
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/css/style.css" />
   <link rel="stylesheet" href="/css/responsive.css" />
+  <script src="/js/devcraft-theme.js"></script>
 `;
 
 const navbar = (active = 'home') => `
@@ -50,6 +51,15 @@ const navbar = (active = 'home') => `
       </ul>
 
       <div class="nav-actions">
+        <!-- Theme Toggle Button (Light / Dark) -->
+        <button class="nav-action-btn devcraft-theme-toggle" id="nav-theme-toggle" aria-label="Toggle Dark/Light Mode" title="Toggle Dark/Light Mode">
+          <span class="theme-toggle-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </span>
+        </button>
+
         <!-- Search Trigger Button -->
         <button class="nav-action-btn" id="nav-search-btn" onclick="devcraftShop && devcraftShop.openSearchModal ? devcraftShop.openSearchModal() : window.location.href='/products'" aria-label="Search catalog" title="Search Apps & Services">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -131,11 +141,11 @@ const navbar = (active = 'home') => `
 
     <!-- Mobile Theme Switcher -->
     <div class="mobile-theme-bar">
-      <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 8px; font-weight: 600; text-transform: uppercase;">Select Site Theme</div>
-      <div class="mobile-theme-buttons">
-        <button class="btn btn-xs theme-picker-btn" data-theme-value="futuristic-dev">A: Futuristic</button>
-        <button class="btn btn-xs theme-picker-btn" data-theme-value="premium-saas">B: SaaS Slate</button>
-        <button class="btn btn-xs theme-picker-btn" data-theme-value="cyber-studio">C: Cyber Green</button>
+      <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 8px; font-weight: 600; text-transform: uppercase;">Theme Mode</div>
+      <div class="mobile-theme-buttons" style="display: flex; gap: 8px;">
+        <button class="btn btn-xs" onclick="DevCraftTheme && DevCraftTheme.setTheme('devcraft-light')">☀️ Light</button>
+        <button class="btn btn-xs" onclick="DevCraftTheme && DevCraftTheme.setTheme('devcraft-dark')">🌙 Dark</button>
+        <button class="btn btn-xs" onclick="DevCraftTheme && DevCraftTheme.setTheme('system')">💻 System</button>
       </div>
     </div>
 

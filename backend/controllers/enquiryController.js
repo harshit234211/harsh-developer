@@ -37,6 +37,20 @@ const createEnquiry = async (req, res, next) => {
       userId: req.user ? (req.user._id || req.user.id) : null
     });
 
+    // Trigger Admin In-App Notification
+    try {
+      await dbService.Notification.create({
+        type: 'project_request',
+        title: `New Project Request from ${name}`,
+        message: `${name} (${email}) requested quote for ${service || 'Custom Project'}. Budget: ${budget || 'Flexible'}`,
+        link: '#enquiries',
+        metadata: { enquiryId: enquiry._id, email, service, budget },
+        read: false
+      });
+    } catch (notifErr) {
+      logger.warn(`Could not dispatch enquiry notification: ${notifErr.message}`);
+    }
+
     logger.success(`New project enquiry received from: ${name} (${email}) for service "${service}"`);
 
     res.status(201).json({

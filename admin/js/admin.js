@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   await verifyAdminSession();
   initNavigation();
+  initNotifications();
   await loadStats();
   await loadEnquiries();
   await loadProjects();
@@ -25,6 +26,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   await loadDiscountRules();
   await loadSoftwareFiles();
   await loadOrdersRoster();
+  await loadCustomerInsights();
+  await loadAdminFeedback();
+  await loadReferralsManager();
   await loadDownloadsAudit();
 });
 
@@ -60,6 +64,12 @@ function initNavigation() {
       document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
       const activeEl = document.getElementById(`section-${section}`);
       if (activeEl) activeEl.classList.add('active');
+
+      // Lazy refresh specific sections
+      if (section === 'insights') loadCustomerInsights();
+      if (section === 'feedback') loadAdminFeedback();
+      if (section === 'referrals') loadReferralsManager();
+      if (section === 'orders-roster') loadOrdersRoster();
     });
   });
 
@@ -970,11 +980,13 @@ async function loadOrdersRoster() {
     const orders = data.orders || [];
 
     if (orders.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: var(--text-muted);">No client orders confirmed yet.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="9" style="text-align: center; color: var(--text-muted);">No client orders confirmed yet.</td></tr>';
       return;
     }
 
-    tbody.innerHTML = orders.map(o => `
+    tbody.innerHTML = orders.map(o => {
+      const isPaid = o.status === 'paid' || o.paymentStatus === 'paid';
+      return `
       <tr>
         <td><strong style="font-family: 'JetBrains Mono', monospace; color: var(--cyan);">${escapeHtml(o.orderId)}</strong></td>
         <td>
@@ -992,12 +1004,46 @@ async function loadOrdersRoster() {
           ${o.couponCodeMask ? `<div style="font-size: 0.75rem; color: #a855f7;">Coupon (${escapeHtml(o.couponCodeMask)}) -${o.couponDiscountPercent}%</div>` : ''}
         </td>
         <td><strong style="color: var(--cyan); font-size: 1.05rem;">₹${(o.finalAmount || 0).toLocaleString('en-IN')}</strong></td>
-        <td><span class="status-pill status-completed">${escapeHtml(o.status || 'Confirmed')}</span></td>
+        <td><span class="status-pill ${isPaid ? 'status-completed' : 'status-pending'}">${escapeHtml(o.status || 'Confirmed')}</span></td>
         <td style="font-size: 0.78rem; color: var(--text-muted);">${new Date(o.createdAt).toLocaleDateString()}</td>
+        <td>
+          ${isPaid 
+            ? `<span style="color: #10b981; font-size: 0.78rem; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">✓ Paid <small style="color: var(--text-muted); font-size: 0.7rem;">(${escapeHtml(o.utr || 'VERIFIED')})</small></span>`
+            : `<button onclick="verifyOrderPaymentManual('${escapeHtml(o.orderId)}')" class="action-btn" style="padding: 4px 10px; font-size: 0.75rem; background: var(--emerald); color: #000; font-weight: 700;">⚡ Verify &amp; Unlock</button>`
+          }
+        </td>
       </tr>
-    `).join('');
+    `;
+    }).join('');
   } catch (err) {
-    tbody.innerHTML = `<tr><td colspan="8" style="color: #f87171; text-align: center;">${escapeHtml(err.message)}</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="9" style="color: #f87171; text-align: center;">${escapeHtml(err.message)}</td></tr>`;
+  }
+}
+
+async function verifyOrderPaymentManual(orderId) {
+  const utr = prompt(`Enter UPI UTR / Transaction Reference number to verify Order ${orderId}:`, `UPI-${Date.now().toString().slice(-8)}`);
+  if (!utr) return;
+
+  try {
+    const res = await fetch(`${API_BASE}/payments/admin/verify-manual`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authToken}`
+      },
+      body: JSON.stringify({ orderId, utr, adminNotes: 'Manually verified by admin console' })
+    });
+    const data = await res.json();
+    if (res.ok && data.success) {
+      alert(`Order ${orderId} verified successfully and deliverable packages unlocked!`);
+      await loadOrdersRoster();
+      await loadStats();
+      await loadAdminNotifications();
+    } else {
+      alert(`Verification error: ${data.message || 'Payment not found'}`);
+    }
+  } catch (err) {
+    alert(`Error: ${err.message}`);
   }
 }
 
@@ -1032,6 +1078,299 @@ async function loadDownloadsAudit() {
     `).join('');
   } catch (err) {
     tbody.innerHTML = `<tr><td colspan="5" style="color: #f87171; text-align: center;">${escapeHtml(err.message)}</td></tr>`;
+  }
+}
+
+// ==========================================
+// NOTIFICATIONS CENTER
+// ==========================================
+let notifPollInterval = null;
+
+function initNotifications() {
+  const bell = document.getElementById('admin-notif-bell');
+  const dropdown = document.getElementById('admin-notif-dropdown');
+  const markAllBtn = document.getElementById('mark-all-read-btn');
+
+  if (bell && dropdown) {
+    bell.addEventListener('click', (e) => {
+      e.stopPropagation();
+      dropdown.style.display = dropdown.style.display === 'flex' ? 'none' : 'flex';
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!dropdown.contains(e.target) && !bell.contains(e.target)) {
+        dropdown.style.display = 'none';
+      }
+    });
+  }
+
+  if (markAllBtn) {
+    markAllBtn.addEventListener('click', async () => {
+      await markAllNotificationsRead();
+    });
+  }
+
+  loadAdminNotifications();
+  if (!notifPollInterval) {
+    notifPollInterval = setInterval(loadAdminNotifications, 30000); // Poll every 30s
+  }
+}
+
+async function loadAdminNotifications() {
+  try {
+    const res = await fetch(`${API_BASE}/admin/notifications`, {
+      headers: { 'Authorization': `Bearer ${authToken}` }
+    });
+    if (!res.ok) return;
+    const data = await res.json();
+
+    const badge = document.getElementById('admin-notif-badge');
+    const list = document.getElementById('admin-notif-list');
+    const countText = document.getElementById('notif-count-text');
+
+    const unread = data.unreadCount || 0;
+    if (badge) {
+      if (unread > 0) {
+        badge.textContent = unread > 99 ? '99+' : unread;
+        badge.style.display = 'flex';
+      } else {
+        badge.style.display = 'none';
+      }
+    }
+    if (countText) {
+      countText.textContent = unread > 0 ? `(${unread} unread)` : '';
+    }
+
+    if (list) {
+      const items = data.notifications || [];
+      if (items.length === 0) {
+        list.innerHTML = '<div style="padding: 24px; text-align: center; color: var(--text-muted); font-size: 0.85rem;">No recent notifications.</div>';
+      } else {
+        list.innerHTML = items.map(n => {
+          const nid = n._id || n.id;
+          const isUnread = !n.read;
+          return `
+            <div style="padding: 10px 12px; margin-bottom: 6px; border-radius: 8px; background: ${isUnread ? 'rgba(0, 240, 255, 0.06)' : 'rgba(255, 255, 255, 0.02)'}; border-left: 3px solid ${isUnread ? 'var(--cyan)' : 'transparent'};">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px;">
+                <div style="font-weight: 600; font-size: 0.88rem; color: ${isUnread ? '#fff' : 'var(--text-muted)'};">${escapeHtml(n.title)}</div>
+                ${isUnread ? `<button onclick="markNotificationRead('${nid}')" style="background: none; border: none; color: var(--cyan); font-size: 0.72rem; cursor: pointer; padding: 0 4px;">Mark read</button>` : ''}
+              </div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 4px;">${escapeHtml(n.message)}</div>
+              <div style="font-size: 0.7rem; color: #64748b;">${new Date(n.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} • ${new Date(n.createdAt).toLocaleDateString()}</div>
+            </div>
+          `;
+        }).join('');
+      }
+    }
+  } catch (_) {}
+}
+
+async function markNotificationRead(id) {
+  try {
+    await fetch(`${API_BASE}/admin/notifications/${id}/read`, {
+      method: 'PATCH',
+      headers: { 'Authorization': `Bearer ${authToken}` }
+    });
+    await loadAdminNotifications();
+  } catch (_) {}
+}
+
+async function markAllNotificationsRead() {
+  try {
+    await fetch(`${API_BASE}/admin/notifications/mark-all-read`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${authToken}` }
+    });
+    await loadAdminNotifications();
+  } catch (_) {}
+}
+
+// ==========================================
+// CUSTOMER INSIGHTS
+// ==========================================
+async function loadCustomerInsights() {
+  try {
+    const res = await fetch(`${API_BASE}/analytics/insights`, {
+      headers: { 'Authorization': `Bearer ${authToken}` }
+    });
+    if (!res.ok) return;
+    const data = await res.json();
+    const insights = data.insights || {};
+
+    const elTotalEvents = document.getElementById('stat-total-events');
+    const elTotalViews = document.getElementById('stat-total-views');
+    const elConvRate = document.getElementById('stat-conversion-rate');
+    const elRevenue = document.getElementById('stat-total-revenue');
+
+    if (elTotalEvents) elTotalEvents.textContent = (insights.totalEvents || 0).toLocaleString();
+    if (elTotalViews) elTotalViews.textContent = (insights.totalPageViews || 0).toLocaleString();
+    if (elConvRate) elConvRate.textContent = `${insights.conversionRate || 0}%`;
+    if (elRevenue) elRevenue.textContent = `₹${(insights.totalRevenue || 0).toLocaleString('en-IN')}`;
+
+    // Top Searches
+    const searchesBody = document.getElementById('top-searches-body');
+    if (searchesBody) {
+      const list = insights.topSearches || [];
+      searchesBody.innerHTML = list.length === 0 
+        ? '<tr><td colspan="2" style="text-align: center; color: var(--text-muted);">No search queries tracked yet.</td></tr>'
+        : list.map(s => `<tr><td><code>${escapeHtml(s.query)}</code></td><td style="text-align: right; font-weight: 700; color: var(--cyan);">${s.count}</td></tr>`).join('');
+    }
+
+    // Top Viewed Products
+    const productsBody = document.getElementById('top-products-body');
+    if (productsBody) {
+      const list = insights.topProducts || [];
+      productsBody.innerHTML = list.length === 0 
+        ? '<tr><td colspan="2" style="text-align: center; color: var(--text-muted);">No product view events tracked yet.</td></tr>'
+        : list.map(p => `<tr><td><strong>${escapeHtml(p.product)}</strong></td><td style="text-align: right; font-weight: 700; color: var(--emerald);">${p.views}</td></tr>`).join('');
+    }
+
+    // Event Stream
+    const eventsBody = document.getElementById('recent-events-body');
+    if (eventsBody) {
+      const events = insights.recentEvents || [];
+      eventsBody.innerHTML = events.length === 0
+        ? '<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">No events recorded yet.</td></tr>'
+        : events.slice(0, 20).map(e => `
+          <tr>
+            <td style="font-size: 0.75rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace;">${new Date(e.createdAt || Date.now()).toLocaleTimeString()}</td>
+            <td><span class="status-pill status-completed" style="font-size: 0.72rem;">${escapeHtml(e.event)}</span></td>
+            <td style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;">${escapeHtml(e.path || '/')}</td>
+            <td style="font-size: 0.8rem;">${escapeHtml(e.userEmail || (e.data && e.data.email) || 'Visitor')}</td>
+            <td style="font-size: 0.75rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace;">${escapeHtml(e.ip || '127.0.0.1')}</td>
+          </tr>
+        `).join('');
+    }
+  } catch (_) {}
+}
+
+// ==========================================
+// FEATURE REQUESTS & BUG REPORTS
+// ==========================================
+async function loadAdminFeedback() {
+  const tbody = document.getElementById('feedback-table-body');
+  if (!tbody) return;
+
+  const statusFilter = document.getElementById('filter-feedback-status')?.value || 'All';
+
+  try {
+    const url = statusFilter !== 'All' 
+      ? `${API_BASE}/feedback/admin?status=${encodeURIComponent(statusFilter)}` 
+      : `${API_BASE}/feedback/admin`;
+
+    const res = await fetch(url, {
+      headers: { 'Authorization': `Bearer ${authToken}` }
+    });
+    if (!res.ok) return;
+    const data = await res.json();
+    const items = data.feedback || [];
+
+    if (items.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--text-muted);">No feedback or feature requests found for this filter.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = items.map(item => {
+      const iid = item._id || item.id;
+      const isBug = item.category === 'bug_report';
+      return `
+        <tr>
+          <td style="font-size: 0.78rem; color: var(--text-muted);">${new Date(item.createdAt).toLocaleDateString()}</td>
+          <td><span class="status-pill ${isBug ? 'status-pending' : 'status-completed'}" style="font-size: 0.72rem;">${escapeHtml(item.category)}</span></td>
+          <td>
+            <strong>${escapeHtml(item.title)}</strong>
+            <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">${escapeHtml(item.description)}</div>
+          </td>
+          <td>
+            <div>${escapeHtml(item.userName || 'Guest')}</div>
+            <small style="color: var(--text-muted); font-size: 0.75rem;">${escapeHtml(item.userEmail || '')}</small>
+          </td>
+          <td><strong style="color: ${item.priority === 'Urgent' || item.priority === 'High' ? '#ef4444' : 'var(--text-main)'};">${escapeHtml(item.priority)}</strong></td>
+          <td>
+            <select onchange="updateFeedbackStatus('${iid}', this.value)" class="search-input" style="padding: 4px 8px; font-size: 0.8rem;">
+              ${['New', 'Reviewing', 'Planned', 'In Development', 'Completed', 'Rejected'].map(s => `
+                <option value="${s}" ${item.status === s ? 'selected' : ''}>${s}</option>
+              `).join('')}
+            </select>
+          </td>
+          <td>
+            <div style="font-size: 0.8rem; color: var(--cyan);">${escapeHtml(item.adminNotes || 'None')}</div>
+            <button onclick="editFeedbackNotes('${iid}', '${escapeHtml(item.adminNotes || '')}')" class="action-btn" style="padding: 2px 8px; font-size: 0.7rem; margin-top: 4px;">Edit Note</button>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  } catch (err) {
+    tbody.innerHTML = `<tr><td colspan="7" style="color: #f87171; text-align: center;">${escapeHtml(err.message)}</td></tr>`;
+  }
+}
+
+async function updateFeedbackStatus(id, newStatus) {
+  try {
+    const res = await fetch(`${API_BASE}/feedback/admin/${id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authToken}`
+      },
+      body: JSON.stringify({ status: newStatus })
+    });
+    if (res.ok) {
+      await loadAdminFeedback();
+    }
+  } catch (_) {}
+}
+
+async function editFeedbackNotes(id, currentNotes) {
+  const notes = prompt('Enter internal engineering notes / status message:', currentNotes);
+  if (notes === null) return;
+
+  try {
+    await fetch(`${API_BASE}/feedback/admin/${id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authToken}`
+      },
+      body: JSON.stringify({ adminNotes: notes })
+    });
+    await loadAdminFeedback();
+  } catch (_) {}
+}
+
+// ==========================================
+// REFERRALS PROGRAM MANAGER
+// ==========================================
+async function loadReferralsManager() {
+  const tbody = document.getElementById('referrals-table-body');
+  if (!tbody) return;
+
+  try {
+    const res = await fetch(`${API_BASE}/admin/referrals`, {
+      headers: { 'Authorization': `Bearer ${authToken}` }
+    });
+    if (!res.ok) return;
+    const data = await res.json();
+    const refs = data.referrals || [];
+
+    if (refs.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--text-muted);">No referral activities recorded yet.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = refs.map(r => `
+      <tr>
+        <td><strong style="font-family: 'JetBrains Mono', monospace; color: var(--cyan);">${escapeHtml(r.referrerCode || 'N/A')}</strong></td>
+        <td>${escapeHtml(r.referrerEmail || r.referrerName || 'Referrer')}</td>
+        <td>${escapeHtml(r.referredUserEmail || 'Client')}</td>
+        <td><span class="status-pill ${r.status === 'converted' ? 'status-completed' : 'status-pending'}">${escapeHtml(r.status)}</span></td>
+        <td>${escapeHtml(r.orderId || 'None yet')}</td>
+        <td><strong style="color: var(--emerald);">₹${(r.rewardAmount || 0).toLocaleString('en-IN')}</strong></td>
+        <td style="font-size: 0.78rem; color: var(--text-muted);">${new Date(r.createdAt || Date.now()).toLocaleDateString()}</td>
+      </tr>
+    `).join('');
+  } catch (err) {
+    tbody.innerHTML = `<tr><td colspan="7" style="color: #f87171; text-align: center;">${escapeHtml(err.message)}</td></tr>`;
   }
 }
 
