@@ -1103,6 +1103,28 @@ function renderContactSection() {
               </div>
             </div>
 
+            <div class="form-row">
+              <div class="form-group">
+                <label class="input-label" for="project-type">Requirement Type</label>
+                <select id="project-type" name="projectType" class="form-control">
+                  <option value="New App" selected>New Mobile App (Android / iOS)</option>
+                  <option value="Website">Website Development</option>
+                  <option value="Web App">Web Application / SaaS Portal</option>
+                  <option value="Custom Software">Custom Enterprise Software</option>
+                  <option value="AI / Machine Learning">AI Assistant &amp; Machine Learning</option>
+                  <option value="Business Automation">Business Automation Pipeline</option>
+                  <option value="Feature Request">Feature Request / Enhancements</option>
+                  <option value="Bug Fix">Codebase Rescue / Bug Fix</option>
+                  <option value="Maintenance">Ongoing Maintenance &amp; Cloud Support</option>
+                  <option value="Feedback">Strategic Technical Consultation</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="input-label" for="tech-preference">Preferred Tech Stack (Optional)</label>
+                <input type="text" id="tech-preference" name="techPreference" class="form-control" placeholder="e.g. React, Node.js, Kotlin, Python, Next.js" />
+              </div>
+            </div>
+
             <div class="form-group">
               <label class="input-label" for="project-details">Project Summary & Technical Requirements *</label>
               <textarea id="project-details" name="message" class="form-control" rows="4" placeholder="Briefly describe what you'd like to build, your target audience, existing stack, or any specific demo you want similar to..." required></textarea>
@@ -1913,10 +1935,43 @@ function buildJoyaPage() {
         </div>
       </div>
 
+      <!-- Android Modern Storage & SAF Compliance (Section 7) -->
+      <div class="glass-card" style="padding: 30px; border-radius: 20px; margin-bottom: 40px; border-left: 4px solid var(--cyan);">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+          <span style="font-size: 1.5rem;">🛡️</span>
+          <h3 style="font-size: 1.3rem; font-weight: 800; margin: 0;">Android Storage Access Framework (SAF) &amp; OS Compliance</h3>
+        </div>
+        <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px;">
+          Unlike amateur projects making unrealistic claims of "unrestricted silent background access", Joya AI strictly respects modern Android operating system security models (Android 11, 12, 13, and 14/15 Scoped Storage).
+        </p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px;">
+          <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); border-radius: 12px; padding: 18px;">
+            <strong style="color: var(--cyan); display: block; margin-bottom: 6px;">📁 Storage Access Framework (SAF)</strong>
+            <p style="color: var(--text-secondary); font-size: 0.85rem; margin: 0;">Uses native Android document picker intents allowing users to grant legitimate access to specific directories (e.g. Documents, WhatsApp Voice Notes, Downloads).</p>
+          </div>
+          <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); border-radius: 12px; padding: 18px;">
+            <strong style="color: var(--cyan); display: block; margin-bottom: 6px;">🔑 Persisted URI Permissions</strong>
+            <p style="color: var(--text-secondary); font-size: 0.85rem; margin: 0;">Leverages <code>takePersistableUriPermission</code> so the user only grants access once; Joya maintains permanent read/write access across app restarts and device reboots.</p>
+          </div>
+          <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); border-radius: 12px; padding: 18px;">
+            <strong style="color: var(--cyan); display: block; margin-bottom: 6px;">🎵 MediaStore API Integration</strong>
+            <p style="color: var(--text-secondary); font-size: 0.85rem; margin: 0;">Integrates modern <code>MediaStore.Audio</code> and <code>MediaStore.Downloads</code> collections for audio recording exports and voice memos without broad disk access.</p>
+          </div>
+          <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); border-radius: 12px; padding: 18px;">
+            <strong style="color: var(--cyan); display: block; margin-bottom: 6px;">✅ 100% Google Play Compliant</strong>
+            <p style="color: var(--text-secondary); font-size: 0.85rem; margin: 0;">Zero dangerous root exploits or MANAGE_EXTERNAL_STORAGE rejection risks. Safe and ready for immediate Google Play Store publishing.</p>
+          </div>
+        </div>
+      </div>
+
       <!-- FAQ Section (Requirement 18) -->
       <div class="glass-card" style="padding: 30px; border-radius: 20px; margin-bottom: 40px;">
         <h3 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 20px;">Frequently Asked Questions — Joya AI</h3>
         <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div>
+            <h4 style="font-size: 1rem; font-weight: 700; color: var(--cyan); margin-bottom: 6px;">Q: How does Joya AI handle file storage permissions on Android 11 to 14?</h4>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin: 0;">Joya AI utilizes Android's official Storage Access Framework (SAF) and MediaStore APIs. Once the user approves a directory via the native Android folder picker, the app invokes <code>takePersistableUriPermission</code> so permission persists seamlessly without repeated prompts.</p>
+          </div>
           <div>
             <h4 style="font-size: 1rem; font-weight: 700; color: var(--cyan); margin-bottom: 6px;">Q: Do I get the complete source code?</h4>
             <p style="color: var(--text-secondary); font-size: 0.9rem; margin: 0;">Yes! Immediately after your payment is verified, you receive download access to the complete Android Studio Kotlin project zip archive (all code, layouts, and build files).</p>

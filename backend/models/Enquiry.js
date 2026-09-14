@@ -1,4 +1,4 @@
-﻿const mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 const EnquirySchema = new mongoose.Schema({
   name: {
@@ -50,10 +50,25 @@ const EnquirySchema = new mongoose.Schema({
     type: String,
     default: ''
   },
+  techPreference: {
+    type: String,
+    default: ''
+  },
+  additionalRequirements: {
+    type: String,
+    default: ''
+  },
+  userId: {
+    type: String,
+    default: null
+  },
   status: {
     type: String,
-    enum: ['New', 'Contacted', 'In Progress', 'Completed', 'Cancelled'],
-    default: 'New'
+    enum: [
+      'New', 'Contacted', 'In Progress', 'Completed', 'Cancelled',
+      'NEW', 'REVIEWING', 'IN_PROGRESS', 'WAITING_FOR_CUSTOMER', 'COMPLETED', 'CANCELLED'
+    ],
+    default: 'NEW'
   },
   notes: {
     type: String,

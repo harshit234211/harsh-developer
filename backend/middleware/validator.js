@@ -37,9 +37,11 @@ const validateEnquiry = (req, res, next) => {
   budget = sanitize(budget);
   projectType = sanitize(projectType);
   deadline = sanitize(deadline);
-  description = sanitize(description);
-  message = sanitize(message);
+  description = sanitize(description || message);
+  message = sanitize(message || description);
   referenceUrl = sanitize(referenceUrl);
+  const techPreference = sanitize(req.body.techPreference || '');
+  const additionalRequirements = sanitize(req.body.additionalRequirements || '');
 
   if (!name || name.length < 2) {
     errors.push('Name must be at least 2 characters long.');
@@ -83,8 +85,10 @@ const validateEnquiry = (req, res, next) => {
     projectType: projectType || 'New Project',
     deadline: deadline || 'Flexible',
     description,
-    message: message || '',
-    referenceUrl: referenceUrl || ''
+    message: message || description,
+    referenceUrl: referenceUrl || '',
+    techPreference,
+    additionalRequirements
   };
 
   next();

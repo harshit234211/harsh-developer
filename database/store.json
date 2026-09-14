@@ -1,13 +1,13 @@
 {
   "admins": [
     {
-      "_id": "e233d342-163f-441c-bcc3-ce2c2a5ae72d",
+      "_id": "14235659-4165-435b-b8bf-7d8dc06e03f0",
       "name": "Harshit (Harsh Developer)",
       "email": "shakyaharshit683@gmail.com",
-      "password": "$2a$10$k5USMeXAFbaZEIeSRgIL4uopfEzkmTlYnGDiN2haZ3fyuvA1o3hYa",
+      "password": "$2a$10$Bspw2q.hSgrEdrhP.5ua5O.lqmj/DheK7cfDGWDzyiDM2yWyK8jBC",
       "role": "superadmin",
-      "createdAt": "2026-09-14T10:27:17.938Z",
-      "updatedAt": "2026-09-14T10:27:17.938Z"
+      "createdAt": "2026-09-14T10:50:26.705Z",
+      "updatedAt": "2026-09-14T10:50:26.705Z"
     }
   ],
   "projects": [
@@ -710,6 +710,27 @@
       "notes": "",
       "createdAt": "2026-09-14T10:27:18.067Z",
       "updatedAt": "2026-09-14T10:27:18.229Z"
+    },
+    {
+      "_id": "22ecda60-a66d-4542-8d14-b220137f59f1",
+      "name": "Johnathan Vance",
+      "email": "john.vance@techcorp.io",
+      "phone": "+919876543210",
+      "whatsapp": "+919876543210",
+      "service": "Web Application Development",
+      "budget": "₹75,000 - ₹1,50,000 / $950 - $1,800",
+      "projectType": "New Project",
+      "deadline": "1 Month",
+      "description": "We need a high-performance SaaS analytics application with Three.js 3D dashboards.",
+      "message": "We need a high-performance SaaS analytics application with Three.js 3D dashboards.",
+      "referenceUrl": "https://example.com/demo",
+      "techPreference": "",
+      "additionalRequirements": "",
+      "userId": null,
+      "status": "In Progress",
+      "notes": "",
+      "createdAt": "2026-09-14T10:50:26.978Z",
+      "updatedAt": "2026-09-14T10:50:27.224Z"
     }
   ],
   "users": [
@@ -719,7 +740,7 @@
       "email": "shakyaharshit683@gmail.com",
       "phone": "+918791984082",
       "company": "Harsh Developer",
-      "password": "$2a$10$k5USMeXAFbaZEIeSRgIL4uopfEzkmTlYnGDiN2haZ3fyuvA1o3hYa",
+      "password": "$2a$10$Bspw2q.hSgrEdrhP.5ua5O.lqmj/DheK7cfDGWDzyiDM2yWyK8jBC",
       "role": "client",
       "createdAt": "2026-09-07T16:41:21.999Z",
       "updatedAt": "2026-09-07T16:41:22.000Z",
@@ -1313,6 +1334,51 @@
       "savedDemos": [],
       "createdAt": "2026-09-14T10:27:18.955Z",
       "updatedAt": "2026-09-14T10:27:18.955Z"
+    },
+    {
+      "_id": "f43f715d-f9b4-47ce-86e1-dffb7823b4fd",
+      "name": "QA Test Client Updated",
+      "email": "qa.client.1789383027256@example.com",
+      "phone": "",
+      "company": "QA Enterprise Global",
+      "password": "$2a$10$opnb62ffyDZX95rgYLpKtubBPg7F0n7nbN.FFU55yPpo.3rVXPrm2",
+      "role": "client",
+      "referralCode": "DEV-7F3F1785",
+      "referredBy": null,
+      "savedDemos": [],
+      "createdAt": "2026-09-14T10:50:27.387Z",
+      "updatedAt": "2026-09-14T10:50:27.562Z",
+      "lastLogin": "2026-09-14T10:50:27.514Z",
+      "resetPasswordToken": "1482b12680a2d74a4172e03e5f53908ed6067aa9b6572e44be7b150ad757365c",
+      "resetPasswordExpires": "2026-09-14T11:50:27.560Z"
+    },
+    {
+      "_id": "02ca3e81-f1e8-4e2f-a757-6d46ce345e5e",
+      "name": "Referrer Pro",
+      "email": "referrer_1789383028262@example.com",
+      "phone": "+91 9988776655",
+      "company": "",
+      "password": "$2a$10$BQTbCQ7ll3/Ykjlf96iHKOYcpsKk0lSuOXbURKq1JiCCgYZ4sOoQe",
+      "role": "client",
+      "referralCode": "DEV-45CEA504",
+      "referredBy": null,
+      "savedDemos": [],
+      "createdAt": "2026-09-14T10:50:28.382Z",
+      "updatedAt": "2026-09-14T10:50:28.382Z"
+    },
+    {
+      "_id": "61af9cd9-61be-43f3-89a4-fdbdd096746e",
+      "name": "Referred Client",
+      "email": "referee_1789383028404@example.com",
+      "phone": "+91 9988776657",
+      "company": "",
+      "password": "$2a$10$mThmARXG3qHQf6qqIRq0NOCyJdyd6xMBrw870BHWu52.LBbbgk9oe",
+      "role": "client",
+      "referralCode": "DEV-76D9D1C7",
+      "referredBy": "DEV-45CEA504",
+      "savedDemos": [],
+      "createdAt": "2026-09-14T10:50:28.525Z",
+      "updatedAt": "2026-09-14T10:50:28.525Z"
     }
   ],
   "coupons": [
@@ -1324,11 +1390,11 @@
       "active": true,
       "expires_at": "2027-09-08T10:45:00.256Z",
       "max_uses": 100,
-      "used_count": 42,
+      "used_count": 44,
       "user_restriction": null,
       "notes": "Standard Private Client Incentive (20% Off)",
       "createdAt": "2026-09-08T10:45:00.257Z",
-      "updatedAt": "2026-09-14T10:27:18.552Z"
+      "updatedAt": "2026-09-14T10:50:27.764Z"
     },
     {
       "_id": "0200ccc4-fa6f-481d-b737-21bc990a6c93",
@@ -1989,6 +2055,36 @@
       "notes": "Redeemed for order DC-ORD-514530",
       "createdAt": "2026-09-14T10:27:18.556Z",
       "updatedAt": "2026-09-14T10:27:18.556Z"
+    },
+    {
+      "_id": "0a626ca3-7e0d-4d52-a4d0-ea238c01fe7d",
+      "coupon_id": "7b8c2286-a476-474e-9caa-3e00cbd081d5",
+      "code_mask": "DEV-****-****-5EHH",
+      "discount_percentage": 20,
+      "user_id": null,
+      "user_email": "qa.client.1789383027256@example.com",
+      "order_id": "ORD-1789383027612",
+      "original_amount": 50000,
+      "discount_amount": 10000,
+      "final_amount": 40000,
+      "notes": "QA Automated Redemption Test",
+      "createdAt": "2026-09-14T10:50:27.629Z",
+      "updatedAt": "2026-09-14T10:50:27.629Z"
+    },
+    {
+      "_id": "3d9957a4-2faf-479b-92e6-01742f58ee32",
+      "coupon_id": "7b8c2286-a476-474e-9caa-3e00cbd081d5",
+      "code_mask": "DEV-****-****-5EHH",
+      "discount_percentage": 20,
+      "user_id": "f43f715d-f9b4-47ce-86e1-dffb7823b4fd",
+      "user_email": "qa.client.1789383027256@example.com",
+      "order_id": "DC-ORD-276749",
+      "original_amount": 3500,
+      "discount_amount": 700,
+      "final_amount": 2800,
+      "notes": "Redeemed for order DC-ORD-276749",
+      "createdAt": "2026-09-14T10:50:27.777Z",
+      "updatedAt": "2026-09-14T10:50:27.777Z"
     }
   ],
   "orders": [
@@ -4130,6 +4226,166 @@
       "paidAt": "2026-09-14T10:27:18.995Z",
       "createdAt": "2026-09-14T10:27:18.974Z",
       "updatedAt": "2026-09-14T10:27:18.997Z"
+    },
+    {
+      "_id": "1c017ce1-f550-4672-bd08-efa5d993ff4c",
+      "orderId": "DC-ORD-276749",
+      "productId": "aptitude-mastery",
+      "productName": "Developer Aptitude & Problem Solving Mastery",
+      "productType": "aptitude",
+      "originalPrice": 5000,
+      "productDiscountPercent": 30,
+      "productDiscountAmount": 1500,
+      "discountedPrice": 3500,
+      "couponCodeMask": "DEV-****-****-5EHH",
+      "couponDiscountPercent": 20,
+      "couponDiscountAmount": 700,
+      "finalAmount": 2800,
+      "items": [
+        {
+          "productId": "aptitude-mastery",
+          "productName": "Developer Aptitude & Problem Solving Mastery",
+          "quantity": 1,
+          "finalPrice": 2800
+        }
+      ],
+      "userId": "f43f715d-f9b4-47ce-86e1-dffb7823b4fd",
+      "clientName": "QA Test Client Updated",
+      "clientEmail": "qa.client.1789383027256@example.com",
+      "clientPhone": "+919988776655",
+      "notes": "QA Automated Test Order",
+      "status": "Confirmed",
+      "paymentStatus": "unpaid",
+      "paymentMethod": "upi_tranz",
+      "transactionId": null,
+      "utr": null,
+      "tranzReferenceId": null,
+      "entitlements": [
+        "aptitude-mastery"
+      ],
+      "paidAt": null,
+      "createdAt": "2026-09-14T10:50:27.755Z",
+      "updatedAt": "2026-09-14T10:50:27.755Z"
+    },
+    {
+      "_id": "d652730a-d741-4c94-800f-32fa733cb204",
+      "orderId": "DC-ORD-505115",
+      "productId": "joya-ai",
+      "productName": "Joya AI — Full Source Code",
+      "productType": "app",
+      "originalPrice": 1999,
+      "productDiscountPercent": 50,
+      "productDiscountAmount": 1000,
+      "discountedPrice": 999,
+      "couponCodeMask": null,
+      "couponDiscountPercent": 0,
+      "couponDiscountAmount": 0,
+      "finalAmount": 999,
+      "items": [
+        {
+          "productId": "joya-ai",
+          "productName": "Joya AI — Full Source Code",
+          "quantity": 1,
+          "finalPrice": 999
+        }
+      ],
+      "userId": null,
+      "clientName": "QA Joya Purchaser",
+      "clientEmail": "joya.buyer@devcraft.io",
+      "clientPhone": "+919876501234",
+      "notes": "",
+      "status": "paid",
+      "paymentStatus": "paid",
+      "paymentMethod": "upi_tranz",
+      "transactionId": "TXN-ADM-1789383028041",
+      "utr": "UTR-QA-99998888",
+      "tranzReferenceId": null,
+      "entitlements": [
+        "joya-ai"
+      ],
+      "paidAt": "2026-09-14T10:50:28.041Z",
+      "createdAt": "2026-09-14T10:50:27.996Z",
+      "updatedAt": "2026-09-14T10:50:28.044Z"
+    },
+    {
+      "_id": "854427ec-fb4e-458a-bafe-dfd1aa681873",
+      "orderId": "DC-ORD-301409",
+      "productId": "jarvis-ai",
+      "productName": "Jarvis AI — Full Source Code",
+      "productType": "app",
+      "originalPrice": 3199,
+      "productDiscountPercent": 50,
+      "productDiscountAmount": 1600,
+      "discountedPrice": 1599,
+      "couponCodeMask": null,
+      "couponDiscountPercent": 0,
+      "couponDiscountAmount": 0,
+      "finalAmount": 1599,
+      "items": [
+        {
+          "productId": "jarvis-ai",
+          "productName": "Jarvis AI — Full Source Code",
+          "quantity": 1,
+          "finalPrice": 1599
+        }
+      ],
+      "userId": null,
+      "clientName": "QA Jarvis Purchaser",
+      "clientEmail": "jarvis.buyer@devcraft.io",
+      "clientPhone": "+919876543210",
+      "notes": "",
+      "status": "paid",
+      "paymentStatus": "paid",
+      "paymentMethod": "upi_tranz",
+      "transactionId": "TXN-ADM-1789383028161",
+      "utr": "UTR-JARVIS-12345678",
+      "tranzReferenceId": null,
+      "entitlements": [
+        "jarvis-ai"
+      ],
+      "paidAt": "2026-09-14T10:50:28.161Z",
+      "createdAt": "2026-09-14T10:50:28.129Z",
+      "updatedAt": "2026-09-14T10:50:28.164Z"
+    },
+    {
+      "_id": "3b88ec23-f115-4eb9-992b-a0568a1d076a",
+      "orderId": "DC-ORD-558150",
+      "productId": "joya-ai",
+      "productName": "Joya AI — Full Source Code",
+      "productType": "app",
+      "originalPrice": 1999,
+      "productDiscountPercent": 50,
+      "productDiscountAmount": 1000,
+      "discountedPrice": 999,
+      "couponCodeMask": null,
+      "couponDiscountPercent": 0,
+      "couponDiscountAmount": 0,
+      "finalAmount": 999,
+      "items": [
+        {
+          "productId": "joya-ai",
+          "productName": "Joya AI — Full Source Code",
+          "quantity": 1,
+          "finalPrice": 999
+        }
+      ],
+      "userId": "61af9cd9-61be-43f3-89a4-fdbdd096746e",
+      "clientName": "Referred Client",
+      "clientEmail": "referee_1789383028404@example.com",
+      "clientPhone": "+91 9988776657",
+      "notes": "",
+      "status": "paid",
+      "paymentStatus": "paid",
+      "paymentMethod": "upi_tranz",
+      "transactionId": "TXN-ADM-1789383028591",
+      "utr": "ADMIN_VERIFIED",
+      "tranzReferenceId": null,
+      "entitlements": [
+        "joya-ai"
+      ],
+      "paidAt": "2026-09-14T10:50:28.591Z",
+      "createdAt": "2026-09-14T10:50:28.556Z",
+      "updatedAt": "2026-09-14T10:50:28.594Z"
     }
   ],
   "shareEvents": [
@@ -4292,6 +4548,14 @@
       "userId": "19a28c5b-a630-45f4-b758-98b4c54fdbe7",
       "ip": "::1",
       "timestamp": "2026-09-14T10:27:18.605Z"
+    },
+    {
+      "_id": "e9cbb80c-e81b-4280-a3b5-44cc7bb1d2bd",
+      "productId": "joya-ai",
+      "sharePlatform": "whatsapp",
+      "userId": "f43f715d-f9b4-47ce-86e1-dffb7823b4fd",
+      "ip": "::1",
+      "timestamp": "2026-09-14T10:50:27.909Z"
     }
   ],
   "products": [
@@ -5572,6 +5836,26 @@
       "ip": "::1",
       "version": "v1.0.0",
       "timestamp": "2026-09-14T10:27:18.791Z"
+    },
+    {
+      "_id": "4d00bb80-c593-41f5-adc0-8a44aeb95a43",
+      "productId": "joya-ai",
+      "productName": "Joya AI — Full Source Code",
+      "userId": null,
+      "clientEmail": "joya.buyer@devcraft.io",
+      "ip": "::1",
+      "version": "v1.0.0",
+      "timestamp": "2026-09-14T10:50:28.109Z"
+    },
+    {
+      "_id": "75cd64ec-fe8b-4dd9-91b9-6ab5f855f173",
+      "productId": "jarvis-ai",
+      "productName": "Jarvis AI — Full Source Code",
+      "userId": null,
+      "clientEmail": "jarvis.buyer@devcraft.io",
+      "ip": "::1",
+      "version": "v1.0.0",
+      "timestamp": "2026-09-14T10:50:28.240Z"
     }
   ],
   "payments": [
@@ -6624,6 +6908,90 @@
       },
       "createdAt": "2026-09-14T10:27:18.985Z",
       "updatedAt": "2026-09-14T10:27:19.003Z"
+    },
+    {
+      "_id": "53d19065-c1c1-4826-9cb8-760854b64ede",
+      "paymentId": "DC-PAY-166464",
+      "orderId": "DC-ORD-276749",
+      "gateway": "tranz_upi",
+      "amount": 2800,
+      "currency": "INR",
+      "status": "pending",
+      "upiUri": "upi://pay?pa=devcraft@upi&pn=DEVCRAFT%20STUDIO&am=2800.00&cu=INR&tr=DC-ORD-276749&tn=DevCraft%20License%20DC-ORD-276749",
+      "gatewayOrderId": "",
+      "gatewayTxnId": "",
+      "utr": "",
+      "customerEmail": "qa.client.1789383027256@example.com",
+      "customerPhone": "+919988776655",
+      "metadata": {
+        "productName": "Developer Aptitude & Problem Solving Mastery",
+        "itemsCount": 1
+      },
+      "createdAt": "2026-09-14T10:50:27.795Z",
+      "updatedAt": "2026-09-14T10:50:27.795Z"
+    },
+    {
+      "_id": "5d05dea0-6f4f-433f-a43d-bfb5bc2b62b3",
+      "paymentId": "DC-PAY-663636",
+      "orderId": "DC-ORD-505115",
+      "gateway": "tranz_upi",
+      "amount": 999,
+      "currency": "INR",
+      "status": "paid",
+      "upiUri": "upi://pay?pa=devcraft@upi&pn=DEVCRAFT%20STUDIO&am=999.00&cu=INR&tr=DC-ORD-505115&tn=DevCraft%20License%20DC-ORD-505115",
+      "gatewayOrderId": "",
+      "gatewayTxnId": "TXN-ADM-1789383028041",
+      "utr": "UTR-QA-99998888",
+      "customerEmail": "joya.buyer@devcraft.io",
+      "customerPhone": "+919876501234",
+      "metadata": {
+        "productName": "Joya AI — Full Source Code",
+        "itemsCount": 1
+      },
+      "createdAt": "2026-09-14T10:50:28.015Z",
+      "updatedAt": "2026-09-14T10:50:28.054Z"
+    },
+    {
+      "_id": "bd30f7f9-ab41-4358-815b-b532709d3d8b",
+      "paymentId": "DC-PAY-445315",
+      "orderId": "DC-ORD-301409",
+      "gateway": "tranz_upi",
+      "amount": 1599,
+      "currency": "INR",
+      "status": "paid",
+      "upiUri": "upi://pay?pa=devcraft@upi&pn=DEVCRAFT%20STUDIO&am=1599.00&cu=INR&tr=DC-ORD-301409&tn=DevCraft%20License%20DC-ORD-301409",
+      "gatewayOrderId": "",
+      "gatewayTxnId": "TXN-ADM-1789383028161",
+      "utr": "UTR-JARVIS-12345678",
+      "customerEmail": "jarvis.buyer@devcraft.io",
+      "customerPhone": "+919876543210",
+      "metadata": {
+        "productName": "Jarvis AI — Full Source Code",
+        "itemsCount": 1
+      },
+      "createdAt": "2026-09-14T10:50:28.146Z",
+      "updatedAt": "2026-09-14T10:50:28.174Z"
+    },
+    {
+      "_id": "1fdf3425-4524-4770-98dc-346b4a9904a6",
+      "paymentId": "DC-PAY-697515",
+      "orderId": "DC-ORD-558150",
+      "gateway": "tranz_upi",
+      "amount": 999,
+      "currency": "INR",
+      "status": "paid",
+      "upiUri": "upi://pay?pa=devcraft@upi&pn=DEVCRAFT%20STUDIO&am=999.00&cu=INR&tr=DC-ORD-558150&tn=DevCraft%20License%20DC-ORD-558150",
+      "gatewayOrderId": "",
+      "gatewayTxnId": "TXN-ADM-1789383028591",
+      "utr": "ADMIN_VERIFIED",
+      "customerEmail": "referee_1789383028404@example.com",
+      "customerPhone": "+91 9988776657",
+      "metadata": {
+        "productName": "Joya AI — Full Source Code",
+        "itemsCount": 1
+      },
+      "createdAt": "2026-09-14T10:50:28.574Z",
+      "updatedAt": "2026-09-14T10:50:28.610Z"
     }
   ],
   "paymentTransactions": [
@@ -7046,6 +7414,42 @@
       "gatewayResponse": {},
       "verifiedAt": "2026-09-14T10:27:19.007Z",
       "createdAt": "2026-09-14T10:27:19.007Z"
+    },
+    {
+      "_id": "5687e180-22cb-48c7-bb6f-0fc07cb0c7a2",
+      "paymentId": "DC-PAY-663636",
+      "orderId": "DC-ORD-505115",
+      "amount": 999,
+      "status": "paid",
+      "txnId": "TXN-ADM-1789383028041",
+      "utr": "UTR-QA-99998888",
+      "gatewayResponse": {},
+      "verifiedAt": "2026-09-14T10:50:28.061Z",
+      "createdAt": "2026-09-14T10:50:28.061Z"
+    },
+    {
+      "_id": "375fe275-8b8c-4f3c-8ac8-aee280f902f3",
+      "paymentId": "DC-PAY-445315",
+      "orderId": "DC-ORD-301409",
+      "amount": 1599,
+      "status": "paid",
+      "txnId": "TXN-ADM-1789383028161",
+      "utr": "UTR-JARVIS-12345678",
+      "gatewayResponse": {},
+      "verifiedAt": "2026-09-14T10:50:28.181Z",
+      "createdAt": "2026-09-14T10:50:28.181Z"
+    },
+    {
+      "_id": "2464993c-ec80-4a7b-bc49-fcc8c0fd349c",
+      "paymentId": "DC-PAY-697515",
+      "orderId": "DC-ORD-558150",
+      "amount": 999,
+      "status": "paid",
+      "txnId": "TXN-ADM-1789383028591",
+      "utr": "ADMIN_VERIFIED",
+      "gatewayResponse": {},
+      "verifiedAt": "2026-09-14T10:50:28.617Z",
+      "createdAt": "2026-09-14T10:50:28.617Z"
     }
   ],
   "savedProducts": [],
@@ -7574,6 +7978,51 @@
       },
       "ip": "127.0.0.1",
       "timestamp": "2026-09-14T10:27:19.011Z"
+    },
+    {
+      "_id": "c15b5e98-bb81-45d7-9e44-3797a27cf611",
+      "action": "ORDER_PAID",
+      "actor": "joya.buyer@devcraft.io",
+      "details": {
+        "orderId": "DC-ORD-505115",
+        "productName": "Joya AI — Full Source Code",
+        "amount": 999,
+        "entitlements": [
+          "joya-ai"
+        ]
+      },
+      "ip": "127.0.0.1",
+      "timestamp": "2026-09-14T10:50:28.076Z"
+    },
+    {
+      "_id": "1723c56f-458b-4711-be53-e9713c8dfd8c",
+      "action": "ORDER_PAID",
+      "actor": "jarvis.buyer@devcraft.io",
+      "details": {
+        "orderId": "DC-ORD-301409",
+        "productName": "Jarvis AI — Full Source Code",
+        "amount": 1599,
+        "entitlements": [
+          "jarvis-ai"
+        ]
+      },
+      "ip": "127.0.0.1",
+      "timestamp": "2026-09-14T10:50:28.188Z"
+    },
+    {
+      "_id": "8ca13b74-2a4d-4431-9d27-89f851730f14",
+      "action": "ORDER_PAID",
+      "actor": "referee_1789383028404@example.com",
+      "details": {
+        "orderId": "DC-ORD-558150",
+        "productName": "Joya AI — Full Source Code",
+        "amount": 999,
+        "entitlements": [
+          "joya-ai"
+        ]
+      },
+      "ip": "127.0.0.1",
+      "timestamp": "2026-09-14T10:50:28.624Z"
     }
   ],
   "referrals": [
@@ -7674,6 +8123,20 @@
       "paid": false,
       "createdAt": "2026-09-14T10:27:18.959Z",
       "updatedAt": "2026-09-14T10:27:19.020Z"
+    },
+    {
+      "_id": "12e81d5f-f06a-4f0d-ba6d-83ee988cdd5e",
+      "referrerId": "02ca3e81-f1e8-4e2f-a757-6d46ce345e5e",
+      "referrerCode": "DEV-45CEA504",
+      "referredUserId": "61af9cd9-61be-43f3-89a4-fdbdd096746e",
+      "referredUserEmail": "referee_1789383028404@example.com",
+      "status": "converted",
+      "orderId": "DC-ORD-558150",
+      "rewardPercent": 10,
+      "rewardAmount": 100,
+      "paid": false,
+      "createdAt": "2026-09-14T10:50:28.533Z",
+      "updatedAt": "2026-09-14T10:50:28.649Z"
     }
   ],
   "referralRewards": [
@@ -7767,6 +8230,19 @@
       "status": "pending",
       "createdAt": "2026-09-14T10:27:19.025Z",
       "updatedAt": "2026-09-14T10:27:19.025Z"
+    },
+    {
+      "_id": "d892c8f1-f057-499d-a104-f2172f6e5d2c",
+      "referralId": "12e81d5f-f06a-4f0d-ba6d-83ee988cdd5e",
+      "referrerId": "02ca3e81-f1e8-4e2f-a757-6d46ce345e5e",
+      "referredUserId": "61af9cd9-61be-43f3-89a4-fdbdd096746e",
+      "orderId": "DC-ORD-558150",
+      "orderAmount": 999,
+      "rewardPercent": 10,
+      "rewardAmount": 100,
+      "status": "pending",
+      "createdAt": "2026-09-14T10:50:28.656Z",
+      "updatedAt": "2026-09-14T10:50:28.656Z"
     }
   ],
   "siteSettings": {
@@ -7801,6 +8277,20 @@
       "adminNotes": "Scheduled for Q4 release sprint",
       "createdAt": "2026-09-14T10:27:19.093Z",
       "updatedAt": "2026-09-14T10:27:19.110Z"
+    },
+    {
+      "_id": "14ddee79-50d5-47f0-9555-b6bcd7234685",
+      "title": "Support for dark mode in code exports",
+      "category": "feature_request",
+      "description": "Please add syntax highlighted dark theme exports for Joya AI code snippets.",
+      "priority": "High",
+      "status": "Planned",
+      "userName": "Test Client",
+      "userEmail": "client@example.com",
+      "userId": null,
+      "adminNotes": "Scheduled for Q4 release sprint",
+      "createdAt": "2026-09-14T10:50:28.765Z",
+      "updatedAt": "2026-09-14T10:50:28.791Z"
     }
   ],
   "notifications": [
@@ -8225,6 +8715,217 @@
       },
       "read": true,
       "createdAt": "2026-09-14T10:27:19.097Z"
+    },
+    {
+      "_id": "7f476d19-ca55-4a5f-8219-4aa0ba62dd4c",
+      "type": "project_request",
+      "title": "New Project Request from Johnathan Vance",
+      "message": "Johnathan Vance (john.vance@techcorp.io) requested quote for Web Application Development. Budget: ₹75,000 - ₹1,50,000 / $950 - $1,800",
+      "link": "#enquiries",
+      "metadata": {
+        "enquiryId": "22ecda60-a66d-4542-8d14-b220137f59f1",
+        "email": "john.vance@techcorp.io",
+        "service": "Web Application Development",
+        "budget": "₹75,000 - ₹1,50,000 / $950 - $1,800"
+      },
+      "read": true,
+      "createdAt": "2026-09-14T10:50:26.986Z"
+    },
+    {
+      "_id": "c23c8496-818b-443f-83d2-28c829945fc2",
+      "type": "new_user",
+      "title": "New Client Registered: QA Test Client",
+      "message": "QA Test Client (qa.client.1789383027256@example.com) registered an account. Company: QA Industries",
+      "link": "#users",
+      "metadata": {
+        "userId": "f43f715d-f9b4-47ce-86e1-dffb7823b4fd",
+        "email": "qa.client.1789383027256@example.com",
+        "referralCode": "DEV-7F3F1785"
+      },
+      "read": true,
+      "createdAt": "2026-09-14T10:50:27.394Z"
+    },
+    {
+      "_id": "904d5161-caec-47f0-93a9-db330d1b9e81",
+      "type": "new_order",
+      "title": "New Order: ₹2800 - Developer Aptitude & Problem Solving Mastery",
+      "message": "Order DC-ORD-276749 placed by qa.client.1789383027256@example.com for Developer Aptitude & Problem Solving Mastery. Amount: ₹2800",
+      "link": "#orders",
+      "metadata": {
+        "orderId": "DC-ORD-276749",
+        "amount": 2800,
+        "email": "qa.client.1789383027256@example.com"
+      },
+      "read": true,
+      "createdAt": "2026-09-14T10:50:27.785Z"
+    },
+    {
+      "_id": "4a6e17e7-efb2-45ec-b9a1-be5b7ee3bf51",
+      "type": "new_order",
+      "title": "New Order: ₹999 - Joya AI — Full Source Code",
+      "message": "Order DC-ORD-505115 placed by joya.buyer@devcraft.io for Joya AI — Full Source Code. Amount: ₹999",
+      "link": "#orders",
+      "metadata": {
+        "orderId": "DC-ORD-505115",
+        "amount": 999,
+        "email": "joya.buyer@devcraft.io"
+      },
+      "read": true,
+      "createdAt": "2026-09-14T10:50:28.005Z"
+    },
+    {
+      "_id": "0f0694b3-7323-475e-9eb3-2513f420ef66",
+      "type": "payment_success",
+      "title": "Payment Received: ₹999 for Joya AI — Full Source Code",
+      "message": "Order DC-ORD-505115 verified successfully via UPI. Buyer: joya.buyer@devcraft.io. Amount: ₹999",
+      "link": "#orders",
+      "metadata": {
+        "orderId": "DC-ORD-505115",
+        "amount": 999,
+        "utr": "UTR-QA-99998888"
+      },
+      "read": true,
+      "createdAt": "2026-09-14T10:50:28.085Z"
+    },
+    {
+      "_id": "2cedf71a-db23-4bbc-8d82-6cc2df5a1968",
+      "type": "download_accessed",
+      "title": "Download Accessed: Joya AI — Full Source Code",
+      "message": "joya.buyer@devcraft.io downloaded package \"joya-ai-source-code-v2.4.0.zip\" (Order: DC-ORD-505115)",
+      "link": "#downloads",
+      "metadata": {
+        "productId": "joya-ai",
+        "orderId": "DC-ORD-505115",
+        "email": "joya.buyer@devcraft.io"
+      },
+      "read": true,
+      "createdAt": "2026-09-14T10:50:28.116Z"
+    },
+    {
+      "_id": "b1140a26-8121-41a8-9b78-a5f510ffde15",
+      "type": "new_order",
+      "title": "New Order: ₹1599 - Jarvis AI — Full Source Code",
+      "message": "Order DC-ORD-301409 placed by jarvis.buyer@devcraft.io for Jarvis AI — Full Source Code. Amount: ₹1599",
+      "link": "#orders",
+      "metadata": {
+        "orderId": "DC-ORD-301409",
+        "amount": 1599,
+        "email": "jarvis.buyer@devcraft.io"
+      },
+      "read": true,
+      "createdAt": "2026-09-14T10:50:28.136Z"
+    },
+    {
+      "_id": "1b1b1ca9-f40d-4e38-a362-62465df14443",
+      "type": "payment_success",
+      "title": "Payment Received: ₹1599 for Jarvis AI — Full Source Code",
+      "message": "Order DC-ORD-301409 verified successfully via UPI. Buyer: jarvis.buyer@devcraft.io. Amount: ₹1599",
+      "link": "#orders",
+      "metadata": {
+        "orderId": "DC-ORD-301409",
+        "amount": 1599,
+        "utr": "UTR-JARVIS-12345678"
+      },
+      "read": true,
+      "createdAt": "2026-09-14T10:50:28.198Z"
+    },
+    {
+      "_id": "60c95cf1-b3c2-49b5-8b0c-fe879bd1b44a",
+      "type": "download_accessed",
+      "title": "Download Accessed: Jarvis AI — Full Source Code",
+      "message": "jarvis.buyer@devcraft.io downloaded package \"jarvis-ai-source-code-v3.1.2.zip\" (Order: DC-ORD-301409)",
+      "link": "#downloads",
+      "metadata": {
+        "productId": "jarvis-ai",
+        "orderId": "DC-ORD-301409",
+        "email": "jarvis.buyer@devcraft.io"
+      },
+      "read": true,
+      "createdAt": "2026-09-14T10:50:28.249Z"
+    },
+    {
+      "_id": "55c3f59e-444d-4695-95ee-9f7037b99814",
+      "type": "new_user",
+      "title": "New Client Registered: Referrer Pro",
+      "message": "Referrer Pro (referrer_1789383028262@example.com) registered an account.",
+      "link": "#users",
+      "metadata": {
+        "userId": "02ca3e81-f1e8-4e2f-a757-6d46ce345e5e",
+        "email": "referrer_1789383028262@example.com",
+        "referralCode": "DEV-45CEA504"
+      },
+      "read": true,
+      "createdAt": "2026-09-14T10:50:28.391Z"
+    },
+    {
+      "_id": "b0c46c71-17eb-4bd8-bd79-7fd26947e833",
+      "type": "new_user",
+      "title": "New Client Registered: Referred Client",
+      "message": "Referred Client (referee_1789383028404@example.com) registered an account. (Referred by DEV-45CEA504)",
+      "link": "#users",
+      "metadata": {
+        "userId": "61af9cd9-61be-43f3-89a4-fdbdd096746e",
+        "email": "referee_1789383028404@example.com",
+        "referralCode": "DEV-76D9D1C7"
+      },
+      "read": true,
+      "createdAt": "2026-09-14T10:50:28.542Z"
+    },
+    {
+      "_id": "909a42f7-c36d-4172-a962-d4fe6a3861f0",
+      "type": "new_order",
+      "title": "New Order: ₹999 - Joya AI — Full Source Code",
+      "message": "Order DC-ORD-558150 placed by referee_1789383028404@example.com for Joya AI — Full Source Code. Amount: ₹999",
+      "link": "#orders",
+      "metadata": {
+        "orderId": "DC-ORD-558150",
+        "amount": 999,
+        "email": "referee_1789383028404@example.com"
+      },
+      "read": true,
+      "createdAt": "2026-09-14T10:50:28.563Z"
+    },
+    {
+      "_id": "8ad654b4-b73a-4fef-b680-14c1ac43f743",
+      "type": "referral_conversion",
+      "title": "Referral Converted: ₹100 earned",
+      "message": "Referrer DEV-45CEA504 earned ₹100 commission on order DC-ORD-558150 from referee_1789383028404@example.com",
+      "link": "#referrals",
+      "metadata": {
+        "orderId": "DC-ORD-558150",
+        "referrerCode": "DEV-45CEA504",
+        "rewardAmount": 100
+      },
+      "read": true,
+      "createdAt": "2026-09-14T10:50:28.663Z"
+    },
+    {
+      "_id": "74d709fb-b451-4764-97b6-a656d8765c3c",
+      "type": "payment_success",
+      "title": "Payment Received: ₹999 for Joya AI — Full Source Code",
+      "message": "Order DC-ORD-558150 verified successfully via UPI. Buyer: referee_1789383028404@example.com. Amount: ₹999",
+      "link": "#orders",
+      "metadata": {
+        "orderId": "DC-ORD-558150",
+        "amount": 999,
+        "utr": "ADMIN_VERIFIED"
+      },
+      "read": true,
+      "createdAt": "2026-09-14T10:50:28.669Z"
+    },
+    {
+      "_id": "b74df5f9-07cb-44c6-becf-b45d1b1c96e3",
+      "type": "feature_request",
+      "title": "New Feature Idea: Support for dark mode in code exports",
+      "message": "Test Client (client@example.com) submitted: \"Support for dark mode in code exports\". Priority: High",
+      "link": "#feedback",
+      "metadata": {
+        "feedbackId": "14ddee79-50d5-47f0-9555-b6bcd7234685",
+        "category": "feature_request",
+        "priority": "High"
+      },
+      "read": true,
+      "createdAt": "2026-09-14T10:50:28.771Z"
     }
   ],
   "analyticsEvents": [
@@ -8255,6 +8956,20 @@
       "userId": null,
       "userEmail": "",
       "timestamp": "2026-09-14T10:27:19.074Z"
+    },
+    {
+      "_id": "b58b6ba2-6167-42c8-a8df-453bfbcced3a",
+      "event": "search",
+      "data": {
+        "query": "joya ai"
+      },
+      "path": "/products",
+      "referrer": "https://google.com",
+      "userAgent": "",
+      "ip": "::1",
+      "userId": null,
+      "userEmail": "",
+      "timestamp": "2026-09-14T10:50:28.728Z"
     }
   ]
 }

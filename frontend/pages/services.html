@@ -1461,6 +1461,28 @@
               </div>
             </div>
 
+            <div class="form-row">
+              <div class="form-group">
+                <label class="input-label" for="project-type">Requirement Type</label>
+                <select id="project-type" name="projectType" class="form-control">
+                  <option value="New App" selected>New Mobile App (Android / iOS)</option>
+                  <option value="Website">Website Development</option>
+                  <option value="Web App">Web Application / SaaS Portal</option>
+                  <option value="Custom Software">Custom Enterprise Software</option>
+                  <option value="AI / Machine Learning">AI Assistant &amp; Machine Learning</option>
+                  <option value="Business Automation">Business Automation Pipeline</option>
+                  <option value="Feature Request">Feature Request / Enhancements</option>
+                  <option value="Bug Fix">Codebase Rescue / Bug Fix</option>
+                  <option value="Maintenance">Ongoing Maintenance &amp; Cloud Support</option>
+                  <option value="Feedback">Strategic Technical Consultation</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="input-label" for="tech-preference">Preferred Tech Stack (Optional)</label>
+                <input type="text" id="tech-preference" name="techPreference" class="form-control" placeholder="e.g. React, Node.js, Kotlin, Python, Next.js" />
+              </div>
+            </div>
+
             <div class="form-group">
               <label class="input-label" for="project-details">Project Summary & Technical Requirements *</label>
               <textarea id="project-details" name="message" class="form-control" rows="4" placeholder="Briefly describe what you'd like to build, your target audience, existing stack, or any specific demo you want similar to..." required></textarea>

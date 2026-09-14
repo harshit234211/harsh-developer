@@ -814,8 +814,10 @@ const dbService = {
         description: data.description,
         message: data.message || '',
         referenceUrl: data.referenceUrl || '',
+        techPreference: data.techPreference || '',
+        additionalRequirements: data.additionalRequirements || '',
         userId: data.userId || null,
-        status: 'New',
+        status: data.status || 'NEW',
         notes: '',
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString()

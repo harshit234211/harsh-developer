@@ -26,7 +26,12 @@ window.submitInquiry = async function(event) {
     service: (document.getElementById('project-service')?.value || '').trim(),
     budget: (document.getElementById('project-budget')?.value || '').trim(),
     timeline: (document.getElementById('project-timeline')?.value || '').trim(),
+    deadline: (document.getElementById('project-timeline')?.value || '').trim(),
+    projectType: (document.getElementById('project-type')?.value || 'New Project').trim(),
+    techPreference: (document.getElementById('tech-preference')?.value || '').trim(),
+    additionalRequirements: (document.getElementById('additional-requirements')?.value || '').trim(),
     message: (document.getElementById('project-details')?.value || '').trim(),
+    description: (document.getElementById('project-details')?.value || '').trim(),
     source: 'DevCraft Studio Web Portal',
     createdAt: new Date().toISOString()
   };
@@ -72,9 +77,15 @@ window.submitInquiry = async function(event) {
   const refId = 'DC-INQ-' + Math.floor(100000 + Math.random() * 900000);
 
   try {
+    const headers = { 'Content-Type': 'application/json' };
+    const token = localStorage.getItem('devcraft_user_token') || sessionStorage.getItem('devcraft_user_token');
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+
     const res = await fetch('/api/contact', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers,
       body: JSON.stringify(payload)
     });
 

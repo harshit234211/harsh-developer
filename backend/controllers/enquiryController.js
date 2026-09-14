@@ -6,7 +6,7 @@ const recentSubmissions = new Map();
 
 const createEnquiry = async (req, res, next) => {
   try {
-    const { name, email, phone, whatsapp, service, budget, projectType, deadline, description, message, referenceUrl } = req.body;
+    const { name, email, phone, whatsapp, service, budget, projectType, deadline, description, message, referenceUrl, techPreference, additionalRequirements } = req.body;
 
     // Check duplicate rapid submissions within 60s
     const submissionKey = `${email.toLowerCase()}_${description.slice(0, 30)}`;
@@ -34,6 +34,8 @@ const createEnquiry = async (req, res, next) => {
       description,
       message,
       referenceUrl,
+      techPreference: techPreference || '',
+      additionalRequirements: additionalRequirements || '',
       userId: req.user ? (req.user._id || req.user.id) : null
     });
 
