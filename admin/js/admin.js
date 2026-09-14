@@ -116,6 +116,12 @@ async function loadStats() {
     if (document.getElementById('stat-new-enquiries')) {
       document.getElementById('stat-new-enquiries').textContent = data.newEnquiries || 0;
     }
+    if (document.getElementById('stat-joya-sales')) {
+      document.getElementById('stat-joya-sales').textContent = data.joyaSales || 0;
+    }
+    if (document.getElementById('stat-jarvis-sales')) {
+      document.getElementById('stat-jarvis-sales').textContent = data.jarvisSales || 0;
+    }
 
     // Render Recent Orders on Overview
     const recentTbody = document.getElementById('overview-recent-orders-body');

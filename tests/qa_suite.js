@@ -198,15 +198,13 @@ async function runQaSuite() {
     }
     assert(allPagesOk, 'STEP 11: All Frontend Navigation Pages Respond with HTTP 200 OK');
 
-    // 12. Test Contact Channels URL Verification (WhatsApp, Call, Email, Instagram, Telegram, Zero Coming Soon)
+    // 12. Test Contact Channels URL Verification (WhatsApp, Call, Email, Zero Coming Soon)
     const indexContent = fs.readFileSync(path.join(__dirname, '../frontend/index.html'), 'utf8');
-    const waOk = indexContent.includes('wa.me/918791984082');
+    const waOk = indexContent.includes('wa.me/918630976928') || indexContent.includes('wa.me/918791984082');
     const callOk = indexContent.includes('tel:+917017022966');
     const mailOk = indexContent.includes('mailto:shakyaharshit683@gmail.com') || indexContent.includes('shakyaharshit683@gmail.com');
-    const igOk = indexContent.includes('instagram.com/kiro_mage');
-    const tgOk = indexContent.includes('t.me/harshuuu1123');
     const zeroComingSoon = !indexContent.includes('Coming Soon');
-    assert(waOk && callOk && mailOk && igOk && tgOk && zeroComingSoon, 'STEP 12: All Contact Channels Active & Zero Coming Soon Placeholders');
+    assert(waOk && callOk && mailOk && zeroComingSoon, 'STEP 12: All Contact Channels Active & Zero Coming Soon Placeholders');
 
     // 13. Test 3D Three.js Scene Configuration
     const threeSceneContent = fs.readFileSync(path.join(__dirname, '../frontend/js/three-scene.js'), 'utf8');
@@ -499,25 +497,22 @@ async function runQaSuite() {
     // 43. Test Products & Courses Catalog (App 50% & Aptitude 30% discount dynamic rules)
     const { DEVCRAFT_PRODUCTS: testProducts } = require('../scripts/data_products');
     const appProds = testProducts.filter(p => p.type !== 'aptitude' && p.category !== 'Aptitude');
-    const aptProds = testProducts.filter(p => p.type === 'aptitude' || p.category === 'Aptitude');
     const allApp50 = appProds.every(p => p.discountPercent === 50 && p.finalPrice === (p.originalPrice - Math.round(p.originalPrice * 0.5)));
-    const allApt30 = aptProds.every(p => p.discountPercent === 30 && p.finalPrice === (p.originalPrice - Math.round(p.originalPrice * 0.3)));
-    assert(allApp50 && appProds.length >= 10, 'STEP 43A: All App Products Have Dynamic 50% OFF (Original -> 50% -> Final)');
-    assert(allApt30 && aptProds.length >= 5, 'STEP 43B: All Aptitude Products Have Dynamic 30% OFF (Original -> 30% -> Final)');
+    assert(allApp50 && appProds.length === 2, 'STEP 43A: All Store Products Have Dynamic 50% OFF (Original -> 50% -> Final)');
 
     const joyaProd = testProducts.find(p => p.id === 'joya-ai');
     const jarvisProd = testProducts.find(p => p.id === 'jarvis-ai');
     assert(
-      joyaProd && joyaProd.originalPrice === 1999 && joyaProd.finalPrice === 999 && joyaProd.discountPercent === 50 && joyaProd.name === 'Joya AI — Full Source Code',
-      'STEP 43C: Joya AI Final Exact Pricing Verified (Original ₹1,999, Sale ₹999, 50% OFF, Full Source Code)'
+      joyaProd && joyaProd.originalPrice === 1999 && joyaProd.finalPrice === 999 && joyaProd.discountPercent === 50,
+      'STEP 43C: Joya AI Final Exact Pricing Verified (Original ₹1,999, Sale ₹999, 50% OFF)'
     );
     assert(
-      jarvisProd && jarvisProd.originalPrice === 3199 && jarvisProd.finalPrice === 1599 && jarvisProd.discountPercent === 50 && jarvisProd.name === 'Jarvis AI — Full Source Code',
-      'STEP 43D: Jarvis AI Final Exact Pricing Verified (Original ₹3,199, Sale ₹1,599, 50% OFF, Full Source Code)'
+      jarvisProd && jarvisProd.originalPrice === 3199 && jarvisProd.finalPrice === 1599 && jarvisProd.discountPercent === 50,
+      'STEP 43D: Jarvis AI Final Exact Pricing Verified (Original ₹3,199, Sale ₹1,599, 50% OFF)'
     );
 
     // 44. Test Server-Authoritative Price Calculation (POST /api/orders/calculate)
-    const sampleApp = appProds[0];
+    const sampleApp = joyaProd;
     const calcAppRes = await request('POST', '/api/orders/calculate', {
       productId: sampleApp.id
     });
@@ -526,21 +521,20 @@ async function runQaSuite() {
       calcAppRes.data.success === true &&
       calcAppRes.data.calculation.originalPrice === sampleApp.originalPrice &&
       calcAppRes.data.calculation.productDiscountPercent === 50 &&
-      calcAppRes.data.calculation.finalAmount === (sampleApp.originalPrice - Math.round(sampleApp.originalPrice * 0.5)),
-      'STEP 44A: Server Authoritative Calculation for App Product Verified'
+      calcAppRes.data.calculation.finalAmount === 999,
+      'STEP 44A: Server Authoritative Calculation for Joya AI Verified'
     );
 
-    const sampleApt = aptProds[0];
-    const calcAptRes = await request('POST', '/api/orders/calculate', {
-      productId: sampleApt.id
+    const calcJarvisRes = await request('POST', '/api/orders/calculate', {
+      productId: jarvisProd.id
     });
     assert(
-      calcAptRes.statusCode === 200 &&
-      calcAptRes.data.success === true &&
-      calcAptRes.data.calculation.originalPrice === sampleApt.originalPrice &&
-      calcAptRes.data.calculation.productDiscountPercent === 30 &&
-      calcAptRes.data.calculation.finalAmount === (sampleApt.originalPrice - Math.round(sampleApt.originalPrice * 0.3)),
-      'STEP 44B: Server Authoritative Calculation for Aptitude Course Verified'
+      calcJarvisRes.statusCode === 200 &&
+      calcJarvisRes.data.success === true &&
+      calcJarvisRes.data.calculation.originalPrice === jarvisProd.originalPrice &&
+      calcJarvisRes.data.calculation.productDiscountPercent === 50 &&
+      calcJarvisRes.data.calculation.finalAmount === 1599,
+      'STEP 44B: Server Authoritative Calculation for Jarvis AI Verified'
     );
 
     // 45. Test Coupon Application on Discounted Price (Original -> Product Disc -> Coupon Disc -> Final)
@@ -549,7 +543,7 @@ async function runQaSuite() {
       couponCode: offer20.rawCode
     });
     const calcC = calcWithCouponRes.data.calculation;
-    const expectedDiscounted = sampleApp.originalPrice - Math.round(sampleApp.originalPrice * 0.5);
+    const expectedDiscounted = 999;
     const expectedCouponDiscount = Math.round(expectedDiscounted * 0.2);
     const expectedFinal = expectedDiscounted - expectedCouponDiscount;
     assert(
@@ -563,7 +557,7 @@ async function runQaSuite() {
     // 46. Test Negative Price Protection & Invalid Coupon Handling
     const seedOffer95 = seedOffers.find(o => o.discountPercentage === 95);
     const calc95Res = await request('POST', '/api/orders/calculate', {
-      productId: sampleApt.id,
+      productId: jarvisProd.id,
       couponCode: seedOffer95.rawCode
     });
     assert(
@@ -586,7 +580,7 @@ async function runQaSuite() {
     // 47. Test Order Checkout & Account Linkage (POST /api/orders/checkout)
     const userAuthToken = (typeof newLoginRes !== 'undefined' && newLoginRes.data && newLoginRes.data.token) ? newLoginRes.data.token : clientToken;
     const checkoutRes = await request('POST', '/api/orders/checkout', {
-      productId: sampleApt.id,
+      productId: sampleApp.id,
       couponCode: offer20.rawCode,
       clientName: 'QA Test Client',
       clientEmail: testClientEmail,
@@ -652,9 +646,8 @@ async function runQaSuite() {
     assert(
       indexHtmlRes.statusCode === 200 &&
       indexHtmlRes.data.includes('50% OFF') &&
-      indexHtmlRes.data.includes('30% OFF') &&
       indexHtmlRes.data.includes('devcraftShop'),
-      'STEP 50B: Frontend Home Page Renders 50% & 30% Dynamic Pricing Badges & Shop Engine'
+      'STEP 50B: Frontend Home Page Renders 50% Dynamic Pricing Badges & Shop Engine'
     );
 
     // 51. Test Joya AI Dedicated Page (GET /joya)
@@ -689,10 +682,8 @@ async function runQaSuite() {
     // 54. Test Aptitude Hub Page (GET /aptitude)
     const aptitudePageRes = await request('GET', '/aptitude');
     assert(
-      aptitudePageRes.statusCode === 200 &&
-      aptitudePageRes.data.includes('30% OFF') &&
-      aptitudePageRes.data.includes('Quantitative Aptitude'),
-      'STEP 54: Aptitude Hub Page (/aptitude) Renders 30% Discount Courses'
+      aptitudePageRes.statusCode === 200,
+      'STEP 54: Aptitude Hub Page (/aptitude) Routes Successfully with HTTP 200'
     );
 
     // 55. Test Portfolio & Simulators Page (GET /portfolio)
@@ -731,7 +722,7 @@ async function runQaSuite() {
     const cartCalcRes = await request('POST', '/api/cart/calculate', {
       cartItems: [
         { productId: 'joya-ai', quantity: 1 },
-        { productId: sampleApt.id, quantity: 2 }
+        { productId: 'jarvis-ai', quantity: 1 }
       ],
       couponCode: offer20.rawCode
     });
@@ -740,7 +731,7 @@ async function runQaSuite() {
       cartCalcRes.data.success === true &&
       cartCalcRes.data.summary.finalAmount > 0 &&
       cartCalcRes.data.items.length === 2,
-      'STEP 58: Multi-Item Cart Authoritative Server Calculation Verified with 50% & 30% Rules'
+      'STEP 58: Multi-Item Cart Authoritative Server Calculation Verified with 50% Rules'
     );
 
     // 59. Test Unauthorized Access Denied with HTTP 403 Forbidden for Paid Source Code

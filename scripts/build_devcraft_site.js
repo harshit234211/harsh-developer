@@ -1344,7 +1344,7 @@ function buildIndexHtml() {
   const html = `<!DOCTYPE html>
 <html lang="en" data-theme="devcraft-dark">
 <head>
-  ${commonHead('DEVCRAFT Studio', 'Ideas → Code → Real Solutions. High-performance software engineering studio offering Android & mobile apps, full-stack web applications, AI automation, and cloud systems.')}
+  ${commonHead('DEVCRAFT Studio', 'Ideas → Code → Real Solutions. High-performance software engineering studio offering Android & mobile apps, full-stack web applications, AI automation, and custom software.')}
 </head>
 <body>
   ${navbar('home')}
@@ -1353,19 +1353,8 @@ function buildIndexHtml() {
     ${renderHeroSection()}
     ${renderFlagshipsSection()}
     ${renderServicesSection()}
-    ${renderAptitudeSection()}
-    ${renderFeaturedDemosSection()}
-    ${renderDemoLabSection()}
     ${renderWhySection()}
-    ${renderProcessSection()}
-    ${renderTechSection()}
-    ${renderCaseStudiesSection()}
-    ${renderAboutSection()}
-    ${renderTestimonialsSection()}
-    ${renderFaqSection()}
-    ${renderPricingSection()}
     ${renderContactSection()}
-    ${renderFinalCtaSection()}
   </main>
 
   ${floatingActions()}
@@ -1376,7 +1365,7 @@ function buildIndexHtml() {
 </html>`;
 
   fs.writeFileSync(path.join(FRONTEND, 'index.html'), html, 'utf8');
-  console.log('✓ Generated frontend/index.html with all 16 sections, 20 services, and 10 demos.');
+  console.log('✓ Generated frontend/index.html with streamlined structure.');
 }
 
 // ==========================================

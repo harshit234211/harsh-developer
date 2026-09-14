@@ -190,11 +190,23 @@ const getStats = async (req, res, next) => {
     const totalRevenue = paidOrders.reduce((sum, o) => sum + (Number(o.finalAmount) || 0), 0);
 
     let productsSold = 0;
+    let joyaSales = 0;
+    let jarvisSales = 0;
     paidOrders.forEach(o => {
       if (o.items && Array.isArray(o.items) && o.items.length > 0) {
         productsSold += o.items.reduce((s, i) => s + (Number(i.quantity) || 1), 0);
+        o.items.forEach(i => {
+          const id = (i.productId || i.id || '').toLowerCase();
+          const nm = (i.name || i.productName || '').toLowerCase();
+          if (id.includes('joya') || nm.includes('joya')) joyaSales += (Number(i.quantity) || 1);
+          if (id.includes('jarvis') || nm.includes('jarvis')) jarvisSales += (Number(i.quantity) || 1);
+        });
       } else {
         productsSold += 1;
+        const id = (o.productId || '').toLowerCase();
+        const nm = (o.productName || '').toLowerCase();
+        if (id.includes('joya') || nm.includes('joya')) joyaSales += 1;
+        if (id.includes('jarvis') || nm.includes('jarvis')) jarvisSales += 1;
       }
     });
 
@@ -221,6 +233,8 @@ const getStats = async (req, res, next) => {
         failedCancelledOrders,
         totalRevenue,
         productsSold,
+        joyaSales,
+        jarvisSales,
         recentOrders,
         recentUsers,
         dbEngine: dbService.getEngine()

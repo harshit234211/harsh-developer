@@ -40,13 +40,10 @@ const navbar = (active = 'home') => `
       <ul class="nav-links">
         <li><a href="/" class="nav-link ${active === 'home' ? 'active' : ''}">Home</a></li>
         <li><a href="/products" class="nav-link ${active === 'products' ? 'active' : ''}">Products <span class="nav-pill-badge">50% OFF</span></a></li>
+        <li><a href="/services" class="nav-link ${active === 'services' ? 'active' : ''}">Services</a></li>
         <li><a href="/joya" class="nav-link ${active === 'joya' ? 'active' : ''}">Joya AI <span class="nav-pill-voice">Voice</span></a></li>
         <li><a href="/jarvis" class="nav-link ${active === 'jarvis' ? 'active' : ''}">Jarvis AI <span class="nav-pill-pc">PC</span></a></li>
-        <li><a href="/aptitude" class="nav-link ${active === 'aptitude' ? 'active' : ''}">Aptitude <span class="nav-pill-aptitude">30% OFF</span></a></li>
-        <li><a href="/services" class="nav-link ${active === 'services' ? 'active' : ''}">Services</a></li>
-        <li><a href="/portfolio" class="nav-link ${active === 'portfolio' ? 'active' : ''}">Portfolio</a></li>
         <li><a href="/about" class="nav-link ${active === 'about' ? 'active' : ''}">About</a></li>
-        <li><a href="/faq" class="nav-link ${active === 'faq' ? 'active' : ''}">FAQ</a></li>
         <li><a href="/contact" class="nav-link ${active === 'contact' ? 'active' : ''}">Contact</a></li>
       </ul>
 
@@ -114,11 +111,9 @@ const navbar = (active = 'home') => `
     <div class="mobile-drawer-links">
       <a href="/" class="mobile-nav-link ${active === 'home' ? 'active' : ''}">Home <span>🏠</span></a>
       <a href="/products" class="mobile-nav-link ${active === 'products' ? 'active' : ''}">Products (50% OFF) <span>📦</span></a>
+      <a href="/services" class="mobile-nav-link ${active === 'services' ? 'active' : ''}">Developer Services <span>⚡</span></a>
       <a href="/joya" class="mobile-nav-link ${active === 'joya' ? 'active' : ''}">Joya AI Voice Assistant <span>🎙️</span></a>
       <a href="/jarvis" class="mobile-nav-link ${active === 'jarvis' ? 'active' : ''}">Jarvis AI PC Assistant <span>💻</span></a>
-      <a href="/aptitude" class="mobile-nav-link ${active === 'aptitude' ? 'active' : ''}">Aptitude Courses (30% OFF) <span>🎓</span></a>
-      <a href="/services" class="mobile-nav-link ${active === 'services' ? 'active' : ''}">Developer Services <span>⚡</span></a>
-      <a href="/portfolio" class="mobile-nav-link ${active === 'portfolio' ? 'active' : ''}">Portfolio &amp; Simulators <span>🚀</span></a>
       <a href="/about" class="mobile-nav-link ${active === 'about' ? 'active' : ''}">About DevCraft <span>🏢</span></a>
       <a href="/contact" class="mobile-nav-link ${active === 'contact' ? 'active' : ''}">Contact Studio <span>📩</span></a>
       <a href="/cart" class="mobile-nav-link">Shopping Cart (<span id="mobile-cart-count">0</span>) <span>🛒</span></a>
@@ -149,7 +144,7 @@ const navbar = (active = 'home') => `
 
     <div style="margin-top: 18px; display: flex; flex-direction: column; gap: 10px;">
       <a href="/contact" class="btn btn-primary" style="width: 100%; justify-content: center;">Start a Project Now</a>
-      <a href="https://wa.me/918791984082?text=Hi%20DevCraft,%20I'm%20interested%20in%20discussing%20a%20project." target="_blank" rel="noopener noreferrer" class="btn btn-emerald" style="width: 100%; justify-content: center;">
+      <a href="https://wa.me/918630976928?text=Hi%20DevCraft,%20I'm%20interested%20in%20discussing%20a%20software%20project." target="_blank" rel="noopener noreferrer" class="btn btn-emerald" style="width: 100%; justify-content: center;">
         WhatsApp Studio Lead
       </a>
       <a href="tel:+917017022966" class="btn btn-outline" style="width: 100%; justify-content: center;">
@@ -161,7 +156,7 @@ const navbar = (active = 'home') => `
 
 const floatingActions = () => `
   <div class="floating-actions-bar">
-    <a href="https://wa.me/918791984082?text=Hi%20DevCraft,%20I'm%20interested%20in%20discussing%20a%20software%20project." target="_blank" rel="noopener noreferrer" class="floating-btn wa" aria-label="Chat on WhatsApp">
+    <a href="https://wa.me/918630976928?text=Hi%20DevCraft,%20I'm%20interested%20in%20discussing%20a%20software%20project." target="_blank" rel="noopener noreferrer" class="floating-btn wa" aria-label="Chat on WhatsApp">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.861.174.086.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.043.072.043.419-.101.824z"/></svg>
       <span class="floating-tooltip">WhatsApp DevCraft</span>
     </a>
@@ -200,7 +195,7 @@ const footer = () => `
           </a>
           <a href="tel:+917017022966" class="footer-contact-item">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-            +91 7017022966 / +91 8791984082
+            +91 7017022966 / +91 8630976928
           </a>
           <span class="footer-contact-item">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
@@ -213,10 +208,8 @@ const footer = () => `
         <div class="footer-col-title">Flagship Products</div>
         <div class="footer-links">
           <a href="/joya" class="footer-link">Joya AI — Voice Assistant (50% OFF)</a>
-          <a href="/jarvis" class="footer-link">Jarvis AI — PC Agent (50% OFF)</a>
-          <a href="/products" class="footer-link">All App &amp; Software Products</a>
-          <a href="/aptitude" class="footer-link">Aptitude Mastery Hub (30% OFF)</a>
-          <a href="/portfolio" class="footer-link">10+ Interactive Simulators</a>
+          <a href="/jarvis" class="footer-link">Jarvis AI — PC Assistant (50% OFF)</a>
+          <a href="/products" class="footer-link">Products Catalog</a>
           <a href="/cart" class="footer-link">Shopping Cart &amp; Checkout</a>
         </div>
       </div>
@@ -237,8 +230,7 @@ const footer = () => `
         <div class="footer-col-title">Studio &amp; Legal</div>
         <div class="footer-links">
           <a href="/about" class="footer-link">About DevCraft Studio</a>
-          <a href="https://www.instagram.com/kiro_mage/" target="_blank" rel="noopener noreferrer" class="footer-link">Instagram (@kiro_mage)</a>
-          <a href="https://t.me/harshuuu1123" target="_blank" rel="noopener noreferrer" class="footer-link">Telegram (@harshuuu1123)</a>
+          <a href="/contact" class="footer-link">Contact Studio</a>
           <a href="/privacy" class="footer-link">Privacy Policy</a>
           <a href="/terms" class="footer-link">Terms of Service</a>
           <a href="/refund" class="footer-link">Refund &amp; Cancellation Policy</a>

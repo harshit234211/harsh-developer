@@ -592,7 +592,10 @@ window.devcraftShop = (function() {
         </div>
 
         <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-          <a href="/dashboard" class="btn btn-primary" style="flex-grow: 1; text-align: center;">
+          <a href="https://wa.me/918630976928?text=${encodeURIComponent(`Hello DevCraft 👋\n\nI have placed order ${order.orderId} for ${order.productName || 'DevCraft Product'} (₹${order.finalAmount}).\n\nPlease confirm my order details.\n\nThank you — DevCraft Customer`)}" target="_blank" rel="noopener noreferrer" class="btn btn-emerald" style="flex-grow: 1; text-align: center; justify-content: center;">
+            💬 Send Confirmation on WhatsApp
+          </a>
+          <a href="/dashboard" class="btn btn-primary" style="flex-grow: 1; text-align: center; justify-content: center;">
             Go to My Dashboard 🚀
           </a>
           <button type="button" class="btn btn-outline" onclick="devcraftShop.hideModal('order-success-modal')">
@@ -849,9 +852,15 @@ window.devcraftShop = (function() {
     const successPanel = document.getElementById('upi-success-panel');
     if (successPanel) {
       const productId = order.productId || (activePaymentOrder && activePaymentOrder.productId) || 'joya-ai';
+      const productName = order.productName || (activePaymentOrder && activePaymentOrder.productName) || (productId === 'jarvis-ai' ? 'Jarvis AI — PC Assistant' : 'Joya AI — Voice Assistant');
+      const amount = order.finalAmount || (activePaymentOrder && activePaymentOrder.finalAmount) || 0;
+      const txnRef = order.utr || order.transactionId || (activePaymentOrder && (activePaymentOrder.utr || activePaymentOrder.transactionId)) || order.orderId;
       const isFlagship = productId === 'joya-ai' || productId === 'jarvis-ai';
       const downloadLabel = isFlagship ? '⬇️ Download Full Source Code (.ZIP)' : '⬇️ Download Purchased Package';
       const emailParam = order.clientEmail || (activePaymentOrder && activePaymentOrder.clientEmail) || '';
+
+      const waMsg = `Hello DevCraft 👋\n\nI have successfully completed my payment.\n\nOrder ID: ${order.orderId}\nProduct: ${productName}\nAmount Paid: ₹${amount}\nPayment Reference: ${txnRef}\n\nPlease verify my order and provide the product/access.\n\nThank you — DevCraft Customer`;
+      const waUrl = `https://wa.me/918630976928?text=${encodeURIComponent(waMsg)}`;
 
       successPanel.style.display = 'block';
       successPanel.innerHTML = `
@@ -862,7 +871,11 @@ window.devcraftShop = (function() {
             Your transaction has been verified server-side. Your commercial license and full source code entitlements have been activated.
           </p>
 
-          <a href="/api/downloads/${encodeURIComponent(productId)}?orderId=${encodeURIComponent(order.orderId)}&email=${encodeURIComponent(emailParam)}" class="btn btn-emerald btn-lg btn-block" style="display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 800; font-size: 1rem; text-decoration: none; padding: 14px; margin-bottom: 12px; box-shadow: 0 0 24px rgba(16, 185, 129, 0.4);">
+          <a href="${waUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-emerald btn-lg btn-block" style="display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 800; font-size: 1rem; text-decoration: none; padding: 14px; margin-bottom: 10px; box-shadow: 0 0 24px rgba(16, 185, 129, 0.4);">
+            <span>💬 Payment Confirmed — Contact on WhatsApp</span>
+          </a>
+
+          <a href="/api/downloads/${encodeURIComponent(productId)}?orderId=${encodeURIComponent(order.orderId)}&email=${encodeURIComponent(emailParam)}" class="btn btn-primary btn-block" style="display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 700; text-decoration: none; padding: 12px; margin-bottom: 10px;">
             <span>${downloadLabel}</span>
           </a>
 
