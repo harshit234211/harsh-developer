@@ -42,8 +42,9 @@ class TranzUpiService {
   async _postToGateway(endpoint, payload) {
     return new Promise((resolve, reject) => {
       try {
+        const querystring = require('querystring');
         const fullUrl = new URL(endpoint, this.baseUrl);
-        const postData = JSON.stringify(payload);
+        const postData = querystring.stringify(payload);
         const isHttps = fullUrl.protocol === 'https:';
         const client = isHttps ? https : http;
 
@@ -53,10 +54,8 @@ class TranzUpiService {
           path: fullUrl.pathname + fullUrl.search,
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded',
             'Content-Length': Buffer.byteLength(postData),
-            'Authorization': `Bearer ${this.apiKey}`,
-            'x-api-key': this.apiKey,
             'User-Agent': 'DevCraft-TranzUPI-Client/2.0'
           },
           timeout: 10000 // 10s timeout
@@ -132,29 +131,36 @@ class TranzUpiService {
     if (this.isConfigured() && finalAmount > 0) {
       try {
         logger.info(`[Tranz UPI] Initiating remote gateway order for ${order.orderId} (₹${finalAmount})`);
+        const cleanMobile = (order.clientPhone || '9876543210').replace(/\D/g, '').slice(-10) || '9876543210';
         const payload = {
+          user_token: this.apiKey,
           api_key: this.apiKey,
-          merchant_id: this.merchantId,
-          order_id: order.orderId,
           amount: finalAmount,
-          customer_name: order.clientName,
-          customer_email: order.clientEmail,
-          customer_mobile: order.clientPhone,
+          order_id: order.orderId,
+          customer_mobile: cleanMobile,
+          customer_name: order.clientName || 'DevCraft Customer',
+          customer_email: order.clientEmail || 'client@devcraft.io',
           redirect_url: `${this.publicSiteUrl}/cart?orderId=${order.orderId}&status=check`,
           callback_url: `${this.publicSiteUrl}/api/payments/webhook/tranz`,
           remark: `DevCraft Order ${order.orderId}`
         };
 
         const res = await this._postToGateway('/api/create-order', payload);
-        if (res && res.data && (res.data.status === true || res.data.status === 'SUCCESS' || res.data.success)) {
-          gatewayData = res.data;
-          await dbService.Payment.findByIdAndUpdate(payment._id, {
-            gatewayOrderId: gatewayData.order_id || gatewayData.txn_id || '',
-            metadata: { ...payment.metadata, gatewayResponse: gatewayData }
-          });
+        if (res && res.data) {
+          if (res.data.status === true || res.data.status === 'SUCCESS' || res.data.success) {
+            gatewayData = res.data;
+            logger.success(`[Tranz UPI] Gateway order created for ${order.orderId}`);
+            await dbService.Payment.findByIdAndUpdate(payment._id, {
+              gatewayOrderId: gatewayData.order_id || gatewayData.txn_id || '',
+              metadata: { ...payment.metadata, gatewayResponse: gatewayData }
+            });
+          } else {
+            logger.info(`[Tranz UPI] Gateway notice for ${order.orderId}: ${res.data.message || 'Direct dynamic UPI active'}`);
+            gatewayData = res.data;
+          }
         }
       } catch (err) {
-        logger.warn(`[Tranz UPI] Remote gateway connection failed: ${err.message}. Falling back to dynamic direct UPI intent.`);
+        logger.warn(`[Tranz UPI] Remote gateway connection notice: ${err.message}. Falling back to direct dynamic UPI intent.`);
       }
     }
 
@@ -166,7 +172,7 @@ class TranzUpiService {
       currency: 'INR',
       productName: order.productName,
       upiUri,
-      qrData: upiUri,
+      qrData: (gatewayData && (gatewayData.payment_url || gatewayData.qr_code)) ? (gatewayData.payment_url || gatewayData.qr_code) : upiUri,
       merchantVpa: this.merchantVpa,
       gatewayConfigured: this.isConfigured(),
       gatewayData,
@@ -226,20 +232,22 @@ class TranzUpiService {
       try {
         logger.info(`[Tranz UPI] Querying gateway payment status for order ${order.orderId}`);
         const statusPayload = {
+          user_token: this.apiKey,
           api_key: this.apiKey,
-          merchant_id: this.merchantId,
-          order_id: order.orderId,
-          txn_id: cleanTxnId,
-          utr: cleanUtr
+          order_id: order.orderId
         };
+        if (cleanTxnId) statusPayload.txn_id = cleanTxnId;
+        if (cleanUtr) statusPayload.utr = cleanUtr;
 
         const res = await this._postToGateway('/api/check-order-status', statusPayload);
         const data = res.data || {};
-        const isSuccess = data.status === 'SUCCESS' || data.status === 'PAID' || data.payment_status === 'SUCCESS';
+        const result = data.result || {};
+        const statusStr = String(result.status || data.status || '').toUpperCase();
+        const isSuccess = (statusStr === 'SUCCESS' || statusStr === 'PAID' || statusStr === 'COMPLETED') && data.message !== 'Order not found' && result !== null;
 
         if (isSuccess) {
           // Verify returned amount matches order final amount
-          const gatewayAmount = Number(data.amount || data.paid_amount || order.finalAmount);
+          const gatewayAmount = Number(result.amount || data.amount || data.paid_amount || order.finalAmount);
           if (gatewayAmount < Number(order.finalAmount)) {
             logger.warn(`[Tranz UPI] Amount mismatch on order ${order.orderId}: Expected ₹${order.finalAmount}, got ₹${gatewayAmount}`);
             return {
@@ -251,8 +259,8 @@ class TranzUpiService {
 
           // Authoritative fulfillment
           const updatedOrder = await this._fulfillPaidOrder(order, {
-            utr: data.utr || cleanUtr,
-            txnId: data.txn_id || cleanTxnId || data.gateway_txn_id,
+            utr: result.utr || data.utr || cleanUtr,
+            txnId: result.txn_id || data.txn_id || cleanTxnId || data.gateway_txn_id,
             gatewayResponse: data
           });
 
@@ -262,7 +270,7 @@ class TranzUpiService {
             order: updatedOrder,
             message: 'Payment verified successfully by Tranz UPI Gateway.'
           };
-        } else if (data.status === 'PENDING' || data.payment_status === 'PENDING') {
+        } else if (statusStr === 'PENDING' || data.payment_status === 'PENDING') {
           await dbService.Order.findByIdAndUpdate(order._id, {
             status: 'payment_processing',
             paymentStatus: 'pending',
@@ -277,11 +285,21 @@ class TranzUpiService {
             message: 'Payment is currently pending bank confirmation. Please wait a moment and try again.'
           };
         } else {
+          // If UTR was provided, store in order so admin can verify immediately
+          if (cleanUtr) {
+            await dbService.Order.findByIdAndUpdate(order._id, {
+              status: 'payment_processing',
+              paymentStatus: 'pending',
+              utr: cleanUtr,
+              transactionId: cleanTxnId || `UTR-${cleanUtr}`
+            });
+          }
+
           return {
             success: false,
             verified: false,
-            status: 'failed',
-            message: data.message || 'Payment verification failed at bank gateway.'
+            status: 'payment_processing',
+            message: data.message || 'Payment reference recorded. Awaiting bank confirmation or studio admin verification.'
           };
         }
       } catch (err) {

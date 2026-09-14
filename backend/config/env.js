@@ -15,10 +15,10 @@ const config = {
   corsOrigin: process.env.CORS_ORIGIN || '*',
   publicSiteUrl: process.env.PUBLIC_SITE_URL || 'https://kiromage.shop',
   tranzUpi: {
-    apiKey: process.env.TRANZ_UPI_API_KEY || '',
+    apiKey: process.env.TRANZ_UPI_API_KEY || process.env.TRANZ_UPI_USER_TOKEN || '',
     merchantId: process.env.TRANZ_UPI_MERCHANT_ID || 'DEVCRAFT_MERCHANT',
     secret: process.env.TRANZ_UPI_SECRET || '',
-    baseUrl: process.env.TRANZ_UPI_BASE_URL || 'https://api.tranzupi.com',
+    baseUrl: process.env.TRANZ_UPI_BASE_URL || 'https://tranzupi.com',
     merchantVpa: process.env.TRANZ_UPI_VPA || 'devcraft@upi'
   },
   developer: {
