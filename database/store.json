@@ -1,13 +1,13 @@
 {
   "admins": [
     {
-      "_id": "7f445d1a-d4c0-4dfb-b881-16f289c788d1",
+      "_id": "18b4f44a-077c-4f95-a380-be5bad9bdf70",
       "name": "Harshit (Harsh Developer)",
       "email": "shakyaharshit683@gmail.com",
-      "password": "$2a$10$hYsPXC7RAMOOE4OOkiILqengteFy7ZCzGvxPvjNoE.K9xzP8Y8qHO",
+      "password": "$2a$10$WnHoyyQjlqagi1.QdKDs6eP7mjeOVqBZ3p1bXCbY6uqJmq.GCQzN.",
       "role": "superadmin",
-      "createdAt": "2026-09-16T10:17:26.044Z",
-      "updatedAt": "2026-09-16T10:17:26.044Z"
+      "createdAt": "2026-09-16T10:31:34.270Z",
+      "updatedAt": "2026-09-16T10:31:34.270Z"
     }
   ],
   "projects": [
@@ -1067,6 +1067,27 @@
       "notes": "",
       "createdAt": "2026-09-16T10:17:26.300Z",
       "updatedAt": "2026-09-16T10:17:26.561Z"
+    },
+    {
+      "_id": "b815e059-4533-40e6-a28a-a07c54cced1b",
+      "name": "Johnathan Vance",
+      "email": "john.vance@techcorp.io",
+      "phone": "+919876543210",
+      "whatsapp": "+919876543210",
+      "service": "Web Application Development",
+      "budget": "₹75,000 - ₹1,50,000 / $950 - $1,800",
+      "projectType": "New Project",
+      "deadline": "1 Month",
+      "description": "We need a high-performance SaaS analytics application with Three.js 3D dashboards.",
+      "message": "We need a high-performance SaaS analytics application with Three.js 3D dashboards.",
+      "referenceUrl": "https://example.com/demo",
+      "techPreference": "",
+      "additionalRequirements": "",
+      "userId": null,
+      "status": "In Progress",
+      "notes": "",
+      "createdAt": "2026-09-16T10:31:34.411Z",
+      "updatedAt": "2026-09-16T10:31:34.609Z"
     }
   ],
   "users": [
@@ -1076,7 +1097,7 @@
       "email": "shakyaharshit683@gmail.com",
       "phone": "+918791984082",
       "company": "Harsh Developer",
-      "password": "$2a$10$hYsPXC7RAMOOE4OOkiILqengteFy7ZCzGvxPvjNoE.K9xzP8Y8qHO",
+      "password": "$2a$10$WnHoyyQjlqagi1.QdKDs6eP7mjeOVqBZ3p1bXCbY6uqJmq.GCQzN.",
       "role": "client",
       "createdAt": "2026-09-07T16:41:21.999Z",
       "updatedAt": "2026-09-07T16:41:22.000Z",
@@ -2362,6 +2383,51 @@
       "savedDemos": [],
       "createdAt": "2026-09-16T10:17:29.416Z",
       "updatedAt": "2026-09-16T10:17:29.416Z"
+    },
+    {
+      "_id": "f4d90304-3e2a-4704-95dc-6c5ac16504ff",
+      "name": "QA Test Client Updated",
+      "email": "qa.client.1789554694667@example.com",
+      "phone": "",
+      "company": "QA Enterprise Global",
+      "password": "$2a$10$XI5PxYzGNg09DbwUQm1UyOM/jEBgCJ8hEjci4YeUDxS7VQf1j5Kke",
+      "role": "client",
+      "referralCode": "DEV-2577A3AD",
+      "referredBy": null,
+      "savedDemos": [],
+      "createdAt": "2026-09-16T10:31:34.740Z",
+      "updatedAt": "2026-09-16T10:31:34.895Z",
+      "lastLogin": "2026-09-16T10:31:34.830Z",
+      "resetPasswordToken": "f694eed24e115eec3e443bac1d00c5a69abd5e2fcd10a5ded2aae9e9f77c1b63",
+      "resetPasswordExpires": "2026-09-16T11:31:34.890Z"
+    },
+    {
+      "_id": "2002a4fe-6c96-49ea-b137-eb5e2a9f438b",
+      "name": "Referrer Pro",
+      "email": "referrer_1789554697634@example.com",
+      "phone": "+91 9988776655",
+      "company": "",
+      "password": "$2a$10$/wWwsthKqpF/mn/S6Uo6weJoK2rW61RKzZRFMurmxzuULBQzA8aea",
+      "role": "client",
+      "referralCode": "DEV-5FD6EF1F",
+      "referredBy": null,
+      "savedDemos": [],
+      "createdAt": "2026-09-16T10:31:37.707Z",
+      "updatedAt": "2026-09-16T10:31:37.707Z"
+    },
+    {
+      "_id": "bced0334-a213-47c4-9556-96594d0abc0d",
+      "name": "Referred Client",
+      "email": "referee_1789554697729@example.com",
+      "phone": "+91 9988776657",
+      "company": "",
+      "password": "$2a$10$JEpBabF697Ij5EQIxXchpuhltRXsSdtaWRJns9J3EasXoAPk0t7vK",
+      "role": "client",
+      "referralCode": "DEV-82284483",
+      "referredBy": "DEV-5FD6EF1F",
+      "savedDemos": [],
+      "createdAt": "2026-09-16T10:31:37.805Z",
+      "updatedAt": "2026-09-16T10:31:37.805Z"
     }
   ],
   "coupons": [
@@ -2373,11 +2439,11 @@
       "active": true,
       "expires_at": "2027-09-08T10:45:00.256Z",
       "max_uses": 100,
-      "used_count": 73,
+      "used_count": 75,
       "user_restriction": null,
       "notes": "Standard Private Client Incentive (20% Off)",
       "createdAt": "2026-09-08T10:45:00.257Z",
-      "updatedAt": "2026-09-16T10:17:27.260Z"
+      "updatedAt": "2026-09-16T10:31:35.121Z"
     },
     {
       "_id": "0200ccc4-fa6f-481d-b737-21bc990a6c93",
@@ -3503,6 +3569,36 @@
       "notes": "Redeemed for order DC-ORD-751148",
       "createdAt": "2026-09-16T10:17:27.275Z",
       "updatedAt": "2026-09-16T10:17:27.275Z"
+    },
+    {
+      "_id": "41ae27c1-0f9f-41b1-b9e5-9b3167ca64a6",
+      "coupon_id": "7b8c2286-a476-474e-9caa-3e00cbd081d5",
+      "code_mask": "DEV-****-****-5EHH",
+      "discount_percentage": 20,
+      "user_id": null,
+      "user_email": "qa.client.1789554694667@example.com",
+      "order_id": "ORD-1789554694955",
+      "original_amount": 50000,
+      "discount_amount": 10000,
+      "final_amount": 40000,
+      "notes": "QA Automated Redemption Test",
+      "createdAt": "2026-09-16T10:31:34.973Z",
+      "updatedAt": "2026-09-16T10:31:34.973Z"
+    },
+    {
+      "_id": "2aa86c2d-c2eb-4963-94d9-99c707b91cd2",
+      "coupon_id": "7b8c2286-a476-474e-9caa-3e00cbd081d5",
+      "code_mask": "DEV-****-****-5EHH",
+      "discount_percentage": 20,
+      "user_id": "f4d90304-3e2a-4704-95dc-6c5ac16504ff",
+      "user_email": "qa.client.1789554694667@example.com",
+      "order_id": "DC-ORD-263619",
+      "original_amount": 999,
+      "discount_amount": 200,
+      "final_amount": 799,
+      "notes": "Redeemed for order DC-ORD-263619",
+      "createdAt": "2026-09-16T10:31:35.129Z",
+      "updatedAt": "2026-09-16T10:31:35.129Z"
     }
   ],
   "orders": [
@@ -8044,6 +8140,166 @@
       "paidAt": "2026-09-16T10:17:29.723Z",
       "createdAt": "2026-09-16T10:17:29.485Z",
       "updatedAt": "2026-09-16T10:17:29.729Z"
+    },
+    {
+      "_id": "30c52c58-2c15-4999-8dd8-c83515a5f379",
+      "orderId": "DC-ORD-263619",
+      "productId": "joya-ai",
+      "productName": "Joya AI — Voice Assistant",
+      "productType": "app",
+      "originalPrice": 1999,
+      "productDiscountPercent": 50,
+      "productDiscountAmount": 1000,
+      "discountedPrice": 999,
+      "couponCodeMask": "DEV-****-****-5EHH",
+      "couponDiscountPercent": 20,
+      "couponDiscountAmount": 200,
+      "finalAmount": 799,
+      "items": [
+        {
+          "productId": "joya-ai",
+          "productName": "Joya AI — Voice Assistant",
+          "quantity": 1,
+          "finalPrice": 799
+        }
+      ],
+      "userId": "f4d90304-3e2a-4704-95dc-6c5ac16504ff",
+      "clientName": "QA Test Client Updated",
+      "clientEmail": "qa.client.1789554694667@example.com",
+      "clientPhone": "+919988776655",
+      "notes": "QA Automated Test Order",
+      "status": "Confirmed",
+      "paymentStatus": "unpaid",
+      "paymentMethod": "upi_tranz",
+      "transactionId": null,
+      "utr": null,
+      "tranzReferenceId": null,
+      "entitlements": [
+        "joya-ai"
+      ],
+      "paidAt": null,
+      "createdAt": "2026-09-16T10:31:35.112Z",
+      "updatedAt": "2026-09-16T10:31:35.112Z"
+    },
+    {
+      "_id": "c529176d-3963-42f3-8122-2728a45dbb55",
+      "orderId": "DC-ORD-272659",
+      "productId": "joya-ai",
+      "productName": "Joya AI — Voice Assistant",
+      "productType": "app",
+      "originalPrice": 1999,
+      "productDiscountPercent": 50,
+      "productDiscountAmount": 1000,
+      "discountedPrice": 999,
+      "couponCodeMask": null,
+      "couponDiscountPercent": 0,
+      "couponDiscountAmount": 0,
+      "finalAmount": 999,
+      "items": [
+        {
+          "productId": "joya-ai",
+          "productName": "Joya AI — Voice Assistant",
+          "quantity": 1,
+          "finalPrice": 999
+        }
+      ],
+      "userId": null,
+      "clientName": "QA Joya Purchaser",
+      "clientEmail": "joya.buyer@devcraft.io",
+      "clientPhone": "+919876501234",
+      "notes": "",
+      "status": "paid",
+      "paymentStatus": "paid",
+      "paymentMethod": "upi_tranz",
+      "transactionId": "TXN-ADM-1789554697137",
+      "utr": "UTR-QA-99998888",
+      "tranzReferenceId": null,
+      "entitlements": [
+        "joya-ai"
+      ],
+      "paidAt": "2026-09-16T10:31:37.137Z",
+      "createdAt": "2026-09-16T10:31:36.223Z",
+      "updatedAt": "2026-09-16T10:31:37.141Z"
+    },
+    {
+      "_id": "806dd4f8-89f7-4675-8e01-b48d2a722f22",
+      "orderId": "DC-ORD-448173",
+      "productId": "jarvis-ai",
+      "productName": "Jarvis AI — PC Assistant",
+      "productType": "app",
+      "originalPrice": 3199,
+      "productDiscountPercent": 50,
+      "productDiscountAmount": 1600,
+      "discountedPrice": 1599,
+      "couponCodeMask": null,
+      "couponDiscountPercent": 0,
+      "couponDiscountAmount": 0,
+      "finalAmount": 1599,
+      "items": [
+        {
+          "productId": "jarvis-ai",
+          "productName": "Jarvis AI — PC Assistant",
+          "quantity": 1,
+          "finalPrice": 1599
+        }
+      ],
+      "userId": null,
+      "clientName": "QA Jarvis Purchaser",
+      "clientEmail": "jarvis.buyer@devcraft.io",
+      "clientPhone": "+919876543210",
+      "notes": "",
+      "status": "paid",
+      "paymentStatus": "paid",
+      "paymentMethod": "upi_tranz",
+      "transactionId": "TXN-ADM-1789554697547",
+      "utr": "UTR-JARVIS-12345678",
+      "tranzReferenceId": null,
+      "entitlements": [
+        "jarvis-ai"
+      ],
+      "paidAt": "2026-09-16T10:31:37.547Z",
+      "createdAt": "2026-09-16T10:31:37.234Z",
+      "updatedAt": "2026-09-16T10:31:37.551Z"
+    },
+    {
+      "_id": "58554add-ce0a-4755-bb32-872def32e5fa",
+      "orderId": "DC-ORD-556800",
+      "productId": "joya-ai",
+      "productName": "Joya AI — Voice Assistant",
+      "productType": "app",
+      "originalPrice": 1999,
+      "productDiscountPercent": 50,
+      "productDiscountAmount": 1000,
+      "discountedPrice": 999,
+      "couponCodeMask": null,
+      "couponDiscountPercent": 0,
+      "couponDiscountAmount": 0,
+      "finalAmount": 999,
+      "items": [
+        {
+          "productId": "joya-ai",
+          "productName": "Joya AI — Voice Assistant",
+          "quantity": 1,
+          "finalPrice": 999
+        }
+      ],
+      "userId": "bced0334-a213-47c4-9556-96594d0abc0d",
+      "clientName": "Referred Client",
+      "clientEmail": "referee_1789554697729@example.com",
+      "clientPhone": "+91 9988776657",
+      "notes": "",
+      "status": "paid",
+      "paymentStatus": "paid",
+      "paymentMethod": "upi_tranz",
+      "transactionId": "TXN-ADM-1789554698043",
+      "utr": "ADMIN_VERIFIED",
+      "tranzReferenceId": null,
+      "entitlements": [
+        "joya-ai"
+      ],
+      "paidAt": "2026-09-16T10:31:38.043Z",
+      "createdAt": "2026-09-16T10:31:37.838Z",
+      "updatedAt": "2026-09-16T10:31:38.047Z"
     }
   ],
   "shareEvents": [
@@ -8326,6 +8582,14 @@
       "userId": "af0f457c-9a6f-484b-a187-78f01f29f0e3",
       "ip": "::1",
       "timestamp": "2026-09-16T10:17:28.031Z"
+    },
+    {
+      "_id": "c958c801-ce04-4a00-9afc-737eb94492a5",
+      "productId": "joya-ai",
+      "sharePlatform": "whatsapp",
+      "userId": "f4d90304-3e2a-4704-95dc-6c5ac16504ff",
+      "ip": "::1",
+      "timestamp": "2026-09-16T10:31:36.147Z"
     }
   ],
   "products": [
@@ -9906,6 +10170,26 @@
       "ip": "::1",
       "version": "v1.0.0",
       "timestamp": "2026-09-16T10:17:29.069Z"
+    },
+    {
+      "_id": "59a5d31b-ef33-4e8e-a12a-0fd2a52a7897",
+      "productId": "joya-ai",
+      "productName": "Joya AI — Voice Assistant",
+      "userId": null,
+      "clientEmail": "joya.buyer@devcraft.io",
+      "ip": "::1",
+      "version": "v1.0.0",
+      "timestamp": "2026-09-16T10:31:37.214Z"
+    },
+    {
+      "_id": "1eafa73d-40c7-455d-a2ad-f155028dc9b7",
+      "productId": "jarvis-ai",
+      "productName": "Jarvis AI — PC Assistant",
+      "userId": null,
+      "clientEmail": "jarvis.buyer@devcraft.io",
+      "ip": "::1",
+      "version": "v1.0.0",
+      "timestamp": "2026-09-16T10:31:37.612Z"
     }
   ],
   "payments": [
@@ -12218,6 +12502,90 @@
       },
       "createdAt": "2026-09-16T10:17:29.527Z",
       "updatedAt": "2026-09-16T10:17:29.748Z"
+    },
+    {
+      "_id": "5c64c31d-8250-4491-ae37-ad7dfcb67941",
+      "paymentId": "DC-PAY-221914",
+      "orderId": "DC-ORD-263619",
+      "gateway": "tranz_upi",
+      "amount": 799,
+      "currency": "INR",
+      "status": "pending",
+      "upiUri": "upi://pay?pa=7017022966@ibl&pn=DEVCRAFT%20STUDIO&am=799.00&cu=INR&tr=DC-ORD-263619&tn=DevCraft%20License%20DC-ORD-263619",
+      "gatewayOrderId": "",
+      "gatewayTxnId": "",
+      "utr": "",
+      "customerEmail": "qa.client.1789554694667@example.com",
+      "customerPhone": "+919988776655",
+      "metadata": {
+        "productName": "Joya AI — Voice Assistant",
+        "itemsCount": 1
+      },
+      "createdAt": "2026-09-16T10:31:35.153Z",
+      "updatedAt": "2026-09-16T10:31:35.153Z"
+    },
+    {
+      "_id": "59f002c7-f557-4082-ad90-74ba5698392e",
+      "paymentId": "DC-PAY-779107",
+      "orderId": "DC-ORD-272659",
+      "gateway": "tranz_upi",
+      "amount": 999,
+      "currency": "INR",
+      "status": "paid",
+      "upiUri": "upi://pay?pa=7017022966@ibl&pn=DEVCRAFT%20STUDIO&am=999.00&cu=INR&tr=DC-ORD-272659&tn=DevCraft%20License%20DC-ORD-272659",
+      "gatewayOrderId": "",
+      "gatewayTxnId": "TXN-ADM-1789554697137",
+      "utr": "UTR-QA-99998888",
+      "customerEmail": "joya.buyer@devcraft.io",
+      "customerPhone": "+919876501234",
+      "metadata": {
+        "productName": "Joya AI — Voice Assistant",
+        "itemsCount": 1
+      },
+      "createdAt": "2026-09-16T10:31:36.246Z",
+      "updatedAt": "2026-09-16T10:31:37.154Z"
+    },
+    {
+      "_id": "6554ef54-3856-42d8-87b5-b5a1846363c9",
+      "paymentId": "DC-PAY-308189",
+      "orderId": "DC-ORD-448173",
+      "gateway": "tranz_upi",
+      "amount": 1599,
+      "currency": "INR",
+      "status": "paid",
+      "upiUri": "upi://pay?pa=7017022966@ibl&pn=DEVCRAFT%20STUDIO&am=1599.00&cu=INR&tr=DC-ORD-448173&tn=DevCraft%20License%20DC-ORD-448173",
+      "gatewayOrderId": "",
+      "gatewayTxnId": "TXN-ADM-1789554697547",
+      "utr": "UTR-JARVIS-12345678",
+      "customerEmail": "jarvis.buyer@devcraft.io",
+      "customerPhone": "+919876543210",
+      "metadata": {
+        "productName": "Jarvis AI — PC Assistant",
+        "itemsCount": 1
+      },
+      "createdAt": "2026-09-16T10:31:37.255Z",
+      "updatedAt": "2026-09-16T10:31:37.563Z"
+    },
+    {
+      "_id": "ba479c0c-f205-444c-a9dc-211c68ee7cfa",
+      "paymentId": "DC-PAY-852415",
+      "orderId": "DC-ORD-556800",
+      "gateway": "tranz_upi",
+      "amount": 999,
+      "currency": "INR",
+      "status": "paid",
+      "upiUri": "upi://pay?pa=7017022966@ibl&pn=DEVCRAFT%20STUDIO&am=999.00&cu=INR&tr=DC-ORD-556800&tn=DevCraft%20License%20DC-ORD-556800",
+      "gatewayOrderId": "",
+      "gatewayTxnId": "TXN-ADM-1789554698043",
+      "utr": "ADMIN_VERIFIED",
+      "customerEmail": "referee_1789554697729@example.com",
+      "customerPhone": "+91 9988776657",
+      "metadata": {
+        "productName": "Joya AI — Voice Assistant",
+        "itemsCount": 1
+      },
+      "createdAt": "2026-09-16T10:31:37.859Z",
+      "updatedAt": "2026-09-16T10:31:38.060Z"
     }
   ],
   "paymentTransactions": [
@@ -13180,6 +13548,42 @@
       "gatewayResponse": {},
       "verifiedAt": "2026-09-16T10:17:29.760Z",
       "createdAt": "2026-09-16T10:17:29.760Z"
+    },
+    {
+      "_id": "8eb71d3c-b823-42ea-9785-00d44a3537ff",
+      "paymentId": "DC-PAY-779107",
+      "orderId": "DC-ORD-272659",
+      "amount": 999,
+      "status": "paid",
+      "txnId": "TXN-ADM-1789554697137",
+      "utr": "UTR-QA-99998888",
+      "gatewayResponse": {},
+      "verifiedAt": "2026-09-16T10:31:37.165Z",
+      "createdAt": "2026-09-16T10:31:37.165Z"
+    },
+    {
+      "_id": "14a160b6-b4c5-4202-992b-6be863ff9a38",
+      "paymentId": "DC-PAY-308189",
+      "orderId": "DC-ORD-448173",
+      "amount": 1599,
+      "status": "paid",
+      "txnId": "TXN-ADM-1789554697547",
+      "utr": "UTR-JARVIS-12345678",
+      "gatewayResponse": {},
+      "verifiedAt": "2026-09-16T10:31:37.573Z",
+      "createdAt": "2026-09-16T10:31:37.573Z"
+    },
+    {
+      "_id": "a1e258e6-0940-44ec-9a5e-ccc01b5644f9",
+      "paymentId": "DC-PAY-852415",
+      "orderId": "DC-ORD-556800",
+      "amount": 999,
+      "status": "paid",
+      "txnId": "TXN-ADM-1789554698043",
+      "utr": "ADMIN_VERIFIED",
+      "gatewayResponse": {},
+      "verifiedAt": "2026-09-16T10:31:38.074Z",
+      "createdAt": "2026-09-16T10:31:38.074Z"
     }
   ],
   "savedProducts": [],
@@ -14383,6 +14787,51 @@
       },
       "ip": "127.0.0.1",
       "timestamp": "2026-09-16T10:17:29.773Z"
+    },
+    {
+      "_id": "705c45c2-522a-48b2-8447-582aa4a9e1e5",
+      "action": "ORDER_PAID",
+      "actor": "joya.buyer@devcraft.io",
+      "details": {
+        "orderId": "DC-ORD-272659",
+        "productName": "Joya AI — Voice Assistant",
+        "amount": 999,
+        "entitlements": [
+          "joya-ai"
+        ]
+      },
+      "ip": "127.0.0.1",
+      "timestamp": "2026-09-16T10:31:37.174Z"
+    },
+    {
+      "_id": "3ed51a29-6629-4ccd-9c4c-c9150c85551c",
+      "action": "ORDER_PAID",
+      "actor": "jarvis.buyer@devcraft.io",
+      "details": {
+        "orderId": "DC-ORD-448173",
+        "productName": "Jarvis AI — PC Assistant",
+        "amount": 1599,
+        "entitlements": [
+          "jarvis-ai"
+        ]
+      },
+      "ip": "127.0.0.1",
+      "timestamp": "2026-09-16T10:31:37.582Z"
+    },
+    {
+      "_id": "95d4d671-7bca-4ce6-afa0-30f5ccb860b1",
+      "action": "ORDER_PAID",
+      "actor": "referee_1789554697729@example.com",
+      "details": {
+        "orderId": "DC-ORD-556800",
+        "productName": "Joya AI — Voice Assistant",
+        "amount": 999,
+        "entitlements": [
+          "joya-ai"
+        ]
+      },
+      "ip": "127.0.0.1",
+      "timestamp": "2026-09-16T10:31:38.083Z"
     }
   ],
   "referrals": [
@@ -14693,6 +15142,20 @@
       "paid": false,
       "createdAt": "2026-09-16T10:17:29.440Z",
       "updatedAt": "2026-09-16T10:17:29.803Z"
+    },
+    {
+      "_id": "ac39d279-fb84-4615-a8ea-866120bcf0c4",
+      "referrerId": "2002a4fe-6c96-49ea-b137-eb5e2a9f438b",
+      "referrerCode": "DEV-5FD6EF1F",
+      "referredUserId": "bced0334-a213-47c4-9556-96594d0abc0d",
+      "referredUserEmail": "referee_1789554697729@example.com",
+      "status": "converted",
+      "orderId": "DC-ORD-556800",
+      "rewardPercent": 10,
+      "rewardAmount": 100,
+      "paid": false,
+      "createdAt": "2026-09-16T10:31:37.814Z",
+      "updatedAt": "2026-09-16T10:31:38.104Z"
     }
   ],
   "referralRewards": [
@@ -14981,6 +15444,19 @@
       "status": "pending",
       "createdAt": "2026-09-16T10:17:29.816Z",
       "updatedAt": "2026-09-16T10:17:29.816Z"
+    },
+    {
+      "_id": "4385c618-dac5-40f1-9bfc-38a0bca6d0d3",
+      "referralId": "ac39d279-fb84-4615-a8ea-866120bcf0c4",
+      "referrerId": "2002a4fe-6c96-49ea-b137-eb5e2a9f438b",
+      "referredUserId": "bced0334-a213-47c4-9556-96594d0abc0d",
+      "orderId": "DC-ORD-556800",
+      "orderAmount": 999,
+      "rewardPercent": 10,
+      "rewardAmount": 100,
+      "status": "pending",
+      "createdAt": "2026-09-16T10:31:38.112Z",
+      "updatedAt": "2026-09-16T10:31:38.112Z"
     }
   ],
   "siteSettings": {
@@ -15225,6 +15701,20 @@
       "adminNotes": "Scheduled for Q4 release sprint",
       "createdAt": "2026-09-16T10:17:29.991Z",
       "updatedAt": "2026-09-16T10:17:30.043Z"
+    },
+    {
+      "_id": "2c9f6be5-7146-478b-afc0-35171196b997",
+      "title": "Support for dark mode in code exports",
+      "category": "feature_request",
+      "description": "Please add syntax highlighted dark theme exports for Joya AI code snippets.",
+      "priority": "High",
+      "status": "Planned",
+      "userName": "Test Client",
+      "userEmail": "client@example.com",
+      "userId": null,
+      "adminNotes": "Scheduled for Q4 release sprint",
+      "createdAt": "2026-09-16T10:31:38.215Z",
+      "updatedAt": "2026-09-16T10:31:38.247Z"
     }
   ],
   "notifications": [
@@ -18858,6 +19348,217 @@
       },
       "read": true,
       "createdAt": "2026-09-16T10:17:30.003Z"
+    },
+    {
+      "_id": "6e09fd23-910b-4669-a351-0b17f66c0734",
+      "type": "project_request",
+      "title": "New Project Request from Johnathan Vance",
+      "message": "Johnathan Vance (john.vance@techcorp.io) requested quote for Web Application Development. Budget: ₹75,000 - ₹1,50,000 / $950 - $1,800",
+      "link": "#enquiries",
+      "metadata": {
+        "enquiryId": "b815e059-4533-40e6-a28a-a07c54cced1b",
+        "email": "john.vance@techcorp.io",
+        "service": "Web Application Development",
+        "budget": "₹75,000 - ₹1,50,000 / $950 - $1,800"
+      },
+      "read": true,
+      "createdAt": "2026-09-16T10:31:34.419Z"
+    },
+    {
+      "_id": "8cc35030-12e9-466e-a59a-099827ea352c",
+      "type": "new_user",
+      "title": "New Client Registered: QA Test Client",
+      "message": "QA Test Client (qa.client.1789554694667@example.com) registered an account. Company: QA Industries",
+      "link": "#users",
+      "metadata": {
+        "userId": "f4d90304-3e2a-4704-95dc-6c5ac16504ff",
+        "email": "qa.client.1789554694667@example.com",
+        "referralCode": "DEV-2577A3AD"
+      },
+      "read": true,
+      "createdAt": "2026-09-16T10:31:34.749Z"
+    },
+    {
+      "_id": "c7840582-dcb4-4a4d-a08d-cfc9459cdde1",
+      "type": "new_order",
+      "title": "New Order: ₹799 - Joya AI — Voice Assistant",
+      "message": "Order DC-ORD-263619 placed by qa.client.1789554694667@example.com for Joya AI — Voice Assistant. Amount: ₹799",
+      "link": "#orders",
+      "metadata": {
+        "orderId": "DC-ORD-263619",
+        "amount": 799,
+        "email": "qa.client.1789554694667@example.com"
+      },
+      "read": true,
+      "createdAt": "2026-09-16T10:31:35.140Z"
+    },
+    {
+      "_id": "71c12e1d-e013-44bd-952b-f0664183dcbc",
+      "type": "new_order",
+      "title": "New Order: ₹999 - Joya AI — Voice Assistant",
+      "message": "Order DC-ORD-272659 placed by joya.buyer@devcraft.io for Joya AI — Voice Assistant. Amount: ₹999",
+      "link": "#orders",
+      "metadata": {
+        "orderId": "DC-ORD-272659",
+        "amount": 999,
+        "email": "joya.buyer@devcraft.io"
+      },
+      "read": true,
+      "createdAt": "2026-09-16T10:31:36.232Z"
+    },
+    {
+      "_id": "6d5e1f1f-2b4c-406d-8edd-51de1aa7f17e",
+      "type": "payment_success",
+      "title": "Payment Received: ₹999 for Joya AI — Voice Assistant",
+      "message": "Order DC-ORD-272659 verified successfully via UPI. Buyer: joya.buyer@devcraft.io. Amount: ₹999",
+      "link": "#orders",
+      "metadata": {
+        "orderId": "DC-ORD-272659",
+        "amount": 999,
+        "utr": "UTR-QA-99998888"
+      },
+      "read": true,
+      "createdAt": "2026-09-16T10:31:37.186Z"
+    },
+    {
+      "_id": "461754f2-a444-4d3b-81c0-3c5c90c51ad8",
+      "type": "download_accessed",
+      "title": "Download Accessed: Joya AI — Voice Assistant",
+      "message": "joya.buyer@devcraft.io downloaded package \"joya-ai-source-code-v2.4.0.zip\" (Order: DC-ORD-272659)",
+      "link": "#downloads",
+      "metadata": {
+        "productId": "joya-ai",
+        "orderId": "DC-ORD-272659",
+        "email": "joya.buyer@devcraft.io"
+      },
+      "read": true,
+      "createdAt": "2026-09-16T10:31:37.223Z"
+    },
+    {
+      "_id": "67d84723-fca3-48fe-93be-c18669e52ee3",
+      "type": "new_order",
+      "title": "New Order: ₹1599 - Jarvis AI — PC Assistant",
+      "message": "Order DC-ORD-448173 placed by jarvis.buyer@devcraft.io for Jarvis AI — PC Assistant. Amount: ₹1599",
+      "link": "#orders",
+      "metadata": {
+        "orderId": "DC-ORD-448173",
+        "amount": 1599,
+        "email": "jarvis.buyer@devcraft.io"
+      },
+      "read": true,
+      "createdAt": "2026-09-16T10:31:37.243Z"
+    },
+    {
+      "_id": "285c6ee7-9338-472f-bc29-b7f4a36c010c",
+      "type": "payment_success",
+      "title": "Payment Received: ₹1599 for Jarvis AI — PC Assistant",
+      "message": "Order DC-ORD-448173 verified successfully via UPI. Buyer: jarvis.buyer@devcraft.io. Amount: ₹1599",
+      "link": "#orders",
+      "metadata": {
+        "orderId": "DC-ORD-448173",
+        "amount": 1599,
+        "utr": "UTR-JARVIS-12345678"
+      },
+      "read": true,
+      "createdAt": "2026-09-16T10:31:37.594Z"
+    },
+    {
+      "_id": "ab28e2a7-c28c-4194-9ca5-11978182bcb8",
+      "type": "download_accessed",
+      "title": "Download Accessed: Jarvis AI — PC Assistant",
+      "message": "jarvis.buyer@devcraft.io downloaded package \"jarvis-ai-source-code-v3.1.2.zip\" (Order: DC-ORD-448173)",
+      "link": "#downloads",
+      "metadata": {
+        "productId": "jarvis-ai",
+        "orderId": "DC-ORD-448173",
+        "email": "jarvis.buyer@devcraft.io"
+      },
+      "read": true,
+      "createdAt": "2026-09-16T10:31:37.621Z"
+    },
+    {
+      "_id": "f7b701d0-7f19-4053-8c2c-4b8a663761ca",
+      "type": "new_user",
+      "title": "New Client Registered: Referrer Pro",
+      "message": "Referrer Pro (referrer_1789554697634@example.com) registered an account.",
+      "link": "#users",
+      "metadata": {
+        "userId": "2002a4fe-6c96-49ea-b137-eb5e2a9f438b",
+        "email": "referrer_1789554697634@example.com",
+        "referralCode": "DEV-5FD6EF1F"
+      },
+      "read": true,
+      "createdAt": "2026-09-16T10:31:37.715Z"
+    },
+    {
+      "_id": "026663c6-5b42-444c-a3be-f0fdae9c36e3",
+      "type": "new_user",
+      "title": "New Client Registered: Referred Client",
+      "message": "Referred Client (referee_1789554697729@example.com) registered an account. (Referred by DEV-5FD6EF1F)",
+      "link": "#users",
+      "metadata": {
+        "userId": "bced0334-a213-47c4-9556-96594d0abc0d",
+        "email": "referee_1789554697729@example.com",
+        "referralCode": "DEV-82284483"
+      },
+      "read": true,
+      "createdAt": "2026-09-16T10:31:37.823Z"
+    },
+    {
+      "_id": "2842aa7f-9590-40f0-a360-7093ee22f3d6",
+      "type": "new_order",
+      "title": "New Order: ₹999 - Joya AI — Voice Assistant",
+      "message": "Order DC-ORD-556800 placed by referee_1789554697729@example.com for Joya AI — Voice Assistant. Amount: ₹999",
+      "link": "#orders",
+      "metadata": {
+        "orderId": "DC-ORD-556800",
+        "amount": 999,
+        "email": "referee_1789554697729@example.com"
+      },
+      "read": true,
+      "createdAt": "2026-09-16T10:31:37.846Z"
+    },
+    {
+      "_id": "418931b2-c1e5-4e1d-9a09-7b77cc749299",
+      "type": "referral_conversion",
+      "title": "Referral Converted: ₹100 earned",
+      "message": "Referrer DEV-5FD6EF1F earned ₹100 commission on order DC-ORD-556800 from referee_1789554697729@example.com",
+      "link": "#referrals",
+      "metadata": {
+        "orderId": "DC-ORD-556800",
+        "referrerCode": "DEV-5FD6EF1F",
+        "rewardAmount": 100
+      },
+      "read": true,
+      "createdAt": "2026-09-16T10:31:38.122Z"
+    },
+    {
+      "_id": "c879ffa4-af14-43ad-bfb4-073f50ba504e",
+      "type": "payment_success",
+      "title": "Payment Received: ₹999 for Joya AI — Voice Assistant",
+      "message": "Order DC-ORD-556800 verified successfully via UPI. Buyer: referee_1789554697729@example.com. Amount: ₹999",
+      "link": "#orders",
+      "metadata": {
+        "orderId": "DC-ORD-556800",
+        "amount": 999,
+        "utr": "ADMIN_VERIFIED"
+      },
+      "read": true,
+      "createdAt": "2026-09-16T10:31:38.130Z"
+    },
+    {
+      "_id": "1d9e46b1-adcb-4c0e-b4e4-a14be425b11e",
+      "type": "feature_request",
+      "title": "New Feature Idea: Support for dark mode in code exports",
+      "message": "Test Client (client@example.com) submitted: \"Support for dark mode in code exports\". Priority: High",
+      "link": "#feedback",
+      "metadata": {
+        "feedbackId": "2c9f6be5-7146-478b-afc0-35171196b997",
+        "category": "feature_request",
+        "priority": "High"
+      },
+      "read": true,
+      "createdAt": "2026-09-16T10:31:38.224Z"
     }
   ],
   "analyticsEvents": [
@@ -19098,6 +19799,20 @@
       "userId": null,
       "userEmail": "",
       "timestamp": "2026-09-16T10:17:29.944Z"
+    },
+    {
+      "_id": "73040482-fce8-4edd-910f-6b6dc9d4ca99",
+      "event": "search",
+      "data": {
+        "query": "joya ai"
+      },
+      "path": "/products",
+      "referrer": "https://google.com",
+      "userAgent": "",
+      "ip": "::1",
+      "userId": null,
+      "userEmail": "",
+      "timestamp": "2026-09-16T10:31:38.179Z"
     }
   ]
 }

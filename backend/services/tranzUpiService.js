@@ -11,7 +11,7 @@ class TranzUpiService {
     this.merchantId = config.tranzUpi.merchantId || 'DEVCRAFT_MERCHANT';
     this.secret = config.tranzUpi.secret || '';
     this.baseUrl = config.tranzUpi.baseUrl || 'https://api.tranzupi.com';
-    this.merchantVpa = config.tranzUpi.merchantVpa || '8630976928@upi';
+    this.merchantVpa = config.tranzUpi.merchantVpa || '7017022966@ibl';
     this.publicSiteUrl = config.publicSiteUrl || 'https://kiromage.shop';
   }
 

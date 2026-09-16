@@ -185,10 +185,10 @@ function renderFlagshipsSection() {
             </div>
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-              <a href="/joya" class="btn btn-ghost btn-sm" style="justify-content: center;">View Details</a>
-              <button class="btn btn-outline btn-sm" onclick="devcraftShop.addToCart('joya-ai')">Add to Cart 🛒</button>
-              <button class="btn btn-emerald btn-sm" onclick="devcraftShop.openCheckoutModal('joya-ai')">Buy Now (₹999) ⚡</button>
-              <button class="btn btn-outline btn-sm" onclick="devcraftShop.openShareModal('joya-ai')">Share 🔗</button>
+              <button class="btn btn-emerald btn-sm" onclick="devcraftShop.openCheckoutModal('joya-ai')" style="justify-content: center;">⚡ Buy Now (₹999)</button>
+              <a href="https://api.whatsapp.com/send?phone=918630976928&text=Hello%20DevCraft%20%F0%9F%91%8B%20I%20want%20to%20buy%20Joya%20AI%20Voice%20Assistant%20(%E2%82%B9999)%20Full%20Source%20Code." target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm" style="justify-content: center;">💬 WhatsApp Buy</a>
+              <button class="btn btn-outline btn-sm" onclick="devcraftShop.addToCart('joya-ai')" style="justify-content: center;">+ Cart 🛒</button>
+              <a href="/joya" class="btn btn-ghost btn-sm" style="justify-content: center;">View Details →</a>
             </div>
           </div>
         </div>
@@ -245,10 +245,10 @@ function renderFlagshipsSection() {
             </div>
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-              <a href="/jarvis" class="btn btn-ghost btn-sm" style="justify-content: center;">View Details</a>
-              <button class="btn btn-outline btn-sm" onclick="devcraftShop.addToCart('jarvis-ai')">Add to Cart 🛒</button>
-              <button class="btn btn-emerald btn-sm" onclick="devcraftShop.openCheckoutModal('jarvis-ai')">Buy Now (₹1,599) ⚡</button>
-              <button class="btn btn-outline btn-sm" onclick="devcraftShop.openShareModal('jarvis-ai')">Share 🔗</button>
+              <button class="btn btn-emerald btn-sm" onclick="devcraftShop.openCheckoutModal('jarvis-ai')" style="justify-content: center;">⚡ Buy Now (₹1,599)</button>
+              <a href="https://api.whatsapp.com/send?phone=918630976928&text=Hello%20DevCraft%20%F0%9F%91%8B%20I%20want%20to%20buy%20Jarvis%20AI%20PC%20Assistant%20(%E2%82%B91,599)%20Full%20Source%20Code." target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm" style="justify-content: center;">💬 WhatsApp Buy</a>
+              <button class="btn btn-outline btn-sm" onclick="devcraftShop.addToCart('jarvis-ai')" style="justify-content: center;">+ Cart 🛒</button>
+              <a href="/jarvis" class="btn btn-ghost btn-sm" style="justify-content: center;">View Details →</a>
             </div>
           </div>
       </div>
@@ -1989,6 +1989,9 @@ function buildJoyaPage() {
               <button class="btn btn-emerald" onclick="devcraftShop.openCheckoutModal('joya-ai')">
                 Buy Full Source Code (₹999) ⚡
               </button>
+              <a href="https://api.whatsapp.com/send?phone=918630976928&text=Hello%20DevCraft%20%F0%9F%91%8B%20I%20want%20to%20buy%20Joya%20AI%20Voice%20Assistant%20(%E2%82%B9999)%20Full%20Source%20Code." target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 6px;">
+                💬 Buy via WhatsApp (₹999)
+              </a>
               <button class="btn btn-outline" onclick="devcraftShop.addToCart('joya-ai')">
                 + Cart 🛒
               </button>
@@ -2215,9 +2218,9 @@ function buildJarvisPage() {
               <button class="btn btn-emerald" onclick="devcraftShop.openCheckoutModal('jarvis-ai')">
                 Buy Full Source Code (₹1,599) ⚡
               </button>
-              <button class="btn btn-primary" onclick="devcraftShop.downloadProduct('jarvis-ai')">
-                Download PC App ⬇️
-              </button>
+              <a href="https://api.whatsapp.com/send?phone=918630976928&text=Hello%20DevCraft%20%F0%9F%91%8B%20I%20want%20to%20buy%20Jarvis%20AI%20PC%20Assistant%20(%E2%82%B91,599)%20Full%20Source%20Code." target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 6px;">
+                💬 Buy via WhatsApp (₹1,599)
+              </a>
               <button class="btn btn-outline" onclick="devcraftShop.addToCart('jarvis-ai')">
                 + Cart 🛒
               </button>

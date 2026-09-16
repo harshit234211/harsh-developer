@@ -636,7 +636,7 @@ window.devcraftShop = (function() {
       }));
     } catch (_) {}
 
-    const upiUri = payment.upiUri || `upi://pay?pa=8630976928@upi&pn=DEVCRAFT%20STUDIO&am=${Number(order.finalAmount).toFixed(2)}&cu=INR&tr=${encodeURIComponent(order.orderId)}&tn=${encodeURIComponent('DevCraft ' + order.orderId)}`;
+    const upiUri = payment.upiUri || `upi://pay?pa=7017022966@ibl&pn=DEVCRAFT%20STUDIO&am=${Number(order.finalAmount).toFixed(2)}&cu=INR&tr=${encodeURIComponent(order.orderId)}&tn=${encodeURIComponent('DevCraft ' + order.orderId)}`;
     const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(upiUri)}`;
 
     body.innerHTML = `
@@ -672,7 +672,7 @@ window.devcraftShop = (function() {
             <img id="upi-qr-image" src="${qrUrl}" alt="Dynamic UPI QR Code" style="width: 200px; height: 200px; display: block; border-radius: 6px;" />
           </div>
           <div style="margin-top: 12px; font-size: 0.82rem; color: #94a3b8;">
-            Merchant UPI ID: <strong style="color: var(--cyan); font-family: var(--font-mono);">${escapeHtml(payment.merchantVpa || '8630976928@upi')}</strong>
+            Merchant UPI ID: <strong style="color: var(--cyan); font-family: var(--font-mono);">${escapeHtml(payment.merchantVpa || '7017022966@ibl')}</strong>
           </div>
           <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">
             Scan with GPay, PhonePe, Paytm, BHIM, Cred or any bank UPI app

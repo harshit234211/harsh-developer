@@ -19,7 +19,7 @@ const config = {
     merchantId: process.env.TRANZ_UPI_MERCHANT_ID || 'DEVCRAFT_MERCHANT',
     secret: process.env.TRANZ_UPI_SECRET || '',
     baseUrl: process.env.TRANZ_UPI_BASE_URL || 'https://tranzupi.com',
-    merchantVpa: process.env.TRANZ_UPI_VPA || '8630976928@upi'
+    merchantVpa: process.env.TRANZ_UPI_VPA || '7017022966@ibl'
   },
   developer: {
     name: 'Harshit',
