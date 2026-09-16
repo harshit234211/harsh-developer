@@ -9,8 +9,333 @@ const { commonHead, navbar, floatingActions, footer } = require('./components');
 const ROOT = path.join(__dirname, '..');
 const FRONTEND = path.join(ROOT, 'frontend');
 const PAGES = path.join(FRONTEND, 'pages');
+const ASSETS_IMG = path.join(FRONTEND, 'assets', 'images');
 
 if (!fs.existsSync(PAGES)) fs.mkdirSync(PAGES, { recursive: true });
+if (!fs.existsSync(ASSETS_IMG)) fs.mkdirSync(ASSETS_IMG, { recursive: true });
+
+// Function to generate futuristic animated SVG assets for Joya AI & Jarvis AI
+function generateAnimatedSvgs() {
+  const joyaSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 320" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <radialGradient id="joyaCoreGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00f0ff" stop-opacity="0.95"/>
+      <stop offset="35%" stop-color="#a855f7" stop-opacity="0.75"/>
+      <stop offset="70%" stop-color="#3b82f6" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#0b1120" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="joyaInnerOrb" cx="40%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/>
+      <stop offset="25%" stop-color="#38bdf8" stop-opacity="0.9"/>
+      <stop offset="60%" stop-color="#9333ea" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#090d16" stop-opacity="0.95"/>
+    </radialGradient>
+    <linearGradient id="joyaWaveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00f0ff" stop-opacity="0.2"/>
+      <stop offset="50%" stop-color="#c084fc" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.2"/>
+    </linearGradient>
+    <linearGradient id="joyaRingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f0ff"/>
+      <stop offset="50%" stop-color="#a855f7"/>
+      <stop offset="100%" stop-color="#ec4899"/>
+    </linearGradient>
+    <filter id="joyaGlowFilter" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="joyaSoftGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <style>
+      @keyframes joyaPulse {
+        0%, 100% { transform: scale(1); opacity: 0.9; }
+        50% { transform: scale(1.08); opacity: 1; filter: drop-shadow(0 0 25px rgba(0,240,255,0.85)); }
+      }
+      @keyframes joyaRotateCW {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      @keyframes joyaRotateCCW {
+        from { transform: rotate(360deg); }
+        to { transform: rotate(0deg); }
+      }
+      @keyframes joyaWaveMove1 {
+        0%, 100% { d: path('M 80 160 Q 180 110 300 160 T 520 160'); }
+        50% { d: path('M 80 160 Q 180 210 300 160 T 520 160'); }
+      }
+      @keyframes joyaWaveMove2 {
+        0%, 100% { d: path('M 80 160 Q 200 200 300 160 T 520 160'); }
+        50% { d: path('M 80 160 Q 200 120 300 160 T 520 160'); }
+      }
+      @keyframes joyaBarBounce {
+        0%, 100% { transform: scaleY(0.3); }
+        50% { transform: scaleY(1.2); }
+      }
+      @keyframes joyaParticleFloat {
+        0% { transform: translateY(0px) scale(0.8); opacity: 0.3; }
+        50% { transform: translateY(-15px) scale(1.2); opacity: 0.95; }
+        100% { transform: translateY(0px) scale(0.8); opacity: 0.3; }
+      }
+      @keyframes joyaRingsExpand {
+        0% { r: 60px; opacity: 0.8; }
+        50% { r: 90px; opacity: 0.3; }
+        100% { r: 120px; opacity: 0; }
+      }
+      .joya-core { transform-origin: 300px 160px; animation: joyaPulse 3.5s ease-in-out infinite; }
+      .joya-ring-cw { transform-origin: 300px 160px; animation: joyaRotateCW 18s linear infinite; }
+      .joya-ring-ccw { transform-origin: 300px 160px; animation: joyaRotateCCW 12s linear infinite; }
+      .joya-wave-1 { animation: joyaWaveMove1 4s ease-in-out infinite; }
+      .joya-wave-2 { animation: joyaWaveMove2 3.2s ease-in-out infinite; }
+      .joya-p1 { animation: joyaParticleFloat 3s ease-in-out infinite; }
+      .joya-p2 { animation: joyaParticleFloat 4.2s ease-in-out 1s infinite; }
+      .joya-p3 { animation: joyaParticleFloat 3.6s ease-in-out 0.5s infinite; }
+      .joya-pulse-ring { animation: joyaRingsExpand 3s ease-out infinite; }
+      .joya-pulse-ring-delayed { animation: joyaRingsExpand 3s ease-out 1.5s infinite; }
+    </style>
+  </defs>
+
+  <rect width="600" height="320" rx="16" fill="#080d1a"/>
+  
+  <g opacity="0.1" stroke="#38bdf8" stroke-width="1">
+    <line x1="0" y1="50" x2="600" y2="50"/>
+    <line x1="0" y1="110" x2="600" y2="110"/>
+    <line x1="0" y1="160" x2="600" y2="160"/>
+    <line x1="0" y1="210" x2="600" y2="210"/>
+    <line x1="0" y1="270" x2="600" y2="270"/>
+    <line x1="100" y1="0" x2="100" y2="320"/>
+    <line x1="200" y1="0" x2="200" y2="320"/>
+    <line x1="300" y1="0" x2="300" y2="320"/>
+    <line x1="400" y1="0" x2="400" y2="320"/>
+    <line x1="500" y1="0" x2="500" y2="320"/>
+  </g>
+
+  <circle cx="300" cy="160" r="150" fill="url(#joyaCoreGlow)"/>
+
+  <path class="joya-wave-1" d="M 80 160 Q 180 110 300 160 T 520 160" fill="none" stroke="url(#joyaWaveGrad)" stroke-width="3" filter="url(#joyaSoftGlow)"/>
+  <path class="joya-wave-2" d="M 80 160 Q 200 200 300 160 T 520 160" fill="none" stroke="#00f0ff" stroke-opacity="0.4" stroke-width="2"/>
+
+  <g transform="translate(85, 160)" fill="#00f0ff" opacity="0.85">
+    <rect x="0" y="-14" width="4" height="28" rx="2" style="animation: joyaBarBounce 1.2s ease-in-out infinite; transform-origin: 2px 0;"/>
+    <rect x="10" y="-25" width="4" height="50" rx="2" style="animation: joyaBarBounce 0.9s ease-in-out 0.2s infinite; transform-origin: 12px 0;"/>
+    <rect x="20" y="-38" width="4" height="76" rx="2" style="animation: joyaBarBounce 1.5s ease-in-out 0.4s infinite; transform-origin: 22px 0;"/>
+    <rect x="30" y="-20" width="4" height="40" rx="2" style="animation: joyaBarBounce 1.1s ease-in-out 0.1s infinite; transform-origin: 32px 0;"/>
+    <rect x="40" y="-10" width="4" height="20" rx="2" style="animation: joyaBarBounce 1.4s ease-in-out 0.3s infinite; transform-origin: 42px 0;"/>
+  </g>
+  <g transform="translate(465, 160)" fill="#c084fc" opacity="0.85">
+    <rect x="0" y="-10" width="4" height="20" rx="2" style="animation: joyaBarBounce 1.4s ease-in-out 0.3s infinite; transform-origin: 2px 0;"/>
+    <rect x="10" y="-20" width="4" height="40" rx="2" style="animation: joyaBarBounce 1.1s ease-in-out 0.1s infinite; transform-origin: 12px 0;"/>
+    <rect x="20" y="-38" width="4" height="76" rx="2" style="animation: joyaBarBounce 1.5s ease-in-out 0.4s infinite; transform-origin: 22px 0;"/>
+    <rect x="30" y="-25" width="4" height="50" rx="2" style="animation: joyaBarBounce 0.9s ease-in-out 0.2s infinite; transform-origin: 32px 0;"/>
+    <rect x="40" y="-14" width="4" height="28" rx="2" style="animation: joyaBarBounce 1.2s ease-in-out infinite; transform-origin: 42px 0;"/>
+  </g>
+
+  <circle cx="300" cy="160" class="joya-pulse-ring" fill="none" stroke="#00f0ff" stroke-width="1.8"/>
+  <circle cx="300" cy="160" class="joya-pulse-ring-delayed" fill="none" stroke="#a855f7" stroke-width="1.8"/>
+
+  <g class="joya-ring-cw">
+    <circle cx="300" cy="160" r="95" fill="none" stroke="url(#joyaRingGrad)" stroke-width="2" stroke-dasharray="8 14 30 10 50 12" opacity="0.85"/>
+    <circle cx="300" cy="65" r="4" fill="#00f0ff" filter="url(#joyaSoftGlow)"/>
+    <circle cx="395" cy="160" r="3.5" fill="#a855f7"/>
+    <circle cx="205" cy="160" r="3.5" fill="#ec4899"/>
+  </g>
+
+  <g class="joya-ring-ccw">
+    <circle cx="300" cy="160" r="74" fill="none" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="4 6 12 8" opacity="0.65"/>
+    <circle cx="300" cy="234" r="3.5" fill="#38bdf8" filter="url(#joyaSoftGlow)"/>
+  </g>
+
+  <g class="joya-core">
+    <circle cx="300" cy="160" r="54" fill="url(#joyaInnerOrb)" filter="url(#joyaGlowFilter)"/>
+    
+    <g transform="translate(286, 142)" fill="#ffffff">
+      <rect x="8" y="4" width="12" height="20" rx="6" fill="#ffffff"/>
+      <path d="M 3 16 A 11 11 0 0 0 25 16" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+      <line x1="14" y1="27" x2="14" y2="34" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+      <line x1="8" y1="34" x2="20" y2="34" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+    </g>
+  </g>
+
+  <circle cx="210" cy="95" r="3" fill="#00f0ff" class="joya-p1" filter="url(#joyaSoftGlow)"/>
+  <circle cx="390" cy="80" r="2.5" fill="#c084fc" class="joya-p2" filter="url(#joyaSoftGlow)"/>
+  <circle cx="370" cy="245" r="3.5" fill="#38bdf8" class="joya-p3" filter="url(#joyaSoftGlow)"/>
+  <circle cx="225" cy="225" r="2.5" fill="#ec4899" class="joya-p1" filter="url(#joyaSoftGlow)"/>
+
+  <g transform="translate(20, 18)">
+    <rect x="0" y="0" width="165" height="26" rx="6" fill="rgba(168, 85, 247, 0.2)" stroke="rgba(168, 85, 247, 0.4)" stroke-width="1"/>
+    <circle cx="14" cy="13" r="4" fill="#10b981"/>
+    <text x="26" y="17" fill="#e9d5ff" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" letter-spacing="1">🎙️ JOYA AI ACTIVE</text>
+  </g>
+
+  <g transform="translate(410, 18)">
+    <rect x="0" y="0" width="170" height="26" rx="6" fill="rgba(0, 240, 255, 0.15)" stroke="rgba(0, 240, 255, 0.35)" stroke-width="1"/>
+    <text x="12" y="17" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" letter-spacing="1">"Wake up Joya"</text>
+  </g>
+
+  <path d="M 140 290 L 460 290" stroke="url(#joyaWaveGrad)" stroke-width="2" stroke-linecap="round"/>
+  <text x="300" y="308" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" text-anchor="middle" letter-spacing="2">AUTONOMOUS VOICE AGENT • FULL SOURCE CODE</text>
+</svg>`;
+
+  const jarvisSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 320" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <radialGradient id="jarvisReactorGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00f0ff" stop-opacity="0.95"/>
+      <stop offset="30%" stop-color="#3b82f6" stop-opacity="0.75"/>
+      <stop offset="65%" stop-color="#1d4ed8" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#0b1120" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="jarvisCoreOrb" cx="45%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
+      <stop offset="30%" stop-color="#00f0ff" stop-opacity="0.95"/>
+      <stop offset="70%" stop-color="#1e40af" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#030712" stop-opacity="0.95"/>
+    </radialGradient>
+    <linearGradient id="jarvisTechGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f0ff"/>
+      <stop offset="50%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
+    <linearGradient id="jarvisCyanBlue" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00f0ff" stop-opacity="0.15"/>
+      <stop offset="50%" stop-color="#3b82f6" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#10b981" stop-opacity="0.15"/>
+    </linearGradient>
+    <filter id="jarvisGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="10" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="jarvisSoftGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <style>
+      @keyframes jarvisCorePulse {
+        0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(0,240,255,0.7)); }
+        50% { transform: scale(1.07); filter: drop-shadow(0 0 35px rgba(0,240,255,1)); }
+      }
+      @keyframes jarvisSpinFastCW {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      @keyframes jarvisSpinSlowCCW {
+        from { transform: rotate(360deg); }
+        to { transform: rotate(0deg); }
+      }
+      @keyframes jarvisRadarSweep {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      @keyframes jarvisGridPulse {
+        0%, 100% { opacity: 0.12; }
+        50% { opacity: 0.25; }
+      }
+      @keyframes jarvisDataStream {
+        0% { transform: translateY(0); opacity: 0.2; }
+        50% { opacity: 0.85; }
+        100% { transform: translateY(-26px); opacity: 0.1; }
+      }
+      .jarvis-core { transform-origin: 300px 160px; animation: jarvisCorePulse 3s ease-in-out infinite; }
+      .jarvis-ring-cw { transform-origin: 300px 160px; animation: jarvisSpinFastCW 14s linear infinite; }
+      .jarvis-ring-ccw { transform-origin: 300px 160px; animation: jarvisSpinSlowCCW 20s linear infinite; }
+      .jarvis-radar { transform-origin: 300px 160px; animation: jarvisRadarSweep 6s linear infinite; }
+      .jarvis-grid { animation: jarvisGridPulse 4s ease-in-out infinite; }
+      .jarvis-stream-1 { animation: jarvisDataStream 2.5s linear infinite; }
+      .jarvis-stream-2 { animation: jarvisDataStream 3.2s linear 0.8s infinite; }
+    </style>
+  </defs>
+
+  <rect width="600" height="320" rx="16" fill="#080d1a"/>
+
+  <g class="jarvis-grid" stroke="#00f0ff" stroke-width="0.8" fill="none">
+    <line x1="50" y1="160" x2="550" y2="160" stroke-dasharray="4 8" opacity="0.4"/>
+    <line x1="300" y1="30" x2="300" y2="290" stroke-dasharray="4 8" opacity="0.4"/>
+    <circle cx="300" cy="160" r="130" stroke-dasharray="6 12" opacity="0.3"/>
+  </g>
+
+  <circle cx="300" cy="160" r="150" fill="url(#jarvisReactorGlow)"/>
+
+  <g transform="translate(35, 80)" font-family="'JetBrains Mono', monospace" font-size="10" fill="#38bdf8" class="jarvis-stream-1">
+    <text x="0" y="0">01 &gt; sys.init(pc_core)</text>
+    <text x="0" y="18">02 &gt; ollama.bridge: OK</text>
+    <text x="0" y="36">03 &gt; ctrl_space: ACTIVE</text>
+    <text x="0" y="54">04 &gt; web_scraper: RUN</text>
+    <text x="0" y="72">05 &gt; term_exec: READY</text>
+    <text x="0" y="90">06 &gt; autostart: TRUE</text>
+  </g>
+
+  <g transform="translate(445, 80)" font-family="'JetBrains Mono', monospace" font-size="10" fill="#34d399" class="jarvis-stream-2">
+    <text x="0" y="0">[HUD] CPU: 2.1% LOAD</text>
+    <text x="0" y="18">[HUD] RAM: 142MB ALLOC</text>
+    <text x="0" y="36">[HUD] LLM: Llama-3 8B</text>
+    <text x="0" y="54">[HUD] VPA: 7017022966</text>
+    <text x="0" y="72">[HUD] ENCRYPT: AES-256</text>
+    <text x="0" y="90">[HUD] PORT: 5000 ONLINE</text>
+  </g>
+
+  <g class="jarvis-ring-cw">
+    <circle cx="300" cy="160" r="105" fill="none" stroke="url(#jarvisTechGrad)" stroke-width="2.5" stroke-dasharray="15 10 40 8 80 12" opacity="0.9"/>
+    <circle cx="300" cy="55" r="4.5" fill="#00f0ff" filter="url(#jarvisSoftGlow)"/>
+    <circle cx="405" cy="160" r="4" fill="#10b981" filter="url(#jarvisSoftGlow)"/>
+    <circle cx="195" cy="160" r="4" fill="#3b82f6" filter="url(#jarvisSoftGlow)"/>
+  </g>
+
+  <g class="jarvis-ring-ccw">
+    <circle cx="300" cy="160" r="82" fill="none" stroke="#00f0ff" stroke-width="2" stroke-dasharray="6 6 25 10" opacity="0.75"/>
+    <path d="M 235 160 A 65 65 0 0 1 365 160" fill="none" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" filter="url(#jarvisSoftGlow)"/>
+    <path d="M 365 160 A 65 65 0 0 1 235 160" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" filter="url(#jarvisSoftGlow)"/>
+  </g>
+
+  <g class="jarvis-radar">
+    <line x1="300" y1="160" x2="300" y2="55" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" filter="url(#jarvisGlow)"/>
+    <polygon points="300,160 270,60 300,55" fill="rgba(0, 240, 255, 0.15)"/>
+  </g>
+
+  <g class="jarvis-core">
+    <circle cx="300" cy="160" r="50" fill="url(#jarvisCoreOrb)" filter="url(#jarvisGlow)"/>
+    
+    <g transform="translate(283, 143)" fill="#ffffff">
+      <rect x="3" y="3" width="28" height="18" rx="3" fill="none" stroke="#ffffff" stroke-width="2.5"/>
+      <line x1="0" y1="25" x2="34" y2="25" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+      <path d="M 9 9 L 14 12 L 9 15" fill="none" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="17" y1="15" x2="24" y2="15" stroke="#10b981" stroke-width="2" stroke-linecap="round"/>
+    </g>
+  </g>
+
+  <g transform="translate(20, 18)">
+    <rect x="0" y="0" width="180" height="26" rx="6" fill="rgba(59, 130, 246, 0.2)" stroke="rgba(59, 130, 246, 0.4)" stroke-width="1"/>
+    <circle cx="14" cy="13" r="4" fill="#00f0ff"/>
+    <text x="26" y="17" fill="#93c5fd" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" letter-spacing="1">💻 JARVIS PC AGENT</text>
+  </g>
+
+  <g transform="translate(405, 18)">
+    <rect x="0" y="0" width="175" height="26" rx="6" fill="rgba(16, 185, 129, 0.15)" stroke="rgba(16, 185, 129, 0.35)" stroke-width="1"/>
+    <text x="12" y="17" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" letter-spacing="1">HOTKEY: Ctrl+Space</text>
+  </g>
+
+  <path d="M 140 290 L 460 290" stroke="url(#jarvisCyanBlue)" stroke-width="2" stroke-linecap="round"/>
+  <text x="300" y="308" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" text-anchor="middle" letter-spacing="2">ELECTRON + PYTHON PC DESKTOP SOFTWARE</text>
+</svg>`;
+
+  fs.writeFileSync(path.join(ASSETS_IMG, 'joya-ai-animated.svg'), joyaSvg, 'utf8');
+  fs.writeFileSync(path.join(ASSETS_IMG, 'jarvis-ai-animated.svg'), jarvisSvg, 'utf8');
+  console.log('✓ Generated animated SVGs for Joya & Jarvis');
+}
+
+// Generate animated SVGs immediately
+generateAnimatedSvgs();
 
 // Helper to escape JSON for safe script tag embedding
 const safeJsonServices = JSON.stringify(DEVCRAFT_SERVICES).replace(/</g, '\\u003c');
@@ -131,9 +456,14 @@ function renderFlagshipsSection() {
 
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 28px;">
         <!-- Card 1: Joya AI -->
-        <div class="glass-card" style="padding: 30px; border-radius: 20px; border: 1px solid rgba(168, 85, 247, 0.3); display: flex; flex-direction: column; justify-content: space-between;">
+        <div class="glass-card" style="padding: 24px; border-radius: 20px; border: 1px solid rgba(168, 85, 247, 0.3); display: flex; flex-direction: column; justify-content: space-between;">
           <div>
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+            <!-- Animated Graphic Banner -->
+            <div style="width: 100%; border-radius: 14px; overflow: hidden; margin-bottom: 18px; border: 1px solid rgba(168, 85, 247, 0.3); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4); background: #080d1a;">
+              <img src="/assets/images/joya-ai-animated.svg" alt="Joya AI Voice Assistant Animated Core" style="width: 100%; height: auto; display: block;" loading="lazy" />
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px;">
               <span class="flagship-hero-badge">🎙️ Android Native • Full Source Code</span>
               <span class="pill-tag" style="background: rgba(16, 185, 129, 0.15); color: #10b981; font-weight: 700;">50% OFF</span>
             </div>
@@ -192,9 +522,14 @@ function renderFlagshipsSection() {
         </div>
 
         <!-- Card 2: Jarvis AI -->
-        <div class="glass-card" style="padding: 30px; border-radius: 20px; border: 1px solid rgba(59, 130, 246, 0.3); display: flex; flex-direction: column; justify-content: space-between;">
+        <div class="glass-card" style="padding: 24px; border-radius: 20px; border: 1px solid rgba(59, 130, 246, 0.3); display: flex; flex-direction: column; justify-content: space-between;">
           <div>
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+            <!-- Animated Graphic Banner -->
+            <div style="width: 100%; border-radius: 14px; overflow: hidden; margin-bottom: 18px; border: 1px solid rgba(59, 130, 246, 0.3); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4); background: #080d1a;">
+              <img src="/assets/images/jarvis-ai-animated.svg" alt="Jarvis AI PC Assistant Animated Core" style="width: 100%; height: auto; display: block;" loading="lazy" />
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px;">
               <span class="flagship-hero-badge" style="background: rgba(59, 130, 246, 0.15); color: #93c5fd; border-color: rgba(59, 130, 246, 0.4);">💻 PC Desktop • Full Source Code</span>
               <span class="pill-tag" style="background: rgba(0, 240, 255, 0.15); color: var(--cyan); font-weight: 700;">50% OFF</span>
             </div>
@@ -1754,6 +2089,15 @@ function buildProductsPage() {
 
     return `
     <div class="product-shop-card" data-category="${p.category || 'Other'}" data-name="${(p.name || '').toLowerCase()}" data-price="${finalPrice}">
+      ${p.id === 'joya-ai' ? `
+      <div style="width: 100%; border-radius: 10px; overflow: hidden; margin-bottom: 12px; border: 1px solid rgba(168, 85, 247, 0.3); background: #080d1a;">
+        <img src="/assets/images/joya-ai-animated.svg" alt="Joya AI Voice Assistant" style="width: 100%; height: auto; display: block;" loading="lazy" />
+      </div>
+      ` : p.id === 'jarvis-ai' ? `
+      <div style="width: 100%; border-radius: 10px; overflow: hidden; margin-bottom: 12px; border: 1px solid rgba(59, 130, 246, 0.3); background: #080d1a;">
+        <img src="/assets/images/jarvis-ai-animated.svg" alt="Jarvis AI PC Assistant" style="width: 100%; height: auto; display: block;" loading="lazy" />
+      </div>
+      ` : ''}
       <div class="product-card-top">
         <div class="product-card-meta">
           <span class="product-category-chip">${p.category}</span>
@@ -1976,7 +2320,10 @@ function buildJoyaPage() {
         </div>
 
         <!-- Right Side: Package & Technical Specs -->
-        <div class="glass-card" style="padding: 30px; border-radius: 20px; border: 1px solid rgba(168, 85, 247, 0.3);">
+        <div class="glass-card" style="padding: 24px; border-radius: 20px; border: 1px solid rgba(168, 85, 247, 0.3);">
+          <div style="width: 100%; border-radius: 12px; overflow: hidden; margin-bottom: 20px; border: 1px solid rgba(168, 85, 247, 0.3); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4); background: #080d1a;">
+            <img src="/assets/images/joya-ai-animated.svg" alt="Joya AI Voice Assistant Animated Core" style="width: 100%; height: auto; display: block;" />
+          </div>
           <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 20px; color: #ffffff;">Package Technical Specifications</h3>
           
           <div style="display: flex; flex-direction: column; gap: 14px;">
@@ -2196,7 +2543,10 @@ function buildJarvisPage() {
         </div>
 
         <!-- Right Side: Specs & Features -->
-        <div class="glass-card" style="padding: 30px; border-radius: 20px; border: 1px solid rgba(59, 130, 246, 0.3);">
+        <div class="glass-card" style="padding: 24px; border-radius: 20px; border: 1px solid rgba(59, 130, 246, 0.3);">
+          <div style="width: 100%; border-radius: 12px; overflow: hidden; margin-bottom: 20px; border: 1px solid rgba(59, 130, 246, 0.3); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4); background: #080d1a;">
+            <img src="/assets/images/jarvis-ai-animated.svg" alt="Jarvis AI PC Assistant Animated Core" style="width: 100%; height: auto; display: block;" />
+          </div>
           <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 20px; color: #ffffff;">Desktop Environment Specifications</h3>
           
           <div style="display: flex; flex-direction: column; gap: 14px;">

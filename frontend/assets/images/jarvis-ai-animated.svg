@@ -1,0 +1,145 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 320" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <radialGradient id="jarvisReactorGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00f0ff" stop-opacity="0.95"/>
+      <stop offset="30%" stop-color="#3b82f6" stop-opacity="0.75"/>
+      <stop offset="65%" stop-color="#1d4ed8" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#0b1120" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="jarvisCoreOrb" cx="45%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
+      <stop offset="30%" stop-color="#00f0ff" stop-opacity="0.95"/>
+      <stop offset="70%" stop-color="#1e40af" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#030712" stop-opacity="0.95"/>
+    </radialGradient>
+    <linearGradient id="jarvisTechGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f0ff"/>
+      <stop offset="50%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
+    <linearGradient id="jarvisCyanBlue" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00f0ff" stop-opacity="0.15"/>
+      <stop offset="50%" stop-color="#3b82f6" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#10b981" stop-opacity="0.15"/>
+    </linearGradient>
+    <filter id="jarvisGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="10" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="jarvisSoftGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <style>
+      @keyframes jarvisCorePulse {
+        0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(0,240,255,0.7)); }
+        50% { transform: scale(1.07); filter: drop-shadow(0 0 35px rgba(0,240,255,1)); }
+      }
+      @keyframes jarvisSpinFastCW {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      @keyframes jarvisSpinSlowCCW {
+        from { transform: rotate(360deg); }
+        to { transform: rotate(0deg); }
+      }
+      @keyframes jarvisRadarSweep {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      @keyframes jarvisGridPulse {
+        0%, 100% { opacity: 0.12; }
+        50% { opacity: 0.25; }
+      }
+      @keyframes jarvisDataStream {
+        0% { transform: translateY(0); opacity: 0.2; }
+        50% { opacity: 0.85; }
+        100% { transform: translateY(-26px); opacity: 0.1; }
+      }
+      .jarvis-core { transform-origin: 300px 160px; animation: jarvisCorePulse 3s ease-in-out infinite; }
+      .jarvis-ring-cw { transform-origin: 300px 160px; animation: jarvisSpinFastCW 14s linear infinite; }
+      .jarvis-ring-ccw { transform-origin: 300px 160px; animation: jarvisSpinSlowCCW 20s linear infinite; }
+      .jarvis-radar { transform-origin: 300px 160px; animation: jarvisRadarSweep 6s linear infinite; }
+      .jarvis-grid { animation: jarvisGridPulse 4s ease-in-out infinite; }
+      .jarvis-stream-1 { animation: jarvisDataStream 2.5s linear infinite; }
+      .jarvis-stream-2 { animation: jarvisDataStream 3.2s linear 0.8s infinite; }
+    </style>
+  </defs>
+
+  <rect width="600" height="320" rx="16" fill="#080d1a"/>
+
+  <g class="jarvis-grid" stroke="#00f0ff" stroke-width="0.8" fill="none">
+    <line x1="50" y1="160" x2="550" y2="160" stroke-dasharray="4 8" opacity="0.4"/>
+    <line x1="300" y1="30" x2="300" y2="290" stroke-dasharray="4 8" opacity="0.4"/>
+    <circle cx="300" cy="160" r="130" stroke-dasharray="6 12" opacity="0.3"/>
+  </g>
+
+  <circle cx="300" cy="160" r="150" fill="url(#jarvisReactorGlow)"/>
+
+  <g transform="translate(35, 80)" font-family="'JetBrains Mono', monospace" font-size="10" fill="#38bdf8" class="jarvis-stream-1">
+    <text x="0" y="0">01 &gt; sys.init(pc_core)</text>
+    <text x="0" y="18">02 &gt; ollama.bridge: OK</text>
+    <text x="0" y="36">03 &gt; ctrl_space: ACTIVE</text>
+    <text x="0" y="54">04 &gt; web_scraper: RUN</text>
+    <text x="0" y="72">05 &gt; term_exec: READY</text>
+    <text x="0" y="90">06 &gt; autostart: TRUE</text>
+  </g>
+
+  <g transform="translate(445, 80)" font-family="'JetBrains Mono', monospace" font-size="10" fill="#34d399" class="jarvis-stream-2">
+    <text x="0" y="0">[HUD] CPU: 2.1% LOAD</text>
+    <text x="0" y="18">[HUD] RAM: 142MB ALLOC</text>
+    <text x="0" y="36">[HUD] LLM: Llama-3 8B</text>
+    <text x="0" y="54">[HUD] VPA: 7017022966</text>
+    <text x="0" y="72">[HUD] ENCRYPT: AES-256</text>
+    <text x="0" y="90">[HUD] PORT: 5000 ONLINE</text>
+  </g>
+
+  <g class="jarvis-ring-cw">
+    <circle cx="300" cy="160" r="105" fill="none" stroke="url(#jarvisTechGrad)" stroke-width="2.5" stroke-dasharray="15 10 40 8 80 12" opacity="0.9"/>
+    <circle cx="300" cy="55" r="4.5" fill="#00f0ff" filter="url(#jarvisSoftGlow)"/>
+    <circle cx="405" cy="160" r="4" fill="#10b981" filter="url(#jarvisSoftGlow)"/>
+    <circle cx="195" cy="160" r="4" fill="#3b82f6" filter="url(#jarvisSoftGlow)"/>
+  </g>
+
+  <g class="jarvis-ring-ccw">
+    <circle cx="300" cy="160" r="82" fill="none" stroke="#00f0ff" stroke-width="2" stroke-dasharray="6 6 25 10" opacity="0.75"/>
+    <path d="M 235 160 A 65 65 0 0 1 365 160" fill="none" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" filter="url(#jarvisSoftGlow)"/>
+    <path d="M 365 160 A 65 65 0 0 1 235 160" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" filter="url(#jarvisSoftGlow)"/>
+  </g>
+
+  <g class="jarvis-radar">
+    <line x1="300" y1="160" x2="300" y2="55" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" filter="url(#jarvisGlow)"/>
+    <polygon points="300,160 270,60 300,55" fill="rgba(0, 240, 255, 0.15)"/>
+  </g>
+
+  <g class="jarvis-core">
+    <circle cx="300" cy="160" r="50" fill="url(#jarvisCoreOrb)" filter="url(#jarvisGlow)"/>
+    
+    <g transform="translate(283, 143)" fill="#ffffff">
+      <rect x="3" y="3" width="28" height="18" rx="3" fill="none" stroke="#ffffff" stroke-width="2.5"/>
+      <line x1="0" y1="25" x2="34" y2="25" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+      <path d="M 9 9 L 14 12 L 9 15" fill="none" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="17" y1="15" x2="24" y2="15" stroke="#10b981" stroke-width="2" stroke-linecap="round"/>
+    </g>
+  </g>
+
+  <g transform="translate(20, 18)">
+    <rect x="0" y="0" width="180" height="26" rx="6" fill="rgba(59, 130, 246, 0.2)" stroke="rgba(59, 130, 246, 0.4)" stroke-width="1"/>
+    <circle cx="14" cy="13" r="4" fill="#00f0ff"/>
+    <text x="26" y="17" fill="#93c5fd" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" letter-spacing="1">💻 JARVIS PC AGENT</text>
+  </g>
+
+  <g transform="translate(405, 18)">
+    <rect x="0" y="0" width="175" height="26" rx="6" fill="rgba(16, 185, 129, 0.15)" stroke="rgba(16, 185, 129, 0.35)" stroke-width="1"/>
+    <text x="12" y="17" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" letter-spacing="1">HOTKEY: Ctrl+Space</text>
+  </g>
+
+  <path d="M 140 290 L 460 290" stroke="url(#jarvisCyanBlue)" stroke-width="2" stroke-linecap="round"/>
+  <text x="300" y="308" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" text-anchor="middle" letter-spacing="2">ELECTRON + PYTHON PC DESKTOP SOFTWARE</text>
+</svg>
