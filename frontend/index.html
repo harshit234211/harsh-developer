@@ -161,91 +161,147 @@
   <main>
     
   <header class="hero-section" id="hero">
-    <div class="container hero-grid">
+    <div class="container hero-grid" style="align-items: center; gap: 48px;">
       <div class="hero-content">
-        <div class="hero-badge">
-          <span class="status-pill-online"><span class="status-dot"></span> Available for Production Sprints</span>
+        <div class="hero-badge" style="background: rgba(0, 240, 255, 0.12); border-color: rgba(0, 240, 255, 0.35); color: var(--cyan);">
+          <span class="status-pill-online"><span class="status-dot"></span> Available for Development & Sprints</span>
         </div>
 
-        <div class="hero-tagline-lead">DEVCRAFT • IDEAS → CODE → REAL SOLUTIONS</div>
-        <h1 class="hero-headline">
-          DevCraft
+        <div class="hero-tagline-lead" style="color: #a855f7; font-weight: 700; letter-spacing: 2px; font-size: 0.85rem; margin-top: 14px; margin-bottom: 8px;">
+          HARSHIT • SENIOR FULL-STACK &amp; AI SYSTEMS DEVELOPER
+        </div>
+
+        <h1 class="hero-headline" style="font-size: 3rem; font-weight: 800; line-height: 1.15; margin-bottom: 16px;">
+          Architecting <span class="text-gradient">AI Software</span> &amp; Production Apps
         </h1>
-        <p class="hero-subheadline text-gradient" style="font-size: 1.6rem; font-weight: 700; margin-bottom: 16px;">
-          Ideas → Code → Real Solutions
+
+        <p class="hero-bio" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary); margin-bottom: 24px;">
+          High-performance Android applications, autonomous AI agents (Joya &amp; Jarvis), custom desktop software, and scalable full-stack web platforms. Zero fluff, 100% full source code ownership.
         </p>
 
-        <p class="hero-bio">
-          We build powerful AI tools, mobile apps, desktop software and custom solutions to help you work smarter, faster and grow.
-        </p>
-
-        <!-- Service Offering Pills -->
-        <div class="hero-offerings-pills">
-          <span class="pill-tag">📱 Android Apps</span>
-          <span class="pill-tag">🌐 Websites</span>
-          <span class="pill-tag">⚡ Web Apps</span>
-          <span class="pill-tag">💻 Custom Software</span>
-          <span class="pill-tag">🤖 AI Solutions</span>
+        <!-- Service Offering Tech Stack Pills -->
+        <div class="hero-offerings-pills" style="margin-bottom: 28px;">
+          <span class="pill-tag">🤖 Joya &amp; Jarvis AI</span>
+          <span class="pill-tag">📱 Android Kotlin</span>
+          <span class="pill-tag">💻 Desktop PC / Electron</span>
+          <span class="pill-tag">🌐 Next.js &amp; React</span>
+          <span class="pill-tag">⚡ Fastify &amp; Node.js</span>
+          <span class="pill-tag">🧠 Ollama Local LLMs</span>
           <span class="pill-tag">⚙️ Automation</span>
-          <span class="pill-tag">🔗 API Integration</span>
-          <span class="pill-tag">🎨 UI/UX</span>
         </div>
 
         <!-- Primary CTAs -->
-        <div class="hero-cta-group">
-          <a href="/products" class="btn btn-primary btn-lg">
-            <span>Explore Products</span>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        <div class="hero-cta-group" style="margin-bottom: 32px;">
+          <a href="https://api.whatsapp.com/send?phone=918630976928&text=Hello%20Harshit%20%F0%9F%91%8B%20I%20want%20to%20discuss%20a%20project%20or%20hire%20you%20for%20development." target="_blank" rel="noopener noreferrer" class="btn btn-emerald btn-lg" style="box-shadow: 0 0 25px rgba(16, 185, 129, 0.4); font-weight: 800;">
+            <span>💬 Hire / Chat on WhatsApp</span>
           </a>
-          <a href="/services" class="btn btn-outline btn-lg">
-            <span>Our Services</span>
+          <a href="/products" class="btn btn-outline btn-lg">
+            <span>Explore AI Products →</span>
           </a>
         </div>
 
-        <!-- Trust Stats -->
-        <div class="hero-stats-strip">
+        <!-- Trust Stats Strip -->
+        <div class="hero-stats-strip" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;">
           <div class="hero-stat-item">
             <span class="stat-number text-gradient">2</span>
             <span class="stat-label">Flagship AI Apps</span>
           </div>
           <div class="hero-stat-item">
             <span class="stat-number text-cyan">9</span>
-            <span class="stat-label">Core Services</span>
+            <span class="stat-label">Services &lt;₹5k</span>
           </div>
           <div class="hero-stat-item">
-            <span class="stat-number text-emerald">&lt;50ms</span>
-            <span class="stat-label">Sub-Second Speed</span>
+            <span class="stat-number text-emerald">100%</span>
+            <span class="stat-label">Source Code Ownership</span>
           </div>
           <div class="hero-stat-item">
-            <span class="stat-number text-warning">100%</span>
-            <span class="stat-label">IP & Code Ownership</span>
+            <span class="stat-number text-warning">&lt;24h</span>
+            <span class="stat-label">Direct Response</span>
           </div>
         </div>
       </div>
 
-      <!-- Hero Visual / 3D Canvas Anchor -->
-      <div class="hero-visual">
-        <div class="three-canvas-container" id="three-container">
-          <canvas id="three-canvas" class="three-canvas"></canvas>
-          <div id="three-fallback" class="three-fallback" style="display: none;">
-            <div class="fallback-glow"></div>
-            <div class="fallback-avatar-graphic">
-              <div class="brand-badge-icon" style="width: 80px; height: 80px; font-size: 2rem;">⚡</div>
+      <!-- Hero Visual: Developer IDE Code Editor & Live Terminal -->
+      <div class="hero-visual" style="position: relative;">
+        <div class="glass-card" style="padding: 0; border-radius: 18px; overflow: hidden; border: 1px solid rgba(0, 240, 255, 0.35); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7); background: #070b14;">
+          <!-- IDE Window Titlebar -->
+          <div style="background: #0d1527; padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="width: 12px; height: 12px; border-radius: 50%; background: #ef4444; display: inline-block;"></span>
+              <span style="width: 12px; height: 12px; border-radius: 50%; background: #f59e0b; display: inline-block;"></span>
+              <span style="width: 12px; height: 12px; border-radius: 50%; background: #10b981; display: inline-block;"></span>
+              <span style="font-family: var(--font-mono); font-size: 0.75rem; color: #64748b; margin-left: 8px;">harshit@devcraft-studio: ~/workspace</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="font-family: var(--font-mono); font-size: 0.72rem; color: #10b981; background: rgba(16, 185, 129, 0.15); padding: 2px 8px; border-radius: 4px;">
+                git:(main) ✓
+              </span>
+            </div>
+          </div>
+
+          <!-- IDE Tabs Strip -->
+          <div style="background: #090f1e; display: flex; border-bottom: 1px solid rgba(255, 255, 255, 0.06); font-family: var(--font-mono); font-size: 0.78rem;">
+            <div style="padding: 10px 16px; background: #070b14; color: #00f0ff; border-right: 1px solid rgba(255, 255, 255, 0.06); border-top: 2px solid #00f0ff; display: flex; align-items: center; gap: 6px;">
+              <span>🎙️ JoyaVoiceCore.kt</span>
+            </div>
+            <div style="padding: 10px 16px; color: #94a3b8; border-right: 1px solid rgba(255, 255, 255, 0.06); display: flex; align-items: center; gap: 6px;">
+              <span>🤖 JarvisAgent.py</span>
+            </div>
+            <div style="padding: 10px 16px; color: #94a3b8; display: flex; align-items: center; gap: 6px;">
+              <span>⚡ FastifyRouter.ts</span>
+            </div>
+          </div>
+
+          <!-- Code Body with Syntax Highlighting -->
+          <div style="padding: 18px 20px; font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.65; overflow-x: auto; color: #e2e8f0; background: #070b14;">
+            <div><span style="color: #64748b;">01</span> <span style="color: #c084fc;">package</span> devcraft.ai.joya.core</div>
+            <div><span style="color: #64748b;">02</span> </div>
+            <div><span style="color: #64748b;">03</span> <span style="color: #64748b;">// On-Device Autonomous Voice AI Architecture</span></div>
+            <div><span style="color: #64748b;">04</span> <span style="color: #38bdf8;">class</span> <span style="color: #facc15;">JoyaVoiceCore</span>(<span style="color: #38bdf8;">private val</span> context: <span style="color: #facc15;">Context</span>) {</div>
+            <div><span style="color: #64748b;">05</span> &nbsp;&nbsp;<span style="color: #38bdf8;">val</span> wakeSentinel = <span style="color: #facc15;">Porcupine</span>.<span style="color: #34d399;">Builder</span>()</div>
+            <div><span style="color: #64748b;">06</span> &nbsp;&nbsp;&nbsp;&nbsp;.<span style="color: #60a5fa;">setKeyword</span>(<span style="color: #34d399;">"Wake up Joya"</span>)</div>
+            <div><span style="color: #64748b;">07</span> &nbsp;&nbsp;&nbsp;&nbsp;.<span style="color: #60a5fa;">setSensitivity</span>(<span style="color: #f97316;">0.85f</span>)</div>
+            <div><span style="color: #64748b;">08</span> &nbsp;&nbsp;&nbsp;&nbsp;.<span style="color: #60a5fa;">build</span>(context)</div>
+            <div><span style="color: #64748b;">09</span> </div>
+            <div><span style="color: #64748b;">10</span> &nbsp;&nbsp;<span style="color: #c084fc;">suspend fun</span> <span style="color: #60a5fa;">dispatchVoiceAction</span>(cmd: <span style="color: #facc15;">VoiceIntent</span>) {</div>
+            <div><span style="color: #64748b;">11</span> &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #c084fc;">when</span> (cmd.action) {</div>
+            <div><span style="color: #64748b;">12</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #facc15;">Action</span>.<span style="color: #38bdf8;">WHATSAPP</span> -> <span style="color: #facc15;">WhatsAppBridge</span>.<span style="color: #60a5fa;">sendDirect</span>(cmd.msg)</div>
+            <div><span style="color: #64748b;">13</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #facc15;">Action</span>.<span style="color: #38bdf8;">AI_INFERENCE</span> -> <span style="color: #facc15;">OfflineNeuralTTS</span>.<span style="color: #60a5fa;">synthesize</span>(cmd.text)</div>
+            <div><span style="color: #64748b;">14</span> &nbsp;&nbsp;&nbsp;&nbsp;}</div>
+            <div><span style="color: #64748b;">15</span> &nbsp;&nbsp;}</div>
+            <div><span style="color: #64748b;">16</span> }</div>
+          </div>
+
+          <!-- IDE Terminal Console Output Strip -->
+          <div style="background: #0a0f1d; padding: 12px 18px; border-top: 1px solid rgba(255, 255, 255, 0.08); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+            <div style="display: flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 0.75rem; color: #10b981;">
+              <span class="status-dot"></span>
+              <span>Compiled 0 errors • JVM 21 • 12ms latency</span>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <a href="/joya" class="btn btn-xs btn-primary" style="font-family: var(--font-mono); font-size: 0.72rem;">
+                Explore Joya Source →
+              </a>
+              <a href="/jarvis" class="btn btn-xs btn-outline" style="font-family: var(--font-mono); font-size: 0.72rem;">
+                Explore Jarvis Source →
+              </a>
             </div>
           </div>
         </div>
-        <div class="hero-card-floating hero-card-top-right">
+
+        <!-- Floating High-Tech Badges -->
+        <div class="hero-card-floating hero-card-top-right" style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(0, 240, 255, 0.35); box-shadow: 0 10px 30px rgba(0,0,0,0.6);">
           <div class="floating-icon">⚡</div>
           <div>
-            <strong>100% Production Ready</strong>
-            <small>Zero placeholder code</small>
+            <strong style="color: var(--cyan);">100% Production Code</strong>
+            <small style="color: var(--text-muted);">Real architecture, zero mockups</small>
           </div>
         </div>
-        <div class="hero-card-floating hero-card-bottom-left">
+        <div class="hero-card-floating hero-card-bottom-left" style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(168, 85, 247, 0.35); box-shadow: 0 10px 30px rgba(0,0,0,0.6);">
           <div class="floating-icon">🛡️</div>
           <div>
-            <strong>Enterprise Security</strong>
-            <small>OWASP compliant architectures</small>
+            <strong style="color: #c084fc;">Full Source Handover</strong>
+            <small style="color: var(--text-muted);">Commercial IP &amp; Git Repository</small>
           </div>
         </div>
       </div>
