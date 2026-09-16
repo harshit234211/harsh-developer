@@ -1,7 +1,7 @@
 /**
  * DEVCRAFT STUDIO — Theme Controller (devcraft-theme.js)
- * Supports: 'devcraft-light' (Light), 'devcraft-dark' (Dark), and 'system' (Auto OS)
- * Persistent via localStorage with zero flash of incorrect theme (FOUC).
+ * Supports: 'system' (Auto OS - Dark/Light), 'devcraft-dark' (Dark), 'devcraft-light' (Light)
+ * Defaults to 'system' (matches OS theme automatically with zero FOUC).
  */
 (function () {
   'use strict';
@@ -9,28 +9,33 @@
   var STORAGE_KEY = 'devcraft_theme';
 
   function getSystemPreference() {
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-      return 'devcraft-light';
-    }
-    return 'devcraft-dark';
+    try {
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return 'devcraft-dark';
+      }
+    } catch (_) {}
+    return 'devcraft-light';
   }
 
   function getSavedTheme() {
     try {
-      return localStorage.getItem(STORAGE_KEY) || 'devcraft-dark';
+      return localStorage.getItem(STORAGE_KEY) || 'system';
     } catch (_) {
-      return 'devcraft-dark';
+      return 'system';
     }
   }
 
   function resolveTheme(preference) {
-    if (preference === 'system') {
+    if (!preference || preference === 'system') {
       return getSystemPreference();
     }
     if (preference === 'light' || preference === 'devcraft-light') {
       return 'devcraft-light';
     }
-    return 'devcraft-dark';
+    if (preference === 'dark' || preference === 'devcraft-dark') {
+      return 'devcraft-dark';
+    }
+    return getSystemPreference();
   }
 
   function applyTheme(preference) {
@@ -43,10 +48,10 @@
       document.body.setAttribute('data-theme', effectiveTheme);
     }
 
-    // Update any UI toggle buttons
+    // Update UI toggle buttons
     updateToggleButtons(preference, effectiveTheme);
 
-    // Dispatch event for any interactive components (charts, 3D canvases, etc.)
+    // Dispatch event for any interactive components (canvases, charts)
     try {
       window.dispatchEvent(new CustomEvent('devcraft:theme-change', {
         detail: { preference: preference, effectiveTheme: effectiveTheme }
@@ -58,16 +63,21 @@
     var buttons = document.querySelectorAll('.devcraft-theme-toggle');
     buttons.forEach(function (btn) {
       var isDark = effectiveTheme === 'devcraft-dark';
-      btn.setAttribute('aria-label', isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode');
-      btn.setAttribute('title', isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode');
-      
+      var isSystem = preference === 'system';
+      var titleText = isSystem
+        ? 'Theme: Auto (System ' + (isDark ? 'Dark' : 'Light') + ') - Click to switch'
+        : (isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode');
+
+      btn.setAttribute('aria-label', titleText);
+      btn.setAttribute('title', titleText);
+
       var icon = btn.querySelector('.theme-toggle-icon');
       if (icon) {
         if (isDark) {
-          // Render Sun icon
+          // Render Sun icon to switch to light
           icon.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
         } else {
-          // Render Moon icon
+          // Render Moon icon to switch to dark
           icon.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>';
         }
       }
@@ -76,7 +86,11 @@
 
   function setTheme(preference) {
     try {
-      localStorage.setItem(STORAGE_KEY, preference);
+      if (preference === 'system') {
+        localStorage.removeItem(STORAGE_KEY);
+      } else {
+        localStorage.setItem(STORAGE_KEY, preference);
+      }
     } catch (_) {}
     applyTheme(preference);
   }
@@ -88,20 +102,26 @@
     setTheme(nextTheme);
   }
 
-  // Initial early execution
+  // Immediate early execution in <head> before page paints
   var initialPref = getSavedTheme();
   applyTheme(initialPref);
 
-  // Listen for system theme changes if set to 'system'
+  // Dynamic listener for OS theme preference changes
   if (window.matchMedia) {
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () {
+    var mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    var handler = function () {
       if (getSavedTheme() === 'system') {
         applyTheme('system');
       }
-    });
+    };
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener('change', handler);
+    } else if (mediaQuery.addListener) {
+      mediaQuery.addListener(handler);
+    }
   }
 
-  // Re-sync on DOM ready to bind buttons and body attributes
+  // Sync on DOM ready to bind buttons
   document.addEventListener('DOMContentLoaded', function () {
     applyTheme(getSavedTheme());
 
