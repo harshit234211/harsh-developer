@@ -184,11 +184,9 @@ function renderFlagshipsSection() {
               <span style="font-size: 0.78rem; color: #10b981; font-weight: 600;">Full Source Code Included</span>
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-              <button class="btn btn-emerald btn-sm" onclick="devcraftShop.openCheckoutModal('joya-ai')" style="justify-content: center;">⚡ Buy Now (₹999)</button>
-              <a href="https://api.whatsapp.com/send?phone=918630976928&text=Hello%20DevCraft%20%F0%9F%91%8B%20I%20want%20to%20buy%20Joya%20AI%20Voice%20Assistant%20(%E2%82%B9999)%20Full%20Source%20Code." target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm" style="justify-content: center;">💬 WhatsApp Buy</a>
-              <button class="btn btn-outline btn-sm" onclick="devcraftShop.addToCart('joya-ai')" style="justify-content: center;">+ Cart 🛒</button>
-              <a href="/joya" class="btn btn-ghost btn-sm" style="justify-content: center;">View Details →</a>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <a href="https://api.whatsapp.com/send?phone=918630976928&text=Hello%20DevCraft%20%F0%9F%91%8B%20I%20want%20to%20buy%20Joya%20AI%20Voice%20Assistant%20(%E2%82%B9999)%20Full%20Source%20Code." target="_blank" rel="noopener noreferrer" class="btn btn-emerald btn-sm" style="justify-content: center; font-weight: 700; text-decoration: none;">💬 Buy on WhatsApp (₹999)</a>
+              <a href="/joya" class="btn btn-outline btn-sm" style="justify-content: center; text-decoration: none;">View Details →</a>
             </div>
           </div>
         </div>
@@ -244,11 +242,9 @@ function renderFlagshipsSection() {
               <span style="font-size: 0.78rem; color: #10b981; font-weight: 600;">Full Source Code Included</span>
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-              <button class="btn btn-emerald btn-sm" onclick="devcraftShop.openCheckoutModal('jarvis-ai')" style="justify-content: center;">⚡ Buy Now (₹1,599)</button>
-              <a href="https://api.whatsapp.com/send?phone=918630976928&text=Hello%20DevCraft%20%F0%9F%91%8B%20I%20want%20to%20buy%20Jarvis%20AI%20PC%20Assistant%20(%E2%82%B91,599)%20Full%20Source%20Code." target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm" style="justify-content: center;">💬 WhatsApp Buy</a>
-              <button class="btn btn-outline btn-sm" onclick="devcraftShop.addToCart('jarvis-ai')" style="justify-content: center;">+ Cart 🛒</button>
-              <a href="/jarvis" class="btn btn-ghost btn-sm" style="justify-content: center;">View Details →</a>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <a href="https://api.whatsapp.com/send?phone=918630976928&text=Hello%20DevCraft%20%F0%9F%91%8B%20I%20want%20to%20buy%20Jarvis%20AI%20PC%20Assistant%20(%E2%82%B91,599)%20Full%20Source%20Code." target="_blank" rel="noopener noreferrer" class="btn btn-emerald btn-sm" style="justify-content: center; font-weight: 700; text-decoration: none;">💬 Buy on WhatsApp (₹1,599)</a>
+              <a href="/jarvis" class="btn btn-outline btn-sm" style="justify-content: center; text-decoration: none;">View Details →</a>
             </div>
           </div>
       </div>
@@ -365,16 +361,13 @@ function renderAptitudeSection() {
                 </div>
               </div>
 
-              <!-- Requirement 5 & 9: Actions with Share -->
-              <div class="card-shop-actions">
+              <!-- WhatsApp Enrollment Action -->
+              <div class="card-shop-actions" style="display: flex; gap: 8px;">
+                <a href="https://api.whatsapp.com/send?phone=918630976928&text=${encodeURIComponent('Hello DevCraft 👋 I want to enroll in ' + item.name + ' (₹' + item.finalPrice.toLocaleString('en-IN') + ')')}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-xs btn-buy" style="background: linear-gradient(135deg, #a855f7, #00f0ff); border: none; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; flex: 1;">
+                  💬 Enroll on WhatsApp (₹${item.finalPrice.toLocaleString('en-IN')})
+                </a>
                 <button class="btn btn-outline btn-xs" onclick="devcraftShop.openProductModal('${item.id}')">
-                  View Syllabus
-                </button>
-                <button class="btn btn-primary btn-xs btn-buy" style="background: linear-gradient(135deg, #a855f7, #00f0ff); border: none;" onclick="devcraftShop.openCheckoutModal('${item.id}')">
-                  ⚡ Enroll (₹${item.finalPrice.toLocaleString('en-IN')}) →
-                </button>
-                <button type="button" class="btn-share-icon" title="Share Course" onclick="devcraftShop.openShareModal('${item.id}')">
-                  🔗 Share
+                  Syllabus
                 </button>
               </div>
             </div>
@@ -1796,24 +1789,13 @@ function buildProductsPage() {
           </div>
         </div>
 
-        <div class="product-card-btn-grid">
-          ${p.fileDetails && p.fileDetails.hasDownload ? `
-          <button type="button" class="btn btn-primary btn-sm" onclick="devcraftShop.downloadProduct('${p.id}')" title="Direct download verified package">
-            ⬇️ Download
-          </button>
-          ` : ''}
-          <button type="button" class="btn btn-emerald btn-sm" onclick="devcraftShop.openCheckoutModal('${p.id}')">
-            ⚡ Buy Now
-          </button>
-          <button type="button" class="btn btn-outline btn-sm" onclick="devcraftShop.addToCart('${p.id}')">
-            + Cart 🛒
-          </button>
-          <a href="${detailsLink}" class="btn btn-ghost btn-sm">
-            View Page →
+        <div class="product-card-btn-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+          <a href="https://api.whatsapp.com/send?phone=918630976928&text=${encodeURIComponent('Hello DevCraft 👋 I want to buy ' + p.name + ' (₹' + finalPrice.toLocaleString('en-IN') + ') Full Source Code.')}" target="_blank" rel="noopener noreferrer" class="btn btn-emerald btn-sm" style="justify-content: center; font-weight: 700; text-decoration: none;">
+            💬 WhatsApp Buy
           </a>
-          <button type="button" class="btn btn-ghost btn-sm" onclick="devcraftShop.openShareModal('${p.id}')" title="Share with friends">
-            🔗
-          </button>
+          <a href="${detailsLink}" class="btn btn-outline btn-sm" style="justify-content: center; text-decoration: none;">
+            View Details →
+          </a>
         </div>
       </div>
     </div>
@@ -1986,18 +1968,9 @@ function buildJoyaPage() {
             </div>
 
             <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-              <button class="btn btn-emerald" onclick="devcraftShop.openCheckoutModal('joya-ai')">
-                Buy Full Source Code (₹999) ⚡
-              </button>
-              <a href="https://api.whatsapp.com/send?phone=918630976928&text=Hello%20DevCraft%20%F0%9F%91%8B%20I%20want%20to%20buy%20Joya%20AI%20Voice%20Assistant%20(%E2%82%B9999)%20Full%20Source%20Code." target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 6px;">
-                💬 Buy via WhatsApp (₹999)
+              <a href="https://api.whatsapp.com/send?phone=918630976928&text=Hello%20DevCraft%20%F0%9F%91%8B%20I%20want%20to%20buy%20Joya%20AI%20Voice%20Assistant%20(%E2%82%B9999)%20Full%20Source%20Code." target="_blank" rel="noopener noreferrer" class="btn btn-emerald btn-lg" style="display: inline-flex; align-items: center; gap: 8px; font-weight: 800; padding: 14px 28px; text-decoration: none;">
+                💬 Buy Full Source Code on WhatsApp (₹999) ⚡
               </a>
-              <button class="btn btn-outline" onclick="devcraftShop.addToCart('joya-ai')">
-                + Cart 🛒
-              </button>
-              <button class="btn btn-ghost" onclick="devcraftShop.openShareModal('joya-ai')">
-                🔗 Share
-              </button>
             </div>
           </div>
         </div>
@@ -2215,18 +2188,9 @@ function buildJarvisPage() {
             </div>
 
             <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-              <button class="btn btn-emerald" onclick="devcraftShop.openCheckoutModal('jarvis-ai')">
-                Buy Full Source Code (₹1,599) ⚡
-              </button>
-              <a href="https://api.whatsapp.com/send?phone=918630976928&text=Hello%20DevCraft%20%F0%9F%91%8B%20I%20want%20to%20buy%20Jarvis%20AI%20PC%20Assistant%20(%E2%82%B91,599)%20Full%20Source%20Code." target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 6px;">
-                💬 Buy via WhatsApp (₹1,599)
+              <a href="https://api.whatsapp.com/send?phone=918630976928&text=Hello%20DevCraft%20%F0%9F%91%8B%20I%20want%20to%20buy%20Jarvis%20AI%20PC%20Assistant%20(%E2%82%B91,599)%20Full%20Source%20Code." target="_blank" rel="noopener noreferrer" class="btn btn-emerald btn-lg" style="display: inline-flex; align-items: center; gap: 8px; font-weight: 800; padding: 14px 28px; text-decoration: none;">
+                💬 Buy Full Source Code on WhatsApp (₹1,599) ⚡
               </a>
-              <button class="btn btn-outline" onclick="devcraftShop.addToCart('jarvis-ai')">
-                + Cart 🛒
-              </button>
-              <button class="btn btn-ghost" onclick="devcraftShop.openShareModal('jarvis-ai')">
-                🔗 Share
-              </button>
             </div>
           </div>
         </div>
@@ -2417,16 +2381,10 @@ function buildAptitudePage() {
                 </div>
               </div>
 
-              <div class="product-card-btn-grid">
-                <button type="button" class="btn btn-emerald btn-sm" onclick="devcraftShop.openCheckoutModal('${p.id}')">
-                  Enroll Now 🎓
-                </button>
-                <button type="button" class="btn btn-outline btn-sm" onclick="devcraftShop.addToCart('${p.id}')">
-                  + Cart 🛒
-                </button>
-                <button type="button" class="btn btn-ghost btn-sm" onclick="devcraftShop.openShareModal('${p.id}')">
-                  🔗 Share
-                </button>
+              <div class="product-card-btn-grid" style="display: grid; grid-template-columns: 1fr; gap: 8px;">
+                <a href="https://api.whatsapp.com/send?phone=918630976928&text=${encodeURIComponent('Hello DevCraft 👋 I want to enroll in ' + p.name + ' (₹' + finalPrice.toLocaleString('en-IN') + ')')}" target="_blank" rel="noopener noreferrer" class="btn btn-emerald btn-sm" style="justify-content: center; font-weight: 700; text-decoration: none;">
+                  💬 Enroll on WhatsApp (₹${finalPrice.toLocaleString('en-IN')})
+                </a>
               </div>
             </div>
           </div>
