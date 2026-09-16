@@ -110,7 +110,8 @@ window.devcraftShop = (function() {
       </div>
     `;
 
-    modal.classList.add('active');
+    modal.style.display = 'flex';
+    setTimeout(() => { modal.classList.add('active'); }, 10);
   }
 
   // ==========================================
@@ -204,7 +205,8 @@ window.devcraftShop = (function() {
       </div>
     `;
 
-    modal.classList.add('active');
+    modal.style.display = 'flex';
+    setTimeout(() => { modal.classList.add('active'); }, 10);
   }
 
   function copyShareLink(url, productId) {
@@ -283,7 +285,8 @@ window.devcraftShop = (function() {
     }
 
     renderCheckoutUI(p, clientName, clientEmail, clientPhone);
-    modal.classList.add('active');
+    modal.style.display = 'flex';
+    setTimeout(() => { modal.classList.add('active'); }, 10);
 
     // Fetch authoritative initial calculation
     await recalculateOrderPrice('');
@@ -1439,6 +1442,13 @@ window.devcraftShop = (function() {
     if (document.getElementById('cart-items-container')) {
       renderCartPage();
     }
+
+    // Modal backdrop click handler
+    document.addEventListener('click', (e) => {
+      if (e.target && e.target.classList && e.target.classList.contains('devcraft-modal')) {
+        hideModal(e.target.id);
+      }
+    });
   });
 
   function hideModal(modalId) {
@@ -1450,8 +1460,10 @@ window.devcraftShop = (function() {
         if (upiCountdownTimer) clearInterval(upiCountdownTimer);
       }
       setTimeout(() => {
-        modal.style.display = 'none';
-      }, 200);
+        if (!modal.classList.contains('active')) {
+          modal.style.display = 'none';
+        }
+      }, 220);
     }
   }
 

@@ -1949,15 +1949,17 @@ textarea.form-control {
   height: 100vh;
   background: rgba(3, 6, 12, 0.85);
   backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   z-index: 9999;
   display: none;
   align-items: center;
   justify-content: center;
   padding: 20px;
+  box-sizing: border-box;
 }
 
 .devcraft-modal.active {
-  display: flex;
+  display: flex !important;
 }
 
 .devcraft-modal-dialog {
