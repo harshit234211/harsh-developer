@@ -1,4 +1,4 @@
-﻿const servicesSectionContent = (fullPage = false) => `
+const servicesSectionContent = (fullPage = false) => `
   <section class="section" id="services">
     <div class="container">
       <div class="section-header">
@@ -238,7 +238,7 @@ const aboutSectionContent = () => `
           <div style="margin-top: 30px; text-align: left; border-top: 1px solid var(--border-glass); padding-top: 20px;">
             <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px;">Direct Developer Contacts:</div>
             <div style="font-size: 0.92rem; margin-bottom: 6px;">📧 shakyaharshit683@gmail.com</div>
-            <div style="font-size: 0.92rem; margin-bottom: 6px;">💬 WhatsApp: +91 8791984082</div>
+            <div style="font-size: 0.92rem; margin-bottom: 6px;">💬 WhatsApp: +91 8630976928</div>
             <div style="font-size: 0.92rem;">📞 Call: +91 7017022966</div>
           </div>
         </div>
@@ -332,11 +332,11 @@ const contactSectionContent = () => `
           </p>
 
           <div class="contact-channel-list">
-            <a href="https://wa.me/918791984082?text=Hi%20Harshit,%20I'd%20like%20to%20hire%20you%20for%20a%20project." target="_blank" rel="noopener noreferrer" class="contact-channel-item">
+            <a href="https://wa.me/918630976928?text=Hi%20Harshit,%20I'd%20like%20to%20hire%20you%20for%20a%20project." target="_blank" rel="noopener noreferrer" class="contact-channel-item">
               <div class="contact-channel-icon icon-wa">WA</div>
               <div class="contact-channel-text">
                 <span class="contact-channel-title">WhatsApp</span>
-                <span class="contact-channel-val">+91 8791984082</span>
+                <span class="contact-channel-val">+91 8630976928</span>
               </div>
             </a>
 

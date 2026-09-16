@@ -18,7 +18,7 @@ services:
       - key: DEVELOPER_EMAIL
         value: shakyaharshit683@gmail.com
       - key: DEVELOPER_WHATSAPP
-        value: "+918791984082"
+        value: "+918630976928"
       - key: DEVELOPER_PHONE
         value: "+917017022966"
       - key: DEVELOPER_INSTAGRAM

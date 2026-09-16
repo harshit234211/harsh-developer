@@ -28,65 +28,57 @@ function renderHeroSection() {
     <div class="container hero-grid">
       <div class="hero-content">
         <div class="hero-badge">
-          <span class="status-pill-online"><span class="status-dot"></span> Available for Q3/Q4 Production Sprints</span>
+          <span class="status-pill-online"><span class="status-dot"></span> Available for Production Sprints</span>
         </div>
 
-        <div class="hero-tagline-lead">DEVCRAFT STUDIO • IDEAS → CODE → REAL SOLUTIONS</div>
+        <div class="hero-tagline-lead">DEVCRAFT • IDEAS → CODE → REAL SOLUTIONS</div>
         <h1 class="hero-headline">
-          Turn Your Ideas Into <span class="text-gradient">Real Software.</span>
+          DevCraft
         </h1>
-
-        <!-- Visual Workflow: Idea → Design → Code → Product → Launch -->
-        <div class="hero-workflow-stepper">
-          <span class="step-item"><span class="step-num">1</span> Idea</span>
-          <span class="step-arrow">→</span>
-          <span class="step-item"><span class="step-num">2</span> Design</span>
-          <span class="step-arrow">→</span>
-          <span class="step-item"><span class="step-num">3</span> Code</span>
-          <span class="step-arrow">→</span>
-          <span class="step-item"><span class="step-num">4</span> Product</span>
-          <span class="step-arrow">→</span>
-          <span class="step-item"><span class="step-num">5</span> Launch</span>
-        </div>
+        <p class="hero-subheadline text-gradient" style="font-size: 1.6rem; font-weight: 700; margin-bottom: 16px;">
+          Ideas → Code → Real Solutions
+        </p>
 
         <p class="hero-bio">
-          DevCraft is a high-performance software engineering studio. We architect and ship full-stack web platforms, native mobile applications, intelligent AI workflows, and mission-critical cloud infrastructure for ambitious founders and growing enterprises.
+          We build powerful AI tools, mobile apps, desktop software and custom solutions to help you work smarter, faster and grow.
         </p>
 
         <!-- Service Offering Pills -->
         <div class="hero-offerings-pills">
-          <span class="pill-tag">📱 Android & iOS Apps</span>
-          <span class="pill-tag">⚡ Full-Stack Web Apps</span>
-          <span class="pill-tag">🤖 AI Agents & Workflows</span>
-          <span class="pill-tag">🛍️ Custom E-Commerce</span>
-          <span class="pill-tag">📊 Enterprise Dashboards</span>
-          <span class="pill-tag">☁️ Cloud DevOps & APIs</span>
-          <span class="pill-tag">🎓 Aptitude & Placement Hub</span>
+          <span class="pill-tag">📱 Android Apps</span>
+          <span class="pill-tag">🌐 Websites</span>
+          <span class="pill-tag">⚡ Web Apps</span>
+          <span class="pill-tag">💻 Custom Software</span>
+          <span class="pill-tag">🤖 AI Solutions</span>
+          <span class="pill-tag">⚙️ Automation</span>
+          <span class="pill-tag">🔗 API Integration</span>
+          <span class="pill-tag">🎨 UI/UX</span>
         </div>
 
         <!-- Primary CTAs -->
         <div class="hero-cta-group">
-          <a href="/products" class="btn btn-primary">
-            <span>Explore Products (50% OFF)</span>
+          <a href="/products" class="btn btn-primary btn-lg">
+            <span>Explore Products</span>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
           </a>
-          <a href="/contact" class="btn btn-emerald">Build My App</a>
-          <a href="/portfolio" class="btn btn-outline">View Portfolio &amp; Demos</a>
+          <a href="/services" class="btn btn-outline btn-lg">
+            <span>Our Services</span>
+          </a>
         </div>
 
         <!-- Trust Stats -->
         <div class="hero-stats-strip">
           <div class="hero-stat-item">
-            <span class="stat-number text-gradient">20</span>
-            <span class="stat-label">Full-Stack Services</span>
+            <span class="stat-number text-gradient">2</span>
+            <span class="stat-label">Flagship AI Apps</span>
           </div>
           <div class="hero-stat-item">
-            <span class="stat-number text-cyan">10</span>
-            <span class="stat-label">Interactive Demos</span>
+            <span class="stat-number text-cyan">9</span>
+            <span class="stat-label">Core Services</span>
           </div>
           <div class="hero-stat-item">
             <span class="stat-number text-emerald">&lt;50ms</span>
-            <span class="stat-label">Avg API Latency</span>
+            <span class="stat-label">Sub-Second Speed</span>
           </div>
           <div class="hero-stat-item">
             <span class="stat-number text-warning">100%</span>
@@ -129,26 +121,27 @@ function renderHeroSection() {
 // Section 2.5: Flagship Autonomous AI Agents (Joya AI & Jarvis AI)
 function renderFlagshipsSection() {
   return `
-  <section class="section" id="flagships" style="background: rgba(11, 17, 32, 0.4); border-top: 1px solid var(--border-glass); border-bottom: 1px solid var(--border-glass);">
+  <section class="section" id="products" style="background: rgba(11, 17, 32, 0.4); border-top: 1px solid var(--border-glass); border-bottom: 1px solid var(--border-glass);">
     <div class="container">
       <div class="section-header text-center" style="margin-bottom: 40px;">
-        <div class="section-badge" style="background: rgba(168, 85, 247, 0.15); border-color: rgba(168, 85, 247, 0.3); color: #d8b4fe;">Flagship Autonomous AI Agents</div>
-        <h2 class="section-title">Autonomous AI Systems Built by <span class="text-gradient">DevCraft</span></h2>
-        <p class="section-desc">Production-ready voice and desktop AI software. On-device offline acoustic processing, custom wake words, desktop automation, and direct installer packages.</p>
+        <div class="section-badge" style="background: rgba(168, 85, 247, 0.15); border-color: rgba(168, 85, 247, 0.3); color: #d8b4fe;">Digital Products</div>
+        <h2 class="section-title">Flagship <span class="text-gradient">AI Software</span></h2>
+        <p class="section-desc">Production-ready voice and desktop AI software. Verified full source code included with instant commercial download access.</p>
       </div>
 
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 28px;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 28px;">
         <!-- Card 1: Joya AI -->
         <div class="glass-card" style="padding: 30px; border-radius: 20px; border: 1px solid rgba(168, 85, 247, 0.3); display: flex; flex-direction: column; justify-content: space-between;">
           <div>
             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
-              <span class="flagship-hero-badge">🎙️ Android Native • Full Source Code Included</span>
+              <span class="flagship-hero-badge">🎙️ Android Native • Full Source Code</span>
               <span class="pill-tag" style="background: rgba(16, 185, 129, 0.15); color: #10b981; font-weight: 700;">50% OFF</span>
             </div>
 
-            <h3 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 8px;">Joya AI — Full Source Code</h3>
+            <h3 style="font-size: 1.6rem; font-weight: 800; margin-bottom: 4px;">Joya AI</h3>
+            <div style="color: var(--cyan); font-weight: 700; font-size: 0.95rem; margin-bottom: 12px;">Wake up Joya</div>
             <p style="color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; margin-bottom: 16px;">
-              Autonomous on-device voice assistant for Android with custom wake word <strong>"Wake up Joya"</strong>. Hands-free WhatsApp messaging, calls, alarms, and offline speech recognition. Customer gets the complete Joya Android source code after successful purchase.
+              Autonomous on-device voice assistant for Android with custom wake word <strong>"Wake up Joya"</strong>. Hands-free WhatsApp messaging, calls, alarms, and offline speech recognition. Full Kotlin source code included.
             </p>
 
             <!-- Interactive Voice Waveform Simulator -->
@@ -174,7 +167,7 @@ function renderFlagshipsSection() {
             </div>
 
             <ul class="product-features-list" style="margin-top: 18px;">
-              <li><span class="check-icon">✓</span> Complete Android Studio Kotlin project source code</li>
+              <li><span class="check-icon">✓</span> Complete Android Studio Kotlin project source code (.ZIP)</li>
               <li><span class="check-icon">✓</span> Responsive wake word detection ("Wake up Joya")</li>
               <li><span class="check-icon">✓</span> WhatsApp &amp; Phone Dialer hands-free automation</li>
               <li><span class="check-icon">✓</span> 100% On-device privacy &amp; offline voice synthesis</li>
@@ -184,21 +177,18 @@ function renderFlagshipsSection() {
           <div style="margin-top: 24px; border-top: 1px solid var(--border-glass); padding-top: 18px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
               <div>
-                <del style="color: var(--text-muted); font-size: 0.9rem;">₹1,999</del>
-                <span style="color: #10b981; font-size: 0.8rem; font-weight: 700; margin-left: 6px;">50% OFF</span>
-                <div style="font-size: 1.4rem; font-weight: 800; color: var(--cyan);">₹999</div>
+                <del style="color: var(--text-muted); font-size: 0.95rem;">₹1,999</del>
+                <span style="color: #10b981; font-size: 0.82rem; font-weight: 700; margin-left: 6px;">50% OFF</span>
+                <div style="font-size: 1.5rem; font-weight: 800; color: var(--cyan);">₹999</div>
               </div>
               <span style="font-size: 0.78rem; color: #10b981; font-weight: 600;">Full Source Code Included</span>
             </div>
 
-            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-              <button class="btn btn-emerald btn-sm" onclick="devcraftShop.openCheckoutModal('joya-ai')">
-                Buy Source Code (₹999) ⚡
-              </button>
-              <button class="btn btn-outline btn-sm" onclick="devcraftShop.addToCart('joya-ai')">
-                + Cart 🛒
-              </button>
-              <a href="/joya" class="btn btn-ghost btn-sm">Full Specs →</a>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+              <a href="/joya" class="btn btn-ghost btn-sm" style="justify-content: center;">View Details</a>
+              <button class="btn btn-outline btn-sm" onclick="devcraftShop.addToCart('joya-ai')">Add to Cart 🛒</button>
+              <button class="btn btn-emerald btn-sm" onclick="devcraftShop.openCheckoutModal('joya-ai')">Buy Now (₹999) ⚡</button>
+              <button class="btn btn-outline btn-sm" onclick="devcraftShop.openShareModal('joya-ai')">Share 🔗</button>
             </div>
           </div>
         </div>
@@ -207,13 +197,14 @@ function renderFlagshipsSection() {
         <div class="glass-card" style="padding: 30px; border-radius: 20px; border: 1px solid rgba(59, 130, 246, 0.3); display: flex; flex-direction: column; justify-content: space-between;">
           <div>
             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
-              <span class="flagship-hero-badge" style="background: rgba(59, 130, 246, 0.15); color: #93c5fd; border-color: rgba(59, 130, 246, 0.4);">💻 PC Desktop • Full Source Code Included</span>
+              <span class="flagship-hero-badge" style="background: rgba(59, 130, 246, 0.15); color: #93c5fd; border-color: rgba(59, 130, 246, 0.4);">💻 PC Desktop • Full Source Code</span>
               <span class="pill-tag" style="background: rgba(0, 240, 255, 0.15); color: var(--cyan); font-weight: 700;">50% OFF</span>
             </div>
 
-            <h3 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 8px;">Jarvis AI — Full Source Code</h3>
+            <h3 style="font-size: 1.6rem; font-weight: 800; margin-bottom: 4px;">Jarvis AI</h3>
+            <div style="color: var(--cyan); font-weight: 700; font-size: 0.95rem; margin-bottom: 12px;">Your PC Voice Assistant</div>
             <p style="color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; margin-bottom: 16px;">
-              Autonomous desktop assistant for PC (Windows/Mac/Linux). Executes terminal scripts, automates web browser workflows, indexes workspace files, and connects to local LLMs (Ollama). Customer gets the complete Jarvis PC source code after successful purchase.
+              Autonomous desktop assistant for PC (Windows/Mac/Linux). Executes terminal scripts, automates web browser workflows, indexes workspace files, and connects to local LLMs (Ollama). Full source code included.
             </p>
 
             <!-- Interactive Terminal Sandbox Mockup -->
@@ -236,7 +227,7 @@ function renderFlagshipsSection() {
             </div>
 
             <ul class="product-features-list" style="margin-top: 18px;">
-              <li><span class="check-icon">✓</span> Complete PC Desktop project source code (Electron + Python)</li>
+              <li><span class="check-icon">✓</span> Complete PC Desktop project source code (.ZIP: Electron + Python)</li>
               <li><span class="check-icon">✓</span> Voice &amp; Hotkey (Ctrl+Space) desktop command center</li>
               <li><span class="check-icon">✓</span> Local LLM bridge (Ollama / Llama-3) &amp; script executor</li>
               <li><span class="check-icon">✓</span> Automated web scraper and file organization sentinel</li>
@@ -246,102 +237,153 @@ function renderFlagshipsSection() {
           <div style="margin-top: 24px; border-top: 1px solid var(--border-glass); padding-top: 18px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
               <div>
-                <del style="color: var(--text-muted); font-size: 0.9rem;">₹3,199</del>
-                <span style="color: #10b981; font-size: 0.8rem; font-weight: 700; margin-left: 6px;">50% OFF</span>
-                <div style="font-size: 1.4rem; font-weight: 800; color: var(--cyan);">₹1,599</div>
+                <del style="color: var(--text-muted); font-size: 0.95rem;">₹3,199</del>
+                <span style="color: #10b981; font-size: 0.82rem; font-weight: 700; margin-left: 6px;">50% OFF</span>
+                <div style="font-size: 1.5rem; font-weight: 800; color: var(--cyan);">₹1,599</div>
               </div>
               <span style="font-size: 0.78rem; color: #10b981; font-weight: 600;">Full Source Code Included</span>
             </div>
 
-            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-              <button class="btn btn-emerald btn-sm" onclick="devcraftShop.openCheckoutModal('jarvis-ai')">
-                Buy Source Code (₹1,599) ⚡
-              </button>
-              <button class="btn btn-outline btn-sm" onclick="devcraftShop.addToCart('jarvis-ai')">
-                + Cart 🛒
-              </button>
-              <a href="/jarvis" class="btn btn-ghost btn-sm">Full Specs →</a>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+              <a href="/jarvis" class="btn btn-ghost btn-sm" style="justify-content: center;">View Details</a>
+              <button class="btn btn-outline btn-sm" onclick="devcraftShop.addToCart('jarvis-ai')">Add to Cart 🛒</button>
+              <button class="btn btn-emerald btn-sm" onclick="devcraftShop.openCheckoutModal('jarvis-ai')">Buy Now (₹1,599) ⚡</button>
+              <button class="btn btn-outline btn-sm" onclick="devcraftShop.openShareModal('jarvis-ai')">Share 🔗</button>
             </div>
           </div>
-        </div>
       </div>
     </div>
   </section>
   `;
 }
 
-// Section 3: Services Showcase (All 20 Services with Dynamic 50% Discount)
+// Section 3: Services Showcase
 function renderServicesSection() {
-  const categories = ['All', 'Mobile Apps', 'Web Apps', 'Websites', 'AI & ML', 'Dashboards', 'Custom Software', 'Automation'];
+  const coreServices = [
+    {
+      id: 'android-app',
+      name: 'Android Apps',
+      icon: '📱',
+      badge: 'Native & Cross-Platform',
+      shortDesc: 'High-performance Android applications built with modern Kotlin, Jetpack Compose, and offline-first database architectures.',
+      tags: ['Kotlin', 'Android Studio', 'Compose', 'Room DB'],
+      link: '/android-development'
+    },
+    {
+      id: 'website-dev',
+      name: 'Websites',
+      icon: '🌐',
+      badge: 'Ultra-Fast & SEO',
+      shortDesc: 'Modern, high-converting business websites engineered with Next.js, 100/100 Google Lighthouse speed, and responsive design.',
+      tags: ['Next.js', 'React', 'TailwindCSS', 'SEO'],
+      link: '/web-development'
+    },
+    {
+      id: 'web-app',
+      name: 'Web Apps',
+      icon: '⚡',
+      badge: 'Cloud Scale & Dynamic',
+      shortDesc: 'Complex single-page applications, custom SaaS platforms, and client portals with reactive state and instant data rendering.',
+      tags: ['React', 'Node.js', 'PostgreSQL', 'WebSockets'],
+      link: '/web-development'
+    },
+    {
+      id: 'custom-software',
+      name: 'Custom Software',
+      icon: '💻',
+      badge: 'Tailored Architecture',
+      shortDesc: 'Bespoke desktop applications, backend engines, and enterprise workflow tools designed specifically for your business operations.',
+      tags: ['Electron', 'Python', 'Node.js', 'SQLite'],
+      link: '/software-development'
+    },
+    {
+      id: 'ai-solutions',
+      name: 'AI Solutions',
+      icon: '🤖',
+      badge: 'Autonomous & LLMs',
+      shortDesc: 'Custom AI agents, LLM integrations (OpenAI / Claude / local Ollama), voice assistants, and intelligent automated workflows.',
+      tags: ['LLMs', 'LangChain', 'Python', 'Vector DB'],
+      link: '/ai-solutions'
+    },
+    {
+      id: 'automation',
+      name: 'Automation',
+      icon: '⚙️',
+      badge: 'Streamlined Pipelines',
+      shortDesc: 'Automated data scraping, scheduled task execution, CRM/ERP bots, and background integrations that save hundreds of manual hours.',
+      tags: ['Puppeteer', 'BullMQ', 'REST APIs', 'Cron'],
+      link: '/automation'
+    },
+    {
+      id: 'api-integration',
+      name: 'API Integration',
+      icon: '🔗',
+      badge: 'Secure & Scalable',
+      shortDesc: 'Seamless payment gateways (UPI / Stripe), third-party webhooks, authentication systems, and cloud microservices integration.',
+      tags: ['UPI', 'Stripe', 'OAuth2', 'Webhooks'],
+      link: '/api-integration'
+    },
+    {
+      id: 'ui-ux',
+      name: 'UI/UX Development',
+      icon: '🎨',
+      badge: 'Modern Aesthetic',
+      shortDesc: 'Cinematic dark-mode interfaces, interactive components, responsive prototypes, and pixel-perfect design systems.',
+      tags: ['Figma', 'CSS3', 'Micro-interactions', 'Design Systems'],
+      link: '/ui-ux'
+    },
+    {
+      id: 'maintenance',
+      name: 'Maintenance / Support',
+      icon: '🛡️',
+      badge: '24/7 Reliability',
+      shortDesc: 'Ongoing server health monitoring, regular security patches, bug fixes, database backups, and dedicated SLA technical support.',
+      tags: ['DevOps', 'Docker', 'Cloud Hosting', 'SSL'],
+      link: '/maintenance'
+    }
+  ];
 
   return `
   <section class="section" id="services">
     <div class="container">
       <div class="section-header text-center">
-        <div class="section-badge">Full Engineering Catalog • 50% OFF</div>
-        <h2 class="section-title">20 Complete <span class="text-gradient">Developer Services</span></h2>
+        <div class="section-badge">Engineering Services</div>
+        <h2 class="section-title">Need an App or <span class="text-gradient">Software?</span></h2>
         <p class="section-desc">
-          From native mobile experiences and multi-tenant SaaS platforms to autonomous AI agents and cloud DevOps. All services include an automatic <strong>50% promotional discount</strong> with transparent upfront pricing.
+          We build custom solutions for your business.
         </p>
       </div>
 
-      <!-- Services Category Filter Bar -->
-      <div class="filter-bar" id="services-filter-bar">
-        ${categories.map(c => `
-          <button class="filter-pill ${c === 'All' ? 'active' : ''}" onclick="filterServicesCategory('${c}')">${c}</button>
+      <!-- Service Cards Grid -->
+      <div class="services-catalog-grid" id="services-catalog-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px;">
+        ${coreServices.map(service => `
+          <div class="service-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+            <div class="service-card-top">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+                <span style="font-size: 2rem;">${service.icon}</span>
+                <span class="service-badge">${service.badge}</span>
+              </div>
+              <h3 class="service-title" style="font-size: 1.3rem; margin-bottom: 8px;">${service.name}</h3>
+              <p class="service-desc" style="font-size: 0.92rem; line-height: 1.6; margin-bottom: 16px;">${service.shortDesc}</p>
+              <div class="service-tech-pills">
+                ${service.tags.map(t => `<span class="tech-tag">${t}</span>`).join('')}
+              </div>
+            </div>
+
+            <div class="service-card-bottom" style="margin-top: 20px; border-top: 1px solid var(--border-glass); padding-top: 16px;">
+              <a href="#contact" onclick="document.getElementById('project-service') ? document.getElementById('project-service').value = '${service.name}' : null;" class="btn btn-outline btn-sm btn-block" style="justify-content: center;">
+                Request Quote for ${service.name} →
+              </a>
+            </div>
+          </div>
         `).join('')}
       </div>
 
-      <!-- 20 Service Cards Grid (Requirement 1: 50% DISCOUNT) -->
-      <div class="services-catalog-grid" id="services-catalog-grid">
-        ${DEVCRAFT_SERVICES.map(service => {
-          const matchingProduct = DEVCRAFT_PRODUCTS.find(p => p.id === service.id || p.name === service.name || (p.linkedServiceId && p.linkedServiceId === service.id));
-          const prodId = matchingProduct ? matchingProduct.id : service.id;
-          const parsed = parseInt(service.pricingStarting.replace(/[^0-9]/g, ''), 10) || 24999;
-          const originalPrice = matchingProduct ? matchingProduct.originalPrice : (parsed * 2);
-          const finalPrice = matchingProduct ? matchingProduct.finalPrice : parsed;
-
-          return `
-          <div class="service-card" data-category="${service.category}">
-            <div class="service-card-top">
-              <span class="service-badge">${service.category} • ${service.badge}</span>
-              <h3 class="service-title">${service.name}</h3>
-              <p class="service-desc">${service.shortDesc}</p>
-              <div class="service-tech-pills">
-                ${service.technologies.slice(0, 4).map(t => `<span class="tech-tag">${t}</span>`).join('')}
-              </div>
-            </div>
-
-            <div class="service-card-bottom">
-              <!-- Requirement 1: Original Price -> 50% OFF -> Final Price -->
-              <div class="card-pricing-block">
-                <div class="price-top-row">
-                  <span class="price-label">Original Price:</span>
-                  <del class="price-original">₹${originalPrice.toLocaleString('en-IN')}</del>
-                  <span class="badge-discount pill-app">50% OFF</span>
-                </div>
-                <div class="price-bottom-row">
-                  <span class="price-final-label">Final Price:</span>
-                  <span class="price-final-value">₹${finalPrice.toLocaleString('en-IN')}</span>
-                </div>
-              </div>
-
-              <!-- Requirement 5 & 9: Actions with Share -->
-              <div class="card-shop-actions">
-                <button class="btn btn-outline btn-xs" onclick="devcraftShop.openProductModal('${prodId}')">
-                  View Details
-                </button>
-                <button class="btn btn-primary btn-xs btn-buy" onclick="devcraftShop.openCheckoutModal('${prodId}')">
-                  ⚡ Order (₹${finalPrice.toLocaleString('en-IN')}) →
-                </button>
-                <button type="button" class="btn-share-icon" title="Share Offer" onclick="devcraftShop.openShareModal('${prodId}')">
-                  🔗 Share
-                </button>
-              </div>
-            </div>
-          </div>
-          `;
-        }).join('')}
+      <!-- Start Your Project Prominent CTA -->
+      <div style="text-align: center; margin-top: 48px;">
+        <a href="#contact" class="btn btn-primary btn-lg" style="padding: 16px 36px; font-weight: 800; font-size: 1.1rem; box-shadow: 0 0 30px rgba(59, 130, 246, 0.4);">
+          🚀 START YOUR PROJECT
+        </a>
       </div>
     </div>
   </section>
@@ -757,7 +799,7 @@ function renderAboutSection() {
             </div>
 
             <div class="profile-social-links">
-              <a href="https://wa.me/918791984082" target="_blank" rel="noopener noreferrer" class="channel-btn whatsapp">WhatsApp</a>
+              <a href="https://wa.me/918630976928" target="_blank" rel="noopener noreferrer" class="channel-btn whatsapp">WhatsApp</a>
               <a href="tel:+917017022966" class="channel-btn call">Call</a>
               <a href="https://www.instagram.com/kiro_mage/" target="_blank" rel="noopener noreferrer" class="channel-btn instagram">Instagram</a>
             </div>
@@ -1017,11 +1059,11 @@ function renderContactSection() {
           </p>
 
           <div class="contact-methods-list">
-            <a href="https://wa.me/918791984082?text=Hi%20DevCraft,%20I'd%20like%20to%20discuss%20a%20project." target="_blank" rel="noopener noreferrer" class="contact-method-card">
+            <a href="https://wa.me/918630976928?text=Hi%20DevCraft,%20I'd%20like%20to%20discuss%20a%20project." target="_blank" rel="noopener noreferrer" class="contact-method-card">
               <div class="method-icon wa-icon">💬</div>
               <div>
                 <strong>Chat Directly on WhatsApp</strong>
-                <small>+91 8791984082 • Typically replies in 15 minutes</small>
+                <small>+91 8630976928 • Typically replies in 15 minutes</small>
               </div>
             </a>
 
@@ -1156,7 +1198,7 @@ function renderFinalCtaSection() {
           </p>
           <div class="final-cta-buttons">
             <a href="#contact" class="btn btn-primary">Start Your Project</a>
-            <a href="https://wa.me/918791984082?text=Hi%20DevCraft,%20let's%20discuss%20a%20project." target="_blank" rel="noopener noreferrer" class="btn btn-emerald">
+            <a href="https://wa.me/918630976928?text=Hi%20DevCraft,%20let's%20discuss%20a%20project." target="_blank" rel="noopener noreferrer" class="btn btn-emerald">
               Chat on WhatsApp
             </a>
             <a href="tel:+917017022966" class="btn btn-outline">Call +91 7017022966</a>
@@ -1511,7 +1553,7 @@ function buildClientPortalPage() {
         </form>
 
         <div style="margin-top: 20px; text-align: center; font-size: 0.82rem; color: var(--text-muted);">
-          Need an active client passkey? <a href="https://wa.me/918791984082" target="_blank" style="color: var(--cyan);">Contact Studio Lead</a>
+          Need an active client passkey? <a href="https://wa.me/918630976928" target="_blank" style="color: var(--cyan);">Contact Studio Lead</a>
         </div>
       </div>
     </div>

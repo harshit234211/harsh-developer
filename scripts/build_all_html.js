@@ -50,7 +50,7 @@ const heroSection = `
 
         <div class="hero-channels">
           <span class="channel-label">Connect:</span>
-          <a href="https://wa.me/918791984082?text=Hi%20Harshit,%20I'm%20interested%20in%20discussing%20a%20project." target="_blank" rel="noopener noreferrer" class="channel-btn whatsapp" title="Chat on WhatsApp">
+          <a href="https://wa.me/918630976928?text=Hi%20Harshit,%20I'm%20interested%20in%20discussing%20a%20project." target="_blank" rel="noopener noreferrer" class="channel-btn whatsapp" title="Chat on WhatsApp">
             WhatsApp
           </a>
           <a href="tel:+917017022966" class="channel-btn call" title="Call Harshit">
@@ -566,7 +566,7 @@ const clientPortalHtml = `<!DOCTYPE html>
           </p>
         </div>
         <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-          <a href="https://wa.me/918791984082?text=Hi%20Harshit,%20checking%20in%20from%20my%20Client%20Portal." target="_blank" class="btn btn-emerald btn-sm">
+          <a href="https://wa.me/918630976928?text=Hi%20Harshit,%20checking%20in%20from%20my%20Client%20Portal." target="_blank" class="btn btn-emerald btn-sm">
             Chat on WhatsApp
           </a>
           <a href="tel:+917017022966" class="btn btn-outline btn-sm">
