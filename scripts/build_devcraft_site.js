@@ -259,130 +259,59 @@ function renderFlagshipsSection() {
 
 // Section 3: Services Showcase
 function renderServicesSection() {
-  const coreServices = [
-    {
-      id: 'android-app',
-      name: 'Android Apps',
-      icon: '📱',
-      badge: 'Native & Cross-Platform',
-      shortDesc: 'High-performance Android applications built with modern Kotlin, Jetpack Compose, and offline-first database architectures.',
-      tags: ['Kotlin', 'Android Studio', 'Compose', 'Room DB'],
-      link: '/android-development'
-    },
-    {
-      id: 'website-dev',
-      name: 'Websites',
-      icon: '🌐',
-      badge: 'Ultra-Fast & SEO',
-      shortDesc: 'Modern, high-converting business websites engineered with Next.js, 100/100 Google Lighthouse speed, and responsive design.',
-      tags: ['Next.js', 'React', 'TailwindCSS', 'SEO'],
-      link: '/web-development'
-    },
-    {
-      id: 'web-app',
-      name: 'Web Apps',
-      icon: '⚡',
-      badge: 'Cloud Scale & Dynamic',
-      shortDesc: 'Complex single-page applications, custom SaaS platforms, and client portals with reactive state and instant data rendering.',
-      tags: ['React', 'Node.js', 'PostgreSQL', 'WebSockets'],
-      link: '/web-development'
-    },
-    {
-      id: 'custom-software',
-      name: 'Custom Software',
-      icon: '💻',
-      badge: 'Tailored Architecture',
-      shortDesc: 'Bespoke desktop applications, backend engines, and enterprise workflow tools designed specifically for your business operations.',
-      tags: ['Electron', 'Python', 'Node.js', 'SQLite'],
-      link: '/software-development'
-    },
-    {
-      id: 'ai-solutions',
-      name: 'AI Solutions',
-      icon: '🤖',
-      badge: 'Autonomous & LLMs',
-      shortDesc: 'Custom AI agents, LLM integrations (OpenAI / Claude / local Ollama), voice assistants, and intelligent automated workflows.',
-      tags: ['LLMs', 'LangChain', 'Python', 'Vector DB'],
-      link: '/ai-solutions'
-    },
-    {
-      id: 'automation',
-      name: 'Automation',
-      icon: '⚙️',
-      badge: 'Streamlined Pipelines',
-      shortDesc: 'Automated data scraping, scheduled task execution, CRM/ERP bots, and background integrations that save hundreds of manual hours.',
-      tags: ['Puppeteer', 'BullMQ', 'REST APIs', 'Cron'],
-      link: '/automation'
-    },
-    {
-      id: 'api-integration',
-      name: 'API Integration',
-      icon: '🔗',
-      badge: 'Secure & Scalable',
-      shortDesc: 'Seamless payment gateways (UPI / Stripe), third-party webhooks, authentication systems, and cloud microservices integration.',
-      tags: ['UPI', 'Stripe', 'OAuth2', 'Webhooks'],
-      link: '/api-integration'
-    },
-    {
-      id: 'ui-ux',
-      name: 'UI/UX Development',
-      icon: '🎨',
-      badge: 'Modern Aesthetic',
-      shortDesc: 'Cinematic dark-mode interfaces, interactive components, responsive prototypes, and pixel-perfect design systems.',
-      tags: ['Figma', 'CSS3', 'Micro-interactions', 'Design Systems'],
-      link: '/ui-ux'
-    },
-    {
-      id: 'maintenance',
-      name: 'Maintenance / Support',
-      icon: '🛡️',
-      badge: '24/7 Reliability',
-      shortDesc: 'Ongoing server health monitoring, regular security patches, bug fixes, database backups, and dedicated SLA technical support.',
-      tags: ['DevOps', 'Docker', 'Cloud Hosting', 'SSL'],
-      link: '/maintenance'
-    }
-  ];
-
   return `
   <section class="section" id="services">
     <div class="container">
       <div class="section-header text-center">
-        <div class="section-badge">Engineering Services</div>
+        <div class="section-badge">Engineering Services • Under ₹5,000</div>
         <h2 class="section-title">Need an App or <span class="text-gradient">Software?</span></h2>
         <p class="section-desc">
-          We build custom solutions for your business.
+          We build custom, production-ready solutions for your business at accessible pricing — all services under ₹5,000.
         </p>
       </div>
 
       <!-- Service Cards Grid -->
       <div class="services-catalog-grid" id="services-catalog-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px;">
-        ${coreServices.map(service => `
-          <div class="service-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+        ${DEVCRAFT_SERVICES.map(service => {
+          const waBookingUrl = `https://api.whatsapp.com/send?phone=918630976928&text=${encodeURIComponent('Hello DevCraft 👋 I want to book ' + service.name + ' (' + service.pricingStarting + ')')}`;
+          return `
+          <div class="service-card" style="display: flex; flex-direction: column; justify-content: space-between; border-radius: 18px;">
             <div class="service-card-top">
               <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
-                <span style="font-size: 2rem;">${service.icon}</span>
-                <span class="service-badge">${service.badge}</span>
+                <span class="service-badge" style="background: rgba(59, 130, 246, 0.15); color: #93c5fd; border-color: rgba(59, 130, 246, 0.3);">${service.category} • ${service.badge}</span>
+                <span style="font-size: 1.1rem; font-weight: 800; color: #10b981;">${service.pricingStarting}</span>
               </div>
               <h3 class="service-title" style="font-size: 1.3rem; margin-bottom: 8px;">${service.name}</h3>
-              <p class="service-desc" style="font-size: 0.92rem; line-height: 1.6; margin-bottom: 16px;">${service.shortDesc}</p>
+              <p class="service-desc" style="font-size: 0.92rem; line-height: 1.6; margin-bottom: 14px;">${service.shortDesc}</p>
+              
+              <ul class="product-features-list" style="margin-bottom: 14px; font-size: 0.85rem;">
+                ${(service.features || []).slice(0, 3).map(f => `<li><span class="check-icon" style="color: #10b981;">✓</span> ${f}</li>`).join('')}
+              </ul>
+
               <div class="service-tech-pills">
-                ${service.tags.map(t => `<span class="tech-tag">${t}</span>`).join('')}
+                ${(service.technologies || []).slice(0, 4).map(t => `<span class="tech-tag">${t}</span>`).join('')}
               </div>
             </div>
 
-            <div class="service-card-bottom" style="margin-top: 20px; border-top: 1px solid var(--border-glass); padding-top: 16px;">
-              <a href="#contact" onclick="document.getElementById('project-service') ? document.getElementById('project-service').value = '${service.name}' : null;" class="btn btn-outline btn-sm btn-block" style="justify-content: center;">
-                Request Quote for ${service.name} →
-              </a>
+            <div class="service-card-bottom" style="margin-top: 18px; border-top: 1px solid var(--border-glass); padding-top: 14px;">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                <a href="${waBookingUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-emerald btn-sm" style="justify-content: center;">
+                  ⚡ Book on WhatsApp
+                </a>
+                <a href="#contact" onclick="document.getElementById('project-service') ? document.getElementById('project-service').value = '${service.name}' : null;" class="btn btn-outline btn-sm" style="justify-content: center;">
+                  Request Quote →
+                </a>
+              </div>
             </div>
           </div>
-        `).join('')}
+          `;
+        }).join('')}
       </div>
 
       <!-- Start Your Project Prominent CTA -->
       <div style="text-align: center; margin-top: 48px;">
         <a href="#contact" class="btn btn-primary btn-lg" style="padding: 16px 36px; font-weight: 800; font-size: 1.1rem; box-shadow: 0 0 30px rgba(59, 130, 246, 0.4);">
-          🚀 START YOUR PROJECT
+          🚀 START YOUR PROJECT TODAY
         </a>
       </div>
     </div>
@@ -943,51 +872,51 @@ function renderPricingSection() {
       <div class="pricing-tiers-grid">
         <!-- Tier 1 -->
         <div class="pricing-card">
-          <div class="pricing-badge">MVP / Starter</div>
+          <div class="pricing-badge">Bug Fix &amp; Integration</div>
           <h3 class="pricing-title">Starter Sprint</h3>
-          <div class="pricing-price-num text-gradient">₹24,999+</div>
-          <p class="pricing-desc">Ideal for high-converting landing pages, rapid MVPs, or standalone microservices.</p>
+          <div class="pricing-price-num text-gradient">₹999 – ₹1,999</div>
+          <p class="pricing-desc">Ideal for rapid bug fixing, payment gateway API setup, or background workflow automation.</p>
           <ul class="pricing-features-list">
-            <li><span>✓</span> Custom responsive UI with animations</li>
-            <li><span>✓</span> Node.js / Express backend integration</li>
-            <li><span>✓</span> Contact inquiry capture & database storage</li>
-            <li><span>✓</span> Free SSL & Render/Vercel deployment</li>
-            <li><span>✓</span> 14 days complimentary post-launch support</li>
+            <li><span>✓</span> Emergency bug triage &amp; UI fixes</li>
+            <li><span>✓</span> Payment gateway API (TranzUPI / Razorpay)</li>
+            <li><span>✓</span> Automated WhatsApp / Email alert triggers</li>
+            <li><span>✓</span> Same-day or 48-hour delivery</li>
+            <li><span>✓</span> 100% source code handover</li>
           </ul>
-          <button class="btn btn-outline btn-block" onclick="devcraftDemos.startProjectFor('Starter Sprint')">Select Starter Sprint</button>
+          <a href="https://api.whatsapp.com/send?phone=918630976928&text=Hello%20DevCraft%20%F0%9F%91%8B%20I%20want%20to%20book%20Starter%20Sprint%20(Under%20%E2%82%B92,000)" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-block" style="justify-content: center;">Book Starter Sprint ⚡</a>
         </div>
 
         <!-- Tier 2 (Featured) -->
         <div class="pricing-card featured">
           <div class="pricing-badge-popular">Most Popular</div>
           <div class="pricing-badge">Full Solution</div>
-          <h3 class="pricing-title">Growth Studio</h3>
-          <div class="pricing-price-num text-gradient">₹59,999+</div>
-          <p class="pricing-desc">Complete full-stack web application or cross-platform mobile app with auth & payments.</p>
+          <h3 class="pricing-title">App &amp; Website Sprint</h3>
+          <div class="pricing-price-num text-gradient">₹2,499 – ₹3,999</div>
+          <p class="pricing-desc">Complete high-speed business website, native Android app, or custom conversational AI solution.</p>
           <ul class="pricing-features-list">
-            <li><span>✓</span> React / Next.js or React Native mobile app</li>
-            <li><span>✓</span> PostgreSQL or MongoDB database schema design</li>
-            <li><span>✓</span> JWT user authentication & role access control</li>
-            <li><span>✓</span> Stripe / Razorpay payment gateway integration</li>
-            <li><span>✓</span> 30 days priority warranty & support</li>
+            <li><span>✓</span> Responsive Next.js / React Website or Android App</li>
+            <li><span>✓</span> On-device or cloud AI bot integration</li>
+            <li><span>✓</span> Instant WhatsApp inquiry funnel &amp; lead capture</li>
+            <li><span>✓</span> Free hosting &amp; custom domain setup</li>
+            <li><span>✓</span> Complete source code ownership (.ZIP)</li>
           </ul>
-          <button class="btn btn-primary btn-block" onclick="devcraftDemos.startProjectFor('Growth Studio')">Select Growth Studio</button>
+          <a href="https://api.whatsapp.com/send?phone=918630976928&text=Hello%20DevCraft%20%F0%9F%91%8B%20I%20want%20to%20book%20App%20%26%20Website%20Sprint%20(Under%20%E2%82%B94,000)" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-block" style="justify-content: center;">Book App/Website Sprint 🚀</a>
         </div>
 
         <!-- Tier 3 -->
         <div class="pricing-card">
-          <div class="pricing-badge">Enterprise Scale</div>
-          <h3 class="pricing-title">Enterprise Custom</h3>
-          <div class="pricing-price-num text-gradient">₹1,20,000+</div>
-          <p class="pricing-desc">High-concurrency multi-tenant SaaS, custom AI agent workflows, and mission-critical cloud systems.</p>
+          <div class="pricing-badge">Full-Stack Custom</div>
+          <h3 class="pricing-title">Custom Software Suite</h3>
+          <div class="pricing-price-num text-gradient">₹4,499 – ₹4,999</div>
+          <p class="pricing-desc">Full-stack web application, client portal with database, or custom desktop software (Electron/Python).</p>
           <ul class="pricing-features-list">
-            <li><span>✓</span> Full-scale microservice & pub/sub architecture</li>
-            <li><span>✓</span> AI agent integration (GPT-4 / Claude / Vector DB)</li>
-            <li><span>✓</span> Custom admin operations cockpit & telemetry</li>
-            <li><span>✓</span> Docker containerization & AWS auto-scaling</li>
-            <li><span>✓</span> 60 days dedicated maintenance & 24/7 SLA</li>
+            <li><span>✓</span> Full-stack Web App or Desktop Software (PC/Mac)</li>
+            <li><span>✓</span> User authentication, databases (PostgreSQL/MongoDB)</li>
+            <li><span>✓</span> Interactive management dashboards &amp; tables</li>
+            <li><span>✓</span> Dynamic NPCI UPI QR &amp; instant payment verification</li>
+            <li><span>✓</span> Full commercial IP transfer &amp; setup guide</li>
           </ul>
-          <button class="btn btn-outline btn-block" onclick="devcraftDemos.startProjectFor('Enterprise Custom')">Select Enterprise Custom</button>
+          <a href="https://api.whatsapp.com/send?phone=918630976928&text=Hello%20DevCraft%20%F0%9F%91%8B%20I%20want%20to%20book%20Custom%20Software%20Suite%20(Under%20%E2%82%B95,000)" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-block" style="justify-content: center;">Book Custom Suite 💻</a>
         </div>
       </div>
 
@@ -1524,47 +1453,219 @@ function buildClientPortalPage() {
   const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
-  ${commonHead('Client Portal Login', 'Access your live DevCraft sprint milestones, staging links, invoices, and project roadmap.')}
+  ${commonHead('Client Portal & Authentication', 'Access your live DevCraft sprint milestones, staging links, invoices, and project roadmap.')}
 </head>
 <body>
   ${navbar('portal')}
 
   <main style="padding: 120px 0 80px; min-height: 80vh; display: flex; align-items: center;">
-    <div class="container" style="max-width: 520px;">
-      <div class="glass-card" style="padding: 40px; border-radius: 20px; border: 1px solid var(--border-glow);">
-        <div style="text-align: center; margin-bottom: 24px;">
-          <div class="brand-badge-icon" style="margin: 0 auto 16px;">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-          </div>
-          <h2 style="font-size: 1.5rem; font-weight: 700;">Client Portal Access</h2>
-          <p style="color: var(--text-secondary); font-size: 0.88rem; margin-top: 4px;">Sign in to view live sprint milestones, staging links & invoices.</p>
+    <div class="container" style="max-width: 540px;">
+      <div class="glass-card" style="padding: 36px; border-radius: 24px; border: 1px solid var(--border-glow); box-shadow: 0 20px 50px rgba(0,0,0,0.4);">
+        
+        <!-- Tab Navigation -->
+        <div style="display: flex; background: rgba(0,0,0,0.25); padding: 4px; border-radius: 12px; margin-bottom: 24px; border: 1px solid var(--border-glass);">
+          <button type="button" id="tab-btn-login" class="btn btn-sm" style="flex: 1; border-radius: 8px; background: var(--accent); color: #fff; border: none; font-weight: 700;" onclick="switchAuthTab('login')">
+            Sign In
+          </button>
+          <button type="button" id="tab-btn-register" class="btn btn-sm" style="flex: 1; border-radius: 8px; background: transparent; color: var(--text-secondary); border: none; font-weight: 700;" onclick="switchAuthTab('register')">
+            Create Account
+          </button>
+          <button type="button" id="tab-btn-forgot" class="btn btn-sm" style="flex: 1; border-radius: 8px; background: transparent; color: var(--text-secondary); border: none; font-weight: 700;" onclick="switchAuthTab('forgot')">
+            Reset Password
+          </button>
         </div>
 
-        <form onsubmit="event.preventDefault(); alert('Demo Client Portal: Staging workspace preview verified for Client Demo #DC-8841.');">
-          <div class="form-group" style="margin-bottom: 16px;">
-            <label class="input-label">Client Access Email</label>
-            <input type="email" class="form-control" placeholder="client@company.com" value="client@demo.com" required />
-          </div>
-          <div class="form-group" style="margin-bottom: 20px;">
-            <label class="input-label">Project Passkey / PIN</label>
-            <input type="password" class="form-control" placeholder="••••••••" value="demo2026" required />
-          </div>
-          <button type="submit" class="btn btn-primary btn-block">Access Project Dashboard →</button>
-        </form>
+        <div id="portal-alert" class="auth-alert" style="display: none; margin-bottom: 18px;"></div>
 
-        <div style="margin-top: 20px; text-align: center; font-size: 0.82rem; color: var(--text-muted);">
-          Need an active client passkey? <a href="https://wa.me/918630976928" target="_blank" style="color: var(--cyan);">Contact Studio Lead</a>
+        <!-- 1. Sign In Tab -->
+        <div id="auth-panel-login">
+          <div style="text-align: center; margin-bottom: 20px;">
+            <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--text-primary);">Client Sign In</h2>
+            <p style="color: var(--text-secondary); font-size: 0.88rem; margin-top: 4px;">Sign in to view your projects, invoices &amp; downloads.</p>
+          </div>
+
+          <form id="portal-login-form" onsubmit="handlePortalLogin(event)">
+            <div class="form-group" style="margin-bottom: 16px;">
+              <label class="input-label">Email Address</label>
+              <input type="email" id="portal-login-email" class="form-control" placeholder="name@company.com" required autocomplete="email" />
+            </div>
+            <div class="form-group" style="margin-bottom: 16px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <label class="input-label" style="margin-bottom: 0;">Password</label>
+                <a href="javascript:void(0)" onclick="switchAuthTab('forgot')" style="font-size: 0.8rem; color: var(--cyan); text-decoration: none;">Forgot password?</a>
+              </div>
+              <input type="password" id="portal-login-password" class="form-control" placeholder="••••••••" required autocomplete="current-password" />
+            </div>
+            <button type="submit" id="portal-login-submit" class="btn btn-primary btn-block" style="padding: 12px; font-weight: 700;">
+              Sign In to Client Portal →
+            </button>
+          </form>
+        </div>
+
+        <!-- 2. Create Account Tab -->
+        <div id="auth-panel-register" style="display: none;">
+          <div style="text-align: center; margin-bottom: 20px;">
+            <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--text-primary);">Create Client Account</h2>
+            <p style="color: var(--text-secondary); font-size: 0.88rem; margin-top: 4px;">Instant access to invoices, project tracking &amp; code downloads.</p>
+          </div>
+
+          <form id="portal-register-form" onsubmit="handlePortalRegister(event)">
+            <div class="form-group" style="margin-bottom: 14px;">
+              <label class="input-label">Full Name *</label>
+              <input type="text" id="portal-reg-name" class="form-control" placeholder="Harshit Shakya" required autocomplete="name" />
+            </div>
+            <div class="form-group" style="margin-bottom: 14px;">
+              <label class="input-label">Email Address *</label>
+              <input type="email" id="portal-reg-email" class="form-control" placeholder="name@company.com" required autocomplete="email" />
+            </div>
+            <div class="form-group" style="margin-bottom: 14px;">
+              <label class="input-label">WhatsApp / Phone Number</label>
+              <input type="tel" id="portal-reg-phone" class="form-control" placeholder="+91 8630976928" autocomplete="tel" />
+            </div>
+            <div class="form-group" style="margin-bottom: 18px;">
+              <label class="input-label">Create Password (min 8 chars, letters &amp; numbers) *</label>
+              <input type="password" id="portal-reg-password" class="form-control" placeholder="••••••••" required autocomplete="new-password" />
+            </div>
+            <button type="submit" id="portal-reg-submit" class="btn btn-emerald btn-block" style="padding: 12px; font-weight: 700;">
+              Register Client Account 🚀
+            </button>
+          </form>
+        </div>
+
+        <!-- 3. Forgot Password Tab -->
+        <div id="auth-panel-forgot" style="display: none;">
+          <div style="text-align: center; margin-bottom: 20px;">
+            <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--text-primary);">Reset Password</h2>
+            <p style="color: var(--text-secondary); font-size: 0.88rem; margin-top: 4px;">Enter your email to receive a secure password reset link.</p>
+          </div>
+
+          <form id="portal-forgot-form" onsubmit="handlePortalForgot(event)">
+            <div class="form-group" style="margin-bottom: 18px;">
+              <label class="input-label">Registered Email Address</label>
+              <input type="email" id="portal-forgot-email" class="form-control" placeholder="name@company.com" required autocomplete="email" />
+            </div>
+            <button type="submit" id="portal-forgot-submit" class="btn btn-primary btn-block" style="padding: 12px; font-weight: 700;">
+              Send Reset Link →
+            </button>
+          </form>
+        </div>
+
+        <div style="margin-top: 24px; text-align: center; font-size: 0.82rem; color: var(--text-muted); border-top: 1px solid var(--border-glass); padding-top: 16px;">
+          Need immediate support? <a href="https://wa.me/918630976928" target="_blank" style="color: var(--cyan); font-weight: 600;">Chat on WhatsApp (+91 8630976928)</a>
         </div>
       </div>
     </div>
   </main>
 
+  ${floatingActions()}
   ${footer()}
+  ${renderModalsMarkup()}
   ${renderClientDataScripts()}
+  <script src="/js/devcraft-auth.js"></script>
+
+  <script>
+    function switchAuthTab(tab) {
+      document.getElementById('auth-panel-login').style.display = tab === 'login' ? 'block' : 'none';
+      document.getElementById('auth-panel-register').style.display = tab === 'register' ? 'block' : 'none';
+      document.getElementById('auth-panel-forgot').style.display = tab === 'forgot' ? 'block' : 'none';
+
+      const btnLogin = document.getElementById('tab-btn-login');
+      const btnReg = document.getElementById('tab-btn-register');
+      const btnForgot = document.getElementById('tab-btn-forgot');
+
+      btnLogin.style.background = tab === 'login' ? 'var(--accent)' : 'transparent';
+      btnLogin.style.color = tab === 'login' ? '#fff' : 'var(--text-secondary)';
+
+      btnReg.style.background = tab === 'register' ? 'var(--accent)' : 'transparent';
+      btnReg.style.color = tab === 'register' ? '#fff' : 'var(--text-secondary)';
+
+      btnForgot.style.background = tab === 'forgot' ? 'var(--accent)' : 'transparent';
+      btnForgot.style.color = tab === 'forgot' ? '#fff' : 'var(--text-secondary)';
+
+      const alertBox = document.getElementById('portal-alert');
+      if (alertBox) alertBox.style.display = 'none';
+    }
+
+    function showPortalAlert(msg, type = 'danger') {
+      const alertBox = document.getElementById('portal-alert');
+      if (!alertBox) return;
+      alertBox.textContent = msg;
+      alertBox.className = 'auth-alert ' + type;
+      alertBox.style.display = 'block';
+    }
+
+    async function handlePortalLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('portal-login-email').value.trim();
+      const password = document.getElementById('portal-login-password').value;
+      const btn = document.getElementById('portal-login-submit');
+
+      btn.disabled = true;
+      btn.textContent = 'Authenticating...';
+
+      try {
+        await DevCraftAuth.login(email, password, true);
+        showPortalAlert('Login successful! Redirecting to Dashboard...', 'success');
+        setTimeout(() => { window.location.href = '/dashboard'; }, 600);
+      } catch (err) {
+        showPortalAlert(err.message || 'Invalid email or password.');
+        btn.disabled = false;
+        btn.textContent = 'Sign In to Client Portal →';
+      }
+    }
+
+    async function handlePortalRegister(e) {
+      e.preventDefault();
+      const name = document.getElementById('portal-reg-name').value.trim();
+      const email = document.getElementById('portal-reg-email').value.trim();
+      const phone = document.getElementById('portal-reg-phone').value.trim();
+      const password = document.getElementById('portal-reg-password').value;
+      const btn = document.getElementById('portal-reg-submit');
+
+      btn.disabled = true;
+      btn.textContent = 'Creating Account...';
+
+      try {
+        await DevCraftAuth.register({ name, email, phone, password });
+        showPortalAlert('Account created successfully! Loading Dashboard...', 'success');
+        setTimeout(() => { window.location.href = '/dashboard'; }, 700);
+      } catch (err) {
+        showPortalAlert(err.message || 'Registration failed. Please check your details.');
+        btn.disabled = false;
+        btn.textContent = 'Register Client Account 🚀';
+      }
+    }
+
+    async function handlePortalForgot(e) {
+      e.preventDefault();
+      const email = document.getElementById('portal-forgot-email').value.trim();
+      const btn = document.getElementById('portal-forgot-submit');
+
+      btn.disabled = true;
+      btn.textContent = 'Generating Link...';
+
+      try {
+        const res = await DevCraftAuth.forgotPassword(email);
+        showPortalAlert(res.message || 'Password reset link sent to your email.', 'success');
+      } catch (err) {
+        showPortalAlert(err.message || 'Could not process password reset.');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Send Reset Link →';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.DevCraftAuth && DevCraftAuth.isAuthenticated()) {
+        window.location.href = '/dashboard';
+      }
+    });
+  </script>
 </body>
 </html>`;
 
   fs.writeFileSync(path.join(PAGES, 'client-portal.html'), html, 'utf8');
+  fs.writeFileSync(path.join(FRONTEND, 'client-portal.html'), html, 'utf8');
   console.log('✓ Generated frontend/pages/client-portal.html');
 }
 
@@ -2623,11 +2724,11 @@ function buildServiceSubPages() {
         { title: 'Play Store Publishing', desc: 'Complete APK/AAB signing, Google Play Store compliance, review assistance, and CI/CD.' }
       ],
       techStack: ['Kotlin', 'Android Studio', 'Jetpack Compose', 'Room DB', 'Retrofit', 'Coroutines', 'Flow', 'Hilt', 'Firebase'],
-      pricing: 'Starting at ₹24,999'
+      pricing: 'Starting at ₹3,999'
     },
     {
       slug: 'web-development',
-      name: 'Web Development',
+      name: 'Website & Web App Development',
       category: 'Full-Stack Web',
       badge: 'Next.js & React',
       headline: 'Ultra-Fast, High-Converting Websites & Web Applications',
@@ -2645,7 +2746,7 @@ function buildServiceSubPages() {
         { title: 'Automated Lead Funnels', desc: 'High-converting lead capture forms with instant WhatsApp and email notifications.' }
       ],
       techStack: ['Next.js', 'React', 'Tailwind CSS', 'TypeScript', 'Node.js', 'Express', 'PostgreSQL', 'Cloudflare'],
-      pricing: 'Starting at ₹14,999'
+      pricing: 'Starting at ₹2,499'
     },
     {
       slug: 'software-development',
@@ -2667,7 +2768,7 @@ function buildServiceSubPages() {
         { title: 'Git & Complete Docs', desc: 'Clean, modular codebase handed over with full developer architecture documentation.' }
       ],
       techStack: ['Node.js', 'Electron', 'Python', 'PostgreSQL', 'MongoDB', 'Redis', 'Docker', 'TypeScript'],
-      pricing: 'Starting at ₹39,999'
+      pricing: 'Starting at ₹4,999'
     },
     {
       slug: 'ai-solutions',
@@ -2689,7 +2790,7 @@ function buildServiceSubPages() {
         { title: 'Full Source Code Licensing', desc: 'Deploy proprietary AI pipelines with 100% source ownership and zero recurring token markup.' }
       ],
       techStack: ['Python', 'Ollama', 'LangChain', 'PyTorch', 'OpenAI API', 'TensorFlow Lite', 'Porcupine', 'Node.js'],
-      pricing: 'Starting at ₹44,999'
+      pricing: 'Starting at ₹3,499'
     },
     {
       slug: 'automation',
@@ -2711,7 +2812,7 @@ function buildServiceSubPages() {
         { title: 'Incident & Failure Alerts', desc: 'Immediate alerting via Telegram, WhatsApp, and Slack when critical pipeline thresholds breach.' }
       ],
       techStack: ['Node.js', 'BullMQ', 'Redis', 'Puppeteer', 'WhatsApp Cloud API', 'Docker', 'Webhooks'],
-      pricing: 'Starting at ₹19,999'
+      pricing: 'Starting at ₹1,999'
     },
     {
       slug: 'api-integration',
@@ -2733,7 +2834,7 @@ function buildServiceSubPages() {
         { title: 'Microservice Containerization', desc: 'Dockerized microservice deployments with health check probes and automated restart policies.' }
       ],
       techStack: ['Express', 'Node.js', 'Redis', 'PostgreSQL', 'GraphQL', 'JWT', 'HMAC-SHA256', 'OpenAPI/Swagger'],
-      pricing: 'Starting at ₹16,999'
+      pricing: 'Starting at ₹1,499'
     },
     {
       slug: 'ui-ux',
@@ -2755,7 +2856,7 @@ function buildServiceSubPages() {
         { title: 'Zero-Bloat Frontend Code', desc: 'Clean, semantic HTML5, CSS3, and Vanilla JS with zero unnecessary bundle bloat.' }
       ],
       techStack: ['Figma', 'CSS Grid/Flexbox', 'Tailwind CSS', 'Three.js', 'SVG Animation', 'Design Tokens'],
-      pricing: 'Starting at ₹18,999'
+      pricing: 'Starting at ₹1,999'
     },
     {
       slug: 'maintenance',
@@ -2777,7 +2878,7 @@ function buildServiceSubPages() {
         { title: 'Direct Engineer Standby', desc: 'Direct WhatsApp and phone access to our lead software architect for mission-critical emergencies.' }
       ],
       techStack: ['Docker', 'GitHub Actions', 'PM2', 'New Relic', 'Linux Servers', 'Sentry', 'Redis', 'Nginx'],
-      pricing: 'Starting at ₹12,999 / mo'
+      pricing: 'Starting at ₹999'
     }
   ];
 
@@ -2815,14 +2916,17 @@ function buildServiceSubPages() {
         </p>
 
         <div style="display: flex; gap: 14px; flex-wrap: wrap; align-items: center; margin-bottom: 40px;">
-          <a href="/contact?service=${srv.slug}" class="btn btn-primary" style="padding: 12px 28px;">
-            Book Production Sprint →
+          <a href="https://api.whatsapp.com/send?phone=918630976928&text=${encodeURIComponent('Hello DevCraft 👋 I want to book ' + srv.name + ' (' + srv.pricing + ')')}" target="_blank" rel="noopener noreferrer" class="btn btn-emerald" style="padding: 12px 28px;">
+            Book on WhatsApp (${srv.pricing}) ⚡
           </a>
-          <a href="/products" class="btn btn-emerald" style="padding: 12px 24px;">
+          <a href="/contact?service=${srv.slug}" class="btn btn-primary" style="padding: 12px 28px;">
+            Request Custom Scope →
+          </a>
+          <a href="/products" class="btn btn-outline" style="padding: 12px 24px;">
             Explore Software Products (50% OFF) ⚡
           </a>
-          <a href="/services" class="btn btn-outline" style="padding: 12px 24px;">
-            All 20 Services Catalog
+          <a href="/services" class="btn btn-ghost" style="padding: 12px 24px;">
+            All Services Catalog
           </a>
         </div>
 

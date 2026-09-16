@@ -143,6 +143,32 @@ const DevCraftAuth = (() => {
     return data;
   }
 
+  async function forgotPassword(email) {
+    const res = await fetch(`${API_BASE}/forgot-password`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.message || 'Failed to request password reset.');
+    }
+    return data;
+  }
+
+  async function resetPassword(token, password, confirmPassword) {
+    const res = await fetch(`${API_BASE}/reset-password`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token, password, confirmPassword })
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.message || 'Password reset failed.');
+    }
+    return data;
+  }
+
   async function logout() {
     try {
       await fetch(`${API_BASE}/logout`, { method: 'POST' });
@@ -244,6 +270,8 @@ const DevCraftAuth = (() => {
     isAuthenticated,
     login,
     register,
+    forgotPassword,
+    resetPassword,
     logout,
     verifySession,
     updateNavbarUI,

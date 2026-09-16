@@ -102,9 +102,9 @@ async function runQaSuite() {
     const devRes = await request('GET', '/api/developer');
     assert(devRes.statusCode === 200 && devRes.data.brand === 'DEVCRAFT Studio', 'STEP 5: Public Developer API Returns DevCraft Studio', `Brand: ${devRes.data.brand}`);
 
-    // 5b. Test All 20 Services API
+    // 5b. Test All 9 Core Under-5K Services API
     const servicesRes = await request('GET', '/api/services');
-    assert(servicesRes.statusCode === 200 && servicesRes.data.count === 20, 'STEP 5b: Services API Returns All 20 Services', `Count: ${servicesRes.data.count}`);
+    assert(servicesRes.statusCode === 200 && servicesRes.data.count === 9, 'STEP 5b: Services API Returns All 9 Core Under-5K Services', `Count: ${servicesRes.data.count}`);
 
     // 5c. Test All 10 Interactive Demos API
     const demosRes = await request('GET', '/api/demos');

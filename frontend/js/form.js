@@ -98,10 +98,14 @@ window.submitInquiry = async function(event) {
       localStorage.setItem('devcraft_inquiries', JSON.stringify(existing));
     } catch (_) {}
 
+    // Construct automated pre-filled WhatsApp link for Lead
+    const waText = `*New Project Inquiry — DevCraft Studio* 🚀\n\n*Name:* ${payload.name}\n*Email:* ${payload.email}\n*Phone:* ${payload.phone}\n*Service:* ${payload.service}\n*Requirements:* ${payload.message}\n*Reference:* ${refId}\n\n_Sent via DevCraft (https://kiromage.shop)_`;
+    const waUrl = `https://api.whatsapp.com/send?phone=918630976928&text=${encodeURIComponent(waText)}`;
+
     // Reset form
     form.reset();
 
-    // Display confirmation modal
+    // Display confirmation modal with direct 1-click WhatsApp button
     const refBox = document.getElementById('inquiry-ref-box');
     if (refBox) {
       refBox.textContent = `Inquiry Reference: ${refId}`;
@@ -109,12 +113,21 @@ window.submitInquiry = async function(event) {
 
     const modal = document.getElementById('inquiry-success-modal');
     if (modal) {
-      modal.classList.add('active');
-    } else {
-      alert(`Inquiry Confirmed! Reference ID: ${refId}. Our lead architect will contact you within 24 hours.`);
+      const waBtn = modal.querySelector('.btn-emerald, a[href*="whatsapp"], a[href*="wa.me"]');
+      if (waBtn) {
+        waBtn.href = waUrl;
+      }
+      modal.style.display = 'flex';
+      setTimeout(() => { modal.classList.add('active'); }, 10);
     }
 
+    // Auto-open WhatsApp in new tab for direct transmission
+    window.open(waUrl, '_blank');
+
   } catch (err) {
+    const waText = `*New Project Inquiry — DevCraft Studio* 🚀\n\n*Name:* ${payload.name}\n*Email:* ${payload.email}\n*Phone:* ${payload.phone}\n*Service:* ${payload.service}\n*Requirements:* ${payload.message}\n*Reference:* ${refId}\n\n_Sent via DevCraft (https://kiromage.shop)_`;
+    const waUrl = `https://api.whatsapp.com/send?phone=918630976928&text=${encodeURIComponent(waText)}`;
+
     // Network or server error fallback: save to localStorage anyway
     try {
       const existing = JSON.parse(localStorage.getItem('devcraft_inquiries') || '[]');
@@ -126,21 +139,38 @@ window.submitInquiry = async function(event) {
 
     const refBox = document.getElementById('inquiry-ref-box');
     if (refBox) {
-      refBox.textContent = `Inquiry Reference: ${refId} (Saved Offline)`;
+      refBox.textContent = `Inquiry Reference: ${refId}`;
     }
 
     const modal = document.getElementById('inquiry-success-modal');
     if (modal) {
-      modal.classList.add('active');
-    } else {
-      alert(`Inquiry Confirmed! Reference ID: ${refId}. Our team has received your message.`);
+      const waBtn = modal.querySelector('.btn-emerald, a[href*="whatsapp"], a[href*="wa.me"]');
+      if (waBtn) {
+        waBtn.href = waUrl;
+      }
+      modal.style.display = 'flex';
+      setTimeout(() => { modal.classList.add('active'); }, 10);
     }
+
+    window.open(waUrl, '_blank');
   } finally {
     if (submitBtn) {
       submitBtn.disabled = false;
       submitBtn.innerHTML = origBtnContent;
     }
   }
+};
+
+window.sendCurrentFormToWhatsApp = function() {
+  const name = (document.getElementById('client-name')?.value || '').trim() || 'Client';
+  const email = (document.getElementById('client-email')?.value || '').trim() || 'N/A';
+  const phone = (document.getElementById('client-phone')?.value || '').trim() || 'N/A';
+  const service = (document.getElementById('project-service')?.value || '').trim() || 'Custom Software / Project';
+  const message = (document.getElementById('project-details')?.value || '').trim() || 'I want to discuss a new project.';
+
+  const waText = `*Project Inquiry — DevCraft Studio* 🚀\n\n*Name:* ${name}\n*Email:* ${email}\n*Phone:* ${phone}\n*Service:* ${service}\n*Details:* ${message}\n\n_Sent from https://kiromage.shop_`;
+  const waUrl = `https://api.whatsapp.com/send?phone=918630976928&text=${encodeURIComponent(waText)}`;
+  window.open(waUrl, '_blank');
 };
 
 function showFormError(msg) {
