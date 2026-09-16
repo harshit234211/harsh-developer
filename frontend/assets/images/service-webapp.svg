@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 220" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <radialGradient id="appGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#818cf8" stop-opacity="0.6"/>
+      <stop offset="60%" stop-color="#4f46e5" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#080d1a" stop-opacity="0"/>
+    </radialGradient>
+    <style>
+      @keyframes appPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); filter: drop-shadow(0 0 16px rgba(129,140,248,0.7)); } }
+      .app-dash { transform-origin: 250px 105px; animation: appPulse 3.5s ease-in-out infinite; }
+    </style>
+  </defs>
+  <rect width="500" height="220" rx="14" fill="#080d1a" stroke="rgba(129,140,248,0.35)" stroke-width="1.5"/>
+  <circle cx="250" cy="105" r="110" fill="url(#appGlow)"/>
+
+  <g class="app-dash" transform="translate(100, 20)">
+    <rect width="300" height="160" rx="10" fill="#0f172a" stroke="#818cf8" stroke-width="1.8"/>
+    <rect width="65" height="160" rx="10" fill="#1e293b"/>
+    <rect x="10" y="14" width="45" height="9" rx="3" fill="#818cf8"/>
+    <rect x="10" y="32" width="45" height="5" rx="2" fill="#64748b"/>
+    <rect x="10" y="44" width="45" height="5" rx="2" fill="#64748b"/>
+    <rect x="10" y="56" width="45" height="5" rx="2" fill="#64748b"/>
+    <rect x="10" y="130" width="45" height="16" rx="4" fill="rgba(16,185,129,0.2)" stroke="#10b981" stroke-width="1"/>
+    <text x="14" y="142" fill="#10b981" font-family="'JetBrains Mono', monospace" font-size="7">AUTH OK</text>
+
+    <g transform="translate(75, 10)">
+      <rect x="0" y="0" width="68" height="30" rx="5" fill="#1e293b"/>
+      <text x="8" y="12" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="7">USERS</text>
+      <text x="8" y="25" fill="#38bdf8" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="800">14,280</text>
+      
+      <rect x="75" y="0" width="68" height="30" rx="5" fill="#1e293b"/>
+      <text x="83" y="12" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="7">REVENUE</text>
+      <text x="83" y="25" fill="#10b981" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="800">₹4.8L</text>
+
+      <rect x="150" y="0" width="68" height="30" rx="5" fill="#1e293b"/>
+      <text x="158" y="12" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="7">STATUS</text>
+      <text x="158" y="25" fill="#c084fc" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="800">ONLINE</text>
+    </g>
+
+    <rect x="75" y="48" width="215" height="98" rx="6" fill="#090d16" stroke="rgba(129,140,248,0.2)" stroke-width="1"/>
+    <g transform="translate(85, 130)">
+      <rect x="10" y="-25" width="16" height="25" rx="3" fill="#818cf8"/>
+      <rect x="35" y="-45" width="16" height="45" rx="3" fill="#38bdf8"/>
+      <rect x="60" y="-35" width="16" height="35" rx="3" fill="#818cf8"/>
+      <rect x="85" y="-60" width="16" height="60" rx="3" fill="#10b981"/>
+      <rect x="110" y="-40" width="16" height="40" rx="3" fill="#818cf8"/>
+      <rect x="135" y="-70" width="16" height="70" rx="3" fill="#c084fc"/>
+      <rect x="160" y="-50" width="16" height="50" rx="3" fill="#38bdf8"/>
+      <line x1="0" y1="0" x2="195" y2="0" stroke="#334155" stroke-width="1"/>
+    </g>
+  </g>
+  <text x="250" y="210" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="1.5">FULL-STACK REACT &amp; NODE.JS WEB PORTAL</text>
+</svg>

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 220" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <radialGradient id="maintGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#10b981" stop-opacity="0.6"/>
+      <stop offset="60%" stop-color="#059669" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#080d1a" stop-opacity="0"/>
+    </radialGradient>
+    <style>
+      @keyframes shieldPulse { 0%, 100% { transform: scale(1); filter: drop-shadow(0 0 16px rgba(16,185,129,0.8)); } 50% { transform: scale(1.06); filter: drop-shadow(0 0 25px rgba(16,185,129,1)); } }
+      .maint-shield { transform-origin: 250px 105px; animation: shieldPulse 3s ease-in-out infinite; }
+    </style>
+  </defs>
+  <rect width="500" height="220" rx="14" fill="#080d1a" stroke="rgba(16,185,129,0.35)" stroke-width="1.5"/>
+  <circle cx="250" cy="105" r="110" fill="url(#maintGlow)"/>
+
+  <g transform="translate(50, 75)">
+    <rect width="120" height="55" rx="8" fill="#0f172a" stroke="#10b981" stroke-width="1.5"/>
+    <text x="12" y="20" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8">SYSTEM UPTIME</text>
+    <text x="12" y="42" fill="#10b981" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="800">99.99%</text>
+  </g>
+
+  <g transform="translate(330, 75)">
+    <rect width="120" height="55" rx="8" fill="#0f172a" stroke="#00f0ff" stroke-width="1.5"/>
+    <text x="12" y="20" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8">BUG PATCH</text>
+    <text x="12" y="42" fill="#00f0ff" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800">0 ERRORS</text>
+  </g>
+
+  <g class="maint-shield">
+    <path d="M 250 55 L 285 73 L 285 120 C 285 145 250 160 250 160 C 250 160 215 145 215 120 L 215 73 Z" fill="#0f172a" stroke="#10b981" stroke-width="2.5"/>
+    <path d="M 237 105 L 246 114 L 263 94" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="250" y="210" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="1.5">RAPID BUG FIXING, OPTIMIZATION &amp; SUPPORT</text>
+</svg>

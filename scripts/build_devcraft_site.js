@@ -329,9 +329,485 @@ function generateAnimatedSvgs() {
   <text x="300" y="308" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" text-anchor="middle" letter-spacing="2">ELECTRON + PYTHON PC DESKTOP SOFTWARE</text>
 </svg>`;
 
+  const androidSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 220" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <radialGradient id="andGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#10b981" stop-opacity="0.6"/>
+      <stop offset="60%" stop-color="#047857" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#080d1a" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="phoneGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f0ff"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
+    <style>
+      @keyframes andPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); filter: drop-shadow(0 0 15px rgba(16,185,129,0.8)); } }
+      @keyframes floatUp { 0% { transform: translateY(0px); opacity: 0.3; } 50% { opacity: 0.9; transform: translateY(-8px); } 100% { transform: translateY(0px); opacity: 0.3; } }
+      @keyframes scanLine { 0% { y: 35; opacity: 0.2; } 50% { opacity: 0.8; } 100% { y: 175; opacity: 0.1; } }
+      .and-phone { transform-origin: 250px 110px; animation: andPulse 3.5s ease-in-out infinite; }
+      .and-f1 { animation: floatUp 3s ease-in-out infinite; }
+      .and-f2 { animation: floatUp 2.6s ease-in-out 0.8s infinite; }
+    </style>
+  </defs>
+  <rect width="500" height="220" rx="14" fill="#080d1a" stroke="rgba(16,185,129,0.35)" stroke-width="1.5"/>
+  <circle cx="250" cy="110" r="110" fill="url(#andGlow)"/>
+  
+  <g class="and-f1" transform="translate(45, 50)">
+    <rect width="115" height="28" rx="6" fill="rgba(16,185,129,0.15)" stroke="rgba(16,185,129,0.4)"/>
+    <text x="12" y="18" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="700">📱 Kotlin 2.0</text>
+  </g>
+  <g class="and-f2" transform="translate(340, 135)">
+    <rect width="125" height="28" rx="6" fill="rgba(0,240,255,0.15)" stroke="rgba(0,240,255,0.4)"/>
+    <text x="10" y="18" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="700">⚡ Jetpack Compose</text>
+  </g>
+  <g class="and-f1" transform="translate(40, 135)">
+    <rect width="120" height="28" rx="6" fill="rgba(168,85,247,0.15)" stroke="rgba(168,85,247,0.4)"/>
+    <text x="10" y="18" fill="#c084fc" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="700">📦 APK &amp; Play Store</text>
+  </g>
+
+  <g class="and-phone" transform="translate(200, 20)">
+    <rect width="100" height="175" rx="14" fill="#0f172a" stroke="url(#phoneGrad)" stroke-width="2.5"/>
+    <rect x="7" y="12" width="86" height="150" rx="9" fill="#090d16"/>
+    <rect x="32" y="5" width="36" height="4" rx="2" fill="#334155"/>
+    <circle cx="50" cy="50" r="18" fill="rgba(16,185,129,0.25)" stroke="#10b981" stroke-width="1.5"/>
+    <g transform="translate(41, 41)" fill="#10b981">
+      <circle cx="9" cy="6" r="5"/>
+      <rect x="4" y="8" width="10" height="7" rx="2"/>
+    </g>
+    <rect x="14" y="80" width="72" height="12" rx="3" fill="rgba(0,240,255,0.2)"/>
+    <rect x="14" y="100" width="72" height="12" rx="3" fill="rgba(16,185,129,0.2)"/>
+    <rect x="14" y="120" width="72" height="18" rx="4" fill="#10b981"/>
+    <text x="28" y="133" fill="#ffffff" font-family="'Plus Jakarta Sans', sans-serif" font-size="8" font-weight="800">BUY APK</text>
+    <rect x="7" y="35" width="86" height="2" fill="#00f0ff" opacity="0.6" style="animation: scanLine 2.5s ease-in-out infinite;"/>
+  </g>
+  <text x="250" y="210" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="1.5">NATIVE ANDROID MOBILE APP ENGINEERING</text>
+</svg>`;
+
+  const webSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 220" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <radialGradient id="webGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.6"/>
+      <stop offset="60%" stop-color="#0284c7" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#080d1a" stop-opacity="0"/>
+    </radialGradient>
+    <style>
+      @keyframes webPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); filter: drop-shadow(0 0 15px rgba(56,189,248,0.7)); } }
+      .web-win { transform-origin: 250px 105px; animation: webPulse 3.5s ease-in-out infinite; }
+    </style>
+  </defs>
+  <rect width="500" height="220" rx="14" fill="#080d1a" stroke="rgba(56,189,248,0.35)" stroke-width="1.5"/>
+  <circle cx="250" cy="105" r="110" fill="url(#webGlow)"/>
+
+  <g class="web-win" transform="translate(110, 20)">
+    <rect width="280" height="160" rx="10" fill="#0f172a" stroke="#38bdf8" stroke-width="1.8"/>
+    <rect width="280" height="26" rx="10" fill="#1e293b"/>
+    <circle cx="15" cy="13" r="4" fill="#ef4444"/>
+    <circle cx="27" cy="13" r="4" fill="#f59e0b"/>
+    <circle cx="39" cy="13" r="4" fill="#10b981"/>
+    <rect x="55" y="5" width="170" height="16" rx="4" fill="#090d16" stroke="rgba(56,189,248,0.3)" stroke-width="1"/>
+    <text x="65" y="17" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-size="8">https://your-business.com</text>
+    
+    <rect x="15" y="36" width="130" height="16" rx="4" fill="#38bdf8" opacity="0.9"/>
+    <rect x="15" y="58" width="110" height="7" rx="2" fill="#64748b"/>
+    <rect x="15" y="70" width="90" height="7" rx="2" fill="#64748b"/>
+    <rect x="15" y="84" width="55" height="14" rx="4" fill="#10b981"/>
+
+    <rect x="160" y="36" width="105" height="62" rx="6" fill="rgba(56,189,248,0.15)" stroke="rgba(56,189,248,0.4)" stroke-width="1"/>
+    <circle cx="212" cy="67" r="14" fill="#38bdf8" opacity="0.4"/>
+
+    <rect x="15" y="110" width="75" height="34" rx="4" fill="#1e293b"/>
+    <rect x="102" y="110" width="75" height="34" rx="4" fill="#1e293b"/>
+    <rect x="190" y="110" width="75" height="34" rx="4" fill="#1e293b"/>
+    <rect x="235" y="5" width="38" height="16" rx="4" fill="rgba(16,185,129,0.2)" stroke="#10b981" stroke-width="1"/>
+    <text x="240" y="17" fill="#10b981" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="700">⚡ 100%</text>
+  </g>
+  <text x="250" y="210" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="1.5">FAST CONVERTING RESPONSIVE WEBSITE</text>
+</svg>`;
+
+  const webAppSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 220" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <radialGradient id="appGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#818cf8" stop-opacity="0.6"/>
+      <stop offset="60%" stop-color="#4f46e5" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#080d1a" stop-opacity="0"/>
+    </radialGradient>
+    <style>
+      @keyframes appPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); filter: drop-shadow(0 0 16px rgba(129,140,248,0.7)); } }
+      .app-dash { transform-origin: 250px 105px; animation: appPulse 3.5s ease-in-out infinite; }
+    </style>
+  </defs>
+  <rect width="500" height="220" rx="14" fill="#080d1a" stroke="rgba(129,140,248,0.35)" stroke-width="1.5"/>
+  <circle cx="250" cy="105" r="110" fill="url(#appGlow)"/>
+
+  <g class="app-dash" transform="translate(100, 20)">
+    <rect width="300" height="160" rx="10" fill="#0f172a" stroke="#818cf8" stroke-width="1.8"/>
+    <rect width="65" height="160" rx="10" fill="#1e293b"/>
+    <rect x="10" y="14" width="45" height="9" rx="3" fill="#818cf8"/>
+    <rect x="10" y="32" width="45" height="5" rx="2" fill="#64748b"/>
+    <rect x="10" y="44" width="45" height="5" rx="2" fill="#64748b"/>
+    <rect x="10" y="56" width="45" height="5" rx="2" fill="#64748b"/>
+    <rect x="10" y="130" width="45" height="16" rx="4" fill="rgba(16,185,129,0.2)" stroke="#10b981" stroke-width="1"/>
+    <text x="14" y="142" fill="#10b981" font-family="'JetBrains Mono', monospace" font-size="7">AUTH OK</text>
+
+    <g transform="translate(75, 10)">
+      <rect x="0" y="0" width="68" height="30" rx="5" fill="#1e293b"/>
+      <text x="8" y="12" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="7">USERS</text>
+      <text x="8" y="25" fill="#38bdf8" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="800">14,280</text>
+      
+      <rect x="75" y="0" width="68" height="30" rx="5" fill="#1e293b"/>
+      <text x="83" y="12" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="7">REVENUE</text>
+      <text x="83" y="25" fill="#10b981" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="800">₹4.8L</text>
+
+      <rect x="150" y="0" width="68" height="30" rx="5" fill="#1e293b"/>
+      <text x="158" y="12" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="7">STATUS</text>
+      <text x="158" y="25" fill="#c084fc" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="800">ONLINE</text>
+    </g>
+
+    <rect x="75" y="48" width="215" height="98" rx="6" fill="#090d16" stroke="rgba(129,140,248,0.2)" stroke-width="1"/>
+    <g transform="translate(85, 130)">
+      <rect x="10" y="-25" width="16" height="25" rx="3" fill="#818cf8"/>
+      <rect x="35" y="-45" width="16" height="45" rx="3" fill="#38bdf8"/>
+      <rect x="60" y="-35" width="16" height="35" rx="3" fill="#818cf8"/>
+      <rect x="85" y="-60" width="16" height="60" rx="3" fill="#10b981"/>
+      <rect x="110" y="-40" width="16" height="40" rx="3" fill="#818cf8"/>
+      <rect x="135" y="-70" width="16" height="70" rx="3" fill="#c084fc"/>
+      <rect x="160" y="-50" width="16" height="50" rx="3" fill="#38bdf8"/>
+      <line x1="0" y1="0" x2="195" y2="0" stroke="#334155" stroke-width="1"/>
+    </g>
+  </g>
+  <text x="250" y="210" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="1.5">FULL-STACK REACT &amp; NODE.JS WEB PORTAL</text>
+</svg>`;
+
+  const softwareSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 220" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <radialGradient id="softGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00f0ff" stop-opacity="0.6"/>
+      <stop offset="60%" stop-color="#3b82f6" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#080d1a" stop-opacity="0"/>
+    </radialGradient>
+    <style>
+      @keyframes softPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); filter: drop-shadow(0 0 16px rgba(0,240,255,0.7)); } }
+      .soft-card { transform-origin: 250px 105px; animation: softPulse 3.5s ease-in-out infinite; }
+    </style>
+  </defs>
+  <rect width="500" height="220" rx="14" fill="#080d1a" stroke="rgba(0,240,255,0.35)" stroke-width="1.5"/>
+  <circle cx="250" cy="105" r="110" fill="url(#softGlow)"/>
+
+  <g class="soft-card" transform="translate(100, 20)">
+    <rect width="300" height="160" rx="10" fill="#0f172a" stroke="#00f0ff" stroke-width="1.8"/>
+    <rect width="300" height="22" rx="10" fill="#1e293b"/>
+    <circle cx="12" cy="11" r="3.5" fill="#ef4444"/>
+    <circle cx="22" cy="11" r="3.5" fill="#f59e0b"/>
+    <circle cx="32" cy="11" r="3.5" fill="#10b981"/>
+    <text x="45" y="15" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8">custom_core.exe — Electron / Python</text>
+
+    <rect x="12" y="30" width="160" height="118" rx="6" fill="#090d16" stroke="rgba(0,240,255,0.2)" stroke-width="1"/>
+    <g transform="translate(20, 44)" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#38bdf8">
+      <text x="0" y="0">[INIT] Engine ready...</text>
+      <text x="0" y="13">[CORE] SQLite DB: Connected</text>
+      <text x="0" y="26">[TASK] Sync cron started</text>
+      <text x="0" y="39" fill="#10b981">[PASS] 0 memory leaks</text>
+      <text x="0" y="52" fill="#facc15">[EXEC] Multi-user active</text>
+      <text x="0" y="65">[NET] IPC Port 4400 OK</text>
+      <text x="0" y="78" fill="#34d399">&gt; system.run() _</text>
+    </g>
+
+    <g transform="translate(182, 30)">
+      <rect width="106" height="55" rx="6" fill="#1e293b"/>
+      <text x="10" y="15" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="7">CPU TELEMETRY</text>
+      <circle cx="53" cy="35" r="14" fill="none" stroke="#334155" stroke-width="3"/>
+      <circle cx="53" cy="35" r="14" fill="none" stroke="#00f0ff" stroke-width="3" stroke-dasharray="60 90"/>
+      <text x="46" y="39" fill="#00f0ff" font-family="'JetBrains Mono', monospace" font-size="7.5" font-weight="700">12%</text>
+
+      <rect y="63" width="106" height="55" rx="6" fill="#1e293b"/>
+      <text x="10" y="78" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="7">DESKTOP BUILD</text>
+      <rect x="10" y="86" width="86" height="14" rx="3" fill="#10b981"/>
+      <text x="18" y="96" fill="#ffffff" font-family="'Plus Jakarta Sans', sans-serif" font-size="8" font-weight="800">WIN / MAC / LINUX</text>
+    </g>
+  </g>
+  <text x="250" y="210" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="1.5">TAILORED DESKTOP &amp; SERVER SOFTWARE</text>
+</svg>`;
+
+  const aiSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 220" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <radialGradient id="aiGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#c084fc" stop-opacity="0.7"/>
+      <stop offset="50%" stop-color="#00f0ff" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#080d1a" stop-opacity="0"/>
+    </radialGradient>
+    <style>
+      @keyframes aiCorePulse { 0%, 100% { transform: scale(1); filter: drop-shadow(0 0 16px rgba(192,132,252,0.8)); } 50% { transform: scale(1.08); filter: drop-shadow(0 0 25px rgba(0,240,255,0.9)); } }
+      .ai-core { transform-origin: 250px 105px; animation: aiCorePulse 3s ease-in-out infinite; }
+    </style>
+  </defs>
+  <rect width="500" height="220" rx="14" fill="#080d1a" stroke="rgba(192,132,252,0.35)" stroke-width="1.5"/>
+  <circle cx="250" cy="105" r="110" fill="url(#aiGlow)"/>
+
+  <g stroke="#c084fc" stroke-width="1.5" opacity="0.5">
+    <line x1="110" y1="65" x2="180" y2="105"/>
+    <line x1="110" y1="145" x2="180" y2="105"/>
+    <line x1="180" y1="105" x2="250" y2="105"/>
+    <line x1="250" y1="105" x2="320" y2="105"/>
+    <line x1="320" y1="105" x2="390" y2="65"/>
+    <line x1="320" y1="105" x2="390" y2="145"/>
+  </g>
+
+  <circle cx="110" cy="65" r="6" fill="#00f0ff"/>
+  <circle cx="110" cy="145" r="6" fill="#38bdf8"/>
+  <circle cx="180" cy="105" r="7" fill="#c084fc"/>
+  <circle cx="320" cy="105" r="7" fill="#c084fc"/>
+  <circle cx="390" cy="65" r="6" fill="#10b981"/>
+  <circle cx="390" cy="145" r="6" fill="#f59e0b"/>
+
+  <g transform="translate(45, 20)">
+    <rect width="130" height="28" rx="6" fill="rgba(0,240,255,0.15)" stroke="rgba(0,240,255,0.4)"/>
+    <text x="10" y="18" fill="#38bdf8" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="700">💬 How can I help?</text>
+  </g>
+  <g transform="translate(325, 20)">
+    <rect width="135" height="28" rx="6" fill="rgba(16,185,129,0.15)" stroke="rgba(16,185,129,0.4)"/>
+    <text x="10" y="18" fill="#34d399" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="700">⚡ AI Auto-Reply Active</text>
+  </g>
+
+  <g class="ai-core">
+    <circle cx="250" cy="105" r="36" fill="#0f172a" stroke="#c084fc" stroke-width="2.5"/>
+    <circle cx="250" cy="105" r="26" fill="rgba(192,132,252,0.3)"/>
+    <text x="238" y="112" fill="#ffffff" font-size="18">🧠</text>
+  </g>
+  <text x="250" y="210" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="1.5">INTELLIGENT AI AGENTS &amp; CHATBOTS</text>
+</svg>`;
+
+  const autoSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 220" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <radialGradient id="autoGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.6"/>
+      <stop offset="60%" stop-color="#d97706" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#080d1a" stop-opacity="0"/>
+    </radialGradient>
+    <style>
+      @keyframes gearSpinCW { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+      @keyframes gearSpinCCW { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
+      .gear-1 { transform-origin: 220px 105px; animation: gearSpinCW 10s linear infinite; }
+      .gear-2 { transform-origin: 285px 105px; animation: gearSpinCCW 10s linear infinite; }
+    </style>
+  </defs>
+  <rect width="500" height="220" rx="14" fill="#080d1a" stroke="rgba(245,158,11,0.35)" stroke-width="1.5"/>
+  <circle cx="250" cy="105" r="110" fill="url(#autoGlow)"/>
+
+  <line x1="80" y1="105" x2="420" y2="105" stroke="rgba(245,158,11="0.3)" stroke-width="4" stroke-dasharray="6 6"/>
+
+  <g transform="translate(50, 35)">
+    <rect width="110" height="28" rx="6" fill="#1e293b" stroke="rgba(245,158,11,0.4)"/>
+    <text x="10" y="18" fill="#fcd34d" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700">📝 Form Submit</text>
+  </g>
+
+  <g transform="translate(340, 35)">
+    <rect width="110" height="28" rx="6" fill="#1e293b" stroke="#10b981"/>
+    <text x="10" y="18" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700">💬 WhatsApp Sent</text>
+  </g>
+
+  <g class="gear-1">
+    <circle cx="220" cy="105" r="30" fill="none" stroke="#f59e0b" stroke-width="6" stroke-dasharray="12 6"/>
+    <circle cx="220" cy="105" r="13" fill="#0f172a" stroke="#fcd34d" stroke-width="2"/>
+  </g>
+  <g class="gear-2">
+    <circle cx="285" cy="105" r="30" fill="none" stroke="#00f0ff" stroke-width="6" stroke-dasharray="12 6"/>
+    <circle cx="285" cy="105" r="13" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/>
+  </g>
+
+  <text x="250" y="210" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="1.5">ZERO-MANUAL-WORK BUSINESS AUTOMATION</text>
+</svg>`;
+
+  const apiSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 220" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <radialGradient id="apiGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00f0ff" stop-opacity="0.6"/>
+      <stop offset="60%" stop-color="#0284c7" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#080d1a" stop-opacity="0"/>
+    </radialGradient>
+    <style>
+      @keyframes apiPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); filter: drop-shadow(0 0 16px rgba(0,240,255,0.8)); } }
+      .api-box { transform-origin: 250px 105px; animation: apiPulse 3s ease-in-out infinite; }
+    </style>
+  </defs>
+  <rect width="500" height="220" rx="14" fill="#080d1a" stroke="rgba(0,240,255,0.35)" stroke-width="1.5"/>
+  <circle cx="250" cy="105" r="110" fill="url(#apiGlow)"/>
+
+  <g transform="translate(50, 55)">
+    <rect width="120" height="90" rx="8" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5"/>
+    <rect width="120" height="18" rx="8" fill="#1e293b"/>
+    <text x="8" y="13" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-size="8">POST /api/pay</text>
+    <g transform="translate(10, 28)" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#94a3b8">
+      <text x="0" y="0">{</text>
+      <text x="6" y="11" fill="#34d399">"vpa": "7017022966"</text>
+      <text x="6" y="22" fill="#f59e0b">"amount": 999,</text>
+      <text x="6" y="33" fill="#c084fc">"auth": "JWT_OK"</text>
+      <text x="0" y="44">}</text>
+    </g>
+  </g>
+
+  <line x1="170" y1="105" x2="220" y2="105" stroke="#00f0ff" stroke-width="2" stroke-dasharray="4 4"/>
+  <line x1="280" y1="105" x2="330" y2="105" stroke="#10b981" stroke-width="2" stroke-dasharray="4 4"/>
+
+  <g class="api-box">
+    <circle cx="250" cy="105" r="28" fill="#0f172a" stroke="#00f0ff" stroke-width="2.5"/>
+    <text x="237" y="110" fill="#00f0ff" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="800">API</text>
+  </g>
+
+  <g transform="translate(330, 55)">
+    <rect width="120" height="90" rx="8" fill="#0f172a" stroke="#10b981" stroke-width="1.5"/>
+    <rect width="120" height="18" rx="8" fill="#1e293b"/>
+    <text x="8" y="13" fill="#10b981" font-family="'JetBrains Mono', monospace" font-size="8">200 OK — HTTP</text>
+    <g transform="translate(10, 28)" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#94a3b8">
+      <text x="0" y="0">{</text>
+      <text x="6" y="11" fill="#10b981">"status": "SUCCESS"</text>
+      <text x="6" y="22" fill="#38bdf8">"txId": "TX_8921"</text>
+      <text x="6" y="33" fill="#f59e0b">"webhook": true</text>
+      <text x="0" y="44">}</text>
+    </g>
+  </g>
+
+  <text x="250" y="210" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="1.5">PAYMENT GATEWAY &amp; REST/GRAPHQL API</text>
+</svg>`;
+
+  const uiuxSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 220" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <radialGradient id="uiGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ec4899" stop-opacity="0.6"/>
+      <stop offset="60%" stop-color="#a855f7" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#080d1a" stop-opacity="0"/>
+    </radialGradient>
+    <style>
+      @keyframes uiPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.04); filter: drop-shadow(0 0 16px rgba(236,72,153,0.7)); } }
+      .ui-card { transform-origin: 250px 105px; animation: uiPulse 3.5s ease-in-out infinite; }
+    </style>
+  </defs>
+  <rect width="500" height="220" rx="14" fill="#080d1a" stroke="rgba(236,72,153,0.35)" stroke-width="1.5"/>
+  <circle cx="250" cy="105" r="110" fill="url(#uiGlow)"/>
+
+  <g class="ui-card" transform="translate(120, 20)">
+    <rect width="260" height="160" rx="10" fill="#0f172a" stroke="#ec4899" stroke-width="1.8"/>
+    <rect width="260" height="22" rx="10" fill="#1e293b"/>
+    <circle cx="15" cy="11" r="4.5" fill="#00f0ff"/>
+    <circle cx="28" cy="11" r="4.5" fill="#a855f7"/>
+    <circle cx="41" cy="11" r="4.5" fill="#ec4899"/>
+    <circle cx="54" cy="11" r="4.5" fill="#10b981"/>
+    <text x="75" y="15" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8">Design System • Figma to Code</text>
+
+    <rect x="15" y="34" width="230" height="50" rx="8" fill="rgba(236,72,153,0.15)" stroke="rgba(236,72,153,0.3)" stroke-width="1"/>
+    <circle cx="45" cy="59" r="14" fill="#ec4899" opacity="0.7"/>
+    <rect x="75" y="47" width="100" height="10" rx="3" fill="#ffffff" opacity="0.9"/>
+    <rect x="75" y="63" width="70" height="7" rx="2" fill="#94a3b8"/>
+
+    <rect x="15" y="94" width="108" height="50" rx="6" fill="#1e293b"/>
+    <text x="25" y="110" fill="#00f0ff" font-family="'JetBrains Mono', monospace" font-size="8">GLASS MODAL</text>
+    <rect x="25" y="118" width="60" height="14" rx="4" fill="#00f0ff" opacity="0.8"/>
+
+    <rect x="137" y="94" width="108" height="50" rx="6" fill="#1e293b"/>
+    <text x="147" y="110" fill="#10b981" font-family="'JetBrains Mono', monospace" font-size="8">DARK / LIGHT</text>
+    <rect x="147" y="118" width="60" height="14" rx="4" fill="#10b981" opacity="0.8"/>
+  </g>
+  <text x="250" y="210" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="1.5">MODERN GLASSMORPHISM &amp; UI/UX PROTOTYPING</text>
+</svg>`;
+
+  const maintSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 220" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <radialGradient id="maintGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#10b981" stop-opacity="0.6"/>
+      <stop offset="60%" stop-color="#059669" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#080d1a" stop-opacity="0"/>
+    </radialGradient>
+    <style>
+      @keyframes shieldPulse { 0%, 100% { transform: scale(1); filter: drop-shadow(0 0 16px rgba(16,185,129,0.8)); } 50% { transform: scale(1.06); filter: drop-shadow(0 0 25px rgba(16,185,129,1)); } }
+      .maint-shield { transform-origin: 250px 105px; animation: shieldPulse 3s ease-in-out infinite; }
+    </style>
+  </defs>
+  <rect width="500" height="220" rx="14" fill="#080d1a" stroke="rgba(16,185,129,0.35)" stroke-width="1.5"/>
+  <circle cx="250" cy="105" r="110" fill="url(#maintGlow)"/>
+
+  <g transform="translate(50, 75)">
+    <rect width="120" height="55" rx="8" fill="#0f172a" stroke="#10b981" stroke-width="1.5"/>
+    <text x="12" y="20" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8">SYSTEM UPTIME</text>
+    <text x="12" y="42" fill="#10b981" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="800">99.99%</text>
+  </g>
+
+  <g transform="translate(330, 75)">
+    <rect width="120" height="55" rx="8" fill="#0f172a" stroke="#00f0ff" stroke-width="1.5"/>
+    <text x="12" y="20" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8">BUG PATCH</text>
+    <text x="12" y="42" fill="#00f0ff" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800">0 ERRORS</text>
+  </g>
+
+  <g class="maint-shield">
+    <path d="M 250 55 L 285 73 L 285 120 C 285 145 250 160 250 160 C 250 160 215 145 215 120 L 215 73 Z" fill="#0f172a" stroke="#10b981" stroke-width="2.5"/>
+    <path d="M 237 105 L 246 114 L 263 94" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="250" y="210" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="1.5">RAPID BUG FIXING, OPTIMIZATION &amp; SUPPORT</text>
+</svg>`;
+
+  const aptitudeSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 220" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <radialGradient id="aptGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#c084fc" stop-opacity="0.6"/>
+      <stop offset="60%" stop-color="#9333ea" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#080d1a" stop-opacity="0"/>
+    </radialGradient>
+    <style>
+      @keyframes aptPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); filter: drop-shadow(0 0 16px rgba(192,132,252,0.8)); } }
+      .apt-core { transform-origin: 250px 105px; animation: aptPulse 3.5s ease-in-out infinite; }
+    </style>
+  </defs>
+  <rect width="500" height="220" rx="14" fill="#080d1a" stroke="rgba(192,132,252,0.35)" stroke-width="1.5"/>
+  <circle cx="250" cy="105" r="110" fill="url(#aptGlow)"/>
+
+  <g transform="translate(50, 68)">
+    <rect width="120" height="70" rx="8" fill="#0f172a" stroke="#c084fc" stroke-width="1.5"/>
+    <text x="10" y="20" fill="#c084fc" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="700">SPEED MATH</text>
+    <text x="10" y="38" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8">Shortcut Tricks</text>
+    <text x="10" y="55" fill="#10b981" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700">30% OFF</text>
+  </g>
+
+  <g class="apt-core">
+    <circle cx="250" cy="105" r="38" fill="#0f172a" stroke="#c084fc" stroke-width="2.5"/>
+    <text x="236" y="114" fill="#ffffff" font-size="22">🎓</text>
+  </g>
+
+  <g transform="translate(330, 68)">
+    <rect width="120" height="70" rx="8" fill="#0f172a" stroke="#00f0ff" stroke-width="1.5"/>
+    <text x="10" y="20" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="700">TECH CRACK</text>
+    <text x="10" y="38" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8">FAANG / Startups</text>
+    <text x="10" y="55" fill="#10b981" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700">100+ Tests</text>
+  </g>
+
+  <text x="250" y="210" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="1.5">TECHNICAL PLACEMENT &amp; APTITUDE CRACKER</text>
+</svg>`;
+
   fs.writeFileSync(path.join(ASSETS_IMG, 'joya-ai-animated.svg'), joyaSvg, 'utf8');
   fs.writeFileSync(path.join(ASSETS_IMG, 'jarvis-ai-animated.svg'), jarvisSvg, 'utf8');
-  console.log('✓ Generated animated SVGs for Joya & Jarvis');
+  fs.writeFileSync(path.join(ASSETS_IMG, 'service-android.svg'), androidSvg, 'utf8');
+  fs.writeFileSync(path.join(ASSETS_IMG, 'service-web.svg'), webSvg, 'utf8');
+  fs.writeFileSync(path.join(ASSETS_IMG, 'service-webapp.svg'), webAppSvg, 'utf8');
+  fs.writeFileSync(path.join(ASSETS_IMG, 'service-software.svg'), softwareSvg, 'utf8');
+  fs.writeFileSync(path.join(ASSETS_IMG, 'service-ai.svg'), aiSvg, 'utf8');
+  fs.writeFileSync(path.join(ASSETS_IMG, 'service-automation.svg'), autoSvg, 'utf8');
+  fs.writeFileSync(path.join(ASSETS_IMG, 'service-api.svg'), apiSvg, 'utf8');
+  fs.writeFileSync(path.join(ASSETS_IMG, 'service-uiux.svg'), uiuxSvg, 'utf8');
+  fs.writeFileSync(path.join(ASSETS_IMG, 'service-maintenance.svg'), maintSvg, 'utf8');
+  fs.writeFileSync(path.join(ASSETS_IMG, 'service-aptitude.svg'), aptitudeSvg, 'utf8');
+  console.log('✓ Generated all animated SVGs for Joya, Jarvis, Services & Aptitude');
+}
+
+function getServiceImage(serviceId) {
+  const map = {
+    'android-development': '/assets/images/service-android.svg',
+    'web-development': '/assets/images/service-web.svg',
+    'software-development': '/assets/images/service-webapp.svg',
+    'custom-software': '/assets/images/service-software.svg',
+    'ai-solutions': '/assets/images/service-ai.svg',
+    'automation': '/assets/images/service-automation.svg',
+    'api-integration': '/assets/images/service-api.svg',
+    'ui-ux': '/assets/images/service-uiux.svg',
+    'maintenance': '/assets/images/service-maintenance.svg'
+  };
+  return map[serviceId] || '/assets/images/service-web.svg';
 }
 
 // Generate animated SVGs immediately
@@ -663,6 +1139,9 @@ function renderServicesSection() {
           const waBookingUrl = `https://api.whatsapp.com/send?phone=918630976928&text=${encodeURIComponent('Hello DevCraft 👋 I want to book ' + service.name + ' (' + service.pricingStarting + ')')}`;
           return `
           <div class="service-card" style="display: flex; flex-direction: column; justify-content: space-between; border-radius: 18px;">
+            <div style="width: 100%; border-radius: 12px; overflow: hidden; margin-bottom: 16px; border: 1px solid rgba(255,255,255,0.08); background: #080d1a;">
+              <img src="${getServiceImage(service.id)}" alt="${service.name}" style="width: 100%; height: auto; display: block;" loading="lazy" />
+            </div>
             <div class="service-card-top">
               <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
                 <span class="service-badge" style="background: rgba(59, 130, 246, 0.15); color: #93c5fd; border-color: rgba(59, 130, 246, 0.3);">${service.category} • ${service.badge}</span>
@@ -727,6 +1206,9 @@ function renderAptitudeSection() {
       <div class="services-catalog-grid" id="aptitude-catalog-grid">
         ${aptitudeProducts.map(item => `
           <div class="service-card" style="border-color: rgba(168, 85, 247, 0.25);">
+            <div style="width: 100%; border-radius: 12px; overflow: hidden; margin-bottom: 16px; border: 1px solid rgba(168, 85, 247, 0.25); background: #080d1a;">
+              <img src="/assets/images/service-aptitude.svg" alt="${item.name}" style="width: 100%; height: auto; display: block;" loading="lazy" />
+            </div>
             <div class="service-card-top">
               <span class="service-badge" style="background: rgba(168, 85, 247, 0.12); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3);">
                 ${item.category} • ${item.badge}
@@ -2143,17 +2625,17 @@ function buildProductsPage() {
     else if (p.id === 'jarvis-ai') detailsLink = '/jarvis';
     else if (isAptitude) detailsLink = '/aptitude';
 
+    let cardBannerImg = '/assets/images/service-software.svg';
+    if (p.id === 'joya-ai') cardBannerImg = '/assets/images/joya-ai-animated.svg';
+    else if (p.id === 'jarvis-ai') cardBannerImg = '/assets/images/jarvis-ai-animated.svg';
+    else if (isAptitude) cardBannerImg = '/assets/images/service-aptitude.svg';
+    else if (p.category === 'Android Apps') cardBannerImg = '/assets/images/service-android.svg';
+
     return `
     <div class="product-shop-card" data-category="${p.category || 'Other'}" data-name="${(p.name || '').toLowerCase()}" data-price="${finalPrice}">
-      ${p.id === 'joya-ai' ? `
-      <div style="width: 100%; border-radius: 10px; overflow: hidden; margin-bottom: 12px; border: 1px solid rgba(168, 85, 247, 0.3); background: #080d1a;">
-        <img src="/assets/images/joya-ai-animated.svg" alt="Joya AI Voice Assistant" style="width: 100%; height: auto; display: block;" loading="lazy" />
+      <div style="width: 100%; border-radius: 10px; overflow: hidden; margin-bottom: 12px; border: 1px solid rgba(255, 255, 255, 0.1); background: #080d1a;">
+        <img src="${cardBannerImg}" alt="${p.name}" style="width: 100%; height: auto; display: block;" loading="lazy" />
       </div>
-      ` : p.id === 'jarvis-ai' ? `
-      <div style="width: 100%; border-radius: 10px; overflow: hidden; margin-bottom: 12px; border: 1px solid rgba(59, 130, 246, 0.3); background: #080d1a;">
-        <img src="/assets/images/jarvis-ai-animated.svg" alt="Jarvis AI PC Assistant" style="width: 100%; height: auto; display: block;" loading="lazy" />
-      </div>
-      ` : ''}
       <div class="product-card-top">
         <div class="product-card-meta">
           <span class="product-category-chip">${p.category}</span>
@@ -2761,6 +3243,9 @@ function buildAptitudePage() {
 
           return `
           <div class="product-shop-card" style="border-color: rgba(16, 185, 129, 0.3);">
+            <div style="width: 100%; border-radius: 10px; overflow: hidden; margin-bottom: 12px; border: 1px solid rgba(16, 185, 129, 0.25); background: #080d1a;">
+              <img src="/assets/images/service-aptitude.svg" alt="${p.name}" style="width: 100%; height: auto; display: block;" loading="lazy" />
+            </div>
             <div class="product-card-top">
               <span class="product-category-chip" style="background: rgba(16, 185, 129, 0.15); color: #34d399;">${p.category}</span>
               <span class="product-discount-chip chip-aptitude">30% OFF</span>
@@ -3270,31 +3755,36 @@ function buildServiceSubPages() {
           <span style="color: var(--accent); font-weight: 600;">${srv.name}</span>
         </nav>
 
-        <div style="display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 9999px; color: #1d4ed8; font-weight: 700; font-size: 0.85rem; margin-bottom: 16px;">
-          <span>⚡ ${srv.category}</span> • <span>${srv.badge}</span>
-        </div>
+        <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; align-items: center; margin-bottom: 36px;">
+          <div>
+            <div style="display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; background: rgba(59, 130, 246, 0.12); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 9999px; color: #93c5fd; font-weight: 700; font-size: 0.85rem; margin-bottom: 16px;">
+              <span>⚡ ${srv.category}</span> • <span>${srv.badge}</span>
+            </div>
 
-        <h1 style="font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 800; line-height: 1.15; color: var(--text-primary); margin-bottom: 20px;">
-          ${srv.headline}
-        </h1>
+            <h1 style="font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 800; line-height: 1.15; color: var(--text-primary); margin-bottom: 20px;">
+              ${srv.headline}
+            </h1>
 
-        <p style="font-size: 1.15rem; line-height: 1.7; color: var(--text-secondary); max-width: 820px; margin-bottom: 32px;">
-          ${srv.subtitle}
-        </p>
+            <p style="font-size: 1.15rem; line-height: 1.7; color: var(--text-secondary); margin-bottom: 32px;">
+              ${srv.subtitle}
+            </p>
 
-        <div style="display: flex; gap: 14px; flex-wrap: wrap; align-items: center; margin-bottom: 40px;">
-          <a href="https://api.whatsapp.com/send?phone=918630976928&text=${encodeURIComponent('Hello DevCraft 👋 I want to book ' + srv.name + ' (' + srv.pricing + ')')}" target="_blank" rel="noopener noreferrer" class="btn btn-emerald" style="padding: 12px 28px;">
-            Book on WhatsApp (${srv.pricing}) ⚡
-          </a>
-          <a href="/contact?service=${srv.slug}" class="btn btn-primary" style="padding: 12px 28px;">
-            Request Custom Scope →
-          </a>
-          <a href="/products" class="btn btn-outline" style="padding: 12px 24px;">
-            Explore Software Products (50% OFF) ⚡
-          </a>
-          <a href="/services" class="btn btn-ghost" style="padding: 12px 24px;">
-            All Services Catalog
-          </a>
+            <div style="display: flex; gap: 14px; flex-wrap: wrap; align-items: center;">
+              <a href="https://api.whatsapp.com/send?phone=918630976928&text=${encodeURIComponent('Hello DevCraft 👋 I want to book ' + srv.name + ' (' + srv.pricing + ')')}" target="_blank" rel="noopener noreferrer" class="btn btn-emerald" style="padding: 12px 28px;">
+                Book on WhatsApp (${srv.pricing}) ⚡
+              </a>
+              <a href="/contact?service=${srv.slug}" class="btn btn-primary" style="padding: 12px 28px;">
+                Request Custom Scope →
+              </a>
+              <a href="/products" class="btn btn-outline" style="padding: 12px 24px;">
+                Explore Software Products (50% OFF) ⚡
+              </a>
+            </div>
+          </div>
+
+          <div style="border-radius: 18px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 12px 40px rgba(0,0,0,0.5); background: #080d1a;">
+            <img src="${getServiceImage(srv.slug)}" alt="${srv.name} Graphic Architecture" style="width: 100%; height: auto; display: block;" />
+          </div>
         </div>
 
         <!-- Trust Stats Strip -->
